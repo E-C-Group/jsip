@@ -28,6 +28,7 @@
  ******************************************************************************/
 package co.ecg.jain_sip.sip.ri;
 
+import co.ecg.jain_sip.core.ri.InternalErrorHandler;
 import co.ecg.jain_sip.sip.*;
 
 
@@ -41,13 +42,15 @@ import java.util.concurrent.ConcurrentHashMap;
 import co.ecg.jain_sip.sip.address.Hop;
 import co.ecg.jain_sip.sip.header.CallIdHeader;
 import co.ecg.jain_sip.sip.message.Request;
+import co.ecg.jain_sip.sip.message.Response;
+import co.ecg.jain_sip.sip.ri.address.RouterExt;
 import co.ecg.jain_sip.sip.ri.header.CallID;
+
 import co.ecg.jain_sip.sip.ri.header.Via;
+import co.ecg.jain_sip.sip.ri.message.SIPMessage;
 import co.ecg.jain_sip.sip.ri.message.SIPRequest;
-import co.ecg.jain_sip.sip.ri.stack.SIPClientTransaction;
-import co.ecg.jain_sip.sip.ri.stack.SIPDialogEventListener;
-import co.ecg.jain_sip.sip.ri.stack.SIPTransaction;
-import co.ecg.jain_sip.sip.ri.stack.SIPTransactionEventListener;
+import co.ecg.jain_sip.sip.ri.message.SIPResponse;
+import co.ecg.jain_sip.sip.ri.stack.*;
 import lombok.extern.slf4j.Slf4j;
 
 
@@ -302,11 +305,9 @@ public class SipProviderImpl implements SipProvider, SipProviderExt,
             }
 
         }
-        if (logger.isLoggingEnabled(LogLevels.TRACE_DEBUG))
-            log.debug(
-                    "could not find existing transaction for "
-                            + sipRequest.getFirstLine()
-                            + " creating a new one ");
+
+        log.debug("could not find existing transaction for " + sipRequest.getFirstLine()
+                + " creating a new one ");
 
         // Could not find a dialog or the route is not set in dialog.
 
@@ -329,7 +330,7 @@ public class SipProviderImpl implements SipProvider, SipProviderExt,
         // client transaction.
 
         try {
-            // Set the brannch id before you ask for a tx.
+            // Set the branch id before you ask for a tx.
             // If the user has set his own branch Id and the
             // branch id starts with a valid prefix, then take it.
             // otherwise, generate one. If branch ID checking has
@@ -445,8 +446,7 @@ public class SipProviderImpl implements SipProvider, SipProviderExt,
         }
 
         if (request.getMethod().equals(Request.ACK)) {
-            if (logger.isLoggingEnabled())
-                log.error("Creating server transaction for ACK -- makes no sense!");
+            log.error("Creating server transaction for ACK -- makes no sense!");
             throw new TransactionUnavailableException("Cannot create Server transaction for ACK ");
         }
         /*
@@ -655,10 +655,8 @@ public class SipProviderImpl implements SipProvider, SipProviderExt,
             Dialog dialog = sipStack.getDialog(((SIPRequest) request)
                     .getDialogId(false));
             if (dialog != null && dialog.getState() != null) {
-                if (logger.isLoggingEnabled())
-                    log.warn(
-                            "Dialog exists -- you may want to use Dialog.sendAck() "
-                                    + dialog.getState());
+                log.warn("Dialog exists -- you may want to use Dialog.sendAck() "
+                        + dialog.getState());
             }
         }
         Hop hop = sipStack.getRouter((SIPRequest) request).getNextHop(request);
@@ -694,28 +692,19 @@ public class SipProviderImpl implements SipProvider, SipProviderExt,
             if (messageChannel != null) {
                 messageChannel.sendMessage((SIPMessage) sipRequest, hop);
             } else {
-                if (logger.isLoggingEnabled(LogLevels.TRACE_DEBUG)) {
-                    log.debug("Could not create a message channel for " + hop.toString() + " listeningPoints = " + this.listeningPoints);
-                }
-                throw new SipException(
-                        "Could not create a message channel for "
-                                + hop.toString());
+                log.debug("Could not create a message channel for " + hop.toString() + " listeningPoints = " + this.listeningPoints);
+
+                throw new SipException("Could not create a message channel for " + hop.toString());
             }
         } catch (IOException ex) {
-            if (logger.isLoggingEnabled()) {
-                logger.logException(ex);
-            }
-
+            log.info("IOException", ex);
             throw new SipException(
-                    "IO Exception occured while Sending Request", ex);
+                    "IO Exception occurred while Sending Request", ex);
 
         } catch (ParseException ex1) {
             InternalErrorHandler.handleException(ex1);
         } finally {
-            if (logger.isLoggingEnabled(LogLevels.TRACE_DEBUG))
-                log.debug(
-                        "done sending " + request.getMethod() + " to hop "
-                                + hop);
+            log.debug("done sending " + request.getMethod() + " to hop " + hop);
         }
     }
 
@@ -890,10 +879,9 @@ public class SipProviderImpl implements SipProvider, SipProviderExt,
 
         if (transactionErrorEvent.getErrorID() == SIPTransactionErrorEvent.TRANSPORT_ERROR) {
             // There must be a way to inform the TU here!!
-            if (logger.isLoggingEnabled(LogLevels.TRACE_DEBUG)) {
-                log.debug(
-                        "TransportError occured on " + transaction);
-            }
+
+            log.debug("TransportError occured on " + transaction);
+
             // Treat this like a timeout event. (Suggestion from Christophe).
             Object errorObject = transactionErrorEvent.getSource();
             Timeout timeout = Timeout.TRANSACTION;
@@ -943,8 +931,7 @@ public class SipProviderImpl implements SipProvider, SipProviderExt,
             Transaction tx = (Transaction) errorObject;
 
             if (tx.getDialog() != null)
-                InternalErrorHandler.handleException("Unexpected event !",
-                        this.logger);
+                InternalErrorHandler.handleException("Unexpected event !");
 
             Timeout timeout = Timeout.RETRANSMIT;
             TimeoutEvent ev = null;
@@ -966,18 +953,18 @@ public class SipProviderImpl implements SipProvider, SipProviderExt,
      */
     public void dialogErrorEvent(SIPDialogErrorEvent dialogErrorEvent) {
         SIPDialog sipDialog = (SIPDialog) dialogErrorEvent.getSource();
-        Reason reason = Reason.AckNotReceived;
+        DialogTimeoutEvent.Reason reason = DialogTimeoutEvent.Reason.AckNotReceived;
         if (dialogErrorEvent.getErrorID() == SIPDialogErrorEvent.DIALOG_ACK_NOT_SENT_TIMEOUT) {
-            reason = Reason.AckNotSent;
+            reason = DialogTimeoutEvent.Reason.AckNotSent;
         } else if (dialogErrorEvent.getErrorID() == SIPDialogErrorEvent.DIALOG_REINVITE_TIMEOUT) {
-            reason = Reason.ReInviteTimeout;
+            reason = DialogTimeoutEvent.Reason.ReInviteTimeout;
         } else if (dialogErrorEvent.getErrorID() == SIPDialogErrorEvent.EARLY_STATE_TIMEOUT) {
-            reason = Reason.EarlyStateTimeout;
+            reason = DialogTimeoutEvent.Reason.EarlyStateTimeout;
         }
-        if (logger.isLoggingEnabled(LogLevels.TRACE_DEBUG)) {
-            log.debug(
-                    "Dialog TimeoutError occured on " + sipDialog);
-        }
+
+        log.debug(
+                "Dialog TimeoutError occured on " + sipDialog);
+
         DialogTimeoutEvent ev = new DialogTimeoutEvent(this, sipDialog, reason);
         ev.setClientTransaction(dialogErrorEvent.getClientTransaction());
 

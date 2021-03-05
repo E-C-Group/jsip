@@ -29,9 +29,7 @@
 package co.ecg.jain_sip.sip.ri.stack;
 
 import co.ecg.jain_sip.sip.ri.parser.PipelinedMsgParser;
-import co.ecg.jain_sip.core.ri.CommonLogger;
-import co.ecg.jain_sip.core.ri.LogWriter;
-import co.ecg.jain_sip.core.ri.StackLogger;
+
 import co.ecg.jain_sip.sip.ri.header.CSeq;
 import co.ecg.jain_sip.sip.ri.header.CallID;
 import co.ecg.jain_sip.sip.ri.header.ContentLength;
@@ -41,6 +39,7 @@ import co.ecg.jain_sip.sip.ri.header.StatusLine;
 import co.ecg.jain_sip.sip.ri.header.To;
 import co.ecg.jain_sip.sip.ri.header.Via;
 import co.ecg.jain_sip.sip.ri.message.SIPMessage;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -64,20 +63,17 @@ import java.text.ParseException;
  * back via the parseError or processMessage functions that are defined as part
  * of the SIPMessageListener interface.
  *
- * @see PipelinedMsgParser
- *
- *
  * @author M. Ranganathan <br/>
- *
  * @version 1.2 $Revision: 1.83 $ $Date: 2010-12-02 22:44:53 $
+ * @see PipelinedMsgParser
  */
+@Slf4j
 public class TCPMessageChannel extends ConnectionOrientedMessageChannel {
-    private static StackLogger logger = CommonLogger.getLogger(TCPMessageChannel.class);    
 
     protected OutputStream myClientOutputStream;
 
     protected TCPMessageChannel(SIPTransactionStack sipStack) {
-    	super(sipStack);
+        super(sipStack);
     }
 
     /**
@@ -87,23 +83,18 @@ public class TCPMessageChannel extends ConnectionOrientedMessageChannel {
      * input is the socket that is returned from the accept. Global data that is
      * shared by all threads is accessible in the Server structure.
      *
-     * @param sock
-     *            Socket from which to read and write messages. The socket is
-     *            already connected (was created as a result of an accept).
-     *
-     * @param sipStack
-     *            Ptr to SIP Stack
+     * @param sock     Socket from which to read and write messages. The socket is
+     *                 already connected (was created as a result of an accept).
+     * @param sipStack Ptr to SIP Stack
      */
 
     protected TCPMessageChannel(Socket sock, SIPTransactionStack sipStack,
-            TCPMessageProcessor msgProcessor, String threadName) throws IOException {
+                                TCPMessageProcessor msgProcessor, String threadName) throws IOException {
 
-    	super(sipStack);
-        if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
-            log.debug(
-                    "creating new TCPMessageChannel ");
-            logger.logStackTrace();
-        }
+        super(sipStack);
+
+        log.debug("creating new TCPMessageChannel ");
+
         mySock = sock;
         peerAddress = mySock.getInetAddress();
         myAddress = msgProcessor.getIpAddress().getHostAddress();
@@ -127,23 +118,18 @@ public class TCPMessageChannel extends ConnectionOrientedMessageChannel {
      * Lamine Brahimi (IBM Zurich) sent in a bug fix for this method. A thread
      * was being uncessarily created.
      *
-     * @param inetAddr
-     *            inet address to connect to.
-     * @param sipStack
-     *            is the sip sipStack from which we are created.
-     * @throws IOException
-     *             if we cannot connect.
+     * @param inetAddr inet address to connect to.
+     * @param sipStack is the sip sipStack from which we are created.
+     * @throws IOException if we cannot connect.
      */
     protected TCPMessageChannel(InetAddress inetAddr, int port,
-            SIPTransactionStack sipStack, TCPMessageProcessor messageProcessor)
+                                SIPTransactionStack sipStack, TCPMessageProcessor messageProcessor)
             throws IOException {
-    	
-    	super(sipStack);
-        if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
-            log.debug(
-                    "creating new TCPMessageChannel ");
-            logger.logStackTrace();
-        }
+
+        super(sipStack);
+
+        log.debug("creating new TCPMessageChannel ");
+
         this.peerAddress = inetAddr;
         this.peerPort = port;
         this.myPort = messageProcessor.getPort();
@@ -153,61 +139,61 @@ public class TCPMessageChannel extends ConnectionOrientedMessageChannel {
         this.key = MessageChannel.getKey(peerAddress, peerPort, "TCP");
         super.messageProcessor = messageProcessor;
 
-    }    
+    }
 
     /**
      * Close the message channel.
      */
-    public void close(boolean removeSocket, boolean stopKeepAliveTask) {  
+    public void close(boolean removeSocket, boolean stopKeepAliveTask) {
         isRunning = false;
-    	// we need to close everything because the socket may be closed by the other end
-    	// like in LB scenarios sending OPTIONS and killing the socket after it gets the response    	
+        // we need to close everything because the socket may be closed by the other end
+        // like in LB scenarios sending OPTIONS and killing the socket after it gets the response
         if (mySock != null) {
-        	if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG))
-                log.debug("Closing socket " + key);
-        	try {
-	            mySock.close();
-	            mySock = null;
-        	} catch (IOException ex) {
-                if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG))
-                    log.debug("Error closing socket " + ex);
-            }
-        }        
-        if(myParser != null) {
-        	if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG))
-                log.debug("Closing my parser " + myParser);
-            myParser.close();            
-        }  
-        // no need to close myClientInputStream since myParser.close() above will do it
-        if(myClientOutputStream != null) {
-        	if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG))
-                log.debug("Closing client output stream " + myClientOutputStream);
-        	try {
-        		myClientOutputStream.close();
-        	} catch (IOException ex) {
-                if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG))
-                    log.debug("Error closing client output stream" + ex);
-            }
-        }   
-        if(removeSocket) {                  
-	        // remove the "tcp:" part of the key to cleanup the ioHandler hashmap
-	        String ioHandlerKey = key.substring(4);
-	        if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG))
-	            log.debug("Closing TCP socket " + ioHandlerKey);
-	        // Issue 358 : remove socket and semaphore on close to avoid leaking
-	        sipStack.ioHandler.removeSocket(ioHandlerKey);
-	        if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
-                log.debug("Closing message Channel (key = " + key +")" + this);
-            }
-        } else {
-            if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
-                String ioHandlerKey = key.substring(4);
-                log.debug("not removing socket key from the cached map since it has already been updated by the iohandler.sendBytes " + ioHandlerKey);
+
+            log.debug("Closing socket " + key);
+            try {
+                mySock.close();
+                mySock = null;
+            } catch (IOException ex) {
+
+                log.debug("Error closing socket " + ex);
             }
         }
-        if(stopKeepAliveTask) {
-			cancelPingKeepAliveTimeoutTaskIfStarted();
-		}
+        if (myParser != null) {
+
+            log.debug("Closing my parser " + myParser);
+            myParser.close();
+        }
+        // no need to close myClientInputStream since myParser.close() above will do it
+        if (myClientOutputStream != null) {
+
+            log.debug("Closing client output stream " + myClientOutputStream);
+            try {
+                myClientOutputStream.close();
+            } catch (IOException ex) {
+
+                log.debug("Error closing client output stream" + ex);
+            }
+        }
+        if (removeSocket) {
+            // remove the "tcp:" part of the key to cleanup the ioHandler hashmap
+            String ioHandlerKey = key.substring(4);
+
+            log.debug("Closing TCP socket " + ioHandlerKey);
+            // Issue 358 : remove socket and semaphore on close to avoid leaking
+            sipStack.ioHandler.removeSocket(ioHandlerKey);
+
+            log.debug("Closing message Channel (key = " + key + ")" + this);
+
+        } else {
+
+            String ioHandlerKey = key.substring(4);
+            log.debug("not removing socket key from the cached map since it has already been updated by the iohandler.sendBytes " + ioHandlerKey);
+
+        }
+        if (stopKeepAliveTask) {
+            cancelPingKeepAliveTimeoutTaskIfStarted();
+        }
 
     }
 
@@ -218,54 +204,53 @@ public class TCPMessageChannel extends ConnectionOrientedMessageChannel {
      */
     public String getTransport() {
         return "TCP";
-    }    
+    }
 
     /**
      * Send message to whoever is connected to us. Uses the topmost via address
      * to send to.
      *
-     * @param msg
-     *            is the message to send.
+     * @param msg      is the message to send.
      * @param isClient
      */
-    protected  synchronized void sendMessage(byte[] msg, boolean isClient) throws IOException {
+    protected synchronized void sendMessage(byte[] msg, boolean isClient) throws IOException {
 
-        if ( logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
-            log.debug("sendMessage isClient  = " + isClient);
-        }
-       
+
+        log.debug("sendMessage isClient  = " + isClient);
+
+
         Socket sock = null;
         IOException problem = null;
         // try to prevent at least the worst thread safety issues by using a local variable ...
         Socket mySockLocal = mySock;
 
         try {
-        	sock = this.sipStack.ioHandler.sendBytes(this.messageProcessor.getIpAddress(),
-                this.peerAddress, this.peerPort, this.peerProtocol, msg, isClient, this);
+            sock = this.sipStack.ioHandler.sendBytes(this.messageProcessor.getIpAddress(),
+                    this.peerAddress, this.peerPort, this.peerProtocol, msg, isClient, this);
         } catch (IOException any) {
-        	problem = any;
-        	log.warn("Failed to connect " + this.peerAddress + ":" + this.peerPort +" but trying the advertised port=" + this.peerPortAdvertisedInHeaders + " if it's different than the port we just failed on");
+            problem = any;
+            log.warn("Failed to connect " + this.peerAddress + ":" + this.peerPort + " but trying the advertised port=" + this.peerPortAdvertisedInHeaders + " if it's different than the port we just failed on");
         }
-        if(sock == null) { // http://java.net/jira/browse/JSIP-362 If we couldn't connect to the host, try the advertised host and port as failsafe
-        	if(peerAddressAdvertisedInHeaders  != null && peerPortAdvertisedInHeaders > 0) { 
-                if (logger.isLoggingEnabled(LogWriter.TRACE_WARN)) {
-                    log.warn("Couldn't connect to peerAddress = " + peerAddress + " peerPort = " + peerPort
-                            + " key = " + key + " retrying on peerPortAdvertisedInHeaders "
-                            + peerPortAdvertisedInHeaders);
-                }
-        		InetAddress address = InetAddress.getByName(peerAddressAdvertisedInHeaders);
+        if (sock == null) { // http://java.net/jira/browse/JSIP-362 If we couldn't connect to the host, try the advertised host and port as failsafe
+            if (peerAddressAdvertisedInHeaders != null && peerPortAdvertisedInHeaders > 0) {
+
+                log.warn("Couldn't connect to peerAddress = " + peerAddress + " peerPort = " + peerPort
+                        + " key = " + key + " retrying on peerPortAdvertisedInHeaders "
+                        + peerPortAdvertisedInHeaders);
+
+                InetAddress address = InetAddress.getByName(peerAddressAdvertisedInHeaders);
                 sock = this.sipStack.ioHandler.sendBytes(this.messageProcessor.getIpAddress(),
-                		address, this.peerPortAdvertisedInHeaders, this.peerProtocol, msg, isClient, this);        		
-        		this.peerPort = this.peerPortAdvertisedInHeaders;
-        		this.peerAddress = address;
-        		this.key = MessageChannel.getKey(peerAddress, peerPort, "TCP");
-        		if (logger.isLoggingEnabled(LogWriter.TRACE_WARN)) {
-                    log.warn("retry suceeded to peerAddress = " + peerAddress
-                            + " peerPortAdvertisedInHeaders = " + peerPortAdvertisedInHeaders + " key = " + key);
-                }
-           } else {
-        		throw problem; // throw the original excpetion we had from the first attempt
-        	}
+                        address, this.peerPortAdvertisedInHeaders, this.peerProtocol, msg, isClient, this);
+                this.peerPort = this.peerPortAdvertisedInHeaders;
+                this.peerAddress = address;
+                this.key = MessageChannel.getKey(peerAddress, peerPort, "TCP");
+
+                log.warn("retry suceeded to peerAddress = " + peerAddress
+                        + " peerPortAdvertisedInHeaders = " + peerPortAdvertisedInHeaders + " key = " + key);
+
+            } else {
+                throw problem; // throw the original excpetion we had from the first attempt
+            }
         }
 
         // Created a new socket so close the old one and stick the new
@@ -276,28 +261,19 @@ public class TCPMessageChannel extends ConnectionOrientedMessageChannel {
         // } else
         if (sock != mySockLocal && sock != null) {
             if (mySockLocal != null) {
-       		 if(logger.isLoggingEnabled(LogWriter.TRACE_WARN)) {
-       			 log.warn(
-                    		 "Old socket different than new socket on channel " + key);
-		             logger.logStackTrace();
-		             log.warn(
-		            		 "Old socket local ip address " + mySock.getLocalSocketAddress());
-		             log.warn(
-		            		 "Old socket remote ip address " + mySock.getRemoteSocketAddress());                         
-		             log.warn(
-		            		 "New socket local ip address " + sock.getLocalSocketAddress());
-		             log.warn(
-		            		 "New socket remote ip address " + sock.getRemoteSocketAddress());
-       		 }
-       		 close(false, false);
-       	}    
-       	if(problem == null) {
+                if (log.isWarnEnabled()) {
+                    log.warn("Old socket different than new socket on channel " + key);
+                    log.warn("Old socket local ip address " + mySock.getLocalSocketAddress());
+                    log.warn("Old socket remote ip address " + mySock.getRemoteSocketAddress());
+                    log.warn("New socket local ip address " + sock.getLocalSocketAddress());
+                    log.warn("New socket remote ip address " + sock.getRemoteSocketAddress());
+                }
+                close(false, false);
+            }
+            if (problem == null) {
                 if (mySockLocal != null) {
-	        		if(logger.isLoggingEnabled(LogWriter.TRACE_WARN)) {
-	        			log.warn(
-	                		 "There was no exception for the retry mechanism so creating a new thread based on the new socket for incoming " + key);
-	        		}
-       		}
+                    log.warn("There was no exception for the retry mechanism so creating a new thread based on the new socket for incoming " + key);
+                }
                 // NOTE: need to consider refactoring the whole socket handling with respect to thread safety
                 if (mySockLocal == mySock) {
                     // still not thread safe :-( but what else to do?
@@ -309,120 +285,107 @@ public class TCPMessageChannel extends ConnectionOrientedMessageChannel {
                     thread.setName("TCPMessageChannelThread");
                     thread.start();
                 }
-       	} else {
-       		if(logger.isLoggingEnabled(LogWriter.TRACE_WARN)) {
-       			log.warn(
-       					"There was an exception for the retry mechanism so not creating a new thread based on the new socket for incoming " + key);
-       		}
-       		mySock = sock;
-       	}
-       }
+            } else {
+
+                log.warn("There was an exception for the retry mechanism so not creating a new thread based on the new socket for incoming " + key);
+
+                mySock = sock;
+            }
+        }
 
     }
 
     /**
      * Send a message to a specified address.
      *
-     * @param message
-     *            Pre-formatted message to send.
-     * @param receiverAddress
-     *            Address to send it to.
-     * @param receiverPort
-     *            Receiver port.
-     * @throws IOException
-     *             If there is a problem connecting or sending.
+     * @param message         Pre-formatted message to send.
+     * @param receiverAddress Address to send it to.
+     * @param receiverPort    Receiver port.
+     * @throws IOException If there is a problem connecting or sending.
      */
     public synchronized void sendMessage(byte message[], InetAddress receiverAddress,
-            int receiverPort, boolean retry) throws IOException {
+                                         int receiverPort, boolean retry) throws IOException {
         if (message == null || receiverAddress == null)
             throw new IllegalArgumentException("Null argument");
-        
-        if(peerPortAdvertisedInHeaders <= 0) {
-        	if(logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
-            	log.debug("receiver port = " + receiverPort + " for this channel " + this + " key " + key);
-            }        	
-        	if(receiverPort <=0) {    
-        		// if port is 0 we assume the default port for TCP
-        		this.peerPortAdvertisedInHeaders = 5060;
-        	} else {
-        		this.peerPortAdvertisedInHeaders = receiverPort;
-        	}
-        	if(logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
-            	log.debug("2.Storing peerPortAdvertisedInHeaders = " + peerPortAdvertisedInHeaders + " for this channel " + this + " key " + key);
-            }	        
+
+        if (peerPortAdvertisedInHeaders <= 0) {
+
+            log.debug("receiver port = " + receiverPort + " for this channel " + this + " key " + key);
+
+            if (receiverPort <= 0) {
+                // if port is 0 we assume the default port for TCP
+                this.peerPortAdvertisedInHeaders = 5060;
+            } else {
+                this.peerPortAdvertisedInHeaders = receiverPort;
+            }
+
+            log.debug("2.Storing peerPortAdvertisedInHeaders = " + peerPortAdvertisedInHeaders + " for this channel " + this + " key " + key);
         }
-        
+
         Socket sock = null;
         IOException problem = null;
         try {
-        	sock = this.sipStack.ioHandler.sendBytes(this.messageProcessor.getIpAddress(),
+            sock = this.sipStack.ioHandler.sendBytes(this.messageProcessor.getIpAddress(),
                     receiverAddress, receiverPort, "TCP", message, retry, this);
         } catch (IOException any) {
-        	problem = any;
-        	log.warn("Failed to connect " + this.peerAddress + ":" + receiverPort +" but trying the advertised port=" + this.peerPortAdvertisedInHeaders + " if it's different than the port we just failed on");
-        	log.error("Error is ", any);
+            problem = any;
+            log.warn("Failed to connect " + this.peerAddress + ":" + receiverPort + " but trying the advertised port=" + this.peerPortAdvertisedInHeaders + " if it's different than the port we just failed on");
+            log.error("Error is ", any);
 
         }
-        if(sock == null) { // http://java.net/jira/browse/JSIP-362 If we couldn't connect to the host, try the advertised host:port as failsafe
-        	if(peerAddressAdvertisedInHeaders  != null && peerPortAdvertisedInHeaders > 0) { 
-                if (logger.isLoggingEnabled(LogWriter.TRACE_WARN)) {
-                    log.warn("Couldn't connect to receiverAddress = " + receiverAddress
-                            + " receiverPort = " + receiverPort + " key = " + key
-                            + " retrying on peerPortAdvertisedInHeaders " + peerPortAdvertisedInHeaders);
-                }
-        		InetAddress address = InetAddress.getByName(peerAddressAdvertisedInHeaders);
+        if (sock == null) { // http://java.net/jira/browse/JSIP-362 If we couldn't connect to the host, try the advertised host:port as failsafe
+            if (peerAddressAdvertisedInHeaders != null && peerPortAdvertisedInHeaders > 0) {
+
+                log.warn("Couldn't connect to receiverAddress = " + receiverAddress
+                        + " receiverPort = " + receiverPort + " key = " + key
+                        + " retrying on peerPortAdvertisedInHeaders " + peerPortAdvertisedInHeaders);
+
+                InetAddress address = InetAddress.getByName(peerAddressAdvertisedInHeaders);
                 sock = this.sipStack.ioHandler.sendBytes(this.messageProcessor.getIpAddress(),
-                    address, this.peerPortAdvertisedInHeaders, "TCP", message, retry, this);
-        		this.peerPort = this.peerPortAdvertisedInHeaders;
-        		this.peerAddress = address;
-        		this.key = MessageChannel.getKey(peerAddress, peerPort, "TCP");
-                if (logger.isLoggingEnabled(LogWriter.TRACE_WARN)) {
-                    log.warn("retry suceeded to peerAddress = " + peerAddress
-                            + " peerPort = " + peerPort + " key = " + key);
-                }
-           } else {
-        		throw problem; // throw the original excpetion we had from the first attempt
-        	}
-        }
-      
-        if (sock != mySock && sock != null) {        	        	
-            if (mySock != null) {
-            	if(logger.isLoggingEnabled(LogWriter.TRACE_WARN)) {
-       			 	 log.warn(
-                    		 "Old socket different than new socket on channel " + key);
-		             logger.logStackTrace();
-		             log.warn(
-		            		 "Old socket local ip address " + mySock.getLocalSocketAddress());
-		             log.warn(
-		            		 "Old socket remote ip address " + mySock.getRemoteSocketAddress());                         
-		             log.warn(
-		            		 "New socket local ip address " + sock.getLocalSocketAddress());
-		             log.warn(
-		            		 "New socket remote ip address " + sock.getRemoteSocketAddress());
-       		 	}
-            	close(false, false);
-            }
-            if(problem == null) {
-            	if (mySock != null) {
-            		if(logger.isLoggingEnabled(LogWriter.TRACE_WARN)) {
-            			log.warn(
-            					"There was no exception for the retry mechanism so creating a new thread based on the new socket for incoming " + key);
-            		}
-            	}
-	            mySock = sock;
-	            this.myClientInputStream = mySock.getInputStream();
-	            this.myClientOutputStream = mySock.getOutputStream();
-	            // start a new reader on this end of the pipe.
-	            Thread mythread = new Thread(this);
-	            mythread.setDaemon(true);
-	            mythread.setName("TCPMessageChannelThread");
-	            mythread.start();
+                        address, this.peerPortAdvertisedInHeaders, "TCP", message, retry, this);
+                this.peerPort = this.peerPortAdvertisedInHeaders;
+                this.peerAddress = address;
+                this.key = MessageChannel.getKey(peerAddress, peerPort, "TCP");
+
+                log.warn("retry suceeded to peerAddress = " + peerAddress
+                        + " peerPort = " + peerPort + " key = " + key);
+
             } else {
-            	if(logger.isLoggingEnabled(LogWriter.TRACE_WARN)) {
-            		log.warn(
-            			"There was an exception for the retry mechanism so not creating a new thread based on the new socket for incoming " + key);
-            	}
-            	mySock = sock;
+                throw problem; // throw the original excpetion we had from the first attempt
+            }
+        }
+
+        if (sock != mySock && sock != null) {
+            if (mySock != null) {
+                if (log.isWarnEnabled()) {
+                    log.warn("Old socket different than new socket on channel " + key);
+
+                    log.warn("Old socket local ip address " + mySock.getLocalSocketAddress());
+                    log.warn("Old socket remote ip address " + mySock.getRemoteSocketAddress());
+                    log.warn("New socket local ip address " + sock.getLocalSocketAddress());
+                    log.warn("New socket remote ip address " + sock.getRemoteSocketAddress());
+                }
+                close(false, false);
+            }
+            if (problem == null) {
+                if (mySock != null) {
+
+                    log.warn("There was no exception for the retry mechanism so creating a new thread based on the new socket for incoming " + key);
+
+                }
+                mySock = sock;
+                this.myClientInputStream = mySock.getInputStream();
+                this.myClientOutputStream = mySock.getOutputStream();
+                // start a new reader on this end of the pipe.
+                Thread mythread = new Thread(this);
+                mythread.setDaemon(true);
+                mythread.setName("TCPMessageChannelThread");
+                mythread.start();
+            } else {
+
+                log.warn("There was an exception for the retry mechanism so not creating a new thread based on the new socket for incoming " + key);
+
+                mySock = sock;
             }
         }
 
@@ -432,69 +395,56 @@ public class TCPMessageChannel extends ConnectionOrientedMessageChannel {
      * Exception processor for exceptions detected from the parser. (This is
      * invoked by the parser when an error is detected).
      *
-     * @param sipMessage
-     *            -- the message that incurred the error.
-     * @param ex
-     *            -- parse exception detected by the parser.
-     * @param header
-     *            -- header that caused the error.
-     * @throws ParseException
-     *             Thrown if we want to reject the message.
+     * @param sipMessage -- the message that incurred the error.
+     * @param ex         -- parse exception detected by the parser.
+     * @param header     -- header that caused the error.
+     * @throws ParseException Thrown if we want to reject the message.
      */
     public void handleException(ParseException ex, SIPMessage sipMessage,
-            Class hdrClass, String header, String message)
+                                Class hdrClass, String header, String message)
             throws ParseException {
-        if (logger.isLoggingEnabled())
-            logger.logException(ex);
+
+        log.info("ParseException", ex);
+
         // Log the bad message for later reference.
         if ((hdrClass != null)
                 && (hdrClass.equals(From.class) || hdrClass.equals(To.class)
-                        || hdrClass.equals(CSeq.class)
-                        || hdrClass.equals(Via.class)
-                        || hdrClass.equals(CallID.class)
-                        || hdrClass.equals(ContentLength.class)
-                        || hdrClass.equals(RequestLine.class) || hdrClass
-                        .equals(StatusLine.class))) {
-            if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
-                log.debug(
-                        "Encountered Bad Message \n" + sipMessage.toString());
-            }
+                || hdrClass.equals(CSeq.class)
+                || hdrClass.equals(Via.class)
+                || hdrClass.equals(CallID.class)
+                || hdrClass.equals(ContentLength.class)
+                || hdrClass.equals(RequestLine.class) || hdrClass
+                .equals(StatusLine.class))) {
+
+            log.debug("Encountered Bad Message \n" + sipMessage.toString());
+
 
             // JvB: send a 400 response for requests (except ACK)
             // Currently only UDP, @todo also other transports
             String msgString = sipMessage.toString();
             if (!msgString.startsWith("SIP/") && !msgString.startsWith("ACK ")) {
-            	if(mySock != null)
-            	{
-	            	 if (logger.isLoggingEnabled(LogWriter.TRACE_ERROR)) {
-	            		 log.error("Malformed mandatory headers: closing socket! :" + mySock.toString());
-	            	 }
-	                
-	            	try
-	            	{
-	            		mySock.close();
-	            		
-	            	} catch(IOException ie)
-	            	{
-	            		if (logger.isLoggingEnabled(LogWriter.TRACE_ERROR)) {
-	            			log.error("Exception while closing socket! :" + mySock.toString() + ":" + ie.toString());
-	            		}
-	            		
-	            	}
-            	}
+                if (mySock != null) {
+                    log.error("Malformed mandatory headers: closing socket! :" + mySock.toString());
+
+                    try {
+                        mySock.close();
+
+                    } catch (IOException ie) {
+                        log.error("Exception while closing socket! :" + mySock.toString() + ":" + ie.toString());
+                    }
+                }
             }
 
             throw ex;
         } else {
             sipMessage.addUnparsed(header);
         }
-    }    
+    }
 
     /**
      * Equals predicate.
      *
-     * @param other
-     *            is the other object to compare ourselves to for equals
+     * @param other is the other object to compare ourselves to for equals
      */
 
     public boolean equals(Object other) {
@@ -508,7 +458,7 @@ public class TCPMessageChannel extends ConnectionOrientedMessageChannel {
             else
                 return true;
         }
-    }    
+    }
 
     /**
      * TCP Is not a secure protocol.

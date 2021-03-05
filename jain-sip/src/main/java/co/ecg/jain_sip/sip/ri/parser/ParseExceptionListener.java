@@ -27,6 +27,8 @@
 * Product of NIST/ITL Advanced Networking Technologies Division (ANTD)         *
 *******************************************************************************/
 package co.ecg.jain_sip.sip.ri.parser;
+import co.ecg.jain_sip.sip.ri.message.SIPMessage;
+
 import java.text.ParseException;
 
 /**

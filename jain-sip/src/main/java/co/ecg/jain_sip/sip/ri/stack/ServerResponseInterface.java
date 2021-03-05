@@ -33,6 +33,8 @@ package co.ecg.jain_sip.sip.ri.stack;
  *  methods.
  */
 
+import co.ecg.jain_sip.sip.ri.message.SIPResponse;
+
 /**
  * An interface for a genereic message processor for SIP Response messages.
  * This is implemented by the application. The stack calls the message

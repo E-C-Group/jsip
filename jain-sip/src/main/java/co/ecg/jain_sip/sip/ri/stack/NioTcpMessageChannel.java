@@ -25,10 +25,6 @@
  */
 package co.ecg.jain_sip.sip.ri.stack;
 
-import co.ecg.jain_sip.core.ri.CommonLogger;
-import co.ecg.jain_sip.core.ri.InternalErrorHandler;
-import co.ecg.jain_sip.core.ri.LogWriter;
-import co.ecg.jain_sip.core.ri.StackLogger;
 import co.ecg.jain_sip.sip.ri.header.CSeq;
 import co.ecg.jain_sip.sip.ri.header.CallID;
 import co.ecg.jain_sip.sip.ri.header.ContentLength;
@@ -39,6 +35,7 @@ import co.ecg.jain_sip.sip.ri.header.To;
 import co.ecg.jain_sip.sip.ri.header.Via;
 import co.ecg.jain_sip.sip.ri.message.SIPMessage;
 import co.ecg.jain_sip.sip.ri.parser.NioPipelineParser;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -49,425 +46,403 @@ import java.util.HashMap;
 
 import javax.net.ssl.SSLException;
 
+@Slf4j
 public class NioTcpMessageChannel extends ConnectionOrientedMessageChannel {
-	private static StackLogger logger = CommonLogger
-			.getLogger(NioTcpMessageChannel.class);
-	protected static HashMap<SocketChannel, NioTcpMessageChannel> channelMap = new HashMap<SocketChannel, NioTcpMessageChannel>();
 
-	protected SocketChannel socketChannel;
-	protected long lastActivityTimeStamp;
-	NioPipelineParser nioParser = null;
+    protected static HashMap<SocketChannel, NioTcpMessageChannel> channelMap = new HashMap<SocketChannel, NioTcpMessageChannel>();
 
-	public static NioTcpMessageChannel create(
-			NioTcpMessageProcessor nioTcpMessageProcessor,
-			SocketChannel socketChannel) throws IOException {
-		NioTcpMessageChannel retval = channelMap.get(socketChannel);
-		if (retval == null) {
-			retval = new NioTcpMessageChannel(nioTcpMessageProcessor,
-					socketChannel);
-			channelMap.put(socketChannel, retval);
-		}
-		retval.messageProcessor = nioTcpMessageProcessor;
-		retval.myClientInputStream = socketChannel.socket().getInputStream();
-		return retval;
-	}
+    protected SocketChannel socketChannel;
+    protected long lastActivityTimeStamp;
+    NioPipelineParser nioParser = null;
 
-	public static NioTcpMessageChannel getMessageChannel(SocketChannel socketChannel) {
-		return channelMap.get(socketChannel);
-	}
+    public static NioTcpMessageChannel create(
+            NioTcpMessageProcessor nioTcpMessageProcessor,
+            SocketChannel socketChannel) throws IOException {
+        NioTcpMessageChannel retval = channelMap.get(socketChannel);
+        if (retval == null) {
+            retval = new NioTcpMessageChannel(nioTcpMessageProcessor,
+                    socketChannel);
+            channelMap.put(socketChannel, retval);
+        }
+        retval.messageProcessor = nioTcpMessageProcessor;
+        retval.myClientInputStream = socketChannel.socket().getInputStream();
+        return retval;
+    }
 
-	public static void putMessageChannel(SocketChannel socketChannel,
-			NioTcpMessageChannel nioTcpMessageChannel) {
-		channelMap.put(socketChannel, nioTcpMessageChannel);
-	}
-	
-	public static void removeMessageChannel(SocketChannel socketChannel) {
-		channelMap.remove(socketChannel);
-	}
-	
-	public void readChannel() {
-		log.debug("NioTcpMessageChannel::readChannel");
-		int bufferSize = 4096;
-		byte[] msg = new byte[bufferSize];
-		this.isRunning = true;
-		try {
-			ByteBuffer byteBuffer  = ByteBuffer.wrap(msg);
-			int nbytes = this.socketChannel.read(byteBuffer);
-			byteBuffer.flip();
-			msg = new byte[byteBuffer.remaining()];
-			byteBuffer.get(msg);
-			boolean streamError = nbytes == -1;
-			nbytes = msg.length;
-			byteBuffer.clear();
-			if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
-				log.debug("Read " + nbytes + " from socketChannel");
-			}
-			
-			if(streamError) 
-				throw new IOException("End-of-stream read (-1). " +
-					"This is usually an indication we are stuck and it is better to disconnect.");
-			
-			// This prevents us from getting stuck in a selector thread spinloop when socket is constantly ready for reading but there are no bytes.
-			if(nbytes == 0) 
-				throw new IOException("The socket is giving us empty TCP packets. " +
-					"This is usually an indication we are stuck and it is better to disconnect.");
-			
-			// Otherwise just add the bytes to queue
-			
-			byte[] bytes = new byte[nbytes];
-			System.arraycopy(msg, 0, bytes, 0, nbytes);
-			addBytes(bytes);
-			lastActivityTimeStamp = System.currentTimeMillis();
+    public static NioTcpMessageChannel getMessageChannel(SocketChannel socketChannel) {
+        return channelMap.get(socketChannel);
+    }
 
-		} catch (Exception ex) { // https://java.net/jira/browse/JSIP-464 make sure to close connections on all exceptions to avoid the stack to hang
-			// Terminate the message.
-			if(ex instanceof IOException && !(ex instanceof SSLException)) {
-				try {
-					nioParser.addBytes("\r\n\r\n".getBytes("UTF-8"));
-				} catch (Exception e) {
-					// InternalErrorHandler.handleException(e);
-				}
-			}
+    public static void putMessageChannel(SocketChannel socketChannel,
+                                         NioTcpMessageChannel nioTcpMessageChannel) {
+        channelMap.put(socketChannel, nioTcpMessageChannel);
+    }
 
-			try {
-				if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
-					log.debug("IOException  closing sock " + ex + "myAddress:myport " + myAddress + ":" + myPort + ", remoteAddress:remotePort " + peerAddress + ":" + peerPort);
-				}
-				
-				close(true, false);
-				
-				
-			} catch (Exception ex1) {
-				if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG))
-					log.debug("Exception closing the socket " + ex1);
-			}
-		} 
+    public static void removeMessageChannel(SocketChannel socketChannel) {
+        channelMap.remove(socketChannel);
+    }
+
+    public void readChannel() {
+        log.debug("NioTcpMessageChannel::readChannel");
+        int bufferSize = 4096;
+        byte[] msg = new byte[bufferSize];
+        this.isRunning = true;
+        try {
+            ByteBuffer byteBuffer = ByteBuffer.wrap(msg);
+            int nbytes = this.socketChannel.read(byteBuffer);
+            byteBuffer.flip();
+            msg = new byte[byteBuffer.remaining()];
+            byteBuffer.get(msg);
+            boolean streamError = nbytes == -1;
+            nbytes = msg.length;
+            byteBuffer.clear();
+
+            log.debug("Read " + nbytes + " from socketChannel");
+
+
+            if (streamError)
+                throw new IOException("End-of-stream read (-1). " +
+                        "This is usually an indication we are stuck and it is better to disconnect.");
+
+            // This prevents us from getting stuck in a selector thread spinloop when socket is constantly ready for reading but there are no bytes.
+            if (nbytes == 0)
+                throw new IOException("The socket is giving us empty TCP packets. " +
+                        "This is usually an indication we are stuck and it is better to disconnect.");
+
+            // Otherwise just add the bytes to queue
+
+            byte[] bytes = new byte[nbytes];
+            System.arraycopy(msg, 0, bytes, 0, nbytes);
+            addBytes(bytes);
+            lastActivityTimeStamp = System.currentTimeMillis();
+
+        } catch (Exception ex) { // https://java.net/jira/browse/JSIP-464 make sure to close connections on all exceptions to avoid the stack to hang
+            // Terminate the message.
+            if (ex instanceof IOException && !(ex instanceof SSLException)) {
+                try {
+                    nioParser.addBytes("\r\n\r\n".getBytes("UTF-8"));
+                } catch (Exception e) {
+                    // InternalErrorHandler.handleException(e);
+                }
+            }
+
+            try {
+
+                log.debug("IOException  closing sock " + ex + "myAddress:myport " + myAddress + ":" + myPort + ", remoteAddress:remotePort " + peerAddress + ":" + peerPort);
+
+
+                close(true, false);
+
+
+            } catch (Exception ex1) {
+
+                log.debug("Exception closing the socket " + ex1);
+            }
+        }
 //		catch (Exception ex) {
 //			InternalErrorHandler.handleException(ex, logger);
 //		}
 
-	}
-	
-	// TLS will override here to add decryption
-	protected void addBytes(byte[] bytes) throws Exception {
-		nioParser.addBytes(bytes);
-	}
+    }
 
-	protected NioTcpMessageChannel(NioTcpMessageProcessor nioTcpMessageProcessor,
-			SocketChannel socketChannel) throws IOException {
-		super(nioTcpMessageProcessor.getSIPStack());
-		super.myClientInputStream = socketChannel.socket().getInputStream();
-		try {
-			this.peerAddress = socketChannel.socket().getInetAddress();
-			this.peerPort = socketChannel.socket().getPort();
-			this.socketChannel = socketChannel;
-			super.mySock = socketChannel.socket();
-			// messages that we write out to him.
-			nioParser = new NioPipelineParser(sipStack, this,
-					this.sipStack.getMaxMessageSize());
-			this.peerProtocol = nioTcpMessageProcessor.transport;
-			lastActivityTimeStamp = System.currentTimeMillis();
-			super.key = MessageChannel.getKey(peerAddress, peerPort, nioTcpMessageProcessor.transport);
+    // TLS will override here to add decryption
+    protected void addBytes(byte[] bytes) throws Exception {
+        nioParser.addBytes(bytes);
+    }
 
-            myAddress = nioTcpMessageProcessor.getIpAddress().getHostAddress();
-            myPort = nioTcpMessageProcessor.getPort();
-
-		} finally {
-			if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
-				log.debug("Done creating NioTcpMessageChannel " + this + " socketChannel = " +socketChannel);
-			}
-		}
-
-	}
-
-	public NioTcpMessageChannel(InetAddress inetAddress, int port,
-			SIPTransactionStack sipStack,
-			NioTcpMessageProcessor nioTcpMessageProcessor) throws IOException {
-		super(sipStack);
-		log.debug("NioTcpMessageChannel::NioTcpMessageChannel: "
-				+ inetAddress.getHostAddress() + ":" + port);
-		try {
-			messageProcessor = nioTcpMessageProcessor;
-			// Take a cached socket to the destination, if none create a new one and cache it
-			socketChannel = nioTcpMessageProcessor.nioHandler.createOrReuseSocket(
-					inetAddress, port);
-			peerAddress = socketChannel.socket().getInetAddress();
-			peerPort = socketChannel.socket().getPort();
-			super.mySock = socketChannel.socket();
-			peerProtocol = getTransport();
-			nioParser = new NioPipelineParser(sipStack, this,
-					this.sipStack.getMaxMessageSize());
-			putMessageChannel(socketChannel, this);
-			lastActivityTimeStamp = System.currentTimeMillis();
-			super.key = MessageChannel.getKey(peerAddress, peerPort, getTransport());
+    protected NioTcpMessageChannel(NioTcpMessageProcessor nioTcpMessageProcessor,
+                                   SocketChannel socketChannel) throws IOException {
+        super(nioTcpMessageProcessor.getSIPStack());
+        super.myClientInputStream = socketChannel.socket().getInputStream();
+        try {
+            this.peerAddress = socketChannel.socket().getInetAddress();
+            this.peerPort = socketChannel.socket().getPort();
+            this.socketChannel = socketChannel;
+            super.mySock = socketChannel.socket();
+            // messages that we write out to him.
+            nioParser = new NioPipelineParser(sipStack, this,
+                    this.sipStack.getMaxMessageSize());
+            this.peerProtocol = nioTcpMessageProcessor.transport;
+            lastActivityTimeStamp = System.currentTimeMillis();
+            super.key = MessageChannel.getKey(peerAddress, peerPort, nioTcpMessageProcessor.transport);
 
             myAddress = nioTcpMessageProcessor.getIpAddress().getHostAddress();
             myPort = nioTcpMessageProcessor.getPort();
 
+        } finally {
 
-		} finally {
-			if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
-				log.debug("NioTcpMessageChannel::NioTcpMessageChannel: Done creating NioTcpMessageChannel "
-						+ this + " socketChannel = " + socketChannel);
-			}
-		}
-	}
+            log.debug("Done creating NioTcpMessageChannel " + this + " socketChannel = " + socketChannel);
 
-	public SocketChannel getSocketChannel() {
-		return socketChannel;
-	}
+        }
 
-	@Override
-	protected void close(boolean removeSocket, boolean stopKeepAliveTask) {
-		try {
-			if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
-				log.debug("Closing NioTcpMessageChannel "
-						+ this + " socketChannel = " + socketChannel);
-			}
-			removeMessageChannel(socketChannel);
-			if(socketChannel != null) {
-				socketChannel.close();
-			}
-			if(nioParser != null) {
-				nioParser.close();
-			}
-			this.isRunning = false;
-			if(removeSocket) {
-				if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
-					log.debug("Removing NioTcpMessageChannel "
-							+ this + " socketChannel = " + socketChannel);
-				}
-				((NioTcpMessageProcessor) this.messageProcessor).nioHandler.removeSocket(socketChannel);
-				((ConnectionOrientedMessageProcessor) this.messageProcessor).remove(this);
-			}
-			if(stopKeepAliveTask) {
-				cancelPingKeepAliveTimeoutTaskIfStarted();
-			}
-		} catch (IOException e) {
-			log.error("Problem occured while closing", e);
-		}
+    }
 
-	}
+    public NioTcpMessageChannel(InetAddress inetAddress, int port,
+                                SIPTransactionStack sipStack,
+                                NioTcpMessageProcessor nioTcpMessageProcessor) throws IOException {
+        super(sipStack);
+        log.debug("NioTcpMessageChannel::NioTcpMessageChannel: "
+                + inetAddress.getHostAddress() + ":" + port);
+        try {
+            messageProcessor = nioTcpMessageProcessor;
+            // Take a cached socket to the destination, if none create a new one and cache it
+            socketChannel = nioTcpMessageProcessor.nioHandler.createOrReuseSocket(
+                    inetAddress, port);
+            peerAddress = socketChannel.socket().getInetAddress();
+            peerPort = socketChannel.socket().getPort();
+            super.mySock = socketChannel.socket();
+            peerProtocol = getTransport();
+            nioParser = new NioPipelineParser(sipStack, this,
+                    this.sipStack.getMaxMessageSize());
+            putMessageChannel(socketChannel, this);
+            lastActivityTimeStamp = System.currentTimeMillis();
+            super.key = MessageChannel.getKey(peerAddress, peerPort, getTransport());
 
-	/**
-	 * get the transport string.
-	 * 
-	 * @return "tcp" in this case.
-	 */
-	public String getTransport() {
-		return "TCP";
-	}
+            myAddress = nioTcpMessageProcessor.getIpAddress().getHostAddress();
+            myPort = nioTcpMessageProcessor.getPort();
 
-	/**
-	 * Send message to whoever is connected to us. Uses the topmost via address
-	 * to send to.
-	 * 
-	 * @param msg
-	 *            is the message to send.
-	 * @param isClient
-	 */
-	protected void sendMessage(byte[] msg, boolean isClient) throws IOException {
 
-		if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
-			log.debug("sendMessage isClient  = " + isClient + " this = " + this);
-		}
-		lastActivityTimeStamp = System.currentTimeMillis();
-		
-		NIOHandler nioHandler = ((NioTcpMessageProcessor) messageProcessor).nioHandler;
-		if(this.socketChannel != null && this.socketChannel.isConnected() && this.socketChannel.isOpen()) {
-			nioHandler.putSocket(NIOHandler.makeKey(this.peerAddress, this.peerPort), this.socketChannel);
-		}
-		sendTCPMessage(msg, this.peerAddress, this.peerPort, isClient);
-	}
-	
-	/**
-	 * Send a message to a specified address.
-	 * 
-	 * @param message
-	 *            Pre-formatted message to send.
-	 * @param receiverAddress
-	 *            Address to send it to.
-	 * @param receiverPort
-	 *            Receiver port.
-	 * @throws IOException
-	 *             If there is a problem connecting or sending.
-	 */
-	public void sendMessage(byte message[], InetAddress receiverAddress,
-			int receiverPort, boolean retry) throws IOException {
-		sendTCPMessage(message, receiverAddress, receiverPort, retry);
-	}
-	/**
-	 * Send a message to a specified address.
-	 * 
-	 * @param message
-	 *            Pre-formatted message to send.
-	 * @param receiverAddress
-	 *            Address to send it to.
-	 * @param receiverPort
-	 *            Receiver port.
-	 * @throws IOException
-	 *             If there is a problem connecting or sending.
-	 */
-	public void sendTCPMessage(byte message[], InetAddress receiverAddress,
-			int receiverPort, boolean retry) throws IOException {
-		if (message == null || receiverAddress == null) {
-			log.error("receiverAddress = " + receiverAddress);
-			throw new IllegalArgumentException("Null argument");
-		}
-		lastActivityTimeStamp = System.currentTimeMillis();
+        } finally {
 
-		if (peerPortAdvertisedInHeaders <= 0) {
-			if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
-				log.debug("receiver port = " + receiverPort
-						+ " for this channel " + this + " key " + key);
-			}
-			if (receiverPort <= 0) {
-				// if port is 0 we assume the default port for TCP
-				this.peerPortAdvertisedInHeaders = 5060;
-			} else {
-				this.peerPortAdvertisedInHeaders = receiverPort;
-			}
-			if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
-				log.debug("2.Storing peerPortAdvertisedInHeaders = "
-						+ peerPortAdvertisedInHeaders + " for this channel "
-						+ this + " key " + key);
-			}
-		}
-		NIOHandler nioHandler = ((NioTcpMessageProcessor) messageProcessor).nioHandler;
-		
-		SocketChannel sock = nioHandler.sendBytes(this.messageProcessor
-					.getIpAddress(), receiverAddress, receiverPort, "TCP",
-					message, retry, this);
+            log.debug("NioTcpMessageChannel::NioTcpMessageChannel: Done creating NioTcpMessageChannel "
+                    + this + " socketChannel = " + socketChannel);
 
-		if (sock != socketChannel && sock != null) {
-			if (socketChannel != null) {
-				if (logger.isLoggingEnabled(LogWriter.TRACE_WARN)) {
-					log.warn("[2] Old socket different than new socket on channel "
-									+ key + socketChannel + " " + sock);
-					logger.logStackTrace();
-					log.warn("Old socket local ip address "
-							+ socketChannel.socket().getLocalSocketAddress());
-					log.warn("Old socket remote ip address "
-							+ socketChannel.socket().getRemoteSocketAddress());
-					log.warn("New socket local ip address "
-							+ sock.socket().getLocalSocketAddress());
-					log.warn("New socket remote ip address "
-							+ sock.socket().getRemoteSocketAddress());
-				}
-				close(false, false); // we can call socketChannel.close() directly but we better use the inherited method
-				
-				socketChannel = sock;
-				putMessageChannel(socketChannel, this);
-				
-				onNewSocket(message);
-			}
-			
-			if (socketChannel != null) {
-				if (logger.isLoggingEnabled(LogWriter.TRACE_WARN)) {
-					log.warn("There was no exception for the retry mechanism so we keep going "
-							+ key);
-				}
-			}
-			socketChannel = sock;
-		}
+        }
+    }
 
-	}
+    public SocketChannel getSocketChannel() {
+        return socketChannel;
+    }
 
-	public void onNewSocket(byte[] message) {
+    @Override
+    protected void close(boolean removeSocket, boolean stopKeepAliveTask) {
+        try {
 
-	}
-	
+            log.debug("Closing NioTcpMessageChannel "
+                    + this + " socketChannel = " + socketChannel);
 
-	/**
-	 * Exception processor for exceptions detected from the parser. (This is
-	 * invoked by the parser when an error is detected).
-	 * 
-	 * @param sipMessage
-	 *            -- the message that incurred the error.
-	 * @param ex
-	 *            -- parse exception detected by the parser.
-	 * @param header
-	 *            -- header that caused the error.
-	 * @throws ParseException
-	 *             Thrown if we want to reject the message.
-	 */
-	public void handleException(ParseException ex, SIPMessage sipMessage,
-			Class hdrClass, String header, String message)
-			throws ParseException {
-		if (logger.isLoggingEnabled())
-			logger.logException(ex);
-		// Log the bad message for later reference.
-		if ((hdrClass != null)
-				&& (hdrClass.equals(From.class) || hdrClass.equals(To.class)
-						|| hdrClass.equals(CSeq.class)
-						|| hdrClass.equals(Via.class)
-						|| hdrClass.equals(CallID.class)
-						|| hdrClass.equals(ContentLength.class)
-						|| hdrClass.equals(RequestLine.class) || hdrClass
-						.equals(StatusLine.class))) {
-			if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
-				log.debug("Encountered Bad Message \n"
-						+ sipMessage.toString());
-			}
+            removeMessageChannel(socketChannel);
+            if (socketChannel != null) {
+                socketChannel.close();
+            }
+            if (nioParser != null) {
+                nioParser.close();
+            }
+            this.isRunning = false;
+            if (removeSocket) {
 
-			// JvB: send a 400 response for requests (except ACK)
-			// Currently only UDP, @todo also other transports
-			String msgString = sipMessage.toString();
-			if (!msgString.startsWith("SIP/") && !msgString.startsWith("ACK ")) {
-				if (socketChannel != null) {
-					if (logger.isLoggingEnabled(LogWriter.TRACE_ERROR)) {
-						log.error("Malformed mandatory headers: closing socket! :"
-										+ socketChannel.toString());
-					}
+                log.debug("Removing NioTcpMessageChannel "
+                        + this + " socketChannel = " + socketChannel);
 
-					try {
-						socketChannel.close();
+                ((NioTcpMessageProcessor) this.messageProcessor).nioHandler.removeSocket(socketChannel);
+                ((ConnectionOrientedMessageProcessor) this.messageProcessor).remove(this);
+            }
+            if (stopKeepAliveTask) {
+                cancelPingKeepAliveTimeoutTaskIfStarted();
+            }
+        } catch (IOException e) {
+            log.error("Problem occured while closing", e);
+        }
 
-					} catch (IOException ie) {
-						if (logger.isLoggingEnabled(LogWriter.TRACE_ERROR)) {
-							log.error("Exception while closing socket! :"
-									+ socketChannel.toString() + ":" + ie.toString());
-						}
+    }
 
-					}
-				}
-			}
+    /**
+     * get the transport string.
+     *
+     * @return "tcp" in this case.
+     */
+    public String getTransport() {
+        return "TCP";
+    }
 
-			throw ex;
-		} else {
-			sipMessage.addUnparsed(header);
-		}
-	}
+    /**
+     * Send message to whoever is connected to us. Uses the topmost via address
+     * to send to.
+     *
+     * @param msg      is the message to send.
+     * @param isClient
+     */
+    protected void sendMessage(byte[] msg, boolean isClient) throws IOException {
+        log.debug("sendMessage isClient  = " + isClient + " this = " + this);
 
-	/**
-	 * Equals predicate.
-	 * 
-	 * @param other
-	 *            is the other object to compare ourselves to for equals
-	 */
+        lastActivityTimeStamp = System.currentTimeMillis();
 
-	public boolean equals(Object other) {
+        NIOHandler nioHandler = ((NioTcpMessageProcessor) messageProcessor).nioHandler;
+        if (this.socketChannel != null && this.socketChannel.isConnected() && this.socketChannel.isOpen()) {
+            nioHandler.putSocket(NIOHandler.makeKey(this.peerAddress, this.peerPort), this.socketChannel);
+        }
+        sendTCPMessage(msg, this.peerAddress, this.peerPort, isClient);
+    }
 
-		if (!this.getClass().equals(other.getClass()))
-			return false;
-		else {
-			NioTcpMessageChannel that = (NioTcpMessageChannel) other;
-			if (this.socketChannel != that.socketChannel)
-				return false;
-			else
-				return true;
-		}
-	}
+    /**
+     * Send a message to a specified address.
+     *
+     * @param message         Pre-formatted message to send.
+     * @param receiverAddress Address to send it to.
+     * @param receiverPort    Receiver port.
+     * @throws IOException If there is a problem connecting or sending.
+     */
+    public void sendMessage(byte message[], InetAddress receiverAddress,
+                            int receiverPort, boolean retry) throws IOException {
+        sendTCPMessage(message, receiverAddress, receiverPort, retry);
+    }
 
-	/**
-	 * TCP Is not a secure protocol.
-	 */
-	public boolean isSecure() {
-		return false;
-	}
-	
-	public long getLastActivityTimestamp() {
-		return lastActivityTimeStamp;
-	}
+    /**
+     * Send a message to a specified address.
+     *
+     * @param message         Pre-formatted message to send.
+     * @param receiverAddress Address to send it to.
+     * @param receiverPort    Receiver port.
+     * @throws IOException If there is a problem connecting or sending.
+     */
+    public void sendTCPMessage(byte message[], InetAddress receiverAddress,
+                               int receiverPort, boolean retry) throws IOException {
+        if (message == null || receiverAddress == null) {
+            log.error("receiverAddress = " + receiverAddress);
+            throw new IllegalArgumentException("Null argument");
+        }
+        lastActivityTimeStamp = System.currentTimeMillis();
+
+        if (peerPortAdvertisedInHeaders <= 0) {
+
+            log.debug("receiver port = " + receiverPort
+                    + " for this channel " + this + " key " + key);
+
+            if (receiverPort <= 0) {
+                // if port is 0 we assume the default port for TCP
+                this.peerPortAdvertisedInHeaders = 5060;
+            } else {
+                this.peerPortAdvertisedInHeaders = receiverPort;
+            }
+
+            log.debug("2.Storing peerPortAdvertisedInHeaders = "
+                    + peerPortAdvertisedInHeaders + " for this channel "
+                    + this + " key " + key);
+
+        }
+        NIOHandler nioHandler = ((NioTcpMessageProcessor) messageProcessor).nioHandler;
+
+        SocketChannel sock = nioHandler.sendBytes(this.messageProcessor
+                        .getIpAddress(), receiverAddress, receiverPort, "TCP",
+                message, retry, this);
+
+        if (sock != socketChannel && sock != null) {
+            if (socketChannel != null) {
+                if (log.isWarnEnabled()) {
+                    log.warn("[2] Old socket different than new socket on channel "
+                            + key + socketChannel + " " + sock);
+
+                    log.warn("Old socket local ip address "
+                            + socketChannel.socket().getLocalSocketAddress());
+                    log.warn("Old socket remote ip address "
+                            + socketChannel.socket().getRemoteSocketAddress());
+                    log.warn("New socket local ip address "
+                            + sock.socket().getLocalSocketAddress());
+                    log.warn("New socket remote ip address "
+                            + sock.socket().getRemoteSocketAddress());
+                }
+                close(false, false); // we can call socketChannel.close() directly but we better use the inherited method
+
+                socketChannel = sock;
+                putMessageChannel(socketChannel, this);
+
+                onNewSocket(message);
+            }
+
+            if (socketChannel != null) {
+                log.warn("There was no exception for the retry mechanism so we keep going "
+                        + key);
+            }
+
+            socketChannel = sock;
+        }
+
+    }
+
+    public void onNewSocket(byte[] message) {
+
+    }
+
+
+    /**
+     * Exception processor for exceptions detected from the parser. (This is
+     * invoked by the parser when an error is detected).
+     *
+     * @param sipMessage -- the message that incurred the error.
+     * @param ex         -- parse exception detected by the parser.
+     * @param header     -- header that caused the error.
+     * @throws ParseException Thrown if we want to reject the message.
+     */
+    public void handleException(ParseException ex, SIPMessage sipMessage,
+                                Class hdrClass, String header, String message)
+            throws ParseException {
+
+        log.info("ParseException", ex);
+        // Log the bad message for later reference.
+        if ((hdrClass != null)
+                && (hdrClass.equals(From.class) || hdrClass.equals(To.class)
+                || hdrClass.equals(CSeq.class)
+                || hdrClass.equals(Via.class)
+                || hdrClass.equals(CallID.class)
+                || hdrClass.equals(ContentLength.class)
+                || hdrClass.equals(RequestLine.class) || hdrClass
+                .equals(StatusLine.class))) {
+
+            log.debug("Encountered Bad Message \n"
+                    + sipMessage.toString());
+
+
+            // JvB: send a 400 response for requests (except ACK)
+            // Currently only UDP, @todo also other transports
+            String msgString = sipMessage.toString();
+            if (!msgString.startsWith("SIP/") && !msgString.startsWith("ACK ")) {
+                if (socketChannel != null) {
+                    log.error("Malformed mandatory headers: closing socket! :"
+                            + socketChannel.toString());
+
+                    try {
+                        socketChannel.close();
+                    } catch (IOException ie) {
+                        log.error("Exception while closing socket! :"
+                                + socketChannel.toString() + ":" + ie.toString());
+                    }
+                }
+            }
+
+            throw ex;
+        } else {
+            sipMessage.addUnparsed(header);
+        }
+    }
+
+    /**
+     * Equals predicate.
+     *
+     * @param other is the other object to compare ourselves to for equals
+     */
+
+    public boolean equals(Object other) {
+
+        if (!this.getClass().equals(other.getClass()))
+            return false;
+        else {
+            NioTcpMessageChannel that = (NioTcpMessageChannel) other;
+            if (this.socketChannel != that.socketChannel)
+                return false;
+            else
+                return true;
+        }
+    }
+
+    /**
+     * TCP Is not a secure protocol.
+     */
+    public boolean isSecure() {
+        return false;
+    }
+
+    public long getLastActivityTimestamp() {
+        return lastActivityTimeStamp;
+    }
 
 }

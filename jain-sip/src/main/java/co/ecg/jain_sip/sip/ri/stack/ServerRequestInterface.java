@@ -28,6 +28,8 @@
 *******************************************************************************/
 package co.ecg.jain_sip.sip.ri.stack;
 
+import co.ecg.jain_sip.sip.ri.message.SIPRequest;
+
 /**
  * An interface for a genereic message processor for SIP Request messages.
  * This is implemented by the application. The stack calls the message

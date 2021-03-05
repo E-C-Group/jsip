@@ -1,13 +1,13 @@
 /*
- * Conditions Of Use 
- * 
+ * Conditions Of Use
+ *
  * This software was developed by employees of the National Institute of
  * Standards and Technology (NIST), an agency of the Federal Government.
  * Pursuant to title 15 Untied States Code Section 105, works of NIST
  * employees are not subject to copyright protection in the United States
  * and are considered to be in the public domain.  As a result, a formal
  * license is not needed to use the software.
- * 
+ *
  * This software is provided by NIST as a service and is expressly
  * provided "AS IS."  NIST MAKES NO WARRANTY OF ANY KIND, EXPRESS, IMPLIED
  * OR STATUTORY, INCLUDING, WITHOUT LIMITATION, THE IMPLIED WARRANTY OF
@@ -16,23 +16,23 @@
  * regarding the use of the software or the results thereof, including but
  * not limited to the correctness, accuracy, reliability or usefulness of
  * the software.
- * 
+ *
  * Permission to use this software is contingent upon your acceptance
  * of the terms of this agreement
- *  
+ *
  * .
- * 
+ *
  */
 /******************************************************************************
  * Product of NIST/ITL Advanced Networking Technologies Division (ANTD).      *
  ******************************************************************************/
 package co.ecg.jain_sip.sip.ri.stack;
 
-import co.ecg.jain_sip.core.ri.CommonLogger;
+
 import co.ecg.jain_sip.core.ri.HostPort;
 import co.ecg.jain_sip.core.ri.InternalErrorHandler;
-import co.ecg.jain_sip.core.ri.LogWriter;
-import co.ecg.jain_sip.core.ri.StackLogger;
+
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -47,32 +47,28 @@ import java.util.Iterator;
  * suggested that a means to limit the number of simultaneous active connections should be added.
  * Mike Andrews suggested that the thread be accessible so as to implement clean stop using
  * Thread.join(). Roger M. Persson contributed a bug fix for cleanup on stop().
- * 
+ *
  */
 
 /**
  * Sit in a loop waiting for incoming tcp connections and start a new thread to handle each new
  * connection. This is the active object that creates new TCP MessageChannels (one for each new
  * accept socket).
- * 
- * @version 1.2 $Revision: 1.35 $ $Date: 2010-12-02 22:04:13 $
- * 
+ *
  * @author M. Ranganathan <br/>
- * 
- * 
+ * @version 1.2 $Revision: 1.35 $ $Date: 2010-12-02 22:04:13 $
  */
+@Slf4j
 public class TCPMessageProcessor extends ConnectionOrientedMessageProcessor implements Runnable {
-	
-	private static StackLogger logger = CommonLogger.getLogger(TCPMessageProcessor.class);
 
     /**
      * Constructor.
-     * 
+     *
      * @param sipStack SIPStack structure.
-     * @param port port where this message processor listens.
+     * @param port     port where this message processor listens.
      */
     protected TCPMessageProcessor(InetAddress ipAddress, SIPTransactionStack sipStack, int port) {
-        super(ipAddress, port, "tcp",sipStack);
+        super(ipAddress, port, "tcp", sipStack);
     }
 
     /**
@@ -127,22 +123,21 @@ public class TCPMessageProcessor extends ConnectionOrientedMessageProcessor impl
                     newsock.setTcpNoDelay(true);
                 }
 
-                if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
-                    log.debug("Accepting new connection!");
-                }
+
+                log.debug("Accepting new connection!");
+
                 // Note that for an incoming message channel, the
                 // thread is already running
 
                 TCPMessageChannel newChannel = new TCPMessageChannel(newsock, sipStack, this, "TCPMessageChannelThread-" + nConnections);
-                if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG))
-                    log.debug(Thread.currentThread() + " adding incoming channel " + newChannel.getKey() + " for processor " + getIpAddress()+ ":" + getPort() + "/" + getTransport());
+
+                log.debug(Thread.currentThread() + " adding incoming channel " + newChannel.getKey() + " for processor " + getIpAddress() + ":" + getPort() + "/" + getTransport());
                 incomingMessageChannels.put(newChannel.getKey(), newChannel);
             } catch (SocketException ex) {
                 this.isRunning = false;
             } catch (IOException ex) {
                 // Problem accepting connection.
-                if (logger.isLoggingEnabled())
-                    logger.logException(ex);
+                log.info("IOException", ex);
                 continue;
             } catch (Exception ex) {
                 InternalErrorHandler.handleException(ex);
@@ -152,7 +147,7 @@ public class TCPMessageProcessor extends ConnectionOrientedMessageProcessor impl
 
     /**
      * Return the transport string.
-     * 
+     *
      * @return the transport string
      */
     public String getTransport() {
@@ -166,29 +161,29 @@ public class TCPMessageProcessor extends ConnectionOrientedMessageProcessor impl
         isRunning = false;
         // this.listeningPoint = null;
         try {
-        	if(sock == null) {
-        		log.debug("Socket was null, perhaps not started properly");
-        	} else {
-        		sock.close();
-        	}
+            if (sock == null) {
+                log.debug("Socket was null, perhaps not started properly");
+            } else {
+                sock.close();
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
 
         Collection en = messageChannels.values();
-        for (Iterator it = en.iterator(); it.hasNext();) {
+        for (Iterator it = en.iterator(); it.hasNext(); ) {
             TCPMessageChannel next = (TCPMessageChannel) it.next();
             next.close();
         }
         // RRPN: fix
         for (Iterator incomingMCIterator = incomingMessageChannels.values().iterator(); incomingMCIterator
-                .hasNext();) {
+                .hasNext(); ) {
             TCPMessageChannel next = (TCPMessageChannel) incomingMCIterator.next();
             next.close();
         }
 
         this.notify();
-    }    
+    }
 
     public synchronized MessageChannel createMessageChannel(HostPort targetHostPort)
             throws IOException {
@@ -200,13 +195,13 @@ public class TCPMessageProcessor extends ConnectionOrientedMessageProcessor impl
                     targetHostPort.getPort(), sipStack, this);
             this.messageChannels.put(key, retval);
             retval.isCached = true;
-            if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
-                log.debug("key " + key);
-                log.debug("Creating " + retval);
-            }
+
+            log.debug("key " + key);
+            log.debug("Creating " + retval);
+
             return retval;
         }
-    }    
+    }
 
     public synchronized MessageChannel createMessageChannel(InetAddress host, int port)
             throws IOException {
@@ -218,10 +213,10 @@ public class TCPMessageProcessor extends ConnectionOrientedMessageProcessor impl
                 TCPMessageChannel retval = new TCPMessageChannel(host, port, sipStack, this);
                 this.messageChannels.put(key, retval);
                 retval.isCached = true;
-                if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
-                    log.debug("key " + key);
-                    log.debug("Creating " + retval);
-                }
+
+                log.debug("key " + key);
+                log.debug("Creating " + retval);
+
                 return retval;
             }
         } catch (UnknownHostException ex) {

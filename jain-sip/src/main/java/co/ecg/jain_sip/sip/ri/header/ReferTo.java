@@ -30,6 +30,9 @@
 
 package co.ecg.jain_sip.sip.ri.header;
 
+import co.ecg.jain_sip.sip.header.ReferToHeader;
+import co.ecg.jain_sip.sip.ri.address.AddressImpl;
+
 /**
  * ReferTo SIP Header.
  *
@@ -43,7 +46,7 @@ package co.ecg.jain_sip.sip.ri.header;
  */
 public final class ReferTo
     extends AddressParametersHeader
-    implements javax.sip.header.ReferToHeader {
+    implements ReferToHeader {
 
     /**
      * Comment for <code>serialVersionUID</code>

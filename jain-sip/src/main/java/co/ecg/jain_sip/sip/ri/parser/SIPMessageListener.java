@@ -28,6 +28,8 @@
 *******************************************************************************/
 package co.ecg.jain_sip.sip.ri.parser;
 
+import co.ecg.jain_sip.sip.ri.message.SIPMessage;
+
 /**
  * Interface  that provides methods for processing good
  * and bad messages for the PipelinedMessageParser.
