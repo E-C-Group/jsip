@@ -193,8 +193,7 @@ public class ServerLog implements ServerLogger {
                 if (auxInfo != null) {
 
                     if (sipStack.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
-                        stackLogger
-                                .logDebug("Here are the stack configuration properties \n"
+                        log.debug("Here are the stack configuration properties \n"
                                         + "javax.sip.IP_ADDRESS= "
                                         + configurationProperties
                                                 .getProperty("javax.sip.IP_ADDRESS")

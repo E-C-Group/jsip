@@ -25,6 +25,11 @@
 */
 package co.ecg.jain_sip.sdp.parser;
 
+import co.ecg.jain_sip.sdp.fields.Email;
+import co.ecg.jain_sip.sdp.fields.EmailAddress;
+import co.ecg.jain_sip.sdp.fields.EmailField;
+import co.ecg.jain_sip.sdp.fields.SDPField;
+
 import java.text.ParseException;
 
 /**

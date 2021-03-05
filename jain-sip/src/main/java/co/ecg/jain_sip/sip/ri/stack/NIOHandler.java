@@ -348,8 +348,7 @@ public class NIOHandler {
      */
     public void closeAll() {
         if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG))
-            logger
-                    .logDebug(
+            log.debug(
                             "Closing " + socketTable.size()
                                     + " sockets from IOHandler");
         

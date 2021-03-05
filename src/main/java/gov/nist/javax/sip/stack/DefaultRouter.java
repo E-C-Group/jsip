@@ -119,8 +119,7 @@ public class DefaultRouter implements Router {
                         .resolveAddress((Hop) (new HopImpl(defaultRoute)));
             } catch (IllegalArgumentException ex) {
                 // The outbound proxy is optional. If specified it should be host:port/transport.
-                logger
-                        .logError(
+                log.error(
                                 "Invalid default route specification - need host:port/transport");
                 throw ex;
             }
@@ -202,14 +201,12 @@ public class DefaultRouter implements Router {
 
                     fixStrictRouting(sipRequest);
                     if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG))
-                        logger
-                                .logDebug("Route post processing fixed strict routing");
+                        log.debug("Route post processing fixed strict routing");
                 }
 
                 Hop hop = createHop(sipUri,request);
                 if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG))
-                    logger
-                            .logDebug("NextHop based on Route:" + hop);
+                    log.debug("NextHop based on Route:" + hop);
                 return hop;
             } else {
                 throw new SipException("First Route not a SIP URI");
@@ -219,8 +216,7 @@ public class DefaultRouter implements Router {
                 && ((SipURI) requestURI).getMAddrParam() != null) {
             Hop hop = createHop((SipURI) requestURI,request);
             if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG))
-                logger
-                        .logDebug("Using request URI maddr to route the request = "
+                log.debug("Using request URI maddr to route the request = "
                                 + hop.toString());
 
             // JvB: don't remove it!
@@ -230,8 +226,7 @@ public class DefaultRouter implements Router {
 
         } else if (defaultRoute != null) {
             if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG))
-                logger
-                        .logDebug("Using outbound proxy to route the request = "
+                log.debug("Using outbound proxy to route the request = "
                                 + defaultRoute.toString());
             return defaultRoute;
         } else if (requestURI.isSipURI()) {
@@ -240,8 +235,7 @@ public class DefaultRouter implements Router {
                 log.debug("Used request-URI for nextHop = "
                         + hop.toString());
             else if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
-                logger
-                        .logDebug("returning null hop -- loop detected");
+                log.debug("returning null hop -- loop detected");
             }
             return hop;
 

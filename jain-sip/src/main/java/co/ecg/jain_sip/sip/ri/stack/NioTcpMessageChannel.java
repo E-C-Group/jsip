@@ -342,8 +342,7 @@ public class NioTcpMessageChannel extends ConnectionOrientedMessageChannel {
 		if (sock != socketChannel && sock != null) {
 			if (socketChannel != null) {
 				if (logger.isLoggingEnabled(LogWriter.TRACE_WARN)) {
-					logger
-							.logWarning("[2] Old socket different than new socket on channel "
+					log.warn("[2] Old socket different than new socket on channel "
 									+ key + socketChannel + " " + sock);
 					logger.logStackTrace();
 					log.warn("Old socket local ip address "
@@ -365,8 +364,7 @@ public class NioTcpMessageChannel extends ConnectionOrientedMessageChannel {
 			
 			if (socketChannel != null) {
 				if (logger.isLoggingEnabled(LogWriter.TRACE_WARN)) {
-					logger
-					.logWarning("There was no exception for the retry mechanism so we keep going "
+					log.warn("There was no exception for the retry mechanism so we keep going "
 							+ key);
 				}
 			}
@@ -418,8 +416,7 @@ public class NioTcpMessageChannel extends ConnectionOrientedMessageChannel {
 			if (!msgString.startsWith("SIP/") && !msgString.startsWith("ACK ")) {
 				if (socketChannel != null) {
 					if (logger.isLoggingEnabled(LogWriter.TRACE_ERROR)) {
-						logger
-								.logError("Malformed mandatory headers: closing socket! :"
+						log.error("Malformed mandatory headers: closing socket! :"
 										+ socketChannel.toString());
 					}
 

@@ -190,8 +190,7 @@ public class EventScanner implements Runnable {
                                 sipStack.isNon2XXAckPassedToListener())) {
 
                         if (logger.isLoggingEnabled(LogLevels.TRACE_DEBUG))
-                            logger
-                                    .logDebug(
+                            log.debug(
                                             "Detected broken client sending ACK with same branch! Passing...");
                     } else {
                         if (logger.isLoggingEnabled(LogLevels.TRACE_DEBUG))
@@ -219,8 +218,7 @@ public class EventScanner implements Runnable {
                 try {
 
                     if (logger.isLoggingEnabled(LogLevels.TRACE_DEBUG)) {
-                        logger
-                                .logDebug(
+                        log.debug(
                                         "Calling listener "
                                                 + sipRequest.getFirstLine());
                         log.debug(
@@ -429,8 +427,7 @@ public class EventScanner implements Runnable {
             } catch (AbstractMethodError ame) {
                 // JvB: for backwards compatibility, accept this
             	if (logger.isLoggingEnabled())
-            		logger
-                        .logWarning(
+            		log.warn(
                                 "Unable to call sipListener.processTransactionTerminated");
             } catch (Exception ex) {
                 logger.logException(ex);

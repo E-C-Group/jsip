@@ -223,7 +223,7 @@ public class IOHandler {
             sslsock.startHandshake();
             channel.setHandshakeCompleted(true);
             if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
-                this.log.debug(
+                log.debug(
                         "Handshake passed");
             }
 
@@ -238,7 +238,7 @@ public class IOHandler {
             }
 
             if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
-                this.log.debug(
+                log.debug(
                         "TLS Security policy passed");
             }
 
@@ -429,7 +429,7 @@ public class IOHandler {
                         sslsock.startHandshake();
                         ((TLSMessageChannel)messageChannel).setHandshakeCompleted(true);
                         if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
-                            this.log.debug(
+                            log.debug(
                                     "Handshake passed");
                         }
                         // allow application to enforce policy by validating the
@@ -446,7 +446,7 @@ public class IOHandler {
                         }
 
                         if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
-                            this.log.debug(
+                            log.debug(
                                     "TLS Security policy passed");
                         }
                         OutputStream outputStream = clientSock
@@ -555,8 +555,7 @@ public class IOHandler {
      */
     public void closeAll() {
         if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG))
-            logger
-                    .logDebug(
+            log.debug(
                             "Closing " + socketTable.size()
                                     + " sockets from IOHandler");
         for (Enumeration<Socket> values = socketTable.elements(); values

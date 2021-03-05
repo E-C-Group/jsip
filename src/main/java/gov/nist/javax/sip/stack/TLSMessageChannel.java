@@ -465,8 +465,7 @@ public class TLSMessageChannel extends ConnectionOrientedMessageChannel {
                     }
                 } else {
                     if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
-                        logger
-                                .logDebug(
+                        log.debug(
                                         "Could not formulate automatic 400 Bad Request");
                     }
                 }

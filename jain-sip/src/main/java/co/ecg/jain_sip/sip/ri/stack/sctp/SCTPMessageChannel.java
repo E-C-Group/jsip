@@ -274,8 +274,7 @@ final class SCTPMessageChannel extends MessageChannel
             // Drop it if there is no request returned
             if (sipServerRequest == null) {
                 if (logger.isLoggingEnabled()) {
-                    logger
-                            .logWarning("Null request interface returned -- dropping request");
+                    log.warn("Null request interface returned -- dropping request");
                 }
 
 
@@ -309,8 +308,7 @@ final class SCTPMessageChannel extends MessageChannel
                 sipResponse.checkHeaders();
             } catch (ParseException ex) {
                 if (logger.isLoggingEnabled())
-                    logger
-                            .logError("Dropping Badly formatted response message >>> "
+                    log.error("Dropping Badly formatted response message >>> "
                                     + sipResponse);
                 return;
             }
@@ -322,8 +320,7 @@ final class SCTPMessageChannel extends MessageChannel
                             && !((SIPClientTransaction) sipServerResponse)
                                     .checkFromTag(sipResponse)) {
                         if (logger.isLoggingEnabled())
-                            logger
-                                    .logError("Dropping response message with invalid tag >>> "
+                            log.error("Dropping response message with invalid tag >>> "
                                             + sipResponse);
                         return;
                     }

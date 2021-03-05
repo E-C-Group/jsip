@@ -256,7 +256,7 @@ public abstract class MessageChannel {
             throw ioe;
         } catch (Exception ex) {
             if (this.logger.isLoggingEnabled(ServerLogger.TRACE_ERROR)) {
-                this.log.error("Error self routing message cause by: ", ex);
+                log.error("Error self routing message cause by: ", ex);
             }
             // TODO: When moving to Java 6, use the IOExcpetion(message, exception) constructor
             throw new IOException("Error self routing message");

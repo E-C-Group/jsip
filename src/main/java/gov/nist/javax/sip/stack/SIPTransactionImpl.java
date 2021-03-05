@@ -335,8 +335,7 @@ public abstract class SIPTransactionImpl implements SIPTransaction {
         if (this.isReliable()) {            
                 encapsulatedChannel.useCount++;
                 if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG))
-                    logger
-                            .logDebug("use count for encapsulated channel"
+                    log.debug("use count for encapsulated channel"
                                     + this
                                     + " "
                                     + encapsulatedChannel.useCount );

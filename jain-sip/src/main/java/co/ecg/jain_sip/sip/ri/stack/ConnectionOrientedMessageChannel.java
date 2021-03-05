@@ -188,8 +188,7 @@ public abstract class ConnectionOrientedMessageChannel extends MessageChannel im
                         } catch (Exception ex) {
                             if (logger
                                     .isLoggingEnabled(ServerLogger.TRACE_ERROR)) {
-                                logger
-                                        .logError(
+                                log.error(
                                                 "Error self routing message cause by: ",
                                                 ex);
                             }
@@ -474,8 +473,7 @@ public abstract class ConnectionOrientedMessageChannel extends MessageChannel im
                 			// IGNore
                 		}
                 		if (logger.isLoggingEnabled())
-                			logger
-                			.logWarning(
+                			log.warn(
                 					"Dropping message -- could not acquire semaphore");
                 	}
                 }
@@ -535,8 +533,7 @@ public abstract class ConnectionOrientedMessageChannel extends MessageChannel im
                         }
                     }
                 } else {
-                	logger
-                    	.logWarning(
+                	log.warn(
                             "Application is blocked -- could not acquire semaphore -- dropping response");
                 }
             }

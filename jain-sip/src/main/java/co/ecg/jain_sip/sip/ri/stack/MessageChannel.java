@@ -33,9 +33,17 @@ import co.ecg.jain_sip.core.ri.Host;
 import co.ecg.jain_sip.core.ri.HostPort;
 import co.ecg.jain_sip.core.ri.InternalErrorHandler;
 import co.ecg.jain_sip.sip.address.Hop;
+import co.ecg.jain_sip.sip.header.*;
+import co.ecg.jain_sip.sip.ri.LogRecord;
+import co.ecg.jain_sip.sip.ri.address.AddressImpl;
+import co.ecg.jain_sip.sip.ri.header.CallID;
+import co.ecg.jain_sip.sip.ri.header.ContentLength;
+import co.ecg.jain_sip.sip.ri.header.ContentType;
 import co.ecg.jain_sip.sip.ri.header.Via;
+import co.ecg.jain_sip.sip.ri.message.MessageFactoryImpl;
 import co.ecg.jain_sip.sip.ri.message.SIPMessage;
 import co.ecg.jain_sip.sip.ri.message.SIPRequest;
+import co.ecg.jain_sip.sip.ri.message.SIPResponse;
 import lombok.extern.slf4j.Slf4j;
 
 
@@ -364,15 +372,24 @@ public abstract class MessageChannel {
      * @param port       is the port to which the message is directed.
      */
     public void logMessage(SIPMessage sipMessage, InetAddress address, int port, long time) {
-        if (!logger.isLoggingEnabled(ServerLogger.TRACE_MESSAGES))
+        if (!log.isTraceEnabled())
             return;
 
         // Default port.
         if (port == -1)
             port = 5060;
 
-        getSIPStack().serverLogger.logMessage(sipMessage, this.getHost() + ":" + this.getPort(),
-                address.getHostAddress().toString() + ":" + port, true, time);
+        String to = address + ":" + port;
+        String from = this.getHost() + ":" + getPort();
+
+        String firstLine = sipMessage.getFirstLine();
+        String tid = sipMessage.getTransactionId();
+        String callId = sipMessage.getCallId().getCallId();
+
+        LogRecord logRecord = getSIPStack().logRecordFactory.createLogRecord(sipMessage.encode(), from, to, time, true,
+                firstLine, tid, callId, 0);
+
+        log.info(logRecord.toString());
     }
 
     /**
@@ -389,10 +406,25 @@ public abstract class MessageChannel {
             peerport = ((AddressImpl) contact.getAddress()).getPort();
 
         }
-        String from = getPeerAddress().toString() + ":" + peerport;
+        String from = getPeerAddress() + ":" + peerport;
         String to = this.getHost() + ":" + getPort();
-        this.getSIPStack().serverLogger.logMessage(sipResponse, from, to, status, false,
-                receptionTime);
+
+        if (sipResponse.getFirstLine() == null)
+            return;
+        CallID cid = (CallID) sipResponse.getCallId();
+        String callId = null;
+        if (cid != null)
+            callId = cid.getCallId();
+        String firstLine = sipResponse.getFirstLine().trim();
+
+        String tid = sipResponse.getTransactionId();
+        TimeStampHeader tsHdr = (TimeStampHeader) sipResponse.getHeader(TimeStampHeader.NAME);
+        long tsval = tsHdr == null ? 0 : tsHdr.getTime();
+
+        LogRecord logRecord = getSIPStack().logRecordFactory.createLogRecord(sipResponse.encode(), from, to, receptionTime, false,
+               firstLine, tid, callId, tsval);
+
+        log.info(logRecord.toString());
     }
 
     /**

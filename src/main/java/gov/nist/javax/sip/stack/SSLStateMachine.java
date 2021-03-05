@@ -377,7 +377,7 @@ public class SSLStateMachine {
 						break;
 					} else {
 						if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
-							this.log.debug(
+							log.debug(
 									"Handshake passed");
 						}
 						// Added for https://java.net/jira/browse/JSIP-483 
@@ -411,7 +411,7 @@ public class SSLStateMachine {
 							}
 
 							if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
-								this.log.debug(
+								log.debug(
 										"TLS Security policy passed");
 							}
 						}

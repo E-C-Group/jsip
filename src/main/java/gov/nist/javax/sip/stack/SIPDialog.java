@@ -460,8 +460,7 @@ public class SIPDialog implements javax.sip.Dialog, DialogExt {
                      * Could not send re-INVITE fire a timeout on the INVITE.
                      */
                     if (logger.isLoggingEnabled())
-                        logger
-                                .logError(
+                        log.error(
                                         "Could not send re-INVITE time out ClientTransaction");
                     ((SIPClientTransaction) ctx).fireTimeoutTimer();
                     /*
@@ -1233,10 +1232,8 @@ public class SIPDialog implements javax.sip.Dialog, DialogExt {
         if (!this.getCallId().getCallId().equals(
                 ((SIPRequest) request).getCallId().getCallId())) {
             if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
-                logger
-                        .logError("CallID " + this.getCallId());
-                logger
-                        .logError(
+                log.error("CallID " + this.getCallId());
+                log.error(
                                 "RequestCallID = "
                                         + ackRequest.getCallId().getCallId());
                 log.error("dialog =  " + this);
@@ -1877,8 +1874,7 @@ public class SIPDialog implements javax.sip.Dialog, DialogExt {
                 this.setLocalTag(sipRequest.getFrom().getTag());
                 if (myTag == null)
                     if (logger.isLoggingEnabled())
-                        logger
-                                .logError(
+                        log.error(
                                         "The request's From header is missing the required Tag parameter.");
             }
         } else if (transaction.getMethod().equals(firstTransactionMethod)
@@ -1973,14 +1969,12 @@ public class SIPDialog implements javax.sip.Dialog, DialogExt {
                 && !hisTag.equals(this.hisTag)) {
             if (this.getState() != DialogState.EARLY) {
                 if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG))
-                    logger
-                            .logDebug(
+                    log.debug(
                                     "Dialog is already established -- ignoring remote tag re-assignment");
                 return;
             } else if (sipStack.isRemoteTagReassignmentAllowed()) {
                 if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG))
-                    logger
-                            .logDebug(
+                    log.debug(
                                     "UNSAFE OPERATION !  tag re-assignment "
                                             + this.hisTag
                                             + " trying to set to " + hisTag
@@ -1996,8 +1990,7 @@ public class SIPDialog implements javax.sip.Dialog, DialogExt {
                 this.hisTag = hisTag;
                 if (removed) {
                     if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG))
-                        logger
-                                .logDebug("ReInserting Dialog");
+                        log.debug("ReInserting Dialog");
                     this.sipStack.putDialog(this);
                 }
             }
@@ -2628,8 +2621,7 @@ public class SIPDialog implements javax.sip.Dialog, DialogExt {
                 dialogRequest.getCallId().getCallId())) {
 
             if (logger.isLoggingEnabled()) {
-                logger
-                        .logError("CallID " + this.getCallId());
+                log.error("CallID " + this.getCallId());
                 log.error(
                         "SIPDialog::sendRequest:RequestCallID = "
                                 + dialogRequest.getCallId().getCallId());
@@ -2660,7 +2652,7 @@ public class SIPDialog implements javax.sip.Dialog, DialogExt {
         if (this.getRemoteTag() != null && to.getTag() != null
                 && !to.getTag().equals(this.getRemoteTag())) {
             if (logger.isLoggingEnabled())
-                this.log.warn(
+                log.warn(
                         "SIPDialog::sendRequest:To header tag mismatch expecting "
                                 + this.getRemoteTag());
         }
@@ -3272,8 +3264,7 @@ public class SIPDialog implements javax.sip.Dialog, DialogExt {
         final int statusCode = sipResponse.getStatusCode();
         if (statusCode == 100) {
             if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG))
-                logger
-                        .logDebug(
+                log.debug(
                                 "Invalid status code - 100 in setLastResponse - ignoring");
             return;
         }
@@ -3317,8 +3308,7 @@ public class SIPDialog implements javax.sip.Dialog, DialogExt {
             }
             if (this.getState() == DialogState.TERMINATED) {
                 if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
-                    logger
-                            .logDebug(
+                    log.debug(
                                     "sipDialog: setLastResponse -- dialog is terminated - ignoring ");
                 }
                 // Capture the OK response for later use in createAck
@@ -3339,8 +3329,7 @@ public class SIPDialog implements javax.sip.Dialog, DialogExt {
                         "dialogState = " + this.getState());
                 log.debug(
                         "method = " + this.getMethod());
-                logger
-                        .logDebug("statusCode = " + statusCode);
+                log.debug("statusCode = " + statusCode);
                 log.debug(
                         "transaction = " + transaction);
             }
@@ -3390,8 +3379,7 @@ public class SIPDialog implements javax.sip.Dialog, DialogExt {
                         // Only do this if method equals initial request!
                         if (logger.isLoggingEnabled(
                                 LogWriter.TRACE_DEBUG)) {
-                            logger
-                                    .logDebug(
+                            log.debug(
                                             "pendingRouteUpdateOn202Response : "
                                                     + this.pendingRouteUpdateOn202Response);
                         }
@@ -3560,8 +3548,7 @@ public class SIPDialog implements javax.sip.Dialog, DialogExt {
                                             .equals(Request.SUBSCRIBE))) {
                                 if (logger
                                         .isLoggingEnabled(LogWriter.TRACE_DEBUG))
-                                    logger
-                                            .logDebug(
+                                    log.debug(
                                                     "RFC 3265 : Not setting dialog to TERMINATED for 489");
                             } else {
                                 // baranowb: simplest fix to
@@ -3894,8 +3881,7 @@ public class SIPDialog implements javax.sip.Dialog, DialogExt {
             Require require = new Require("100rel");
             relResponse.addHeader(require);
             if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
-                logger
-                        .logDebug(
+                log.debug(
                                 "Require header with optionTag 100rel is needed -- adding one");
             }
 
@@ -4046,21 +4032,18 @@ public class SIPDialog implements javax.sip.Dialog, DialogExt {
      */
     void releaseAckSem() {
     	if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
-            logger
-                    .logDebug("releaseAckSem-enter]]" + this + " sem=" + this.ackSem + " b2bua=" + this.isBackToBackUserAgent);
+            log.debug("releaseAckSem-enter]]" + this + " sem=" + this.ackSem + " b2bua=" + this.isBackToBackUserAgent);
             logger.logStackTrace();
         }
         if (this.isBackToBackUserAgent) {
             if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
-                logger
-                        .logDebug("releaseAckSem]]" + this + " sem=" + this.ackSem);
+                log.debug("releaseAckSem]]" + this + " sem=" + this.ackSem);
                 logger.logStackTrace();
             }
             if (this.ackSem.availablePermits() == 0 ) {
                 this.ackSem.release();
                 if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
-                    logger
-                            .logDebug("releaseAckSem]]" + this + " sem=" + this.ackSem);
+                    log.debug("releaseAckSem]]" + this + " sem=" + this.ackSem);
                 }
             }
         }
@@ -4297,8 +4280,7 @@ public class SIPDialog implements javax.sip.Dialog, DialogExt {
         if (isReleaseReferences()) {
             cleanUpOnAck();
             if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
-                logger
-                        .logDebug("dialog cleanup : " + getDialogId());
+                log.debug("dialog cleanup : " + getDialogId());
             }            
             if (eventListeners != null) {
                 eventListeners.clear();
@@ -4335,8 +4317,7 @@ public class SIPDialog implements javax.sip.Dialog, DialogExt {
                 originalRequestRecordRouteHeaders = (RecordRouteList) new RecordRouteParser(
                         originalRequestRecordRouteHeadersString).parse();
             } catch (ParseException e) {
-                logger
-                        .logError(
+                log.error(
                                 "error reparsing the originalRequest RecordRoute Headers",
                                 e);
             }

@@ -297,7 +297,7 @@ import java.util.*;
  * <p class="table">
  * If set to <it>true</it> then the application installed
  * Router is consulted for ALL routing decisions (ie. both out of dialog SIP and non-SIP request
- * URI's -- identitcal to the behavior supported in v1.1 of this specification). If set to
+ * URI's -- identical to the behavior supported in v1.1 of this specification). If set to
  * <it>false</it> the user installed router will only be consulted for routing of Non-SIP URIs.
  * Implementations may thus provide support for sophisticated operations such as DNS lookup
  * for SIP URI's  using the proceedures defined in RFC 3263

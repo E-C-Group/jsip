@@ -691,8 +691,7 @@ public class SipStackImpl extends SIPTransactionStack implements
 		            getTimer().schedule(new PingTimer(null), 0);
 		        }
 			} catch (Exception e) {
-				logger
-					.logError(
+				log.error(
 							"Bad configuration value for gov.nist.javax.sip.TIMER_CLASS_NAME", e);			
 			}
 		}
@@ -839,8 +838,7 @@ public class SipStackImpl extends SIPTransactionStack implements
 			Router router = (Router) cons.newInstance(args);
 			super.setRouter(router);
 		} catch (InvocationTargetException ex1) {
-			logger
-					.logError(
+			log.error(
 							"could not instantiate router -- invocation target problem",
 							(Exception) ex1.getCause());
 			throw new PeerUnavailableException(
@@ -1081,7 +1079,7 @@ public class SipStackImpl extends SIPTransactionStack implements
 				this.threadPoolSize = new Integer(threadPoolSize).intValue();
 			} catch (NumberFormatException ex) {
 				if (logger.isLoggingEnabled())
-					this.log.error(
+					log.error(
 						"thread pool size - bad value " + ex.getMessage());
 			}
 		}
@@ -1101,7 +1099,7 @@ public class SipStackImpl extends SIPTransactionStack implements
 				PostParseExecutorServices.setPostParseExcutorSize(threads, congetstionControlTimeout);
 			} catch (NumberFormatException ex) {
 				if (logger.isLoggingEnabled())
-					this.log.error(
+					log.error(
 							"TCP post-parse thread pool size - bad value " + tcpTreadPoolSize + " : " + ex.getMessage());
 			}
 		}
@@ -1122,8 +1120,7 @@ public class SipStackImpl extends SIPTransactionStack implements
 				// Lowater is 80% of highwater
 			} catch (NumberFormatException ex) {
 				if (logger.isLoggingEnabled())
-					this.logger
-						.logError(
+					log.error(
 								"transaction table size - bad value "
 										+ ex.getMessage());
 			}
@@ -1143,8 +1140,7 @@ public class SipStackImpl extends SIPTransactionStack implements
 				// Lowater is 80% of highwater
 			} catch (NumberFormatException ex) {
 				if (logger.isLoggingEnabled())
-					this.logger
-						.logError(
+					log.error(
 								"transaction table size - bad value "
 										+ ex.getMessage());
 			}
@@ -1221,7 +1217,7 @@ public class SipStackImpl extends SIPTransactionStack implements
 				.getProperty("gov.nist.javax.sip.STUN_SERVER");
 
 		if (stunAddr != null)
-			this.log.warn(
+			log.warn(
 					"Ignoring obsolete property "
 							+ "gov.nist.javax.sip.STUN_SERVER");
 
@@ -1288,8 +1284,7 @@ public class SipStackImpl extends SIPTransactionStack implements
 						.newInstance(new Object[0]);
 			} catch (Exception ex) {
 				if (logger.isLoggingEnabled())
-					logger
-						.logError(
+					log.error(
 								"Bad configuration value for LOG_FACTORY -- using default logger");
 				this.logRecordFactory = new DefaultMessageLogFactory();
 			}
@@ -1399,8 +1394,7 @@ public class SipStackImpl extends SIPTransactionStack implements
 		try {
 			super.messageParserFactory = (MessageParserFactory) Class.forName(messageParserFactoryName).newInstance();
 		} catch (Exception e) {
-			logger
-				.logError(
+			log.error(
 						"Bad configuration value for gov.nist.javax.sip.MESSAGE_PARSER_FACTORY", e);			
 		}
 		
@@ -1408,8 +1402,7 @@ public class SipStackImpl extends SIPTransactionStack implements
 		try {
 			super.messageProcessorFactory = (MessageProcessorFactory) Class.forName(messageProcessorFactoryName).newInstance();
 		} catch (Exception e) {
-			logger
-				.logError(
+			log.error(
 						"Bad configuration value for gov.nist.javax.sip.MESSAGE_PROCESSOR_FACTORY", e);			
 		}
 		
@@ -1417,8 +1410,7 @@ public class SipStackImpl extends SIPTransactionStack implements
 		try {
 			super.nioSocketMaxIdleTime = Long.parseLong(maxIdleTimeString);
 		} catch (Exception e) {
-			logger
-				.logError(
+			log.error(
 						"Bad configuration value for gov.nist.javax.sip.NIO_MAX_SOCKET_IDLE_TIME=" + maxIdleTimeString, e);			
 		}
 		
@@ -1431,8 +1423,7 @@ public class SipStackImpl extends SIPTransactionStack implements
 	            getTimer().schedule(new PingTimer(null), 0);
 	        }
 		} catch (Exception e) {
-			logger
-				.logError(
+			log.error(
 						"Bad configuration value for gov.nist.javax.sip.TIMER_CLASS_NAME", e);			
 		}
 		super.aggressiveCleanup = Boolean.parseBoolean(configurationProperties
@@ -1449,13 +1440,11 @@ public class SipStackImpl extends SIPTransactionStack implements
 					Thread.sleep(100);
 					sipMessageValve.init(thisStack);
 				} catch (Exception e) {
-					logger
-					.logError("Error intializing SIPMessageValve", e);
+					log.error("Error intializing SIPMessageValve", e);
 				}
 
 			} catch (Exception e) {
-				logger
-				.logError(
+				log.error(
 						"Bad configuration value for gov.nist.javax.sip.SIP_MESSAGE_VALVE", e);			
 			}
 		}
@@ -1471,15 +1460,13 @@ public class SipStackImpl extends SIPTransactionStack implements
 							Thread.sleep(100);
 							sipEventInterceptor.init(thisStack);
 						} catch (Exception e) {
-							logger
-							.logError("Error intializing SIPEventInterceptor", e);
+							log.error("Error intializing SIPEventInterceptor", e);
 						}
 						
 					}
 				}.start();
 			} catch (Exception e) {
-				logger
-					.logError(
+				log.error(
 							"Bad configuration value for gov.nist.javax.sip.SIP_EVENT_INTERCEPTOR", e);			
 			}
 		}
@@ -1577,7 +1564,7 @@ public class SipStackImpl extends SIPTransactionStack implements
 		if (listeningPoint == null)
 			throw new NullPointerException("null listeningPoint");
 		if (logger.isLoggingEnabled(LogLevels.TRACE_DEBUG))
-			this.log.debug(
+			log.debug(
 					"createSipProvider: " + listeningPoint);
 		ListeningPointImpl listeningPointImpl = (ListeningPointImpl) listeningPoint;
 		if (listeningPointImpl.sipProvider != null)

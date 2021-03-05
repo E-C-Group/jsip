@@ -2475,7 +2475,7 @@ public class SIPDialog implements Dialog, DialogExt {
         if (this.getRemoteTag() != null && to.getTag() != null
                 && !to.getTag().equals(this.getRemoteTag())) {
 
-            this.log.warn(
+            log.warn(
                     "SIPDialog::sendRequest:To header tag mismatch expecting "
                             + this.getRemoteTag());
         }

@@ -626,8 +626,7 @@ class DialogFilter implements ServerRequestInterface, ServerResponseInterface {
                         } else {
                             if (logger
                                     .isLoggingEnabled(LogLevels.TRACE_DEBUG)) {
-                                logger
-                                        .logDebug(
+                                log.debug(
                                                 "Dropping ACK - cannot find a transaction or dialog");
                             }
                             SIPServerTransaction ackTransaction = sipStack
@@ -643,8 +642,7 @@ class DialogFilter implements ServerRequestInterface, ServerResponseInterface {
                                             .removeTransactionPendingAck(ackTransaction);
                                 } catch (Exception ex) {
                                     if (logger.isLoggingEnabled()) {
-                                        logger
-                                                .logError(
+                                        log.error(
                                                         "Problem terminating transaction",
                                                         ex);
                                     }
@@ -717,8 +715,7 @@ class DialogFilter implements ServerRequestInterface, ServerResponseInterface {
 
                 }
                 if (logger.isLoggingEnabled(LogLevels.TRACE_DEBUG)) {
-                    logger
-                            .logDebug(
+                    log.debug(
                                     "Sending 481 for PRACK - automatic dialog support is enabled -- cant find dialog!");
                 }
                 SIPResponse notExist = sipRequest
@@ -758,8 +755,7 @@ class DialogFilter implements ServerRequestInterface, ServerResponseInterface {
                 }
             } else {
                 if (logger.isLoggingEnabled(LogLevels.TRACE_DEBUG))
-                    logger
-                            .logDebug(
+                    log.debug(
                                     "Processing PRACK without a DIALOG -- this must be a proxy element");
             }
 
@@ -796,8 +792,7 @@ class DialogFilter implements ServerRequestInterface, ServerResponseInterface {
                 // take care of this error condition possibly.
 
                 if (logger.isLoggingEnabled(LogLevels.TRACE_DEBUG))
-                    logger
-                            .logDebug(
+                    log.debug(
                                     "dropping request -- automatic dialog "
                                             + "support enabled and dialog does not exist!");
                 this.sendCallOrTransactionDoesNotExistResponse(sipRequest, transaction);
@@ -1004,8 +999,7 @@ class DialogFilter implements ServerRequestInterface, ServerResponseInterface {
                 // sent an error response and the terminated state will be reached when we
                 // have sent an OK response. We do not need to wait till the ACK to be seen.
                 if (logger.isLoggingEnabled(LogLevels.TRACE_DEBUG)) {
-                    logger
-                            .logDebug(
+                    log.debug(
                                     "Sending 491 response. Last transaction is in PROCEEDING state.");
                     log.debug(
                             "last Transaction state = " + lastTransaction
@@ -1157,8 +1151,7 @@ class DialogFilter implements ServerRequestInterface, ServerResponseInterface {
                     return;
 
                 } catch (Exception ex) {
-                    logger
-                            .logError(
+                    log.error(
                                     "Exception while sending error response statelessly",
                                     ex);
                     return;
@@ -1343,8 +1336,7 @@ class DialogFilter implements ServerRequestInterface, ServerResponseInterface {
         }
         if (listeningPoint == null) {
             if (logger.isLoggingEnabled())
-                logger
-                        .logError(
+                log.error(
                                 "Dropping message: No listening point"
                                         + " registered!");
             return;
@@ -1353,8 +1345,7 @@ class DialogFilter implements ServerRequestInterface, ServerResponseInterface {
         if (sipStack.checkBranchId()
                 && !Utils.getInstance().responseBelongsToUs(response)) {
             if (logger.isLoggingEnabled()) {
-                logger
-                        .logError(
+                log.error(
                                 "Dropping response - topmost VIA header does not originate from this stack");
             }
             return;
@@ -1392,8 +1383,7 @@ class DialogFilter implements ServerRequestInterface, ServerResponseInterface {
             if (dialog != null) {
                 if (response.getStatusCode() / 100 != 2) {
                     if (logger.isLoggingEnabled(LogLevels.TRACE_DEBUG)) {
-                        logger
-                                .logDebug(
+                        log.debug(
                                         "Response is not a final response and dialog is found for response -- dropping response!");
                     }
                     return;
@@ -1420,8 +1410,7 @@ class DialogFilter implements ServerRequestInterface, ServerResponseInterface {
                             // Found the dialog - resend the ACK and
                             // dont pass up the null transaction
                             if (logger.isLoggingEnabled(LogLevels.TRACE_DEBUG)) {
-                                logger
-                                        .logDebug(
+                                log.debug(
                                                 "Retransmission of OK detected: Resending last ACK");
                             }
                             dialog.resendAck();
@@ -1558,8 +1547,7 @@ class DialogFilter implements ServerRequestInterface, ServerResponseInterface {
 
         if (listeningPoint == null) {
             if (logger.isLoggingEnabled(LogLevels.TRACE_DEBUG))
-                logger
-                        .logDebug(
+                log.debug(
                                 "Dropping message: No listening point"
                                         + " registered!");
             return;
