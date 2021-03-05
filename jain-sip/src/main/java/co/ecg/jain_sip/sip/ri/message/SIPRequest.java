@@ -29,6 +29,7 @@
 package co.ecg.jain_sip.sip.ri.message;
 
 import co.ecg.jain_sip.core.ri.InternalErrorHandler;
+import co.ecg.jain_sip.sip.SipException;
 import co.ecg.jain_sip.sip.address.URI;
 import co.ecg.jain_sip.sip.header.*;
 import co.ecg.jain_sip.sip.message.Request;

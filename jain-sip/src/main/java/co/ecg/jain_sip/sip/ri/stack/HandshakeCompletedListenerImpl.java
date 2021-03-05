@@ -18,8 +18,8 @@
  */
 package co.ecg.jain_sip.sip.ri.stack;
 
-import co.ecg.jain_sip.core.ri.CommonLogger;
-import co.ecg.jain_sip.core.ri.StackLogger;
+
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
 import java.net.Socket;
@@ -29,9 +29,9 @@ import java.security.cert.Certificate;
 import javax.net.ssl.HandshakeCompletedEvent;
 import javax.net.ssl.HandshakeCompletedListener;
 
+@Slf4j
 public class HandshakeCompletedListenerImpl implements HandshakeCompletedListener {
-	private static StackLogger logger = CommonLogger.getLogger(HandshakeCompletedListenerImpl.class);          
-	
+
     private HandshakeCompletedEvent handshakeCompletedEvent;
     private final Object eventWaitObject = new Object();
 

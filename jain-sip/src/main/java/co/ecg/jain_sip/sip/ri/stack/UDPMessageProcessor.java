@@ -128,7 +128,7 @@ public class UDPMessageProcessor extends MessageProcessor implements Runnable {
         if(sipStack.getMaxMessageSize() < SipStackImpl.MAX_DATAGRAM_SIZE && sipStack.getMaxMessageSize() > 0) {
             this.maxMessageSize = sipStack.getMaxMessageSize();
         }
-        if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
+        if (log.isDebugEnabled()) {
             log.debug("Max Message size is " + maxMessageSize);
         }
         this.messageQueue = new LinkedBlockingQueue<DatagramQueuedMessageDispatch>();
@@ -248,7 +248,7 @@ public class UDPMessageProcessor extends MessageProcessor implements Runnable {
             }
             catch (SocketException ex) {
             	if( !isRunning ) {
-					if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
+					if (log.isDebugEnabled()) {
 	                    log.debug("UDPMessageProcessor: Stopping");
 					}
                     return;

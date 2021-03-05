@@ -41,6 +41,7 @@ package co.ecg.jain_sip.sip.ri.parser.ims;
 import co.ecg.jain_sip.core.ri.NameValue;
 import co.ecg.jain_sip.core.ri.Token;
 import co.ecg.jain_sip.sip.ri.header.SIPHeaderList;
+import co.ecg.jain_sip.sip.ri.header.ims.*;
 import co.ecg.jain_sip.sip.ri.parser.HeaderParser;
 import co.ecg.jain_sip.sip.ri.parser.Lexer;
 import co.ecg.jain_sip.sip.ri.parser.TokenTypes;
@@ -64,13 +65,13 @@ public class SecurityAgreeParser extends HeaderParser
     protected void parseParameter(SecurityAgree header)
         throws ParseException
     {
-        if (debug)
+
             dbg_enter("parseParameter");
         try {
             NameValue nv = this.nameValue('=');
             header.setParameter(nv);
         } finally {
-            if (debug)
+
                 dbg_leave("parseParameter");
         }
     }

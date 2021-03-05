@@ -25,9 +25,7 @@
  */
 package co.ecg.jain_sip.sip.ri.stack;
 
-import co.ecg.jain_sip.core.ri.CommonLogger;
-import co.ecg.jain_sip.core.ri.LogLevels;
-import co.ecg.jain_sip.core.ri.StackLogger;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -41,16 +39,14 @@ import java.util.HashMap;
  * Websocket handshake rev 13 and rev 8
  *
  */
+@Slf4j
 public class WebSocketHttpHandshake {
 
-	private static StackLogger logger = CommonLogger
-			.getLogger(WebSocketHttpHandshake.class);
-	
 	private HashMap<String, String> headers = new HashMap<String, String>();
 
 	public byte[] createHttpResponse(String request) throws Exception {
 		
-		if(logger.isLoggingEnabled(LogLevels.TRACE_DEBUG)) {
+		if(log.isDebugEnabled()) {
 			log.debug("Request=" + request);
 		}
 		InputStream is = new ByteArrayInputStream(request.getBytes());
@@ -137,7 +133,7 @@ public class WebSocketHttpHandshake {
 
 		String response = sb.toString();
 
-		if(logger.isLoggingEnabled(LogLevels.TRACE_DEBUG)) {
+		if(log.isDebugEnabled()) {
 			log.debug("Response=" + response);
 		}
 		byte[] output = sb.toString().getBytes();

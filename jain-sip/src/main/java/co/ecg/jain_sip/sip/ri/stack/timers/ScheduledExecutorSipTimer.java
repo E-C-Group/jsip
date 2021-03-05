@@ -60,7 +60,7 @@ public class ScheduledExecutorSipTimer implements SipTimer {
 	public void stop() {
 		threadPoolExecutor.shutdown();
 		logger.logStackTrace(StackLogger.TRACE_DEBUG);
-		if(logger.isLoggingEnabled(StackLogger.TRACE_INFO)) {
+		if(log.isInfoEnabled()) {
 			log.info("the sip stack timer " + this.getClass().getName() + " has been stopped");
 		}
 	}
@@ -99,7 +99,7 @@ public class ScheduledExecutorSipTimer implements SipTimer {
 		sipStackImpl= sipStack;
 		// TODO have a param in the stack properties to set the number of thread for the timer executor
 		threadPoolExecutor.prestartAllCoreThreads();
-		if(logger.isLoggingEnabled(StackLogger.TRACE_INFO)) {
+		if(log.isInfoEnabled()) {
 			log.info("the sip stack timer " + this.getClass().getName() + " has been started");
 		}
 	}

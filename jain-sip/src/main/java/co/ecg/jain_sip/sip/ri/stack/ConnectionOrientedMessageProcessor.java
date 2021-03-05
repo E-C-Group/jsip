@@ -25,12 +25,11 @@
  */
 package co.ecg.jain_sip.sip.ri.stack;
 
-import co.ecg.jain_sip.core.ri.CommonLogger;
+
 import co.ecg.jain_sip.core.ri.Host;
 import co.ecg.jain_sip.core.ri.HostPort;
-import co.ecg.jain_sip.core.ri.LogLevels;
-import co.ecg.jain_sip.core.ri.LogWriter;
-import co.ecg.jain_sip.core.ri.StackLogger;
+import lombok.extern.slf4j.Slf4j;
+
 
 import java.net.InetAddress;
 import java.net.ServerSocket;
@@ -39,13 +38,11 @@ import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author jean.deruelle@gmail.com
- *
  */
+@Slf4j
 public abstract class ConnectionOrientedMessageProcessor extends MessageProcessor {
 
-	private static StackLogger logger = CommonLogger.getLogger(ConnectionOrientedMessageProcessor.class);
-	
-	protected int nConnections;
+    protected int nConnections;
 
     protected boolean isRunning;
 
@@ -56,55 +53,52 @@ public abstract class ConnectionOrientedMessageProcessor extends MessageProcesso
     protected ServerSocket sock;
 
     protected int useCount;
-	
-	public ConnectionOrientedMessageProcessor(InetAddress ipAddress, int port,
-			String transport, SIPTransactionStack sipStack) {
-		super(ipAddress, port, transport, sipStack);
-		
-	    this.sipStack = sipStack;
-	    
-		this.messageChannels = new ConcurrentHashMap <String, ConnectionOrientedMessageChannel>();
-        this.incomingMessageChannels = new ConcurrentHashMap <String, ConnectionOrientedMessageChannel>();
-	}
- 	
-	 /**
+
+    public ConnectionOrientedMessageProcessor(InetAddress ipAddress, int port,
+                                              String transport, SIPTransactionStack sipStack) {
+        super(ipAddress, port, transport, sipStack);
+
+        this.sipStack = sipStack;
+
+        this.messageChannels = new ConcurrentHashMap<String, ConnectionOrientedMessageChannel>();
+        this.incomingMessageChannels = new ConcurrentHashMap<String, ConnectionOrientedMessageChannel>();
+    }
+
+    /**
      * Returns the stack.
-     * 
+     *
      * @return my sip stack.
      */
     public SIPTransactionStack getSIPStack() {
         return sipStack;
     }
-    
+
     protected synchronized void remove(ConnectionOrientedMessageChannel messageChannel) {
 
         String key = messageChannel.getKey();
-        if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
-            log.debug(Thread.currentThread() + " removing " + key + " for processor " + getIpAddress()+ ":" + getPort() + "/" + getTransport());
-        }
+
+        log.debug(Thread.currentThread() + " removing " + key + " for processor " + getIpAddress() + ":" + getPort() + "/" + getTransport());
 
         /** May have been removed already */
         if (messageChannels.get(key) == messageChannel)
             this.messageChannels.remove(key);
-        
-        if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG))
-            log.debug(Thread.currentThread() + " Removing incoming channel " + key + " for processor " + getIpAddress()+ ":" + getPort() + "/" + getTransport());
+
+        log.debug(Thread.currentThread() + " Removing incoming channel " + key + " for processor " + getIpAddress() + ":" + getPort() + "/" + getTransport());
         incomingMessageChannels.remove(key);
     }
-	
+
     protected synchronized void cacheMessageChannel(ConnectionOrientedMessageChannel messageChannel) {
         String key = messageChannel.getKey();
         ConnectionOrientedMessageChannel currentChannel = messageChannels.get(key);
         if (currentChannel != null) {
-            if (logger.isLoggingEnabled(LogLevels.TRACE_DEBUG))
-                log.debug("Closing " + key);
+            log.debug("Closing " + key);
             currentChannel.close();
         }
-        if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG))
-            log.debug("Caching " + key);
+
+        log.debug("Caching " + key);
         this.messageChannels.put(key, messageChannel);
     }
-    
+
     /**
      * TCP can handle an unlimited number of bytes.
      */
@@ -115,7 +109,7 @@ public abstract class ConnectionOrientedMessageProcessor extends MessageProcesso
     public boolean inUse() {
         return this.useCount != 0;
     }
-    
+
     public boolean closeReliableConnection(String peerAddress, int peerPort) throws IllegalArgumentException {
 
         validatePortInRange(peerPort);
@@ -131,19 +125,19 @@ public abstract class ConnectionOrientedMessageProcessor extends MessageProcesso
 
             if (foundMessageChannel != null) {
                 foundMessageChannel.close();
-                if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG))
-                    log.debug(Thread.currentThread() + " Removing channel " + messageChannelKey + " for processor " + getIpAddress()+ ":" + getPort() + "/" + getTransport());
+
+                log.debug(Thread.currentThread() + " Removing channel " + messageChannelKey + " for processor " + getIpAddress() + ":" + getPort() + "/" + getTransport());
                 incomingMessageChannels.remove(messageChannelKey);
                 messageChannels.remove(messageChannelKey);
                 return true;
             }
-            
+
             foundMessageChannel = incomingMessageChannels.get(messageChannelKey);
 
             if (foundMessageChannel != null) {
                 foundMessageChannel.close();
-                if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG))
-                    log.debug(Thread.currentThread() + " Removing incoming channel " + messageChannelKey + " for processor " + getIpAddress()+ ":" + getPort() + "/" + getTransport());
+
+                log.debug(Thread.currentThread() + " Removing incoming channel " + messageChannelKey + " for processor " + getIpAddress() + ":" + getPort() + "/" + getTransport());
                 incomingMessageChannels.remove(messageChannelKey);
                 messageChannels.remove(messageChannelKey);
                 return true;
@@ -151,41 +145,40 @@ public abstract class ConnectionOrientedMessageProcessor extends MessageProcesso
         }
         return false;
     }
-    
+
     public boolean setKeepAliveTimeout(String peerAddress, int peerPort, long keepAliveTimeout) {
 
         validatePortInRange(peerPort);
 
-        HostPort hostPort  = new HostPort();
+        HostPort hostPort = new HostPort();
         hostPort.setHost(new Host(peerAddress));
         hostPort.setPort(peerPort);
 
         String messageChannelKey = MessageChannel.getKey(hostPort, "TCP");
-                
+
         ConnectionOrientedMessageChannel foundMessageChannel = messageChannels.get(messageChannelKey);
-        if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG))
-            log.debug(Thread.currentThread() + " checking channel with key " + messageChannelKey + " : " + foundMessageChannel + " for processor " + getIpAddress()+ ":" + getPort() + "/" + getTransport());
-        
+
+        log.debug(Thread.currentThread() + " checking channel with key " + messageChannelKey + " : " + foundMessageChannel + " for processor " + getIpAddress() + ":" + getPort() + "/" + getTransport());
+
         if (foundMessageChannel != null) {
             foundMessageChannel.setKeepAliveTimeout(keepAliveTimeout);
             return true;
         }
-        
+
         foundMessageChannel = incomingMessageChannels.get(messageChannelKey);
-        
-        if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG))
-            log.debug(Thread.currentThread() + " checking incoming channel with key " + messageChannelKey + " : " + foundMessageChannel + " for processor " + getIpAddress()+ ":" + getPort() + "/" + getTransport());
-        
+
+        log.debug(Thread.currentThread() + " checking incoming channel with key " + messageChannelKey + " : " + foundMessageChannel + " for processor " + getIpAddress() + ":" + getPort() + "/" + getTransport());
+
         if (foundMessageChannel != null) {
             foundMessageChannel.setKeepAliveTimeout(keepAliveTimeout);
             return true;
         }
 
         return false;
-    }       
+    }
 
     protected void validatePortInRange(int port) throws IllegalArgumentException {
-        if (port < 1 || port > 65535){
+        if (port < 1 || port > 65535) {
             throw new IllegalArgumentException("Peer port should be greater than 0 and less 65535, port = " + port);
         }
     }

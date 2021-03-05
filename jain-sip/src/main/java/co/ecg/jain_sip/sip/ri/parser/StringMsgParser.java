@@ -30,7 +30,17 @@
 
 package co.ecg.jain_sip.sip.ri.parser;
 
+import co.ecg.jain_sip.core.ri.Host;
+import co.ecg.jain_sip.core.ri.HostNameParser;
+import co.ecg.jain_sip.sip.ri.SIPConstants;
+import co.ecg.jain_sip.sip.ri.address.AddressImpl;
+import co.ecg.jain_sip.sip.ri.address.GenericURI;
+import co.ecg.jain_sip.sip.ri.address.SipUri;
+import co.ecg.jain_sip.sip.ri.address.TelephoneNumber;
+import co.ecg.jain_sip.sip.ri.header.*;
 import co.ecg.jain_sip.sip.ri.message.SIPMessage;
+import co.ecg.jain_sip.sip.ri.message.SIPRequest;
+import co.ecg.jain_sip.sip.ri.message.SIPResponse;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.UnsupportedEncodingException;
@@ -39,8 +49,6 @@ import java.text.ParseException;
  * Acknowledgement: 1/12/2007: Yanick Belanger rewrote the parsing loops to make them
  * simpler and quicker.
  */
-
-import javax.xml.bind.DatatypeConverter;
 
 /**
  * Parse SIP message and parts of SIP messages such as URI's etc from memory and
@@ -105,7 +113,7 @@ public class StringMsgParser implements MessageParser {
         }
         catch (ArrayIndexOutOfBoundsException e) {
             // Array contains only control char, return null.
-        	if (logger.isLoggingEnabled(StackLogger.TRACE_DEBUG)) {
+        	if (log.isDebugEnabled()) {
             	log.debug("handled only control char so returning null");
             }
             return null;

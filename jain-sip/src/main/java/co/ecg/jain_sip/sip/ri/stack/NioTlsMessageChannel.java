@@ -25,12 +25,10 @@
  */
 package co.ecg.jain_sip.sip.ri.stack;
 
-import co.ecg.jain_sip.core.ri.CommonLogger;
-import co.ecg.jain_sip.core.ri.LogLevels;
-import co.ecg.jain_sip.core.ri.LogWriter;
-import co.ecg.jain_sip.core.ri.StackLogger;
+
 import co.ecg.jain_sip.sip.ri.SipStackImpl;
 import co.ecg.jain_sip.sip.ri.stack.SSLStateMachine.MessageSendCallback;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.net.ssl.HandshakeCompletedListener;
 import javax.net.ssl.SSLSession;
@@ -43,230 +41,231 @@ import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
 import java.security.cert.CertificateException;
 
-public class NioTlsMessageChannel extends NioTcpMessageChannel implements NioTlsChannelInterface{
+@Slf4j
+public class NioTlsMessageChannel extends NioTcpMessageChannel implements NioTlsChannelInterface {
 
-	private static StackLogger logger = CommonLogger
-			.getLogger(NioTlsMessageChannel.class);
-	
-	SSLStateMachine sslStateMachine;
-	// Added for https://java.net/jira/browse/JSIP-483
-	private HandshakeCompletedListener handshakeCompletedListener;
-	private boolean handshakeCompleted = false;
+    SSLStateMachine sslStateMachine;
+    // Added for https://java.net/jira/browse/JSIP-483
+    private HandshakeCompletedListener handshakeCompletedListener;
+    private boolean handshakeCompleted = false;
 
-	private int appBufferMax;
-	private int netBufferMax;
+    private int appBufferMax;
+    private int netBufferMax;
 
-	public static NioTcpMessageChannel create(
-			NioTcpMessageProcessor nioTcpMessageProcessor,
-			SocketChannel socketChannel) throws IOException {
-		NioTcpMessageChannel retval = channelMap.get(socketChannel);
-		if (retval == null) {
-			retval = new NioTlsMessageChannel(nioTcpMessageProcessor,
-					socketChannel);
-			channelMap.put(socketChannel, retval);
-		}
-		return retval;
-	}
-	
-	protected NioTlsMessageChannel(NioTcpMessageProcessor nioTcpMessageProcessor,
-			SocketChannel socketChannel) throws IOException {
-		super(nioTcpMessageProcessor, socketChannel);
+    public static NioTcpMessageChannel create(
+            NioTcpMessageProcessor nioTcpMessageProcessor,
+            SocketChannel socketChannel) throws IOException {
+        NioTcpMessageChannel retval = channelMap.get(socketChannel);
+        if (retval == null) {
+            retval = new NioTlsMessageChannel(nioTcpMessageProcessor,
+                    socketChannel);
+            channelMap.put(socketChannel, retval);
+        }
+        return retval;
+    }
 
-		messageProcessor = nioTcpMessageProcessor;
-		myClientInputStream = socketChannel.socket().getInputStream();
-		try {
-			init(false);
-			createBuffers();
-		}catch (Exception e) {
-			throw new IOException("Can't do TLS init", e);
-		}
-	}
-	
-	public void init(boolean clientMode) throws Exception, CertificateException, FileNotFoundException, IOException {
+    protected NioTlsMessageChannel(NioTcpMessageProcessor nioTcpMessageProcessor,
+                                   SocketChannel socketChannel) throws IOException {
+        super(nioTcpMessageProcessor, socketChannel);
+
+        messageProcessor = nioTcpMessageProcessor;
+        myClientInputStream = socketChannel.socket().getInputStream();
+        try {
+            init(false);
+            createBuffers();
+        } catch (Exception e) {
+            throw new IOException("Can't do TLS init", e);
+        }
+    }
+
+    public void init(boolean clientMode) throws Exception, CertificateException, FileNotFoundException, IOException {
         SSLContext ctx = clientMode ?
-                ((NioTlsMessageProcessor)messageProcessor).sslClientCtx :
-                ((NioTlsMessageProcessor)messageProcessor).sslServerCtx;
-		sslStateMachine = new SSLStateMachine(ctx.createSSLEngine(), this);
+                ((NioTlsMessageProcessor) messageProcessor).sslClientCtx :
+                ((NioTlsMessageProcessor) messageProcessor).sslServerCtx;
+        sslStateMachine = new SSLStateMachine(ctx.createSSLEngine(), this);
 
         sslStateMachine.sslEngine.setUseClientMode(clientMode);
-        String auth = ((SipStackImpl)super.sipStack).
-        		getConfigurationProperties().getProperty("gov.nist.javax.sip.TLS_CLIENT_AUTH_TYPE");
-        if(auth == null) {
-        	auth = "Enabled";
+        String auth = ((SipStackImpl) super.sipStack).
+                getConfigurationProperties().getProperty("gov.nist.javax.sip.TLS_CLIENT_AUTH_TYPE");
+        if (auth == null) {
+            auth = "Enabled";
         }
-        if(auth.equals("Disabled") || auth.equals("DisabledAll")) {
-        	sslStateMachine.sslEngine.setNeedClientAuth(false);
-        	sslStateMachine.sslEngine.setWantClientAuth(false);
-        } else if(auth.equals("Enabled")) {
-        	sslStateMachine.sslEngine.setNeedClientAuth(true);
-        } else if(auth.equals("Want")) {
-        	sslStateMachine.sslEngine.setNeedClientAuth(false);
-        	sslStateMachine.sslEngine.setWantClientAuth(true);
+        if (auth.equals("Disabled") || auth.equals("DisabledAll")) {
+            sslStateMachine.sslEngine.setNeedClientAuth(false);
+            sslStateMachine.sslEngine.setWantClientAuth(false);
+        } else if (auth.equals("Enabled")) {
+            sslStateMachine.sslEngine.setNeedClientAuth(true);
+        } else if (auth.equals("Want")) {
+            sslStateMachine.sslEngine.setNeedClientAuth(false);
+            sslStateMachine.sslEngine.setWantClientAuth(true);
         } else {
-        	throw new RuntimeException("Invalid parameter for TLS authentication: " + auth);
+            throw new RuntimeException("Invalid parameter for TLS authentication: " + auth);
         }
 
         // http://java.net/jira/browse/JSIP-451 - josemrecio
-    	sslStateMachine.sslEngine.setEnabledProtocols(((SipStackImpl)sipStack).getEnabledProtocols());
-    	// Added for https://java.net/jira/browse/JSIP-483 
-		if(getHandshakeCompletedListener() == null) {
-			HandshakeCompletedListenerImpl listner = new HandshakeCompletedListenerImpl(this, getSocketChannel());
-			setHandshakeCompletedListener(listner);
-		}
-	}
-	
-	public ByteBuffer prepareEncryptedDataBuffer() {
-		return ByteBufferFactory.getInstance().allocateDirect(netBufferMax);
-	}
-	
-	public ByteBuffer prepareAppDataBuffer() {
-		return ByteBufferFactory.getInstance().allocateDirect(appBufferMax);
-	}
-	
-	public ByteBuffer prepareAppDataBuffer(int capacity) {
-		return ByteBufferFactory.getInstance().allocateDirect(capacity);
-	}
-	
-	public static class SSLReconnectedException extends IOException {
-		private static final long serialVersionUID = 1L;}
-	
-	@Override
-	protected void sendMessage(final byte[] msg, final boolean isClient) throws IOException {
-		checkSocketState();
-		
-		ByteBuffer b = ByteBuffer.wrap(msg);
-		try {
-			sslStateMachine.wrap(b, ByteBufferFactory.getInstance().allocateDirect(netBufferMax), new MessageSendCallback() {
+        sslStateMachine.sslEngine.setEnabledProtocols(((SipStackImpl) sipStack).getEnabledProtocols());
+        // Added for https://java.net/jira/browse/JSIP-483
+        if (getHandshakeCompletedListener() == null) {
+            HandshakeCompletedListenerImpl listner = new HandshakeCompletedListenerImpl(this, getSocketChannel());
+            setHandshakeCompletedListener(listner);
+        }
+    }
 
-				@Override
-				public void doSend(byte[] bytes) throws IOException {
-					
-						NioTlsMessageChannel.super.sendMessage(bytes, isClient);
-					
-				}
-			});
-		} catch (Exception e) {
-			throw new IOException("Can't send message", e);
-		}
-	}
-	
-	public void sendEncryptedData(byte[] msg) throws IOException { 
-		// bypass the encryption for already encrypted data or TLS metadata
-		if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
-			log.debug("sendEncryptedData " + " this = " + this + " peerPort = " + peerPort + " addr = " + peerAddress);
-		}
-		lastActivityTimeStamp = System.currentTimeMillis();
-		
-		NIOHandler nioHandler = ((NioTcpMessageProcessor) messageProcessor).nioHandler;
-		if(this.socketChannel != null && this.socketChannel.isConnected() && this.socketChannel.isOpen()) {
-			nioHandler.putSocket(NIOHandler.makeKey(this.peerAddress, this.peerPort), this.socketChannel);
-		}
-		super.sendMessage(msg, this.peerAddress, this.peerPort, true);
-	}
-	
-	@Override
-	public void sendMessage(final byte message[], final InetAddress receiverAddress,
-			final int receiverPort, final boolean retry) throws IOException {
-	
-		checkSocketState();
-		
-		ByteBuffer b = ByteBuffer.wrap(message);
-		try {
-			sslStateMachine.wrap(b, ByteBufferFactory.getInstance().allocateDirect(netBufferMax), new MessageSendCallback() {
-				
-				@Override
-				public void doSend(byte[] bytes) throws IOException {
-					NioTlsMessageChannel.super.sendMessage(bytes,
-							receiverAddress, receiverPort, retry);
-					
-				}
-			});
-		} catch (IOException e) {
-			throw e;
-		}
-	}
-	 protected void createBuffers() {
+    public ByteBuffer prepareEncryptedDataBuffer() {
+        return ByteBufferFactory.getInstance().allocateDirect(netBufferMax);
+    }
 
-	        SSLSession session = sslStateMachine.sslEngine.getSession();
-	        appBufferMax = session.getApplicationBufferSize();
-	        netBufferMax = session.getPacketBufferSize();
-	        
-	        if(logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
-	        	log.debug("appBufferMax=" + appBufferMax + " netBufferMax=" + netBufferMax);
-	        }
-	    }
-	
-	public NioTlsMessageChannel(InetAddress inetAddress, int port,
-			SIPTransactionStack sipStack,
-			NioTcpMessageProcessor nioTcpMessageProcessor) throws IOException {
-		super(inetAddress, port, sipStack, nioTcpMessageProcessor);
-		try {
-			init(true);
-			createBuffers();
-		} catch (Exception e) {
-			throw new IOException("Can't init the TLS channel", e);
-		}
-	}
-	
-	@Override
-	protected void addBytes(byte[] bytes) throws Exception {
-		if(logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
-			log.debug("Adding TLS bytes for decryption " + bytes.length);
-		}
-		if(bytes.length <= 0) return;
-		ByteBuffer buffer = ByteBuffer.wrap(bytes);
-		sslStateMachine.unwrap(buffer);
-	}
-	
-	@Override
-	public String getTransport() {
-		return "TLS";
-	}
+    public ByteBuffer prepareAppDataBuffer() {
+        return ByteBufferFactory.getInstance().allocateDirect(appBufferMax);
+    }
 
-	@Override
-	public void onNewSocket(byte[] message) {
-		super.onNewSocket(message);
-		try {
-			if(logger.isLoggingEnabled(LogLevels.TRACE_DEBUG)) {
-				String last = null;
-				if(message != null) {
-					last = new String(message, "UTF-8");
-				}
-				log.debug("New socket for " + this + " last message = " + last);
-			}
-			init(true);
-			createBuffers();
-			sendMessage(message, false);
-		} catch (Exception e) {
-			log.error("Cant reinit", e);
-		}
-	}
+    public ByteBuffer prepareAppDataBuffer(int capacity) {
+        return ByteBufferFactory.getInstance().allocateDirect(capacity);
+    }
 
-	private void checkSocketState() throws IOException {
-		if (socketChannel != null && (!socketChannel.isConnected() || !socketChannel.isOpen())) {
-			if (logger.isLoggingEnabled(LogLevels.TRACE_DEBUG))
-				log.debug("Need to reset SSL engine for socket " + socketChannel);
-			try {
-				init(sslStateMachine.sslEngine.getUseClientMode());
-			} catch (Exception ex) {
-				log.error("Cannot reset SSL engine", ex);
-				throw new IOException(ex);
-			}
-		}
-	}
+    public static class SSLReconnectedException extends IOException {
+        private static final long serialVersionUID = 1L;
+    }
 
-	@Override
-	public boolean isSecure() {
-		return true;
-	}
+    @Override
+    protected void sendMessage(final byte[] msg, final boolean isClient) throws IOException {
+        checkSocketState();
 
-	@Override
-	public void addPlaintextBytes(byte[] bytes) throws Exception {
-		nioParser.addBytes(bytes);
-	}
-	
-	// Methods below Added for https://java.net/jira/browse/JSIP-483 
-	public void setHandshakeCompletedListener(
+        ByteBuffer b = ByteBuffer.wrap(msg);
+        try {
+            sslStateMachine.wrap(b, ByteBufferFactory.getInstance().allocateDirect(netBufferMax), new MessageSendCallback() {
+
+                @Override
+                public void doSend(byte[] bytes) throws IOException {
+
+                    NioTlsMessageChannel.super.sendMessage(bytes, isClient);
+
+                }
+            });
+        } catch (Exception e) {
+            throw new IOException("Can't send message", e);
+        }
+    }
+
+    public void sendEncryptedData(byte[] msg) throws IOException {
+        // bypass the encryption for already encrypted data or TLS metadata
+
+        log.debug("sendEncryptedData " + " this = " + this + " peerPort = " + peerPort + " addr = " + peerAddress);
+
+        lastActivityTimeStamp = System.currentTimeMillis();
+
+        NIOHandler nioHandler = ((NioTcpMessageProcessor) messageProcessor).nioHandler;
+        if (this.socketChannel != null && this.socketChannel.isConnected() && this.socketChannel.isOpen()) {
+            nioHandler.putSocket(NIOHandler.makeKey(this.peerAddress, this.peerPort), this.socketChannel);
+        }
+        super.sendMessage(msg, this.peerAddress, this.peerPort, true);
+    }
+
+    @Override
+    public void sendMessage(final byte message[], final InetAddress receiverAddress,
+                            final int receiverPort, final boolean retry) throws IOException {
+
+        checkSocketState();
+
+        ByteBuffer b = ByteBuffer.wrap(message);
+        try {
+            sslStateMachine.wrap(b, ByteBufferFactory.getInstance().allocateDirect(netBufferMax), new MessageSendCallback() {
+
+                @Override
+                public void doSend(byte[] bytes) throws IOException {
+                    NioTlsMessageChannel.super.sendMessage(bytes,
+                            receiverAddress, receiverPort, retry);
+
+                }
+            });
+        } catch (IOException e) {
+            throw e;
+        }
+    }
+
+    protected void createBuffers() {
+
+        SSLSession session = sslStateMachine.sslEngine.getSession();
+        appBufferMax = session.getApplicationBufferSize();
+        netBufferMax = session.getPacketBufferSize();
+
+
+        log.debug("appBufferMax=" + appBufferMax + " netBufferMax=" + netBufferMax);
+
+    }
+
+    public NioTlsMessageChannel(InetAddress inetAddress, int port,
+                                SIPTransactionStack sipStack,
+                                NioTcpMessageProcessor nioTcpMessageProcessor) throws IOException {
+        super(inetAddress, port, sipStack, nioTcpMessageProcessor);
+        try {
+            init(true);
+            createBuffers();
+        } catch (Exception e) {
+            throw new IOException("Can't init the TLS channel", e);
+        }
+    }
+
+    @Override
+    protected void addBytes(byte[] bytes) throws Exception {
+
+        log.debug("Adding TLS bytes for decryption " + bytes.length);
+
+        if (bytes.length <= 0) return;
+        ByteBuffer buffer = ByteBuffer.wrap(bytes);
+        sslStateMachine.unwrap(buffer);
+    }
+
+    @Override
+    public String getTransport() {
+        return "TLS";
+    }
+
+    @Override
+    public void onNewSocket(byte[] message) {
+        super.onNewSocket(message);
+        try {
+            if (log.isDebugEnabled()) {
+                String last = null;
+                if (message != null) {
+                    last = new String(message, "UTF-8");
+                }
+                log.debug("New socket for " + this + " last message = " + last);
+            }
+
+            init(true);
+            createBuffers();
+            sendMessage(message, false);
+        } catch (Exception e) {
+            log.error("Cant reinit", e);
+        }
+    }
+
+    private void checkSocketState() throws IOException {
+        if (socketChannel != null && (!socketChannel.isConnected() || !socketChannel.isOpen())) {
+
+            log.debug("Need to reset SSL engine for socket " + socketChannel);
+            try {
+                init(sslStateMachine.sslEngine.getUseClientMode());
+            } catch (Exception ex) {
+                log.error("Cannot reset SSL engine", ex);
+                throw new IOException(ex);
+            }
+        }
+    }
+
+    @Override
+    public boolean isSecure() {
+        return true;
+    }
+
+    @Override
+    public void addPlaintextBytes(byte[] bytes) throws Exception {
+        nioParser.addBytes(bytes);
+    }
+
+    // Methods below Added for https://java.net/jira/browse/JSIP-483
+    public void setHandshakeCompletedListener(
             HandshakeCompletedListener handshakeCompletedListenerImpl) {
         this.handshakeCompletedListener = handshakeCompletedListenerImpl;
     }
@@ -276,24 +275,24 @@ public class NioTlsMessageChannel extends NioTcpMessageChannel implements NioTls
      */
     public HandshakeCompletedListenerImpl getHandshakeCompletedListener() {
         return (HandshakeCompletedListenerImpl) handshakeCompletedListener;
-    }  
-    
-	/**
-	 * @return the handshakeCompleted
-	 */
-	public boolean isHandshakeCompleted() {
-		return handshakeCompleted;
-	}
+    }
 
-	/**
-	 * @param handshakeCompleted the handshakeCompleted to set
-	 */
-	public void setHandshakeCompleted(boolean handshakeCompleted) {
-		this.handshakeCompleted = handshakeCompleted;
-	}
-	
-	@Override
-	public SipStackImpl getSIPStack() {
-		return (SipStackImpl) super.getSIPStack();
-	}
+    /**
+     * @return the handshakeCompleted
+     */
+    public boolean isHandshakeCompleted() {
+        return handshakeCompleted;
+    }
+
+    /**
+     * @param handshakeCompleted the handshakeCompleted to set
+     */
+    public void setHandshakeCompleted(boolean handshakeCompleted) {
+        this.handshakeCompleted = handshakeCompleted;
+    }
+
+    @Override
+    public SipStackImpl getSIPStack() {
+        return (SipStackImpl) super.getSIPStack();
+    }
 }

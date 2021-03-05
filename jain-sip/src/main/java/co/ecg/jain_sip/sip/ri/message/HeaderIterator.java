@@ -25,6 +25,8 @@
 */
 package co.ecg.jain_sip.sip.ri.message;
 
+import co.ecg.jain_sip.sip.ri.header.SIPHeader;
+
 import java.util.ListIterator;
 import java.util.NoSuchElementException;
 

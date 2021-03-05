@@ -28,11 +28,8 @@
  *******************************************************************************/
 package co.ecg.jain_sip.sip.ri.stack;
 
-import co.ecg.jain_sip.core.ri.CommonLogger;
-import co.ecg.jain_sip.core.ri.LogLevels;
-import co.ecg.jain_sip.core.ri.LogWriter;
-import co.ecg.jain_sip.core.ri.StackLogger;
 import co.ecg.jain_sip.sip.ri.SipStackImpl;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.net.ssl.SSLHandshakeException;
 import javax.net.ssl.SSLSocket;
@@ -53,16 +50,11 @@ import java.util.concurrent.TimeUnit;
  * Low level Input output to a socket. Caches TCP connections and takes care of
  * re-connecting to the remote party if the other end drops the connection
  *
- * @version 1.2
- *
  * @author M. Ranganathan <br/>
- *
- *
+ * @version 1.2
  */
-
+@Slf4j
 public class IOHandler {
-	
-	private static StackLogger logger = CommonLogger.getLogger(IOHandler.class);
 
     private SipStackImpl sipStack;
 
@@ -93,15 +85,14 @@ public class IOHandler {
     }
 
     protected void putSocket(String key, Socket sock) {
-    	if (logger.isLoggingEnabled(StackLogger.TRACE_DEBUG)) {
-            log.debug("adding socket for key " + key);
-        }
+
+        log.debug("adding socket for key " + key);
+
         socketTable.put(key, sock);
     }
 
     protected Socket getSocket(String key) {
         return (Socket) socketTable.get(key);
-
     }
 
     protected void removeSocket(String key) {
@@ -110,9 +101,8 @@ public class IOHandler {
         if (semaphore != null) {
             semaphore.release();
         }
-        if (logger.isLoggingEnabled(StackLogger.TRACE_DEBUG)) {
-            log.debug("removed Socket and Semaphore for key " + key);
-        }
+
+        log.debug("removed Socket and Semaphore for key " + key);
     }
 
     /**
@@ -139,25 +129,19 @@ public class IOHandler {
      * Creates and binds, if necessary, a socket connected to the specified
      * destination address and port and then returns its local address.
      *
-     * @param dst
-     *            the destination address that the socket would need to connect
-     *            to.
-     * @param dstPort
-     *            the port number that the connection would be established with.
-     * @param localAddress
-     *            the address that we would like to bind on (null for the "any"
-     *            address).
-     * @param localPort
-     *            the port that we'd like our socket to bind to (0 for a random
-     *            port).
-     *
+     * @param dst          the destination address that the socket would need to connect
+     *                     to.
+     * @param dstPort      the port number that the connection would be established with.
+     * @param localAddress the address that we would like to bind on (null for the "any"
+     *                     address).
+     * @param localPort    the port that we'd like our socket to bind to (0 for a random
+     *                     port).
      * @return the SocketAddress that this handler would use when connecting to
-     *         the specified destination address and port.
-     *
+     * the specified destination address and port.
      * @throws IOException if we fail binding the socket
      */
     public SocketAddress getLocalAddressForTcpDst(InetAddress dst, int dstPort,
-            InetAddress localAddress, int localPort) throws IOException {
+                                                  InetAddress localAddress, int localPort) throws IOException {
         String key = makeKey(dst, dstPort);
 
         Socket clientSock = getSocket(key);
@@ -176,23 +160,20 @@ public class IOHandler {
      * Creates and binds, if necessary, a socket connected to the specified
      * destination address and port and then returns its local address.
      *
-     * @param dst the destination address that the socket would need to connect
-     * to.
-     * @param dstPort the port number that the connection would be established
-     * with.
+     * @param dst          the destination address that the socket would need to connect
+     *                     to.
+     * @param dstPort      the port number that the connection would be established
+     *                     with.
      * @param localAddress the address that we would like to bind on (null for
-     * the "any" address).
-     *
-     * @param channel the message channel that will be servicing the socket
-     *
+     *                     the "any" address).
+     * @param channel      the message channel that will be servicing the socket
      * @return the SocketAddress that this handler would use when connecting to
      * the specified destination address and port.
-     *
      * @throws IOException if we fail binding the socket
      */
     public SocketAddress getLocalAddressForTlsDst(InetAddress dst, int dstPort,
-             InetAddress localAddress, TLSMessageChannel channel)
-             throws IOException {
+                                                  InetAddress localAddress, TLSMessageChannel channel)
+            throws IOException {
         String key = makeKey(dst, dstPort);
 
         Socket clientSock = getSocket(key);
@@ -200,16 +181,12 @@ public class IOHandler {
         if (clientSock == null) {
 
             clientSock = sipStack.getNetworkLayer()
-                .createSSLSocket(dst, dstPort, localAddress);
+                    .createSSLSocket(dst, dstPort, localAddress);
 
             SSLSocket sslsock = (SSLSocket) clientSock;
 
-            if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
-                log.debug(
-                        "inaddr = " + dst);
-                log.debug(
-                        "port = " + dstPort);
-            }
+            log.debug("inaddr = " + dst);
+            log.debug("port = " + dstPort);
 
             HandshakeCompletedListenerImpl listner
                     = new HandshakeCompletedListenerImpl(channel, sslsock);
@@ -222,25 +199,22 @@ public class IOHandler {
             listner.startHandshakeWatchdog();
             sslsock.startHandshake();
             channel.setHandshakeCompleted(true);
-            if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
-                log.debug(
-                        "Handshake passed");
-            }
+
+            log.debug("Handshake passed");
+
 
             // allow application to enforce policy by validating the
             // certificate
             try {
                 sipStack.getTlsSecurityPolicy().enforceTlsPolicy(
-                            channel.getEncapsulatedClientTransaction());
-            }
-            catch (SecurityException ex) {
+                        channel.getEncapsulatedClientTransaction());
+            } catch (SecurityException ex) {
                 throw new IOException(ex.getMessage());
             }
 
-            if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
-                log.debug(
-                        "TLS Security policy passed");
-            }
+
+            log.debug("TLS Security policy passed");
+
 
             putSocket(key, clientSock);
         }
@@ -251,38 +225,29 @@ public class IOHandler {
     /**
      * Send an array of bytes.
      *
-     * @param receiverAddress
-     *            -- inet address
-     * @param contactPort
-     *            -- port to connect to.
-     * @param transport
-     *            -- tcp or udp.
-     * @param isClient
-     *            -- retry to connect if the other end closed connection
-     * @throws IOException
-     *             -- if there is an IO exception sending message.
+     * @param receiverAddress -- inet address
+     * @param contactPort     -- port to connect to.
+     * @param transport       -- tcp or udp.
+     * @param isClient        -- retry to connect if the other end closed connection
+     * @throws IOException -- if there is an IO exception sending message.
      */
 
     public Socket sendBytes(InetAddress senderAddress,
-            InetAddress receiverAddress, int contactPort, String transport,
-            byte[] bytes, boolean isClient, MessageChannel messageChannel)
+                            InetAddress receiverAddress, int contactPort, String transport,
+                            byte[] bytes, boolean isClient, MessageChannel messageChannel)
             throws IOException {
         int retry_count = 0;
         int max_retry = isClient ? 2 : 1;
         // Server uses TCP transport. TCP client sockets are cached
         int length = bytes.length;
-        if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
-            log.debug(
-                    "sendBytes " + transport + " local inAddr "
-                    		+ senderAddress.getHostAddress() + " remote inAddr "
-                            + receiverAddress.getHostAddress() + " port = "
-                            + contactPort + " length = " + length + " isClient " + isClient );
 
-        }
-        if (logger.isLoggingEnabled(LogLevels.TRACE_INFO)
-                && sipStack.isLogStackTraceOnMessageSend()) {
-            logger.logStackTrace(StackLogger.TRACE_INFO);
-        }
+        log.debug(
+                "sendBytes " + transport + " local inAddr "
+                        + senderAddress.getHostAddress() + " remote inAddr "
+                        + receiverAddress.getHostAddress() + " port = "
+                        + contactPort + " length = " + length + " isClient " + isClient);
+
+
         if (transport.compareToIgnoreCase(TCP) == 0) {
             String key = makeKey(receiverAddress, contactPort);
             // This should be in a synchronized block ( reported by
@@ -295,12 +260,10 @@ public class IOHandler {
                 clientSock = getSocket(key);
                 while (retry_count < max_retry) {
                     if (clientSock == null) {
-                        if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
-                            log.debug(
-                                    "inaddr = " + receiverAddress);
-                            log.debug(
-                                    "port = " + contactPort);
-                        }
+
+                        log.debug("inaddr = " + receiverAddress);
+                        log.debug("port = " + contactPort);
+
                         // note that the IP Address for stack may not be
                         // assigned.
                         // sender address is the address of the listening point.
@@ -308,20 +271,20 @@ public class IOHandler {
                         // address (i.e. that of the stack). In version 1.2
                         // the IP address is on a per listening point basis.
                         try {
-                        	clientSock = sipStack.getNetworkLayer().createSocket(
-                        			receiverAddress, contactPort, senderAddress);
+                            clientSock = sipStack.getNetworkLayer().createSocket(
+                                    receiverAddress, contactPort, senderAddress);
                         } catch (SocketException e) { // We must catch the socket timeout exceptions here, any SocketException not just ConnectException
-                        	log.error("Problem connecting " +
-                        			receiverAddress + " " + contactPort + " " + senderAddress + " for message " + new String(bytes, "UTF-8"));
-                        	// new connection is bad.
-                        	// remove from our table the socket and its semaphore
-                        	removeSocket(key);
-                        	throw new SocketException(e.getClass() + " " + e.getMessage() + " " + e.getCause() + " Problem connecting " +
-                        			receiverAddress + " " + contactPort + " " + senderAddress + " for message " + new String(bytes, "UTF-8"));
+                            log.error("Problem connecting " +
+                                    receiverAddress + " " + contactPort + " " + senderAddress + " for message " + new String(bytes, "UTF-8"));
+                            // new connection is bad.
+                            // remove from our table the socket and its semaphore
+                            removeSocket(key);
+                            throw new SocketException(e.getClass() + " " + e.getMessage() + " " + e.getCause() + " Problem connecting " +
+                                    receiverAddress + " " + contactPort + " " + senderAddress + " for message " + new String(bytes, "UTF-8"));
                         }
-                        if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
-                        	log.debug("local inaddr = " + clientSock.getLocalAddress().getHostAddress());
-                        }
+
+                        log.debug("local inaddr = " + clientSock.getLocalAddress().getHostAddress());
+
                         OutputStream outputStream = clientSock
                                 .getOutputStream();
                         writeChunks(outputStream, bytes, length);
@@ -334,11 +297,9 @@ public class IOHandler {
                             writeChunks(outputStream, bytes, length);
                             break;
                         } catch (IOException ex) {
-                            if (logger
-                                    .isLoggingEnabled(LogWriter.TRACE_WARN))
-                                log.warn(
-                                        "IOException occured retryCount "
-                                                + retry_count);                            
+
+                            log.warn("IOException occured retryCount "
+                                    + retry_count);
                             try {
                                 clientSock.close();
                             } catch (Exception e) {
@@ -346,47 +307,44 @@ public class IOHandler {
                             clientSock = null;
                             retry_count++;
                             // This is a server tx trying to send a response.
-                            if ( !isClient ) {
-   								removeSocket(key);
+                            if (!isClient) {
+                                removeSocket(key);
                                 throw ex;
                             }
-                            if(retry_count >= max_retry) {
-								// old connection is bad.
-								// remove from our table the socket and its semaphore
-								removeSocket(key);
-							} else {
-								// don't remove the semaphore on retry
-								socketTable.remove(key);
-							}
+                            if (retry_count >= max_retry) {
+                                // old connection is bad.
+                                // remove from our table the socket and its semaphore
+                                removeSocket(key);
+                            } else {
+                                // don't remove the semaphore on retry
+                                socketTable.remove(key);
+                            }
                         }
                     }
                 }
             } catch (IOException ex) {
-                if (logger.isLoggingEnabled(LogWriter.TRACE_ERROR)) {
-                    log.error(
-                            "Problem sending: sendBytes " + transport
-                                    + " inAddr "
-                                    + receiverAddress.getHostAddress()
-                                    + " port = " + contactPort +
-                            " remoteHost " + messageChannel.getPeerAddress() +
-                            " remotePort " + messageChannel.getPeerPort() +
-                            " peerPacketPort "
-                                    + messageChannel.getPeerPacketSourcePort() + " isClient " + isClient);
-                }
-                removeSocket(key);                                
+
+                log.error("Problem sending: sendBytes " + transport
+                        + " inAddr "
+                        + receiverAddress.getHostAddress()
+                        + " port = " + contactPort +
+                        " remoteHost " + messageChannel.getPeerAddress() +
+                        " remotePort " + messageChannel.getPeerPort() +
+                        " peerPacketPort "
+                        + messageChannel.getPeerPacketSourcePort() + " isClient " + isClient);
+
+                removeSocket(key);
             } finally {
                 leaveIOCriticalSection(key);
             }
 
             if (clientSock == null) {
 
-                if (logger.isLoggingEnabled(LogWriter.TRACE_ERROR)) {
-                    log.error(
-                            this.socketTable.toString());
-                    log.error(
-                            "Could not connect to " + receiverAddress + ":"
-                                    + contactPort);
-                }
+
+                log.error(this.socketTable.toString());
+                log.error("Could not connect to " + receiverAddress + ":"
+                        + contactPort);
+
 
                 throw new IOException("Could not connect to " + receiverAddress
                         + ":" + contactPort);
@@ -412,13 +370,10 @@ public class IOHandler {
                                         senderAddress);
                         SSLSocket sslsock = (SSLSocket) clientSock;
 
-                        if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
-                            log.debug(
-                                    "inaddr = " + receiverAddress);
-                            log.debug(
-                                    "port = " + contactPort);
-                        }
-                        HandshakeCompletedListenerImpl listner = new HandshakeCompletedListenerImpl((TLSMessageChannel)messageChannel, clientSock);
+                        log.debug("inaddr = " + receiverAddress);
+                        log.debug("port = " + contactPort);
+
+                        HandshakeCompletedListenerImpl listner = new HandshakeCompletedListenerImpl((TLSMessageChannel) messageChannel, clientSock);
                         ((TLSMessageChannel) messageChannel)
                                 .setHandshakeCompletedListener(listner);
                         sslsock.addHandshakeCompletedListener(listner);
@@ -427,11 +382,10 @@ public class IOHandler {
 
                         listner.startHandshakeWatchdog();
                         sslsock.startHandshake();
-                        ((TLSMessageChannel)messageChannel).setHandshakeCompleted(true);
-                        if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
-                            log.debug(
-                                    "Handshake passed");
-                        }
+                        ((TLSMessageChannel) messageChannel).setHandshakeCompleted(true);
+
+                        log.debug("Handshake passed");
+
                         // allow application to enforce policy by validating the
                         // certificate
 
@@ -445,10 +399,9 @@ public class IOHandler {
                             throw new IOException(ex.getMessage());
                         }
 
-                        if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
-                            log.debug(
-                                    "TLS Security policy passed");
-                        }
+
+                        log.debug("TLS Security policy passed");
+
                         OutputStream outputStream = clientSock
                                 .getOutputStream();
                         writeChunks(outputStream, bytes, length);
@@ -461,8 +414,7 @@ public class IOHandler {
                             writeChunks(outputStream, bytes, length);
                             break;
                         } catch (IOException ex) {
-                            if (logger.isLoggingEnabled())
-                                logger.logException(ex);
+                            log.info("IOException", ex);
                             // old connection is bad.
                             // remove from our table.
                             removeSocket(key);
@@ -528,17 +480,17 @@ public class IOHandler {
     private void enterIOCriticalSection(String key) throws IOException {
         // http://dmy999.com/article/34/correct-use-of-concurrenthashmap
         Semaphore creationSemaphore = socketCreationMap.get(key);
-        if(creationSemaphore == null) {
+        if (creationSemaphore == null) {
             Semaphore newCreationSemaphore = new Semaphore(1, true);
             creationSemaphore = socketCreationMap.putIfAbsent(key, newCreationSemaphore);
-            if(creationSemaphore == null) {
-                creationSemaphore = newCreationSemaphore;       
-                if (logger.isLoggingEnabled(StackLogger.TRACE_DEBUG)) {
-                    log.debug("new Semaphore added for key " + key);
-                }
+            if (creationSemaphore == null) {
+                creationSemaphore = newCreationSemaphore;
+
+                log.debug("new Semaphore added for key " + key);
+
             }
         }
-        
+
         try {
             boolean retval = creationSemaphore.tryAcquire(10, TimeUnit.SECONDS);
             if (!retval) {
@@ -554,19 +506,17 @@ public class IOHandler {
      * Close all the cached connections.
      */
     public void closeAll() {
-        if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG))
-            log.debug(
-                            "Closing " + socketTable.size()
-                                    + " sockets from IOHandler");
+        log.debug("Closing " + socketTable.size()
+                + " sockets from IOHandler");
+
         for (Enumeration<Socket> values = socketTable.elements(); values
-                .hasMoreElements();) {
+                .hasMoreElements(); ) {
             Socket s = (Socket) values.nextElement();
             try {
                 s.close();
             } catch (IOException ex) {
             }
         }
-
     }
 
 }

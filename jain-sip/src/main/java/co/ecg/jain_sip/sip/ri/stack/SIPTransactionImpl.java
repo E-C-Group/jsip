@@ -27,12 +27,7 @@ package co.ecg.jain_sip.sip.ri.stack;
 
 import co.ecg.jain_sip.sip.ri.message.SIPMessage;
 import co.ecg.jain_sip.sip.ri.message.SIPRequest;
-import co.ecg.jain_sip.core.ri.CommonLogger;
 import co.ecg.jain_sip.core.ri.InternalErrorHandler;
-import co.ecg.jain_sip.core.ri.LogLevels;
-import co.ecg.jain_sip.core.ri.LogWriter;
-import co.ecg.jain_sip.core.ri.ServerLogger;
-import co.ecg.jain_sip.core.ri.StackLogger;
 import co.ecg.jain_sip.sip.ri.SIPConstants;
 import co.ecg.jain_sip.sip.ri.SipProviderImpl;
 import co.ecg.jain_sip.sip.ri.SipStackImpl;
@@ -63,12 +58,14 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.net.ssl.SSLPeerUnverifiedException;
+
 import co.ecg.jain_sip.sip.Dialog;
 import co.ecg.jain_sip.sip.IOExceptionEvent;
 import co.ecg.jain_sip.sip.TransactionState;
 import co.ecg.jain_sip.sip.address.SipURI;
 import co.ecg.jain_sip.sip.message.Request;
 import co.ecg.jain_sip.sip.message.Response;
+import lombok.extern.slf4j.Slf4j;
 
 /*
  * Modifications for TLS Support added by Daniel J. Martinez Manzano
@@ -82,20 +79,19 @@ import co.ecg.jain_sip.sip.message.Response;
  *
  * @author Jeff Keyser
  * @author M. Ranganathan
- *
- *
  * @version 1.2 $Revision: 1.100 $ $Date: 2010-12-02 22:04:13 $
  */
+@Slf4j
 public abstract class SIPTransactionImpl implements SIPTransaction {
-	private static StackLogger logger = CommonLogger.getLogger(SIPTransaction.class);
 
-	// Contribution on http://java.net/jira/browse/JSIP-417 from Alexander Saveliev
-	private static final Pattern EXTRACT_CN = Pattern.compile(".*CN\\s*=\\s*([\\w*\\.\\-_]+).*");
+
+    // Contribution on http://java.net/jira/browse/JSIP-417 from Alexander Saveliev
+    private static final Pattern EXTRACT_CN = Pattern.compile(".*CN\\s*=\\s*([\\w*\\.\\-_]+).*");
 
     protected boolean toListener; // Flag to indicate that the listener gets
 
     // to see the event.
-    
+
     protected int baseTimerInterval = SIPTransactionStack.BASE_TIMER_INTERVAL;
     /**
      * 5 sec Maximum duration a message will remain in the network
@@ -119,7 +115,7 @@ public abstract class SIPTransactionImpl implements SIPTransaction {
     protected SIPResponse lastResponse;
 
     // private SIPDialog dialog;
-    
+
     protected boolean isMapped;
 
     private transient TransactionSemaphore semaphore;
@@ -141,10 +137,10 @@ public abstract class SIPTransactionImpl implements SIPTransaction {
     // so we keep only those data instead
     protected byte[] originalRequestBytes;
     protected long originalRequestCSeqNumber;
-    protected String originalRequestBranch;	
+    protected String originalRequestBranch;
     protected boolean originalRequestHasPort;
-    
-	
+
+
     // Underlying channel being used to send messages for this transaction
     protected transient MessageChannel encapsulatedChannel;
 
@@ -177,21 +173,21 @@ public abstract class SIPTransactionImpl implements SIPTransaction {
     // after the Transaction goes to terminated state.
     protected int collectionTime;
 
-    private boolean terminatedEventDelivered;      
-    
+    private boolean terminatedEventDelivered;
+
     // aggressive flag to optimize eagerly
     private boolean releaseReferences;
-    
+
     // caching flags
     private Boolean inviteTransaction = null;
-    private Boolean dialogCreatingTransaction = null; 
-    
+    private Boolean dialogCreatingTransaction = null;
+
     // caching fork id
     private String forkId = null;
     protected String mergeId = null;
-    
+
     public ExpiresTimerTask expiresTimerTask;
-	// http://java.net/jira/browse/JSIP-420
+    // http://java.net/jira/browse/JSIP-420
     private MaxTxLifeTimeListener maxTxLifeTimeListener;
 
     /**
@@ -208,22 +204,22 @@ public abstract class SIPTransactionImpl implements SIPTransaction {
     // and a lock for reetrant listener to avoid race conditions 
     // when 2 responses 180/200 OK arrives at the same time
     class TransactionSemaphore {
-        
+
         private static final long serialVersionUID = -1634100711669020804L;
         Semaphore sem = null;
         ReentrantLock lock = null;
-        
+
         public TransactionSemaphore() {
-            if(((SipStackImpl)sipStack).isReEntrantListener()) {
+            if (((SipStackImpl) sipStack).isReEntrantListener()) {
                 lock = new ReentrantLock();
             } else {
                 sem = new Semaphore(1, true);
             }
         }
-        
+
         public boolean acquire() {
             try {
-                if(((SipStackImpl)sipStack).isReEntrantListener()) {
+                if (((SipStackImpl) sipStack).isReEntrantListener()) {
                     lock.lock();
                 } else {
                     sem.acquire();
@@ -234,52 +230,50 @@ public abstract class SIPTransactionImpl implements SIPTransaction {
                         ex);
                 InternalErrorHandler.handleException(ex);
                 return false;
-            }        
+            }
         }
-        
+
         public boolean tryAcquire() {
             try {
-                if(((SipStackImpl)sipStack).isReEntrantListener()) {
+                if (((SipStackImpl) sipStack).isReEntrantListener()) {
                     return lock.tryLock(sipStack.maxListenerResponseTime, TimeUnit.SECONDS);
                 } else {
                     return sem.tryAcquire(sipStack.maxListenerResponseTime, TimeUnit.SECONDS);
-                }                
+                }
             } catch (Exception ex) {
                 log.error("Unexpected exception trying acquiring sem",
                         ex);
                 InternalErrorHandler.handleException(ex);
                 return false;
-            }        
+            }
         }
-        
+
         public void release() {
             try {
-                if(((SipStackImpl)sipStack).isReEntrantListener()) {
-                    if(lock.isHeldByCurrentThread()) {
+                if (((SipStackImpl) sipStack).isReEntrantListener()) {
+                    if (lock.isHeldByCurrentThread()) {
                         lock.unlock();
                     }
                 } else {
                     sem.release();
-                }                
+                }
             } catch (Exception ex) {
                 log.error("Unexpected exception releasing sem",
-                                ex);
-            }        
+                        ex);
+            }
         }
     }
-    
+
     /**
      * The linger timer is used to remove the transaction from the transaction
      * table after it goes into terminated state. This allows connection caching
      * and also takes care of race conditins.
-     *
-     *
      */
     class LingerTimer extends SIPStackTimerTask {
 
-        public LingerTimer() {            
-            if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
-            	SIPTransaction sipTransaction = SIPTransactionImpl.this;
+        public LingerTimer() {
+            if (log.isDebugEnabled()) {
+                SIPTransaction sipTransaction = SIPTransactionImpl.this;
                 log.debug("LingerTimer : "
                         + sipTransaction.getTransactionId());
             }
@@ -290,28 +284,27 @@ public abstract class SIPTransactionImpl implements SIPTransaction {
             cleanUp();
         }
     }
-    
+
     /**
      * http://java.net/jira/browse/JSIP-420
      * This timer task will terminate the transaction after a configurable time
-     *
      */
     class MaxTxLifeTimeListener extends SIPStackTimerTask {
         SIPTransaction sipTransaction = SIPTransactionImpl.this;
-    
+
         public void runTask() {
-            try {               	
-            	if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
-                    log.debug("Fired MaxTxLifeTimeListener for tx " +  sipTransaction + " , tx id "+ sipTransaction.getTransactionId() + " , state " + sipTransaction.getState());
-            	}
-            	
-        		raiseErrorEvent(SIPTransactionErrorEvent.TIMEOUT_ERROR);
-        	
-        		 SIPStackTimerTask myTimer = new LingerTimer();
-                 sipStack.getTimer().schedule(myTimer,
-                     SIPTransactionStack.CONNECTION_LINGER_TIME * 1000);
-                 maxTxLifeTimeListener = null;
-                 
+            try {
+                if (log.isDebugEnabled()) {
+                    log.debug("Fired MaxTxLifeTimeListener for tx " + sipTransaction + " , tx id " + sipTransaction.getTransactionId() + " , state " + sipTransaction.getState());
+                }
+
+                raiseErrorEvent(SIPTransactionErrorEvent.TIMEOUT_ERROR);
+
+                SIPStackTimerTask myTimer = new LingerTimer();
+                sipStack.getTimer().schedule(myTimer,
+                        SIPTransactionStack.CONNECTION_LINGER_TIME * 1000);
+                maxTxLifeTimeListener = null;
+
             } catch (Exception ex) {
                 log.error("unexpected exception", ex);
             }
@@ -321,26 +314,24 @@ public abstract class SIPTransactionImpl implements SIPTransaction {
     /**
      * Transaction constructor.
      *
-     * @param newParentStack
-     *            Parent stack for this transaction.
-     * @param newEncapsulatedChannel
-     *            Underlying channel for this transaction.
+     * @param newParentStack         Parent stack for this transaction.
+     * @param newEncapsulatedChannel Underlying channel for this transaction.
      */
     protected SIPTransactionImpl(SIPTransactionStack newParentStack,
-            MessageChannel newEncapsulatedChannel) {
+                                 MessageChannel newEncapsulatedChannel) {
 
         sipStack = newParentStack;
         this.semaphore = new TransactionSemaphore();
-        
+
         encapsulatedChannel = newEncapsulatedChannel;
-     
-        if (this.isReliable()) {            
-                encapsulatedChannel.useCount++;
-                if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG))
-                    log.debug("use count for encapsulated channel"
-                                    + this
-                                    + " "
-                                    + encapsulatedChannel.useCount );
+
+        if (this.isReliable()) {
+            encapsulatedChannel.useCount++;
+            if (log.isDebugEnabled())
+                log.debug("use count for encapsulated channel"
+                        + this
+                        + " "
+                        + encapsulatedChannel.useCount);
         }
 
         this.currentState = -1;
@@ -362,9 +353,9 @@ public abstract class SIPTransactionImpl implements SIPTransaction {
     @Override
     public abstract void cleanUp();
 
-	/**
-   * @see SIPTransaction#setOriginalRequest(SIPRequest)
-   */
+    /**
+     * @see SIPTransaction#setOriginalRequest(SIPRequest)
+     */
     @Override
     public void setOriginalRequest(SIPRequest newOriginalRequest) {
 
@@ -374,7 +365,7 @@ public abstract class SIPTransactionImpl implements SIPTransaction {
         final String newTransactionId = newOriginalRequest.getTransactionId();
         if (this.originalRequest != null
                 && (!this.originalRequest.getTransactionId().equals(
-                        newTransactionId))) {
+                newTransactionId))) {
             sipStack.removeTransactionHash(this);
         }
         // This will be cleared later.
@@ -385,19 +376,19 @@ public abstract class SIPTransactionImpl implements SIPTransaction {
         this.originalRequestBranch = topmostVia.getBranch();
         this.originalRequestHasPort = topmostVia.hasPort();
         int originalRequestViaPort = topmostVia.getPort();
-       
-        if ( originalRequestViaPort == -1 ) {
-            if (topmostVia.getTransport().equalsIgnoreCase("TLS") ) {
-                originalRequestViaPort = 5061;         
+
+        if (originalRequestViaPort == -1) {
+            if (topmostVia.getTransport().equalsIgnoreCase("TLS")) {
+                originalRequestViaPort = 5061;
             } else {
                 originalRequestViaPort = 5060;
             }
         }
-                
+
         // just cache the control information so the
         // original request can be released later.
         this.method = newOriginalRequest.getMethod();
-        
+
         this.transactionId = newTransactionId;
 
         originalRequest.setTransaction(this);
@@ -405,7 +396,7 @@ public abstract class SIPTransactionImpl implements SIPTransaction {
         // If the message has an explicit branch value set,
         newBranch = topmostVia.getBranch();
         if (newBranch != null) {
-            if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG))
+            if (log.isDebugEnabled())
                 log.debug("Setting Branch id : " + newBranch);
 
             // Override the default branch with the one
@@ -413,7 +404,7 @@ public abstract class SIPTransactionImpl implements SIPTransaction {
             setBranch(newBranch);
 
         } else {
-            if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG))
+            if (log.isDebugEnabled())
                 log.debug("Branch id is null - compute TID!"
                         + newOriginalRequest.encode());
             setBranch(newTransactionId);
@@ -433,8 +424,8 @@ public abstract class SIPTransactionImpl implements SIPTransaction {
      */
     @Override
     public Request getRequest() {
-        if(isReleaseReferences() && originalRequest == null && originalRequestBytes != null) {
-            if(logger.isLoggingEnabled(StackLogger.TRACE_WARN)) {
+        if (isReleaseReferences() && originalRequest == null && originalRequestBytes != null) {
+            if (log.isWarnEnabled()) {
                 log.warn("reparsing original request " + originalRequestBytes + " since it was eagerly cleaned up, but beware this is not efficient with the aggressive flag set !");
             }
             try {
@@ -443,7 +434,7 @@ public abstract class SIPTransactionImpl implements SIPTransaction {
             } catch (ParseException e) {
                 log.error("message " + originalRequestBytes + " could not be reparsed !");
             }
-        }   
+        }
         return (Request) originalRequest;
     }
 
@@ -453,20 +444,20 @@ public abstract class SIPTransactionImpl implements SIPTransaction {
     @Override
     public boolean isDialogCreatingTransaction() {
         if (dialogCreatingTransaction == null) {
-        	dialogCreatingTransaction = Boolean.valueOf(isInviteTransaction() || getMethod().equals(Request.SUBSCRIBE) || getMethod().equals(Request.REFER));
+            dialogCreatingTransaction = Boolean.valueOf(isInviteTransaction() || getMethod().equals(Request.SUBSCRIBE) || getMethod().equals(Request.REFER));
         }
-    	return dialogCreatingTransaction.booleanValue();
+        return dialogCreatingTransaction.booleanValue();
     }
-    
+
     /**
      * @see SIPTransaction#isInviteTransaction()
      */
     @Override
     public boolean isInviteTransaction() {
         if (inviteTransaction == null) {
-        	inviteTransaction = Boolean.valueOf(getMethod().equals(Request.INVITE));
+            inviteTransaction = Boolean.valueOf(getMethod().equals(Request.INVITE));
         }
-    	return inviteTransaction.booleanValue();
+        return inviteTransaction.booleanValue();
     }
 
     /**
@@ -545,20 +536,18 @@ public abstract class SIPTransactionImpl implements SIPTransaction {
         }
         if (currentState != TransactionState._TERMINATED) {
             currentState = newState;
-        }
-        else
+        } else
             newState = currentState;
         // END OF PATCH
 
-        if(newState == TransactionState._COMPLETED) {
-        	enableTimeoutTimer(TIMER_H); // timer H must be started around now
+        if (newState == TransactionState._COMPLETED) {
+            enableTimeoutTimer(TIMER_H); // timer H must be started around now
         }
 
-        if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
+        if (log.isDebugEnabled()) {
             log.debug("Transaction:setState " + newState
                     + " " + this + " branchID = " + this.getBranch()
                     + " isClient = " + (this instanceof SIPClientTransaction));
-            logger.logStackTrace();
         }
     }
 
@@ -575,9 +564,9 @@ public abstract class SIPTransactionImpl implements SIPTransaction {
      */
     @Override
     public TransactionState getState() {
-    	if(currentState < 0) {
-    		return null;
-    	}
+        if (currentState < 0) {
+            return null;
+        }
         return TransactionState.getObject(this.currentState);
     }
 
@@ -593,9 +582,8 @@ public abstract class SIPTransactionImpl implements SIPTransaction {
      * Enables retransmission timer events for this transaction to begin after
      * the number of ticks passed to this routine.
      *
-     * @param tickCount
-     *            Number of ticks before the next retransmission timer event
-     *            occurs.
+     * @param tickCount Number of ticks before the next retransmission timer event
+     *                  occurs.
      */
     protected void enableRetransmissionTimer(int tickCount) {
         // For INVITE Client transactions, double interval each time
@@ -622,11 +610,10 @@ public abstract class SIPTransactionImpl implements SIPTransaction {
      * Enables a timeout event to occur for this transaction after the number of
      * ticks passed to this method.
      *
-     * @param tickCount
-     *            Number of ticks before this transaction times out.
+     * @param tickCount Number of ticks before this transaction times out.
      */
     protected void enableTimeoutTimer(int tickCount) {
-        if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG))
+        if (log.isDebugEnabled())
             log.debug("enableTimeoutTimer " + this
                     + " tickCount " + tickCount + " currentTickCount = "
                     + timeoutTimerTicksLeft);
@@ -640,7 +627,7 @@ public abstract class SIPTransactionImpl implements SIPTransaction {
      */
     @Override
     public void disableTimeoutTimer() {
-    	if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) log.debug("disableTimeoutTimer " + this);
+        if (log.isDebugEnabled()) log.debug("disableTimeoutTimer " + this);
         timeoutTimerTicksLeft = -1;
     }
 
@@ -729,6 +716,7 @@ public abstract class SIPTransactionImpl implements SIPTransaction {
     }
 
     // @@@ hagai
+
     /**
      * @see SIPTransaction#getPeerPacketSourcePort()
      */
@@ -798,89 +786,89 @@ public abstract class SIPTransactionImpl implements SIPTransaction {
         // created. Bug was noted by Bruce Evangelder
         // soleo communications.
         try {
-        	final RawMessageChannel channel = (RawMessageChannel) encapsulatedChannel;
+            final RawMessageChannel channel = (RawMessageChannel) encapsulatedChannel;
             for (MessageProcessor messageProcessor : sipStack
                     .getMessageProcessors()) {
-            	boolean addrmatch = messageProcessor.getIpAddress().getHostAddress().toString().equals(this.getPeerAddress());
-            	if (addrmatch
-            			&& messageProcessor.getPort() == this.getPeerPort()
-            			&& messageProcessor.getTransport().equalsIgnoreCase(
-            					this.getPeerProtocol())) {
-            		if (channel instanceof TCPMessageChannel) {
-            			try {
+                boolean addrmatch = messageProcessor.getIpAddress().getHostAddress().toString().equals(this.getPeerAddress());
+                if (addrmatch
+                        && messageProcessor.getPort() == this.getPeerPort()
+                        && messageProcessor.getTransport().equalsIgnoreCase(
+                        this.getPeerProtocol())) {
+                    if (channel instanceof TCPMessageChannel) {
+                        try {
 
-            				Runnable processMessageTask = new Runnable() {
+                            Runnable processMessageTask = new Runnable() {
 
-            					public void run() {
-            						try {
-            							((TCPMessageChannel) channel)
-            							.processMessage((SIPMessage) messageToSend.clone(), getPeerInetAddress());
-            						} catch (Exception ex) {
+                                public void run() {
+                                    try {
+                                        ((TCPMessageChannel) channel)
+                                                .processMessage((SIPMessage) messageToSend.clone(), getPeerInetAddress());
+                                    } catch (Exception ex) {
 
-            							if (logger.isLoggingEnabled(ServerLogger.TRACE_ERROR)) {
-            								log.error("Error self routing TCP message cause by: ", ex);
-            							}
-            						}
-            					}
-            				};
-            				getSIPStack().getSelfRoutingThreadpoolExecutor().execute(processMessageTask);
+                                        if (log.isErrorEnabled()) {
+                                            log.error("Error self routing TCP message cause by: ", ex);
+                                        }
+                                    }
+                                }
+                            };
+                            getSIPStack().getSelfRoutingThreadpoolExecutor().execute(processMessageTask);
 
-            			} catch (Exception e) {
+                        } catch (Exception e) {
 
-            				log.error("Error passing message in self routing TCP", e);
+                            log.error("Error passing message in self routing TCP", e);
 
-            			}
-            			if (logger.isLoggingEnabled(LogLevels.TRACE_DEBUG))
-                        	log.debug("Self routing message TCP");
+                        }
+                        if (log.isDebugEnabled())
+                            log.debug("Self routing message TCP");
 
                         return;
                     }
-            		if (channel instanceof TLSMessageChannel) {
-            			try {
+                    if (channel instanceof TLSMessageChannel) {
+                        try {
 
-            				Runnable processMessageTask = new Runnable() {
+                            Runnable processMessageTask = new Runnable() {
 
-            					public void run() {
-            						try {
-            							((TLSMessageChannel) channel)
-            							.processMessage((SIPMessage) messageToSend.clone(), getPeerInetAddress());
-            						} catch (Exception ex) {
-            							if (logger.isLoggingEnabled(ServerLogger.TRACE_ERROR)) {
-            								log.error("Error self routing TLS message cause by: ", ex);
-            							}
-            						}
-            					}
-            				};
-            				getSIPStack().getSelfRoutingThreadpoolExecutor().execute(processMessageTask);
+                                public void run() {
+                                    try {
+                                        ((TLSMessageChannel) channel)
+                                                .processMessage((SIPMessage) messageToSend.clone(), getPeerInetAddress());
+                                    } catch (Exception ex) {
+                                        if (log.isErrorEnabled()) {
+                                            log.error("Error self routing TLS message cause by: ", ex);
+                                        }
+                                    }
+                                }
+                            };
+                            getSIPStack().getSelfRoutingThreadpoolExecutor().execute(processMessageTask);
 
-            			} catch (Exception e) {
-            				log.error("Error passing message in TLS self routing", e);
-            			}
-            			if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG))
-                        	log.debug("Self routing message TLS");
+                        } catch (Exception e) {
+                            log.error("Error passing message in TLS self routing", e);
+                        }
+                        if (log.isDebugEnabled())
+                            log.debug("Self routing message TLS");
                         return;
                     }
                     if (channel instanceof RawMessageChannel) {
                         try {
 
-                        	Runnable processMessageTask = new Runnable() {
+                            Runnable processMessageTask = new Runnable() {
 
-    							public void run() {
-    								try {
-    									((RawMessageChannel) channel).processMessage((SIPMessage) messageToSend.clone());
-    								} catch (Exception ex) {
-    									if (logger.isLoggingEnabled(ServerLogger.TRACE_ERROR)) {
-    						        		log.error("Error self routing message cause by: ", ex);
-    						        	}
-    								}
-    							}
-    						};
-    						getSIPStack().getSelfRoutingThreadpoolExecutor().execute(processMessageTask);
-						} catch (Exception e) {
-							log.error("Error passing message in self routing", e);
-						}
-                        if (logger.isLoggingEnabled(LogLevels.TRACE_DEBUG))
-                        	log.debug("Self routing message");
+                                public void run() {
+                                    try {
+                                        ((RawMessageChannel) channel).processMessage((SIPMessage) messageToSend.clone());
+                                    } catch (Exception ex) {
+                                        if (log.isErrorEnabled()) {
+                                            log.error("Error self routing message cause by: ", ex);
+                                        }
+                                    }
+                                }
+                            };
+                            getSIPStack().getSelfRoutingThreadpoolExecutor().execute(processMessageTask);
+                        } catch (Exception e) {
+                            log.error("Error passing message in self routing", e);
+                        }
+                        if (log.isDebugEnabled())
+                            log.debug("Self routing message");
                         return;
                     }
 
@@ -898,18 +886,13 @@ public abstract class SIPTransactionImpl implements SIPTransaction {
      * and send it to the SIP peer. This is just a placeholder method -- calling
      * it will result in an IO exception.
      *
-     * @param messageBytes
-     *            Bytes of the message to send.
-     * @param receiverAddress
-     *            Address of the target peer.
-     * @param receiverPort
-     *            Network port of the target peer.
-     *
-     * @throws IOException
-     *             If called.
+     * @param messageBytes    Bytes of the message to send.
+     * @param receiverAddress Address of the target peer.
+     * @param receiverPort    Network port of the target peer.
+     * @throws IOException If called.
      */
     public void sendMessage(byte[] messageBytes,
-            InetAddress receiverAddress, int receiverPort, boolean retry)
+                            InetAddress receiverAddress, int receiverPort, boolean retry)
             throws IOException {
         throw new IOException(
                 "Cannot send unparsed message through Transaction Channel!");
@@ -1101,9 +1084,9 @@ public abstract class SIPTransactionImpl implements SIPTransaction {
                 // this message,
                 if (getBranch().equalsIgnoreCase(messageBranch)
                         && topViaHeader.getSentBy().equals(
-                                origRequest.getTopmostVia().getSentBy())) {
+                        origRequest.getTopmostVia().getSentBy())) {
                     transactionMatches = true;
-                    if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG))
+                    if (log.isDebugEnabled())
                         log.debug("returning  true");
                 }
 
@@ -1112,20 +1095,20 @@ public abstract class SIPTransactionImpl implements SIPTransaction {
                 // If RequestURI, To tag, From tag,
                 // CallID, CSeq number, and top Via
                 // headers are the same,
-                if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG))
+                if (log.isDebugEnabled())
                     log.debug("testing against "
                             + origRequest);
 
                 if (origRequest.getRequestURI().equals(
                         requestToTest.getRequestURI())
                         && origRequest.getTo().equals(
-                                requestToTest.getTo())
+                        requestToTest.getTo())
                         && origRequest.getFrom().equals(
-                                requestToTest.getFrom())
+                        requestToTest.getFrom())
                         && origRequest.getCallId().getCallId().equals(
-                                requestToTest.getCallId().getCallId())
+                        requestToTest.getCallId().getCallId())
                         && origRequest.getCSeq().getSeqNumber() == requestToTest
-                                .getCSeq().getSeqNumber()
+                        .getCSeq().getSeqNumber()
                         && topViaHeader.equals(origRequest.getTopmostVia())) {
 
                     transactionMatches = true;
@@ -1164,7 +1147,7 @@ public abstract class SIPTransactionImpl implements SIPTransaction {
     @Override
     public void close() {
         this.encapsulatedChannel.close();
-        if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG))
+        if (log.isDebugEnabled())
             log.debug("Closing " + this.encapsulatedChannel);
 
     }
@@ -1208,8 +1191,8 @@ public abstract class SIPTransactionImpl implements SIPTransaction {
     @Override
     public void setEncapsulatedChannel(MessageChannel messageChannel) {
         this.encapsulatedChannel = messageChannel;
-        if ( this instanceof SIPClientTransaction ) {
-        	this.encapsulatedChannel.setEncapsulatedClientTransaction((SIPClientTransaction) this);
+        if (this instanceof SIPClientTransaction) {
+            this.encapsulatedChannel.setEncapsulatedClientTransaction((SIPClientTransaction) this);
         }
     }
 
@@ -1242,18 +1225,17 @@ public abstract class SIPTransactionImpl implements SIPTransaction {
     @Override
     public boolean acquireSem() {
         boolean retval = false;
-        if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
+        if (log.isDebugEnabled()) {
             log.debug("acquireSem [[[[" + this);
-            logger.logStackTrace();
         }
-        if ( this.sipStack.maxListenerResponseTime == -1 ) {
+        if (this.sipStack.maxListenerResponseTime == -1) {
             retval = this.semaphore.acquire();
         } else {
             retval = this.semaphore.tryAcquire();
         }
-        if ( logger.isLoggingEnabled(LogWriter.TRACE_DEBUG))
+        if (log.isDebugEnabled())
             log.debug(
-                "acquireSem() returning : " + retval);
+                    "acquireSem() returning : " + retval);
         return retval;
     }
 
@@ -1277,9 +1259,8 @@ public abstract class SIPTransactionImpl implements SIPTransaction {
     }
 
     public void semRelease() {
-        if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
+        if (log.isDebugEnabled()) {
             log.debug("semRelease ]]]]" + this);
-            logger.logStackTrace();
         }
         this.semaphore.release();
     }
@@ -1298,7 +1279,7 @@ public abstract class SIPTransactionImpl implements SIPTransaction {
      */
     @Override
     public void setPassToListener() {
-        if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
+        if (log.isDebugEnabled()) {
             log.debug("setPassToListener()");
         }
         this.toListener = true;
@@ -1321,17 +1302,19 @@ public abstract class SIPTransactionImpl implements SIPTransaction {
      */
     @Override
     public String getCipherSuite() throws UnsupportedOperationException {
-        if (this.getMessageChannel() instanceof TLSMessageChannel ) {
-            if (  ((TLSMessageChannel) this.getMessageChannel()).getHandshakeCompletedListener() == null )
+        if (this.getMessageChannel() instanceof TLSMessageChannel) {
+            if (((TLSMessageChannel) this.getMessageChannel()).getHandshakeCompletedListener() == null)
                 return null;
-            else if ( ((TLSMessageChannel) this.getMessageChannel()).getHandshakeCompletedListener().getHandshakeCompletedEvent() == null)
+            else if (((TLSMessageChannel) this.getMessageChannel()).getHandshakeCompletedListener().getHandshakeCompletedEvent() == null)
                 return null;
-            else return ((TLSMessageChannel) this.getMessageChannel()).getHandshakeCompletedListener().getHandshakeCompletedEvent().getCipherSuite();
+            else
+                return ((TLSMessageChannel) this.getMessageChannel()).getHandshakeCompletedListener().getHandshakeCompletedEvent().getCipherSuite();
         } // Added for https://java.net/jira/browse/JSIP-483
         else if (this.getMessageChannel() instanceof NioTlsMessageChannel) {
-            if (  ((NioTlsMessageChannel) this.getMessageChannel()).getHandshakeCompletedListener() == null )
+            if (((NioTlsMessageChannel) this.getMessageChannel()).getHandshakeCompletedListener() == null)
                 return null;
-            else return ((NioTlsMessageChannel) this.getMessageChannel()).getHandshakeCompletedListener().getCipherSuite();
+            else
+                return ((NioTlsMessageChannel) this.getMessageChannel()).getHandshakeCompletedListener().getCipherSuite();
         } else throw new UnsupportedOperationException("Not a TLS channel");
 
     }
@@ -1342,17 +1325,19 @@ public abstract class SIPTransactionImpl implements SIPTransaction {
      */
     @Override
     public Certificate[] getLocalCertificates() throws UnsupportedOperationException {
-         if (this.getMessageChannel() instanceof TLSMessageChannel ) {
-            if (  ((TLSMessageChannel) this.getMessageChannel()).getHandshakeCompletedListener() == null )
+        if (this.getMessageChannel() instanceof TLSMessageChannel) {
+            if (((TLSMessageChannel) this.getMessageChannel()).getHandshakeCompletedListener() == null)
                 return null;
-            else if ( ((TLSMessageChannel) this.getMessageChannel()).getHandshakeCompletedListener().getHandshakeCompletedEvent() == null)
+            else if (((TLSMessageChannel) this.getMessageChannel()).getHandshakeCompletedListener().getHandshakeCompletedEvent() == null)
                 return null;
-            else return ((TLSMessageChannel) this.getMessageChannel()).getHandshakeCompletedListener().getHandshakeCompletedEvent().getLocalCertificates();
+            else
+                return ((TLSMessageChannel) this.getMessageChannel()).getHandshakeCompletedListener().getHandshakeCompletedEvent().getLocalCertificates();
         } // Added for https://java.net/jira/browse/JSIP-483
         else if (this.getMessageChannel() instanceof NioTlsMessageChannel) {
-            if (  ((NioTlsMessageChannel) this.getMessageChannel()).getHandshakeCompletedListener() == null )
+            if (((NioTlsMessageChannel) this.getMessageChannel()).getHandshakeCompletedListener() == null)
                 return null;
-            else return ((NioTlsMessageChannel) this.getMessageChannel()).getHandshakeCompletedListener().getLocalCertificates();
+            else
+                return ((NioTlsMessageChannel) this.getMessageChannel()).getHandshakeCompletedListener().getLocalCertificates();
         } else throw new UnsupportedOperationException("Not a TLS channel");
     }
 
@@ -1362,17 +1347,19 @@ public abstract class SIPTransactionImpl implements SIPTransaction {
      */
     @Override
     public Certificate[] getPeerCertificates() throws SSLPeerUnverifiedException {
-        if (this.getMessageChannel() instanceof TLSMessageChannel ) {
-            if (  ((TLSMessageChannel) this.getMessageChannel()).getHandshakeCompletedListener() == null )
+        if (this.getMessageChannel() instanceof TLSMessageChannel) {
+            if (((TLSMessageChannel) this.getMessageChannel()).getHandshakeCompletedListener() == null)
                 return null;
-            else if ( ((TLSMessageChannel) this.getMessageChannel()).getHandshakeCompletedListener().getHandshakeCompletedEvent() == null)
+            else if (((TLSMessageChannel) this.getMessageChannel()).getHandshakeCompletedListener().getHandshakeCompletedEvent() == null)
                 return null;
-            else return ((TLSMessageChannel) this.getMessageChannel()).getHandshakeCompletedListener().getHandshakeCompletedEvent().getPeerCertificates();
+            else
+                return ((TLSMessageChannel) this.getMessageChannel()).getHandshakeCompletedListener().getHandshakeCompletedEvent().getPeerCertificates();
         } // Added for https://java.net/jira/browse/JSIP-483
-        else if(this.getMessageChannel() instanceof NioTlsMessageChannel) {
-        	if (  ((NioTlsMessageChannel) this.getMessageChannel()).getHandshakeCompletedListener() == null )
+        else if (this.getMessageChannel() instanceof NioTlsMessageChannel) {
+            if (((NioTlsMessageChannel) this.getMessageChannel()).getHandshakeCompletedListener() == null)
                 return null;
-            else return ((NioTlsMessageChannel) this.getMessageChannel()).getHandshakeCompletedListener().getPeerCertificates();
+            else
+                return ((NioTlsMessageChannel) this.getMessageChannel()).getHandshakeCompletedListener().getPeerCertificates();
         } else throw new UnsupportedOperationException("Not a TLS channel");
 
     }
@@ -1386,30 +1373,30 @@ public abstract class SIPTransactionImpl implements SIPTransaction {
             List<String> certIdentities = new ArrayList<String>();
             Certificate[] certs = getPeerCertificates();
             if (certs == null) {
-                if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
+                if (log.isDebugEnabled()) {
                     log.debug("No certificates available");
                 }
                 return certIdentities;
             }
             for (Certificate cert : certs) {
                 X509Certificate x509cert = (X509Certificate) cert;
-                Collection<List< ? >> subjAltNames = null;
+                Collection<List<?>> subjAltNames = null;
                 try {
                     subjAltNames = x509cert.getSubjectAlternativeNames();
                 } catch (CertificateParsingException ex) {
-                    if (logger.isLoggingEnabled()) {
-                        log.error("Error parsing TLS certificate", ex);
-                    }
+
+                    log.error("Error parsing TLS certificate", ex);
+
                 }
                 // subjAltName types are defined in rfc2459
                 final Integer dnsNameType = 2;
                 final Integer uriNameType = 6;
                 if (subjAltNames != null) {
-                    if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
+                    if (log.isDebugEnabled()) {
                         log.debug("found subjAltNames: " + subjAltNames);
                     }
                     // First look for a URI in the subjectAltName field
-                    for (List< ? > altName : subjAltNames) {
+                    for (List<?> altName : subjAltNames) {
                         // 0th position is the alt name type
                         // 1st position is the alt name data
                         if (altName.get(0).equals(uriNameType)) {
@@ -1417,22 +1404,19 @@ public abstract class SIPTransactionImpl implements SIPTransaction {
                             try {
                                 altNameUri = new AddressFactoryImpl().createSipURI((String) altName.get(1));
                                 // only sip URIs are allowed
-                                if(!"sip".equals(altNameUri.getScheme()))
+                                if (!"sip".equals(altNameUri.getScheme()))
                                     continue;
                                 // user certificates are not allowed
-                                if(altNameUri.getUser() != null)
+                                if (altNameUri.getUser() != null)
                                     continue;
                                 String altHostName = altNameUri.getHost();
-                                if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
+                                if (log.isDebugEnabled()) {
                                     log.debug(
-                                        "found uri " + altName.get(1) + ", hostName " + altHostName);
+                                            "found uri " + altName.get(1) + ", hostName " + altHostName);
                                 }
                                 certIdentities.add(altHostName);
                             } catch (ParseException e) {
-                                if (logger.isLoggingEnabled()) {
-                                    log.error(
-                                        "certificate contains invalid uri: " + altName.get(1));
-                                }
+                                log.error("certificate contains invalid uri: " + altName.get(1));
                             }
                         }
 
@@ -1442,9 +1426,9 @@ public abstract class SIPTransactionImpl implements SIPTransaction {
                     // identity is found that matches the "sip" URI type described
                     // above.
                     if (certIdentities.isEmpty()) {
-                        for (List< ? > altName : subjAltNames) {
+                        for (List<?> altName : subjAltNames) {
                             if (altName.get(0).equals(dnsNameType)) {
-                                if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
+                                if (log.isDebugEnabled()) {
                                     log.debug("found dns " + altName.get(1));
                                 }
                                 certIdentities.add(altName.get(1).toString());
@@ -1462,15 +1446,13 @@ public abstract class SIPTransactionImpl implements SIPTransaction {
                         Matcher matcher = EXTRACT_CN.matcher(dname);
                         if (matcher.matches()) {
                             cname = matcher.group(1);
-                            if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
+                            if (log.isDebugEnabled()) {
                                 log.debug("found CN: " + cname + " from DN: " + dname);
                             }
                             certIdentities.add(cname);
                         }
                     } catch (Exception ex) {
-                        if (logger.isLoggingEnabled()) {
-                            log.error("exception while extracting CN", ex);
-                        }
+                        log.error("exception while extracting CN", ex);
                     }
                 }
             }
@@ -1490,6 +1472,7 @@ public abstract class SIPTransactionImpl implements SIPTransaction {
      * (non-Javadoc)
      * @see gov.nist.javax.sip.DialogExt#isReleaseReferences()
      */
+
     /**
      * @see SIPTransaction#isReleaseReferences()
      */
@@ -1502,6 +1485,7 @@ public abstract class SIPTransactionImpl implements SIPTransaction {
      * (non-Javadoc)
      * @see gov.nist.javax.sip.DialogExt#setReleaseReferences(boolean)
      */
+
     /**
      * @see SIPTransaction#setReleaseReferences(boolean)
      */
@@ -1518,6 +1502,7 @@ public abstract class SIPTransactionImpl implements SIPTransaction {
     public int getTimerD() {
         return timerD;
     }
+
     /**
      * @see SIPTransaction#getTimerT2()
      */
@@ -1539,7 +1524,7 @@ public abstract class SIPTransactionImpl implements SIPTransaction {
      */
     @Override
     public void setTimerD(int interval) {
-        if(interval < 32000) {
+        if (interval < 32000) {
             throw new IllegalArgumentException("To be RFC 3261 compliant, the value of Timer D should be at least 32s");
         }
         timerD = interval / baseTimerInterval;
@@ -1570,7 +1555,7 @@ public abstract class SIPTransactionImpl implements SIPTransaction {
      */
     @Override
     public int getBaseTimerInterval() {
-      return this.baseTimerInterval;
+        return this.baseTimerInterval;
     }
 
     /**
@@ -1578,7 +1563,7 @@ public abstract class SIPTransactionImpl implements SIPTransaction {
      */
     @Override
     public int getT4() {
-      return this.T4;
+        return this.T4;
     }
 
     /**
@@ -1586,7 +1571,7 @@ public abstract class SIPTransactionImpl implements SIPTransaction {
      */
     @Override
     public int getT2() {
-      return this.T2;
+        return this.T2;
     }
 
     /**
@@ -1594,7 +1579,7 @@ public abstract class SIPTransactionImpl implements SIPTransaction {
      */
     @Override
     public int getTimerI() {
-      return this.timerI;
+        return this.timerI;
     }
 
     /**
@@ -1602,7 +1587,7 @@ public abstract class SIPTransactionImpl implements SIPTransaction {
      */
     @Override
     public int getTimerK() {
-      return this.timerK;
+        return this.timerK;
     }
 
 
@@ -1611,103 +1596,103 @@ public abstract class SIPTransactionImpl implements SIPTransaction {
      */
     @Override
     public void setForkId(String forkId) {
-		this.forkId = forkId;
-	}
-    
+        this.forkId = forkId;
+    }
+
     /**
      * @see SIPTransaction#getForkId()
      */
     @Override
     public String getForkId() {
-		return forkId;
-	}
-  
-  /**
-   * @see SIPTransaction#scheduleMaxTxLifeTimeTimer()
-   */
-  @Override
-  public void scheduleMaxTxLifeTimeTimer() {
-  	if (maxTxLifeTimeListener == null && this.getMethod().equalsIgnoreCase(Request.INVITE) && sipStack.getMaxTxLifetimeInvite() > 0) {
-      	if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
-              log.debug("Scheduling MaxTxLifeTimeListener for tx " +  this + " , tx id "+ this.getTransactionId() + " , state " + this.getState());
-      	}
-      	maxTxLifeTimeListener = new MaxTxLifeTimeListener();
-          sipStack.getTimer().schedule(maxTxLifeTimeListener,
-                  sipStack.getMaxTxLifetimeInvite() * 1000);
-      }
-      
-      if (maxTxLifeTimeListener == null && !this.getMethod().equalsIgnoreCase(Request.INVITE) && sipStack.getMaxTxLifetimeNonInvite() > 0) {
-      	if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
-              log.debug("Scheduling MaxTxLifeTimeListener for tx " +  this + " , tx id "+ this.getTransactionId() + " , state " + this.getState());
-      	}
-      	maxTxLifeTimeListener = new MaxTxLifeTimeListener();
-          sipStack.getTimer().schedule(maxTxLifeTimeListener,
-                  sipStack.getMaxTxLifetimeNonInvite() * 1000);
-      }
-  }
+        return forkId;
+    }
 
-	/**
-   * @see SIPTransaction#cancelMaxTxLifeTimeTimer()
-   */
-	@Override
-  public void cancelMaxTxLifeTimeTimer() {
-		if(maxTxLifeTimeListener != null) {
-			if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
-                log.debug("Cancelling MaxTxLifeTimeListener for tx " +  this + " , tx id "+ this.getTransactionId() + " , state " + this.getState());
-        	}
-			sipStack.getTimer().cancel(maxTxLifeTimeListener);
-			maxTxLifeTimeListener = null;
-		}
-	}
+    /**
+     * @see SIPTransaction#scheduleMaxTxLifeTimeTimer()
+     */
+    @Override
+    public void scheduleMaxTxLifeTimeTimer() {
+        if (maxTxLifeTimeListener == null && this.getMethod().equalsIgnoreCase(Request.INVITE) && sipStack.getMaxTxLifetimeInvite() > 0) {
+            if (log.isDebugEnabled()) {
+                log.debug("Scheduling MaxTxLifeTimeListener for tx " + this + " , tx id " + this.getTransactionId() + " , state " + this.getState());
+            }
+            maxTxLifeTimeListener = new MaxTxLifeTimeListener();
+            sipStack.getTimer().schedule(maxTxLifeTimeListener,
+                    sipStack.getMaxTxLifetimeInvite() * 1000);
+        }
 
-	/**
-   * @see SIPTransaction#getMergeId()
-   */
-	@Override
-  public String getMergeId() {
-		if(mergeId == null) {
-			return ((SIPRequest)getRequest()).getMergeId();
-		}
-		return mergeId;
-	}
-	
-	/**
-	 * @see SIPTransaction#getAuditTag()
-	 */
-  @Override
-  public long getAuditTag() {
-    return auditTag;
-  }
+        if (maxTxLifeTimeListener == null && !this.getMethod().equalsIgnoreCase(Request.INVITE) && sipStack.getMaxTxLifetimeNonInvite() > 0) {
+            if (log.isDebugEnabled()) {
+                log.debug("Scheduling MaxTxLifeTimeListener for tx " + this + " , tx id " + this.getTransactionId() + " , state " + this.getState());
+            }
+            maxTxLifeTimeListener = new MaxTxLifeTimeListener();
+            sipStack.getTimer().schedule(maxTxLifeTimeListener,
+                    sipStack.getMaxTxLifetimeNonInvite() * 1000);
+        }
+    }
 
-  /**
-   * @see SIPTransaction#setAuditTag(long)
-   */
-  @Override
-  public void setAuditTag(long auditTag) {
-    this.auditTag = auditTag;
-  }
-  
-  /**
-   * @see SIPServerTransaction#isTransactionMapped()
-   */
-  @Override
-  public boolean isTransactionMapped() {
-      return this.isMapped;
-  }
+    /**
+     * @see SIPTransaction#cancelMaxTxLifeTimeTimer()
+     */
+    @Override
+    public void cancelMaxTxLifeTimeTimer() {
+        if (maxTxLifeTimeListener != null) {
+            if (log.isDebugEnabled()) {
+                log.debug("Cancelling MaxTxLifeTimeListener for tx " + this + " , tx id " + this.getTransactionId() + " , state " + this.getState());
+            }
+            sipStack.getTimer().cancel(maxTxLifeTimeListener);
+            maxTxLifeTimeListener = null;
+        }
+    }
 
-  /**
-   * @see SIPServerTransaction#setTransactionMapped(boolean)
-   */
-  @Override
-  public void setTransactionMapped(boolean transactionMapped) {
-    isMapped = transactionMapped;
-  }
-  
-  /**
-   * @see SIPTransaction#setCollectionTime(int)
-   */
-  @Override
-  public void setCollectionTime(int collectionTime) {
-    this.collectionTime = collectionTime;
-  }
+    /**
+     * @see SIPTransaction#getMergeId()
+     */
+    @Override
+    public String getMergeId() {
+        if (mergeId == null) {
+            return ((SIPRequest) getRequest()).getMergeId();
+        }
+        return mergeId;
+    }
+
+    /**
+     * @see SIPTransaction#getAuditTag()
+     */
+    @Override
+    public long getAuditTag() {
+        return auditTag;
+    }
+
+    /**
+     * @see SIPTransaction#setAuditTag(long)
+     */
+    @Override
+    public void setAuditTag(long auditTag) {
+        this.auditTag = auditTag;
+    }
+
+    /**
+     * @see SIPServerTransaction#isTransactionMapped()
+     */
+    @Override
+    public boolean isTransactionMapped() {
+        return this.isMapped;
+    }
+
+    /**
+     * @see SIPServerTransaction#setTransactionMapped(boolean)
+     */
+    @Override
+    public void setTransactionMapped(boolean transactionMapped) {
+        isMapped = transactionMapped;
+    }
+
+    /**
+     * @see SIPTransaction#setCollectionTime(int)
+     */
+    @Override
+    public void setCollectionTime(int collectionTime) {
+        this.collectionTime = collectionTime;
+    }
 }

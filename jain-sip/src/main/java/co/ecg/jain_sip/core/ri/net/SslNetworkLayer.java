@@ -25,11 +25,9 @@
 */
 package co.ecg.jain_sip.core.ri.net;
 
-import co.ecg.jain_sip.core.ri.CommonLogger;
-import co.ecg.jain_sip.core.ri.LogWriter;
-import co.ecg.jain_sip.core.ri.StackLogger;
 import co.ecg.jain_sip.sip.ri.SipStackImpl;
 import co.ecg.jain_sip.sip.ri.stack.ClientAuthType;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.net.ssl.*;
 import java.io.FileInputStream;
@@ -50,10 +48,9 @@ import java.security.cert.X509Certificate;
  * @since 1.2
  *
  */
+@Slf4j
 public class SslNetworkLayer implements NetworkLayer {
 
-	private static StackLogger logger = CommonLogger.getLogger(SslNetworkLayer.class);
-	
     private SSLSocketFactory sslSocketFactory;
 
     private SSLServerSocketFactory sslServerSocketFactory;
@@ -65,13 +62,13 @@ public class SslNetworkLayer implements NetworkLayer {
           return new X509Certificate[0]; 
         }
         public void checkClientTrusted(X509Certificate[] certs, String authType) {
-        	if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
+        	if (log.isDebugEnabled()) {
                 log.debug(
                         "checkClientTrusted : Not validating certs " + certs + " authType " + authType);
             }
         }
         public void checkServerTrusted(X509Certificate[] certs, String authType) {
-        	if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
+        	if (log.isDebugEnabled()) {
                 log.debug(
                         "checkServerTrusted : Not validating certs " + certs + " authType " + authType);
             }
@@ -102,13 +99,13 @@ public class SslNetworkLayer implements NetworkLayer {
         tmFactory.init(trustStore);
         kmFactory.init(keyStore, keyStorePassword);
         if(sipStack.getClientAuth() == ClientAuthType.DisabledAll) {
-        	if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
+        	if (log.isDebugEnabled()) {
                 log.debug(
                         "ClientAuth " + sipStack.getClientAuth()  +  " bypassing all cert validations");
             }
         	sslContext.init(null, trustAllCerts, secureRandom);
         } else {
-        	if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
+        	if (log.isDebugEnabled()) {
                 log.debug(
                         "ClientAuth " + sipStack.getClientAuth());
             }

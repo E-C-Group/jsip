@@ -107,7 +107,7 @@ class NistSipMessageFactoryImpl implements StackMessageFactory {
             SIPResponse sipResponse, MessageChannel msgChannel) {
         // Tr is null if a transaction is not mapped.
         SIPTransaction tr = sipStack.findTransaction(sipResponse, false);
-        if (logger.isLoggingEnabled(LogLevels.TRACE_DEBUG))
+        if (log.isDebugEnabled())
             log.debug(
                     "Found Transaction " + tr + " for " + sipResponse);
 
@@ -117,14 +117,14 @@ class NistSipMessageFactoryImpl implements StackMessageFactory {
             // spurious response. This was moved up from the transaction
             // layer for efficiency.
             if (tr.getInternalState() < 0) {
-                if (logger.isLoggingEnabled(LogLevels.TRACE_DEBUG))
+                if (log.isDebugEnabled())
                     log.debug(
                             "Dropping response - null transaction state");
                 return null;
                 // Ignore 1xx
             } else if (TransactionState._COMPLETED == tr.getInternalState()
                     && sipResponse.getStatusCode() / 100 == 1) {
-                if (logger.isLoggingEnabled(LogLevels.TRACE_DEBUG))
+                if (log.isDebugEnabled())
                     log.debug(
                             "Dropping response - late arriving "
                                     + sipResponse.getStatusCode());

@@ -28,6 +28,8 @@
 *******************************************************************************/
 package co.ecg.jain_sip.sip.ri;
 
+import co.ecg.jain_sip.sip.ri.header.SIPHeaderNames;
+
 /**
  * Default constants for SIP.
  * @version 1.2 $Revision: 1.9 $ $Date: 2009-07-17 18:57:20 $
@@ -35,8 +37,8 @@ package co.ecg.jain_sip.sip.ri;
 public interface SIPConstants
     extends
         SIPHeaderNames,
-        gov.nist.javax.sip.address.ParameterNames,
-        gov.nist.javax.sip.header.ParameterNames {
+        co.ecg.jain_sip.sip.ri.address.ParameterNames,
+        co.ecg.jain_sip.sip.ri.header.ParameterNames {
     public static final int DEFAULT_PORT = 5060;
 
     // Added by Daniel J. Martinez Manzano <dani@dif.um.es>

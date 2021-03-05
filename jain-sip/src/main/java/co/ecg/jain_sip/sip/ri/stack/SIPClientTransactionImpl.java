@@ -282,7 +282,7 @@ public class SIPClientTransactionImpl extends SIPTransactionImpl implements SIPC
         TimeoutEvent tte = new TimeoutEvent(provider, ct, Timeout.TRANSACTION);
         provider.handleEvent(tte, ct);
       } else {
-        if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
+        if (log.isDebugEnabled()) {
           log.debug("state = " + ct.getState());
         }
       }
@@ -306,7 +306,7 @@ public class SIPClientTransactionImpl extends SIPTransactionImpl implements SIPC
     this.notifyOnRetransmit = false;
     this.timeoutIfStillInCallingState = false;
 
-    if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
+    if (log.isDebugEnabled()) {
       log.debug("Creating clientTransaction " + this);
       logger.logStackTrace();
     }
@@ -319,7 +319,7 @@ public class SIPClientTransactionImpl extends SIPTransactionImpl implements SIPC
    */
   @Override
   public void setResponseInterface(ServerResponseInterface newRespondTo) {
-    if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
+    if (log.isDebugEnabled()) {
       log.debug("Setting response interface for " + this + " to " + newRespondTo);
       if (newRespondTo == null) {
         logger.logStackTrace();
@@ -413,7 +413,7 @@ public class SIPClientTransactionImpl extends SIPTransactionImpl implements SIPC
       } catch (ParseException ex) {
       }
 
-      if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
+      if (log.isDebugEnabled()) {
         log.debug("Sending Message " + messageToSend);
         log.debug("TransactionState " + this.getState());
       }
@@ -514,7 +514,7 @@ public class SIPClientTransactionImpl extends SIPTransactionImpl implements SIPC
       return;
     }
 
-    if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
+    if (log.isDebugEnabled()) {
       log.debug("processing " + transactionResponse.getFirstLine() + "current state = "
                       + getState());
       log.debug("dialog = " + dialog);
@@ -666,7 +666,7 @@ public class SIPClientTransactionImpl extends SIPTransactionImpl implements SIPC
         cleanUpOnTimer();
       }
     } else {
-      if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
+      if (log.isDebugEnabled()) {
         log.debug(" Not sending response to TU! " + getState());
       }
       this.semRelease();
@@ -681,14 +681,14 @@ public class SIPClientTransactionImpl extends SIPTransactionImpl implements SIPC
         if (!transactionTimerCancelled) {
           sipStack.getTimer().cancel(transactionTimer);
           transactionTimer = null;
-          if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
+          if (log.isDebugEnabled()) {
             log.debug("starting TransactionTimerK() : " + getTransactionId() + " time "
                             + time);
           }
           SIPStackTimerTask task = new SIPStackTimerTask() {
 
             public void runTask() {
-              if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
+              if (log.isDebugEnabled()) {
                 log.debug("executing TransactionTimerJ() : " + getTransactionId());
               }
               fireTimeoutTimer();
@@ -788,7 +788,7 @@ public class SIPClientTransactionImpl extends SIPTransactionImpl implements SIPC
         try {
           // Found the dialog - resend the ACK and
           // dont pass up the null transaction
-          if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG))
+          if (log.isDebugEnabled())
             log.debug("resending ACK");
 
           dialog.resendAck();
@@ -796,7 +796,7 @@ public class SIPClientTransactionImpl extends SIPTransactionImpl implements SIPC
           // What to do here ?? kill the dialog?
         }
       }
-      if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG) && dialog != null)
+      if (log.isDebugEnabled() && dialog != null)
           log.debug("Dialog " + dialog + " current state " + dialog.getState() );
       if (dialog == null && statusCode >= 200 && statusCode < 300) {
         // http://java.net/jira/browse/JSIP-377
@@ -810,11 +810,11 @@ public class SIPClientTransactionImpl extends SIPTransactionImpl implements SIPC
         // TERMINATED
         // where some responses are still able to be handled by it so we let 2xx responses for
         // proxies pass up to the application
-        if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG))
+        if (log.isDebugEnabled())
           log.debug("Client Transaction " + this + " branch id " + getBranch()
                           + " doesn't have any dialog and is in TERMINATED state");
         if (respondTo != null) {
-          if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG))
+          if (log.isDebugEnabled())
             log.debug("passing 2xx response up to the application");
           respondTo.processResponse(transactionResponse, encapsulatedChannel, dialog);
         } else {
@@ -825,11 +825,11 @@ public class SIPClientTransactionImpl extends SIPTransactionImpl implements SIPC
       	// https://java.net/jira/browse/JSIP-487
       	// for UAs, it happens that there is a race condition while the tx is getting removed and TERMINATED
       	// where some responses are still able to be handled by it so we let 2xx responses pass up to the application
-      	if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG))
+      	if (log.isDebugEnabled())
               log.debug("Client Transaction " + this + " branch id " + getBranch() + " has a early dialog and is in TERMINATED state");
       	transactionResponse.setRetransmission(false);
       	if (respondTo != null) {
-      		if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG))
+      		if (log.isDebugEnabled())
                   log.debug("passing 2xx response up to the application");
             respondTo.processResponse(transactionResponse, encapsulatedChannel, dialog);
       	} else {
@@ -982,7 +982,7 @@ public class SIPClientTransactionImpl extends SIPTransactionImpl implements SIPC
     if (this.getInternalState() >= 0)
       throw new IllegalTransactionStateException("Request already sent", Reason.RequestAlreadySent);
 
-    if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
+    if (log.isDebugEnabled()) {
       log.debug("sendRequest() " + sipRequest);
     }
 
@@ -1147,7 +1147,7 @@ public class SIPClientTransactionImpl extends SIPTransactionImpl implements SIPC
    */
   public void fireTimeoutTimer() {
 
-    if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG))
+    if (log.isDebugEnabled())
       log.debug("fireTimeoutTimer " + this);
 
     SIPDialog dialog = (SIPDialog) this.getDialog();
@@ -1245,7 +1245,7 @@ public class SIPClientTransactionImpl extends SIPTransactionImpl implements SIPC
     } else if (lastResponse == null) {
       throw new SipException("bad Transaction state");
     } else if (lastResponse.getStatusCode() < 200) {
-      if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
+      if (log.isDebugEnabled()) {
         log.debug("lastResponse = " + lastResponse);
       }
       throw new SipException("Cannot ACK a provisional response!");
@@ -1330,7 +1330,7 @@ public class SIPClientTransactionImpl extends SIPTransactionImpl implements SIPC
     } else if (lastResponse == null) {
       throw new SipException("bad Transaction state");
     } else if (lastResponse.getStatusCode() < 200) {
-      if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
+      if (log.isDebugEnabled()) {
         log.debug("lastResponse = " + lastResponse);
       }
       throw new SipException("Cannot ACK a provisional response!");
@@ -1484,14 +1484,14 @@ public class SIPClientTransactionImpl extends SIPTransactionImpl implements SIPC
     String originalFromTag = getOriginalRequestFromTag();
     if (this.defaultDialog != null) {
       if (originalFromTag == null ^ sipResponse.getFrom().getTag() == null) {
-        if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG))
+        if (log.isDebugEnabled())
           log.debug("From tag mismatch -- dropping response");
         return false;
       }
       if (originalFromTag != null
           && !originalFromTag.equalsIgnoreCase(sipResponse.getFrom().getTag()))
       {
-        if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG))
+        if (log.isDebugEnabled())
           log.debug("From tag mismatch -- dropping response");
         return false;
       }
@@ -1523,7 +1523,7 @@ public class SIPClientTransactionImpl extends SIPTransactionImpl implements SIPC
       }
     }
 
-    if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
+    if (log.isDebugEnabled()) {
       log.debug("marking response as retransmission " + isRetransmission + " for ctx " + this);
     }
     sipResponse.setRetransmission(isRetransmission);
@@ -1651,7 +1651,7 @@ public class SIPClientTransactionImpl extends SIPTransactionImpl implements SIPC
       retval = (Dialog) this.getDefaultDialog();
 
     }
-    if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
+    if (log.isDebugEnabled()) {
       log.debug(" sipDialogs =  " + sipDialogs + " default dialog " + this.getDefaultDialog()
                       + " retval " + retval);
     }
@@ -1693,7 +1693,7 @@ public class SIPClientTransactionImpl extends SIPTransactionImpl implements SIPC
    */
   @Override
   public void setDialog(SIPDialog sipDialog, String dialogId) {
-    if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG))
+    if (log.isDebugEnabled())
       log.debug("setDialog: " + dialogId + " sipDialog = " + sipDialog);
 
     if (sipDialog == null) {
@@ -1773,7 +1773,7 @@ public class SIPClientTransactionImpl extends SIPTransactionImpl implements SIPC
   // passed in the COMPLETED state
   protected void cleanUpOnTimer() {
     if (isReleaseReferences()) {
-      if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
+      if (log.isDebugEnabled()) {
         log.debug("cleanupOnTimer: " + getTransactionId());
       }
       // we release the ref to the dialog asap and just keep the id of the dialog to look it up in
@@ -1827,7 +1827,7 @@ public class SIPClientTransactionImpl extends SIPTransactionImpl implements SIPC
   public void cleanUp() {
     if (isReleaseReferences()) {
       // release the connection associated with this transaction.
-      if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
+      if (log.isDebugEnabled()) {
         log.debug("cleanup : " + getTransactionId());
       }
       if (defaultDialog != null) {
@@ -1869,7 +1869,7 @@ public class SIPClientTransactionImpl extends SIPTransactionImpl implements SIPC
 
   // jeand cleanup called after the ctx timer or the timer k has fired
   protected void cleanUpOnTerminated() {
-    if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
+    if (log.isDebugEnabled()) {
       log.debug("removing  = " + this + " isReliable " + isReliable());
     }
     if (isReleaseReferences()) {
@@ -1911,7 +1911,7 @@ public class SIPClientTransactionImpl extends SIPTransactionImpl implements SIPC
       // until the client disconnects.
       if (logger.isLoggingEnabled() && isReliable()) {
         int useCount = getMessageChannel().useCount;
-        if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG))
+        if (log.isDebugEnabled())
           log.debug("Client Use Count = " + useCount);
       }
       // Let the connection linger for a while and then close

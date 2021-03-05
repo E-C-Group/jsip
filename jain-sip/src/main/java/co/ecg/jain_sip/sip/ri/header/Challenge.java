@@ -28,6 +28,9 @@
 *******************************************************************************/
 package co.ecg.jain_sip.sip.ri.header;
 
+import co.ecg.jain_sip.core.ri.NameValue;
+import co.ecg.jain_sip.core.ri.NameValueList;
+
 /**
  * Challenge part of the Auth header. This is only used by the parser interface
  *

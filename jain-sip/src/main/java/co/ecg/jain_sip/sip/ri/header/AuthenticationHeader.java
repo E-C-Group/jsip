@@ -26,6 +26,9 @@
 ******************************************************************************/
 package co.ecg.jain_sip.sip.ri.header;
 
+import co.ecg.jain_sip.core.ri.NameValue;
+import co.ecg.jain_sip.core.ri.Separators;
+import co.ecg.jain_sip.sip.address.URI;
 import co.ecg.jain_sip.sip.ri.header.ims.ParameterNamesIms;
 
 import java.text.ParseException;
@@ -254,7 +257,7 @@ public abstract class AuthenticationHeader extends ParametersHeader {
      * Note that since 1.2 this is no longer applicable to the WWW-Authenticate
      * and Proxy-Authenticate headers
      */
-    public void setURI(javax.sip.address.URI uri) {
+    public void setURI(URI uri) {
         if (uri != null) {
             NameValue nv = new NameValue(ParameterNames.URI, uri);
             nv.setQuotedValue();
@@ -275,7 +278,7 @@ public abstract class AuthenticationHeader extends ParametersHeader {
      * Note that since 1.2 this is no longer applicable to the WWW-Authenticate
      * and Proxy-Authenticate headers
      */
-    public javax.sip.address.URI getURI() {
+    public URI getURI() {
         return getParameterAsURI(ParameterNames.URI);
     }
 

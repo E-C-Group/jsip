@@ -1,46 +1,50 @@
 /*
-* Conditions Of Use
-*
-* This software was developed by employees of the National Institute of
-* Standards and Technology (NIST), an agency of the Federal Government.
-* Pursuant to title 15 Untied States Code Section 105, works of NIST
-* employees are not subject to copyright protection in the United States
-* and are considered to be in the public domain.  As a result, a formal
-* license is not needed to use the software.
-*
-* This software is provided by NIST as a service and is expressly
-* provided "AS IS."  NIST MAKES NO WARRANTY OF ANY KIND, EXPRESS, IMPLIED
-* OR STATUTORY, INCLUDING, WITHOUT LIMITATION, THE IMPLIED WARRANTY OF
-* MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, NON-INFRINGEMENT
-* AND DATA ACCURACY.  NIST does not warrant or make any representations
-* regarding the use of the software or the results thereof, including but
-* not limited to the correctness, accuracy, reliability or usefulness of
-* the software.
-*
-* Permission to use this software is contingent upon your acceptance
-* of the terms of this agreement
-*
-* .
-*
-*/
+ * Conditions Of Use
+ *
+ * This software was developed by employees of the National Institute of
+ * Standards and Technology (NIST), an agency of the Federal Government.
+ * Pursuant to title 15 Untied States Code Section 105, works of NIST
+ * employees are not subject to copyright protection in the United States
+ * and are considered to be in the public domain.  As a result, a formal
+ * license is not needed to use the software.
+ *
+ * This software is provided by NIST as a service and is expressly
+ * provided "AS IS."  NIST MAKES NO WARRANTY OF ANY KIND, EXPRESS, IMPLIED
+ * OR STATUTORY, INCLUDING, WITHOUT LIMITATION, THE IMPLIED WARRANTY OF
+ * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, NON-INFRINGEMENT
+ * AND DATA ACCURACY.  NIST does not warrant or make any representations
+ * regarding the use of the software or the results thereof, including but
+ * not limited to the correctness, accuracy, reliability or usefulness of
+ * the software.
+ *
+ * Permission to use this software is contingent upon your acceptance
+ * of the terms of this agreement
+ *
+ * .
+ *
+ */
 package co.ecg.jain_sip.sip.ri.parser;
+
+import co.ecg.jain_sip.sip.ri.address.GenericURI;
+import co.ecg.jain_sip.sip.ri.header.ErrorInfo;
+import co.ecg.jain_sip.sip.ri.header.ErrorInfoList;
+import co.ecg.jain_sip.sip.ri.header.SIPHeader;
+import co.ecg.jain_sip.sip.ri.header.SIPHeaderNames;
 
 import java.text.ParseException;
 
 /**
  * Parser for ErrorInfo header.
  *
- * @version 1.2 $Revision: 1.9 $ $Date: 2009-10-22 10:27:37 $
- *
  * @author Olivier Deruelle   <br/>
  * @author M. Ranganathan   <br/>
- *
- *
+ * @version 1.2 $Revision: 1.9 $ $Date: 2009-10-22 10:27:37 $
  */
 public class ErrorInfoParser extends ParametersParser {
 
     /**
      * Creates a new instance of ErrorInfoParser
+     *
      * @param errorInfo the header to parse
      */
     public ErrorInfoParser(String errorInfo) {
@@ -49,6 +53,7 @@ public class ErrorInfoParser extends ParametersParser {
 
     /**
      * Constructor
+     *
      * @param lexer the lexer to use to parse the header
      */
     protected ErrorInfoParser(Lexer lexer) {
@@ -57,44 +62,43 @@ public class ErrorInfoParser extends ParametersParser {
 
     /**
      * parse the ErrorInfo String header
+     *
      * @return SIPHeader (ErrorInfoList object)
-     * @throws SIPParseException if the message does not respect the spec.
+     * @throws ParseException if the message does not respect the spec.
      */
     public SIPHeader parse() throws ParseException {
 
-        if (debug)
-            dbg_enter("ErrorInfoParser.parse");
+        dbg_enter("ErrorInfoParser.parse");
         ErrorInfoList list = new ErrorInfoList();
 
         try {
             headerName(TokenTypes.ERROR_INFO);
 
             while (lexer.lookAhead(0) != '\n') {
-            	do {
-	                ErrorInfo errorInfo = new ErrorInfo();
-	                errorInfo.setHeaderName(SIPHeaderNames.ERROR_INFO);
-	
-	                this.lexer.SPorHT();
-	                this.lexer.match('<');
-	                URLParser urlParser = new URLParser((Lexer) this.lexer);
-	                GenericURI uri = urlParser.uriReference( true );
-	                errorInfo.setErrorInfo(uri);
-	                this.lexer.match('>');
-	                this.lexer.SPorHT();
-	
-	                super.parse(errorInfo);
-	                list.add(errorInfo);
-	                
-	                if ( lexer.lookAhead(0) == ',' ) {
-	                	this.lexer.match(',');
-	                } else break;
-            	} while (true);
+                do {
+                    ErrorInfo errorInfo = new ErrorInfo();
+                    errorInfo.setHeaderName(SIPHeaderNames.ERROR_INFO);
+
+                    this.lexer.SPorHT();
+                    this.lexer.match('<');
+                    URLParser urlParser = new URLParser((Lexer) this.lexer);
+                    GenericURI uri = urlParser.uriReference(true);
+                    errorInfo.setErrorInfo(uri);
+                    this.lexer.match('>');
+                    this.lexer.SPorHT();
+
+                    super.parse(errorInfo);
+                    list.add(errorInfo);
+
+                    if (lexer.lookAhead(0) == ',') {
+                        this.lexer.match(',');
+                    } else break;
+                } while (true);
             }
 
             return list;
         } finally {
-            if (debug)
-                dbg_leave("ErrorInfoParser.parse");
+            dbg_leave("ErrorInfoParser.parse");
         }
     }
 

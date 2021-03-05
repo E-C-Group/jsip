@@ -26,10 +26,10 @@
 package co.ecg.jain_sip.sip.ri.stack;
 
 
-import co.ecg.jain_sip.core.ri.CommonLogger;
+
 import co.ecg.jain_sip.core.ri.HostPort;
-import co.ecg.jain_sip.core.ri.LogWriter;
-import co.ecg.jain_sip.core.ri.StackLogger;
+import lombok.extern.slf4j.Slf4j;
+
 
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
@@ -42,9 +42,8 @@ import java.nio.channels.SocketChannel;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 
+@Slf4j
 public class NioTlsMessageProcessor extends NioTcpMessageProcessor{
-
-    private static StackLogger logger = CommonLogger.getLogger(NioTlsMessageProcessor.class);
 
     // Create a trust manager that does not validate certificate chains
     public static TrustManager[] trustAllCerts = new TrustManager[] { 
@@ -53,13 +52,13 @@ public class NioTlsMessageProcessor extends NioTcpMessageProcessor{
           return new X509Certificate[0]; 
         }
         public void checkClientTrusted(X509Certificate[] certs, String authType) {
-        	if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
+        	if (log.isDebugEnabled()) {
                 log.debug(
                         "checkClientTrusted : Not validating certs " + certs + " authType " + authType);
             }
         }
         public void checkServerTrusted(X509Certificate[] certs, String authType) {
-        	if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
+        	if (log.isDebugEnabled()) {
                 log.debug(
                         "checkServerTrusted : Not validating certs " + certs + " authType " + authType);
             }
@@ -87,7 +86,7 @@ public class NioTlsMessageProcessor extends NioTcpMessageProcessor{
 	
     @Override
     public MessageChannel createMessageChannel(HostPort targetHostPort) throws IOException {
-    	if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
+    	if (log.isDebugEnabled()) {
     		log.debug("NioTlsMessageProcessor::createMessageChannel: " + targetHostPort);
     	}
     	NioTlsMessageChannel retval = null;
@@ -106,7 +105,7 @@ public class NioTlsMessageProcessor extends NioTcpMessageProcessor{
     				this.messageChannels.put(key, retval);
     			}
     			retval.isCached = true;
-    			if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
+    			if (log.isDebugEnabled()) {
     				log.debug("key " + key);
     				log.debug("Creating " + retval);
     			}
@@ -115,7 +114,7 @@ public class NioTlsMessageProcessor extends NioTcpMessageProcessor{
 
     		}
     	} finally {
-    		if(logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
+    		if(log.isDebugEnabled()) {
     			log.debug("MessageChannel::createMessageChannel - exit " + retval);
     		}
     	}
@@ -133,7 +132,7 @@ public class NioTlsMessageProcessor extends NioTcpMessageProcessor{
  //           retval.getSocketChannel().register(selector, SelectionKey.OP_READ);
             this.messageChannels.put(key, retval);
             retval.isCached = true;
-            if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
+            if (log.isDebugEnabled()) {
                 log.debug("key " + key);
                 log.debug("Creating " + retval);
             }
@@ -145,7 +144,7 @@ public class NioTlsMessageProcessor extends NioTcpMessageProcessor{
 		if(sipStack.securityManagerProvider.getKeyManagers(false) == null ||
 				sipStack.securityManagerProvider.getTrustManagers(false) == null ||
                 sipStack.securityManagerProvider.getTrustManagers(true) == null) {
-			if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
+			if (log.isDebugEnabled()) {
                 log.debug("TLS initialization failed due to NULL security config");
             }
 			return; // The settings 
@@ -155,14 +154,14 @@ public class NioTlsMessageProcessor extends NioTcpMessageProcessor{
         sslClientCtx = SSLContext.getInstance("TLS");
         
         if(sipStack.getClientAuth() == ClientAuthType.DisabledAll) {
-        	if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
+        	if (log.isDebugEnabled()) {
                 log.debug(
                         "ClientAuth " + sipStack.getClientAuth()  +  " bypassing all cert validations");
             }
         	sslServerCtx.init(sipStack.securityManagerProvider.getKeyManagers(false), trustAllCerts, null);
         	sslClientCtx.init(sipStack.securityManagerProvider.getKeyManagers(true), trustAllCerts, null);
         } else {
-        	if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
+        	if (log.isDebugEnabled()) {
                 log.debug(
                         "ClientAuth " + sipStack.getClientAuth());
             }

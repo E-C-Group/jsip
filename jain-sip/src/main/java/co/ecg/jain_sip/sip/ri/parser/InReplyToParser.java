@@ -1,46 +1,50 @@
 /*
-* Conditions Of Use
-*
-* This software was developed by employees of the National Institute of
-* Standards and Technology (NIST), an agency of the Federal Government.
-* Pursuant to title 15 Untied States Code Section 105, works of NIST
-* employees are not subject to copyright protection in the United States
-* and are considered to be in the public domain.  As a result, a formal
-* license is not needed to use the software.
-*
-* This software is provided by NIST as a service and is expressly
-* provided "AS IS."  NIST MAKES NO WARRANTY OF ANY KIND, EXPRESS, IMPLIED
-* OR STATUTORY, INCLUDING, WITHOUT LIMITATION, THE IMPLIED WARRANTY OF
-* MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, NON-INFRINGEMENT
-* AND DATA ACCURACY.  NIST does not warrant or make any representations
-* regarding the use of the software or the results thereof, including but
-* not limited to the correctness, accuracy, reliability or usefulness of
-* the software.
-*
-* Permission to use this software is contingent upon your acceptance
-* of the terms of this agreement
-*
-* .
-*
-*/
+ * Conditions Of Use
+ *
+ * This software was developed by employees of the National Institute of
+ * Standards and Technology (NIST), an agency of the Federal Government.
+ * Pursuant to title 15 Untied States Code Section 105, works of NIST
+ * employees are not subject to copyright protection in the United States
+ * and are considered to be in the public domain.  As a result, a formal
+ * license is not needed to use the software.
+ *
+ * This software is provided by NIST as a service and is expressly
+ * provided "AS IS."  NIST MAKES NO WARRANTY OF ANY KIND, EXPRESS, IMPLIED
+ * OR STATUTORY, INCLUDING, WITHOUT LIMITATION, THE IMPLIED WARRANTY OF
+ * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, NON-INFRINGEMENT
+ * AND DATA ACCURACY.  NIST does not warrant or make any representations
+ * regarding the use of the software or the results thereof, including but
+ * not limited to the correctness, accuracy, reliability or usefulness of
+ * the software.
+ *
+ * Permission to use this software is contingent upon your acceptance
+ * of the terms of this agreement
+ *
+ * .
+ *
+ */
 package co.ecg.jain_sip.sip.ri.parser;
+
+import co.ecg.jain_sip.core.ri.Token;
+import co.ecg.jain_sip.sip.ri.header.InReplyTo;
+import co.ecg.jain_sip.sip.ri.header.InReplyToList;
+import co.ecg.jain_sip.sip.ri.header.SIPHeader;
+import co.ecg.jain_sip.sip.ri.header.SIPHeaderNames;
 
 import java.text.ParseException;
 
 /**
  * Parser for InReplyTo header.
  *
- * @version 1.2 $Revision: 1.8 $ $Date: 2009-07-17 18:58:00 $
- *
  * @author Olivier Deruelle   <br/>
  * @author M. Ranganathan   <br/>
- *
- *
+ * @version 1.2 $Revision: 1.8 $ $Date: 2009-07-17 18:58:00 $
  */
 public class InReplyToParser extends HeaderParser {
 
     /**
      * Creates a new instance of InReplyToParser
+     *
      * @param inReplyTo the header to parse
      */
     public InReplyToParser(String inReplyTo) {
@@ -49,6 +53,7 @@ public class InReplyToParser extends HeaderParser {
 
     /**
      * Constructor
+     *
      * @param lexer the lexer to use to parse the header
      */
     protected InReplyToParser(Lexer lexer) {
@@ -57,13 +62,14 @@ public class InReplyToParser extends HeaderParser {
 
     /**
      * parse the String message
+     *
      * @return SIPHeader (InReplyToList object)
-     * @throws SIPParseException if the message does not respect the spec.
+     * @throws ParseException if the message does not respect the spec.
      */
     public SIPHeader parse() throws ParseException {
 
-        if (debug)
-            dbg_enter("InReplyToParser.parse");
+
+        dbg_enter("InReplyToParser.parse");
         InReplyToList list = new InReplyToList();
 
         try {
@@ -80,7 +86,7 @@ public class InReplyToParser extends HeaderParser {
                     this.lexer.match(TokenTypes.SAFE);
                     Token secToken = lexer.getNextToken();
                     inReplyTo.setCallId(
-                        token.getTokenValue() + "@" + secToken.getTokenValue());
+                            token.getTokenValue() + "@" + secToken.getTokenValue());
                 } else {
                     inReplyTo.setCallId(token.getTokenValue());
                 }
@@ -102,9 +108,9 @@ public class InReplyToParser extends HeaderParser {
                         this.lexer.match(TokenTypes.SAFE);
                         Token secToken = lexer.getNextToken();
                         inReplyTo.setCallId(
-                            token.getTokenValue()
-                                + "@"
-                                + secToken.getTokenValue());
+                                token.getTokenValue()
+                                        + "@"
+                                        + secToken.getTokenValue());
                     } else {
                         inReplyTo.setCallId(token.getTokenValue());
                     }
@@ -115,8 +121,8 @@ public class InReplyToParser extends HeaderParser {
 
             return list;
         } finally {
-            if (debug)
-                dbg_leave("InReplyToParser.parse");
+
+            dbg_leave("InReplyToParser.parse");
         }
     }
 

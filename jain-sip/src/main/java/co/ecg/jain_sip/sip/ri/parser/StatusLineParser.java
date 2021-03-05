@@ -24,6 +24,8 @@
 *
 */
 package co.ecg.jain_sip.sip.ri.parser;
+import co.ecg.jain_sip.sip.ri.header.StatusLine;
+
 import java.text.ParseException;
 
 /**
@@ -48,7 +50,7 @@ public class StatusLineParser extends Parser {
 
     protected int statusCode() throws ParseException {
         String scode = this.lexer.number();
-        if (debug)
+
             dbg_enter("statusCode");
         try {
             int retval = Integer.parseInt(scode);
@@ -58,7 +60,7 @@ public class StatusLineParser extends Parser {
                 lexer.getBuffer() + ":" + ex.getMessage(),
                 lexer.getPtr());
         } finally {
-            if (debug)
+
                 dbg_leave("statusCode");
         }
 
@@ -70,7 +72,7 @@ public class StatusLineParser extends Parser {
 
     public StatusLine parse() throws ParseException {
         try {
-            if (debug)
+
                 dbg_enter("parse");
             StatusLine retval = new StatusLine();
             String version = this.sipVersion();
@@ -84,7 +86,7 @@ public class StatusLineParser extends Parser {
             lexer.SPorHT();
             return retval;
         } finally {
-            if (debug)
+
                 dbg_leave("parse");
         }
     }

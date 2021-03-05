@@ -25,10 +25,6 @@
  */
 package co.ecg.jain_sip.sip.ri.stack;
 
-import co.ecg.jain_sip.core.ri.CommonLogger;
-import co.ecg.jain_sip.core.ri.LogLevels;
-import co.ecg.jain_sip.core.ri.LogWriter;
-import co.ecg.jain_sip.core.ri.StackLogger;
 import co.ecg.jain_sip.sip.ri.SipStackImpl;
 import co.ecg.jain_sip.sip.ri.message.SIPMessage;
 import co.ecg.jain_sip.sip.ri.message.SIPRequest;
@@ -37,6 +33,7 @@ import co.ecg.jain_sip.sip.ri.stack.SSLStateMachine.MessageSendCallback;
 import javax.net.ssl.SSLSession;
 import javax.net.ssl.SSLContext;
 import co.ecg.jain_sip.sip.address.SipURI;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -45,11 +42,9 @@ import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
 import java.security.cert.CertificateException;
 
+@Slf4j
 public class NioTlsWebSocketMessageChannel extends NioWebSocketMessageChannel implements NioTlsChannelInterface {
 
-	private static StackLogger logger = CommonLogger
-			.getLogger(NioTlsWebSocketMessageChannel.class);
-	
 	SSLStateMachine sslStateMachine;
 
 	private int appBufferMax;
@@ -137,7 +132,7 @@ public class NioTlsWebSocketMessageChannel extends NioWebSocketMessageChannel im
 	
 	public void sendEncryptedData(byte[] msg) throws IOException { 
 		// bypass the encryption for already encrypted data or TLS metadata
-		if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
+		if (log.isDebugEnabled()) {
 			log.debug("sendEncryptedData " + " this = " + this + " peerPort = " + peerPort + " addr = " + peerAddress);
 		}
 		lastActivityTimeStamp = System.currentTimeMillis();
@@ -253,7 +248,7 @@ public class NioTlsWebSocketMessageChannel extends NioWebSocketMessageChannel im
 	        appBufferMax = session.getApplicationBufferSize();
 	        netBufferMax = session.getPacketBufferSize();
 	        
-	        if(logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
+	        if(log.isDebugEnabled()) {
 	        	log.debug("appBufferMax=" + appBufferMax + " netBufferMax=" + netBufferMax);
 	        }
 	    }
@@ -272,7 +267,7 @@ public class NioTlsWebSocketMessageChannel extends NioWebSocketMessageChannel im
 	
 	@Override
 	protected void addBytes(byte[] bytes) throws Exception {
-		if(logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
+		if(log.isDebugEnabled()) {
 			log.debug("Adding WSS bytes for decryption " + bytes.length);
 		}
 		if(bytes.length <= 0) return;
@@ -283,7 +278,7 @@ public class NioTlsWebSocketMessageChannel extends NioWebSocketMessageChannel im
 	@Override
 	protected void sendNonWebSocketMessage(byte[] msg, final boolean isClient) throws IOException {
 
-		if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
+		if (log.isDebugEnabled()) {
 			log.debug("sendMessage isClient  = " + isClient + " this = " + this);
 		}
 		lastActivityTimeStamp = System.currentTimeMillis();
@@ -319,7 +314,7 @@ public class NioTlsWebSocketMessageChannel extends NioWebSocketMessageChannel im
 	public void onNewSocket(byte[] message) {
 		super.onNewSocket(message);
 		try {
-			if(logger.isLoggingEnabled(LogLevels.TRACE_DEBUG)) {
+			if(log.isDebugEnabled()) {
 				String last = null;
 				if(message != null) {
 					last = new String(message, "UTF-8");
@@ -336,7 +331,7 @@ public class NioTlsWebSocketMessageChannel extends NioWebSocketMessageChannel im
 
 	private void checkSocketState() throws IOException {
 		if (socketChannel != null && (!socketChannel.isConnected() || !socketChannel.isOpen())) {
-			if (logger.isLoggingEnabled(LogLevels.TRACE_DEBUG))
+			if (log.isDebugEnabled())
 				log.debug("Need to reset SSL engine for socket " + socketChannel);
 			try {
 				init(sslStateMachine.sslEngine.getUseClientMode());

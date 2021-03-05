@@ -325,7 +325,7 @@ public class SIPServerTransactionImpl extends SIPTransactionImpl implements SIPS
     class SendTrying extends SIPStackTimerTask {
 
         protected SendTrying() {
-            if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG))
+            if (log.isDebugEnabled())
                 log.debug("scheduled timer for " + SIPServerTransactionImpl.this);
 
         }
@@ -336,13 +336,13 @@ public class SIPServerTransactionImpl extends SIPTransactionImpl implements SIPS
             int realState = serverTransaction.getRealState();
 
             if (realState < 0 || TransactionState._TRYING == realState) {
-                if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG))
+                if (log.isDebugEnabled())
                     log.debug(" sending Trying current state = "
                             + serverTransaction.getRealState());
                 try {
                     serverTransaction.sendMessage(serverTransaction.getOriginalRequest()
                             .createResponse(100, "Trying"));
-                    if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG))
+                    if (log.isDebugEnabled())
                         log.debug(" trying sent "
                                 + serverTransaction.getRealState());
                 } catch (IOException ex) {
@@ -357,7 +357,7 @@ public class SIPServerTransactionImpl extends SIPTransactionImpl implements SIPS
     class TransactionTimer extends SIPStackTimerTask {
 
         public TransactionTimer() {
-            if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
+            if (log.isDebugEnabled()) {
                 log.debug("TransactionTimer() : " + getTransactionId());
             }
 
@@ -408,7 +408,7 @@ public class SIPServerTransactionImpl extends SIPTransactionImpl implements SIPS
      */
 
     protected void sendResponse(SIPResponse transactionResponse) throws IOException {
-        if ( logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
+        if ( log.isDebugEnabled()) {
             log.debug("sipServerTransaction::sendResponse " + transactionResponse.getFirstLine());
         }
         try {
@@ -515,7 +515,7 @@ public class SIPServerTransactionImpl extends SIPTransactionImpl implements SIPS
         
         // Only one outstanding request for a given server tx.
 
-        if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
+        if (log.isDebugEnabled()) {
             log.debug("Creating Server Transaction" + this.getBranchId());
             logger.logStackTrace();
         }
@@ -707,7 +707,7 @@ public class SIPServerTransactionImpl extends SIPTransactionImpl implements SIPS
         // transaction at a time. For a given server transaction
         // the listener sees only one event at a time.
 
-        if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
+        if (log.isDebugEnabled()) {
             log.debug("processRequest: " + transactionRequest.getFirstLine());
             log.debug("tx state = " + this.getRealState());
         }
@@ -761,7 +761,7 @@ public class SIPServerTransactionImpl extends SIPTransactionImpl implements SIPS
                 } else {
                     // According to RFC3261 Application should not Ack in
                     // CONFIRMED state
-                    if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
+                    if (log.isDebugEnabled()) {
                         log.debug("ACK received for server Tx "
                                 + this.getTransactionId() + " not delivering to application!");
 
@@ -793,7 +793,7 @@ public class SIPServerTransactionImpl extends SIPTransactionImpl implements SIPS
 			// none of the above? well release the lock anyhow!
 			this.semRelease();
                 }
-                if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG))
+                if (log.isDebugEnabled())
                     log.debug("completed processing retransmitted request : "
                         + transactionRequest.getFirstLine() + this + " txState = "
                         + this.getState() + " lastResponse = " + this.lastResponseAsBytes);
@@ -836,7 +836,7 @@ public class SIPServerTransactionImpl extends SIPTransactionImpl implements SIPS
                     }
 
                 } else if (transactionRequest.getMethod().equals(Request.CANCEL)) {
-                    if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG))
+                    if (log.isDebugEnabled())
                         log.debug("Too late to cancel Transaction");
                     this.semRelease();
                     // send OK and just ignore the CANCEL.
@@ -850,7 +850,7 @@ public class SIPServerTransactionImpl extends SIPTransactionImpl implements SIPS
 			// none of the above? well release the lock anyhow!
 			 this.semRelease();
                 }
-                if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG))
+                if (log.isDebugEnabled())
                     log.debug("Dropping request " + getRealState());
             }
 
@@ -868,7 +868,7 @@ public class SIPServerTransactionImpl extends SIPTransactionImpl implements SIPS
      */
     @Override
     public void sendMessage(SIPMessage messageToSend) throws IOException {
-        if ( logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
+        if ( log.isDebugEnabled()) {
             log.debug("sipServerTransaction::sendMessage " + messageToSend.getFirstLine());
         }
         // Message typecast as a response
@@ -904,7 +904,7 @@ public class SIPServerTransactionImpl extends SIPTransactionImpl implements SIPS
             }
 
             if(!checkStateTimers(statusCode)) {
-                if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
+                if (log.isDebugEnabled()) {
                     log.debug("checkStateTimers returned false -- not sending message");
                 }
                 return;
@@ -913,7 +913,7 @@ public class SIPServerTransactionImpl extends SIPTransactionImpl implements SIPS
             try {
                 // Send the message to the client.
                 // Record the last message sent out.
-                if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
+                if (log.isDebugEnabled()) {
                     log.debug(
                             "sendMessage : tx = " + this + " getState = " + this.getState());
                 }
@@ -1122,7 +1122,7 @@ public class SIPServerTransactionImpl extends SIPTransactionImpl implements SIPS
     public void fireRetransmissionTimer() {
 
         try {
-            if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
+            if (log.isDebugEnabled()) {
                 log.debug("fireRetransmissionTimer() -- " + this + " state " + getState());
             }
             // Resend the last response sent by this transaction
@@ -1160,7 +1160,7 @@ public class SIPServerTransactionImpl extends SIPTransactionImpl implements SIPS
     public void resendLastResponseAsBytes() throws IOException {
 
         if(lastResponse != null) {
-            if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
+            if (log.isDebugEnabled()) {
                 log.debug("resend last response " + lastResponse);
             }
             sendMessage(lastResponse);
@@ -1169,7 +1169,7 @@ public class SIPServerTransactionImpl extends SIPTransactionImpl implements SIPS
 //                if(!checkStateTimers(lastResponseStatusCode)) {
 //                    return;
 //                }
-            if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
+            if (log.isDebugEnabled()) {
                 log.debug("resend last response " + new String(lastResponseAsBytes));
             }
 
@@ -1190,7 +1190,7 @@ public class SIPServerTransactionImpl extends SIPTransactionImpl implements SIPS
 
                         getMessageChannel().logMessage(lastReparsedResponse, this.getPeerInetAddress(), this.getPeerPort(), System.currentTimeMillis());
                     } catch (ParseException e) {
-                        if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
+                        if (log.isDebugEnabled()) {
                             log.debug("couldn't reparse last response " + new String(lastResponseAsBytes));
                         }
                     }
@@ -1216,7 +1216,7 @@ public class SIPServerTransactionImpl extends SIPTransactionImpl implements SIPS
 
                             messageChannel.logMessage(lastReparsedResponse, messageChannel.getPeerInetAddress(), messageChannel.getPeerPort(), System.currentTimeMillis());
                         } catch (ParseException e) {
-                            if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
+                            if (log.isDebugEnabled()) {
                                 log.debug("couldn't reparse last response " + new String(lastResponseAsBytes));
                             }
                         }
@@ -1249,13 +1249,13 @@ public class SIPServerTransactionImpl extends SIPTransactionImpl implements SIPS
      */
     public void fireTimeoutTimer() {
 
-        if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG))
+        if (log.isDebugEnabled())
             log.debug("SIPServerTransaction.fireTimeoutTimer this = " + this
                     + " current state = " + this.getRealState() + " method = "
                     + this.getMethod());
 
         if (isInviteTransaction() && sipStack.removeTransactionPendingAck(this) ) {
-            if ( logger.isLoggingEnabled(LogWriter.TRACE_DEBUG) ) {
+            if ( log.isDebugEnabled() ) {
                 log.debug("Found tx pending ACK - timer H has kicked");
             }
 
@@ -1443,7 +1443,7 @@ public class SIPServerTransactionImpl extends SIPTransactionImpl implements SIPS
                         // the user.
                         sipResponse.getTo().setTag(Utils.getInstance().generateTag());
                     } else if (dialog.getLocalTag() != null && sipResponse.getToTag() == null) {
-                        if ( logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
+                        if ( log.isDebugEnabled()) {
                             log.debug("assigning toTag : serverTransaction = " + this + " dialog "
                                     + dialog + " tag = " + dialog.getLocalTag());
                         }
@@ -1476,7 +1476,7 @@ public class SIPServerTransactionImpl extends SIPTransactionImpl implements SIPS
             } else if (fromTag != null) {
                 sipResponse.getFrom().setTag(fromTag);
             } else {
-                if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG))
+                if (log.isDebugEnabled())
                     log.debug("WARNING -- Null From tag in request!!");
             }
             // See if the dialog needs to be inserted into the dialog table
@@ -1599,7 +1599,7 @@ public class SIPServerTransactionImpl extends SIPTransactionImpl implements SIPS
     protected void startTransactionTimerJ(long time) {
             if (this.transactionTimerStarted.compareAndSet(false, true)) {
                 if (sipStack.getTimer() != null && sipStack.getTimer().isStarted() ) {
-                    if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
+                    if (log.isDebugEnabled()) {
                         log.debug("starting TransactionTimerJ() : " + getTransactionId() + " time " + time);
                     }
                     // The timer is set to null when the Stack is
@@ -1607,7 +1607,7 @@ public class SIPServerTransactionImpl extends SIPTransactionImpl implements SIPS
                     SIPStackTimerTask task = new SIPStackTimerTask () {
 
                         public void runTask() {
-                            if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
+                            if (log.isDebugEnabled()) {
                                log.debug("executing TransactionTimerJ() : " + getTransactionId());
                             }
                             fireTimeoutTimer();
@@ -1666,7 +1666,7 @@ public class SIPServerTransactionImpl extends SIPTransactionImpl implements SIPS
      */
     @Override
     public void setDialog(SIPDialog sipDialog, String dialogId) {
-        if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG))
+        if (log.isDebugEnabled())
             log.debug("setDialog " + this + " dialog = " + sipDialog);
         this.dialog = sipDialog;
            this.dialogId = dialogId;
@@ -1942,13 +1942,13 @@ public class SIPServerTransactionImpl extends SIPTransactionImpl implements SIPS
     @Override
     public void cleanUp() {
         // Remove it from the set
-        if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG))
+        if (log.isDebugEnabled())
             log.debug("removing" + this);
 
         if(isReleaseReferences()) {
 
             // release the connection associated with this transaction.
-            if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
+            if (log.isDebugEnabled()) {
                 log.debug("cleanup : "
                         + getTransactionId());
             }
@@ -2007,7 +2007,7 @@ public class SIPServerTransactionImpl extends SIPTransactionImpl implements SIPS
             // Close the encapsulated socket if stack is configured
             close();
         } else {
-            if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)
+            if (log.isDebugEnabled()
                     && (!sipStack.cacheServerConnections)
                     && isReliable()) {
                 int useCount = getMessageChannel().useCount;
@@ -2020,7 +2020,7 @@ public class SIPServerTransactionImpl extends SIPTransactionImpl implements SIPS
     // clean up the state of the stx when it goes to completed or terminated to help GC
     protected void cleanUpOnTimer() {
         if(isReleaseReferences()) {
-            if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
+            if (log.isDebugEnabled()) {
                 log.debug("cleanup on timer : "
                         + getTransactionId());
             }

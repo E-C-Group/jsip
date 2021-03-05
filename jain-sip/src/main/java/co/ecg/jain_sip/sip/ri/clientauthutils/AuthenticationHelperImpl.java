@@ -249,7 +249,7 @@ public class AuthenticationHelperImpl implements AuthenticationHelper {
                                     reoriginatedRequest.getRawContent()), authHeader, userCreds);
                 }
 
-                if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
+                if (log.isDebugEnabled()) {
                     log.debug(
                             "Created authorization header: " + authorization.toString());
                 }
@@ -264,7 +264,7 @@ public class AuthenticationHelperImpl implements AuthenticationHelper {
             }
 
 
-            if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
+            if (log.isDebugEnabled()) {
                 log.debug(
                         "Returning authorization transaction." + retryTran);
             }
@@ -438,7 +438,7 @@ public class AuthenticationHelperImpl implements AuthenticationHelper {
         Collection<AuthorizationHeader> authHeaders = this.cachedCredentials
                 .getCachedAuthorizationHeaders(callId);
         if (authHeaders == null) {
-            if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG))
+            if (log.isDebugEnabled())
                 log.debug(
                         "Could not find authentication headers for " + callId);
             return;

@@ -28,6 +28,7 @@
  ******************************************************************************/
 package co.ecg.jain_sip.sip.ri.stack;
 
+import co.ecg.jain_sip.core.ri.InternalErrorHandler;
 import co.ecg.jain_sip.core.ri.net.AddressResolver;
 
 import co.ecg.jain_sip.sip.*;
@@ -37,6 +38,14 @@ import java.util.ListIterator;
 import co.ecg.jain_sip.sip.header.ViaHeader;
 import co.ecg.jain_sip.sip.message.*;
 import co.ecg.jain_sip.sip.address.*;
+import co.ecg.jain_sip.sip.ri.SIPConstants;
+import co.ecg.jain_sip.sip.ri.address.AddressImpl;
+import co.ecg.jain_sip.sip.ri.address.SipUri;
+import co.ecg.jain_sip.sip.ri.header.RequestLine;
+import co.ecg.jain_sip.sip.ri.header.Route;
+import co.ecg.jain_sip.sip.ri.header.RouteList;
+import co.ecg.jain_sip.sip.ri.message.SIPRequest;
+import lombok.extern.slf4j.Slf4j;
 
 /*
  * Bug reported by Will Scullin -- maddr was being ignored when routing
@@ -89,9 +98,8 @@ import co.ecg.jain_sip.sip.address.*;
  * @author M. Ranganathan <br/>
  *
  */
+@Slf4j
 public class DefaultRouter implements Router {
-
-	private static StackLogger logger = CommonLogger.getLogger(DefaultRouter.class);
 
     private SIPTransactionStack sipStack;
 
@@ -193,12 +201,12 @@ public class DefaultRouter implements Router {
                 if (!sipUri.hasLrParam()) {
 
                     fixStrictRouting(sipRequest);
-                    if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG))
+                    if (log.isDebugEnabled())
                         log.debug("Route post processing fixed strict routing");
                 }
 
                 Hop hop = createHop(sipUri,request);
-                if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG))
+                if (log.isDebugEnabled())
                     log.debug("NextHop based on Route:" + hop);
                 return hop;
             } else {
@@ -208,7 +216,7 @@ public class DefaultRouter implements Router {
         } else if (requestURI.isSipURI()
                 && ((SipURI) requestURI).getMAddrParam() != null) {
             Hop hop = createHop((SipURI) requestURI,request);
-            if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG))
+            if (log.isDebugEnabled())
                 log.debug("Using request URI maddr to route the request = "
                                 + hop.toString());
 
@@ -218,24 +226,23 @@ public class DefaultRouter implements Router {
             return hop;
 
         } else if (defaultRoute != null) {
-            if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG))
+            if (log.isDebugEnabled())
                 log.debug("Using outbound proxy to route the request = "
                                 + defaultRoute.toString());
             return defaultRoute;
         } else if (requestURI.isSipURI()) {
             Hop hop = createHop((SipURI) requestURI,request);
-            if (hop != null && logger.isLoggingEnabled(LogWriter.TRACE_DEBUG))
+            if (hop != null && log.isDebugEnabled())
                 log.debug("Used request-URI for nextHop = "
                         + hop.toString());
-            else if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
+            else if (log.isDebugEnabled()) {
                 log.debug("returning null hop -- loop detected");
             }
             return hop;
 
         } else {
             // The internal router should never be consulted for non-sip URIs.
-            InternalErrorHandler.handleException("Unexpected non-sip URI",
-                    this.logger);
+            InternalErrorHandler.handleException("Unexpected non-sip URI");
             return null;
         }
 
@@ -261,7 +268,7 @@ public class DefaultRouter implements Router {
 
         routes.add(route); // as last one
         req.setRequestURI(firstUri);
-        if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
+        if (log.isDebugEnabled()) {
             log.debug("post: fixStrictRouting" + req);
         }
     }

@@ -25,17 +25,18 @@
  */
 package co.ecg.jain_sip.sip.ri.stack;
 
-import co.ecg.jain_sip.core.ri.CommonLogger;
-import co.ecg.jain_sip.core.ri.StackLogger;
+
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
 
+@Slf4j
 public class KeyedSemaphore {
 	ConcurrentHashMap<String, Semaphore> map = new ConcurrentHashMap<String, Semaphore>();
-	static StackLogger logger = CommonLogger.getLogger(KeyedSemaphore.class);
+
 	
     public void leaveIOCriticalSection(String key) {
         Semaphore creationSemaphore = map.get(key);
@@ -59,9 +60,9 @@ public class KeyedSemaphore {
             creationSemaphore = map.putIfAbsent(key, newCreationSemaphore);
             if(creationSemaphore == null) {
                 creationSemaphore = newCreationSemaphore;       
-                if (logger.isLoggingEnabled(StackLogger.TRACE_DEBUG)) {
+
                     log.debug("new Semaphore added for key " + key);
-                }
+
             }
         }
         
