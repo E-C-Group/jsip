@@ -23,13 +23,13 @@
  */
 package gov.nist.javax.sip.parser;
 
-import gov.nist.javax.sip.address.AddressImpl;
-import gov.nist.javax.sip.address.SipUri;
-import gov.nist.javax.sip.header.Contact;
-import gov.nist.javax.sip.header.ContactList;
-import gov.nist.javax.sip.header.SIPHeader;
+import co.ecg.jain_sip.sip.ri.address.AddressImpl;
+import co.ecg.jain_sip.sip.ri.address.SipUri;
+import co.ecg.jain_sip.sip.ri.header.Contact;
+import co.ecg.jain_sip.sip.ri.header.ContactList;
+import co.ecg.jain_sip.sip.ri.header.SIPHeader;
 
-import javax.sip.address.URI;
+import co.ecg.jain_sip.sip.address.URI;
 import java.text.ParseException;
 import java.util.HashSet;
 import java.util.Iterator;

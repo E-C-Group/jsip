@@ -25,11 +25,11 @@
 */
 package gov.nist.javax.sip.parser;
 
-import gov.nist.javax.sip.address.GenericURI;
-import gov.nist.javax.sip.header.AlertInfo;
-import gov.nist.javax.sip.header.AlertInfoList;
-import gov.nist.javax.sip.header.SIPHeader;
-import gov.nist.javax.sip.header.SIPHeaderNames;
+import co.ecg.jain_sip.sip.ri.address.GenericURI;
+import co.ecg.jain_sip.sip.ri.header.AlertInfo;
+import co.ecg.jain_sip.sip.ri.header.AlertInfoList;
+import co.ecg.jain_sip.sip.ri.header.SIPHeader;
+import co.ecg.jain_sip.sip.ri.header.SIPHeaderNames;
 
 import java.text.ParseException;
 

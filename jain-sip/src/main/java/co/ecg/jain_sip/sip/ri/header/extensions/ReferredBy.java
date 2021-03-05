@@ -1,28 +1,27 @@
 
 /*******************************************************************************
-* Product of NIST/ITL Advanced Networking Technologies Division (ANTD).        *
-*******************************************************************************/
+ * Product of NIST/ITL Advanced Networking Technologies Division (ANTD).        *
+ *******************************************************************************/
 
 package co.ecg.jain_sip.sip.ri.header.extensions;
 
+import co.ecg.jain_sip.sip.ri.address.AddressImpl;
+import co.ecg.jain_sip.sip.ri.header.AddressParametersHeader;
+
 import java.text.ParseException;
 
-import javax.sip.header.ExtensionHeader;
+import co.ecg.jain_sip.sip.header.ExtensionHeader;
 /*
-* This code has been contributed by the author to the public domain.
-*/
+ * This code has been contributed by the author to the public domain.
+ */
 
 /**
  * ReferredBy SIP Header. RFC 3892
  *
- * @version JAIN-SIP-1.2
- *
  * @author Peter Musgrave.
- *
- *
+ * @version JAIN-SIP-1.2
  */
-public final class ReferredBy
-    extends AddressParametersHeader implements ExtensionHeader, ReferredByHeader {
+public final class ReferredBy extends AddressParametersHeader implements ExtensionHeader, ReferredByHeader {
 
     // TODO: Need a unique UID
     private static final long serialVersionUID = 3134344915465784267L;
@@ -30,7 +29,8 @@ public final class ReferredBy
     // TODO: When the MinSEHeader is added to javax - move this there...pmusgrave
     public static final String NAME = "Referred-By";
 
-    /** default Constructor.
+    /**
+     * default Constructor.
      */
     public ReferredBy() {
         super(NAME);
@@ -38,12 +38,13 @@ public final class ReferredBy
 
     public void setValue(String value) throws ParseException {
         // not implemented.
-        throw new ParseException(value,0);
+        throw new ParseException(value, 0);
 
     }
 
     /**
      * Encode the header content into a String.
+     *
      * @return String
      */
     public StringBuilder encodeBody(StringBuilder retval) {
@@ -59,7 +60,7 @@ public final class ReferredBy
         }
 
         if (!parameters.isEmpty()) {
-            retval.append(SEMICOLON); 
+            retval.append(SEMICOLON);
             parameters.encode(retval);
         }
         return retval;

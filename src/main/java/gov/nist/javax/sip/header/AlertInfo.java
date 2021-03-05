@@ -28,8 +28,8 @@ package gov.nist.javax.sip.header;
 
 import java.text.ParseException;
 
-import gov.nist.javax.sip.address.*;
-import javax.sip.address.*;
+import co.ecg.jain_sip.sip.ri.address.*;
+import co.ecg.jain_sip.sip.address.*;
 
 /**
  * AlertInfo SIP Header.

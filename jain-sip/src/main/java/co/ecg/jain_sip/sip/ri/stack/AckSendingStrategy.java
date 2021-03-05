@@ -25,12 +25,11 @@
  */
 package co.ecg.jain_sip.sip.ri.stack;
 
+import co.ecg.jain_sip.sip.SipException;
+import co.ecg.jain_sip.sip.address.Hop;
+import co.ecg.jain_sip.sip.ri.message.SIPRequest;
+
 import java.io.IOException;
-
-import gov.nist.javax.sip.message.SIPRequest;
-
-import javax.sip.SipException;
-import javax.sip.address.Hop;
 
 /**
  * Implement this and set it in a SIPDialog to override the sending of an ack message

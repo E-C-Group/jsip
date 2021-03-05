@@ -15,9 +15,9 @@
  */
 package co.ecg.jain_sip.sip.ri;
 
-import gov.nist.javax.sip.DialogTimeoutEvent.Reason;
+import co.ecg.jain_sip.sip.ri.DialogTimeoutEvent.Reason;
 
-import javax.sip.IOExceptionEvent;
+import co.ecg.jain_sip.sip.IOExceptionEvent;
 
 /**
  * Created: 09.09.11 15:16

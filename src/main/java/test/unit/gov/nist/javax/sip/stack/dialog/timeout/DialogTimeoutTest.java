@@ -15,9 +15,9 @@
  */
  package test.unit.gov.nist.javax.sip.stack.dialog.timeout;
 
-import gov.nist.javax.sip.SipStackImpl;
+import co.ecg.jain_sip.sip.ri.SipStackImpl;
 
-import javax.sip.SipProvider;
+import co.ecg.jain_sip.sip.SipProvider;
 
 import org.apache.log4j.Logger;
 

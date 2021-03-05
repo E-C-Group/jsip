@@ -25,6 +25,8 @@
 */
 package co.ecg.jain_sip.sip.ri;
 
+import co.ecg.jain_sip.sip.ri.stack.SIPTransaction;
+
 import  java.util.*;
 
 /**

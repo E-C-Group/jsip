@@ -26,8 +26,8 @@
  */
 package javax.sip.address;
 
-import javax.sip.SipException;
-import javax.sip.message.Request;
+import co.ecg.jain_sip.sip.SipException;
+import co.ecg.jain_sip.sip.message.Request;
 import java.util.ListIterator;
 
 /**

@@ -24,15 +24,15 @@
 *
 */
 package gov.nist.javax.sip.parser;
-import gov.nist.core.HostNameParser;
-import gov.nist.core.HostPort;
-import gov.nist.core.NameValue;
-import gov.nist.core.NameValueList;
-import gov.nist.core.Token;
-import gov.nist.javax.sip.address.GenericURI;
-import gov.nist.javax.sip.address.SipUri;
-import gov.nist.javax.sip.address.TelURLImpl;
-import gov.nist.javax.sip.address.TelephoneNumber;
+import co.ecg.jain_sip.core.ri.HostNameParser;
+import co.ecg.jain_sip.core.ri.HostPort;
+import co.ecg.jain_sip.core.ri.NameValue;
+import co.ecg.jain_sip.core.ri.NameValueList;
+import co.ecg.jain_sip.core.ri.Token;
+import co.ecg.jain_sip.sip.ri.address.GenericURI;
+import co.ecg.jain_sip.sip.ri.address.SipUri;
+import co.ecg.jain_sip.sip.ri.address.TelURLImpl;
+import co.ecg.jain_sip.sip.ri.address.TelephoneNumber;
 import java.text.ParseException;
 
 /**

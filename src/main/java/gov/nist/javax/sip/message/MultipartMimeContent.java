@@ -3,7 +3,7 @@ package gov.nist.javax.sip.message;
 import java.util.Iterator;
 import java.util.List;
 
-import javax.sip.header.ContentTypeHeader;
+import co.ecg.jain_sip.sip.header.ContentTypeHeader;
 
 public interface MultipartMimeContent {
 

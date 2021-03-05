@@ -28,14 +28,14 @@
  ******************************************************************************/
 package co.ecg.jain_sip.sip.ri.parser;
 
-import gov.nist.core.CommonLogger;
-import gov.nist.core.LogLevels;
-import gov.nist.core.LogWriter;
-import gov.nist.core.StackLogger;
-import gov.nist.javax.sip.message.SIPMessage;
-import gov.nist.javax.sip.stack.ConnectionOrientedMessageChannel;
-import gov.nist.javax.sip.stack.QueuedMessageDispatchBase;
-import gov.nist.javax.sip.stack.SIPTransactionStack;
+import co.ecg.jain_sip.core.ri.CommonLogger;
+import co.ecg.jain_sip.core.ri.LogLevels;
+import co.ecg.jain_sip.core.ri.LogWriter;
+import co.ecg.jain_sip.core.ri.StackLogger;
+import co.ecg.jain_sip.sip.ri.message.SIPMessage;
+import co.ecg.jain_sip.sip.ri.stack.ConnectionOrientedMessageChannel;
+import co.ecg.jain_sip.sip.ri.stack.QueuedMessageDispatchBase;
+import co.ecg.jain_sip.sip.ri.stack.SIPTransactionStack;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -47,8 +47,8 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
 
-import javax.sip.header.CallIdHeader;
-import javax.sip.header.ContentLengthHeader;
+import co.ecg.jain_sip.sip.header.CallIdHeader;
+import co.ecg.jain_sip.sip.header.ContentLengthHeader;
 
 /**
  * This is a FSM that can parse a single stream of messages with they bodies and 
@@ -152,7 +152,7 @@ public class NioPipelineParser {
 	                }
                 }
             } catch (InterruptedException e) {
-            	logger.logError("Semaphore acquisition for callId " + callId + " interrupted, couldn't process message, returning", e);
+            	log.error("Semaphore acquisition for callId " + callId + " interrupted, couldn't process message, returning", e);
             	// https://java.net/jira/browse/JSIP-499 don't process the message if the semaphore wasn't acquired
             	return;
             }
@@ -196,7 +196,7 @@ public class NioPipelineParser {
             		log.warn("Problem parsing message " + unparsedMessage);
             	}
     		}catch (Exception e) {
-            	logger.logError("Error occured processing message " + message, e);
+            	log.error("Error occured processing message " + message, e);
                 // We do not break the TCP connection because other calls use the same socket here
             } finally {            
             	if(!messagePolled) {
@@ -299,7 +299,7 @@ public class NioPipelineParser {
                 	try {
 						sipMessageListener.sendSingleCRLF();
 					} catch (Exception e) {						
-						logger.logError("A problem occured while trying to send a single CRLF in response to a double CRLF", e);
+						log.error("A problem occured while trying to send a single CRLF in response to a double CRLF", e);
 					}                	                	
             	} else {
             		crlfReceived = true;
@@ -382,7 +382,7 @@ public class NioPipelineParser {
 						sipMessage = smp.parseSIPMessage(msgLines.getBytes(), false, false, null);
 						sipMessage.setMessageContent(msgBodyBytes);
 					} catch (ParseException e) {
-						logger.logError("Parsing problem", e);
+						log.error("Parsing problem", e);
 					}
 				}
 				this.contentLength = 0;
@@ -396,7 +396,7 @@ public class NioPipelineParser {
 		try {
 			sipMessageListener.processMessage(message);
 		} catch (Exception e) {
-			logger.logError("Can't process message", e);
+			log.error("Can't process message", e);
 		}
 	}
 	

@@ -25,7 +25,7 @@
 */
 package co.ecg.jain_sip.sip.ri.parser;
 import java.text.ParseException;
-import javax.sip.*;
+import co.ecg.jain_sip.sip.*;
 
 /**
  * Accept-Encoding SIP (HTTP) Header parser.

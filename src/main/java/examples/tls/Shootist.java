@@ -1,14 +1,14 @@
 package examples.tls;
-import gov.nist.javax.sip.ClientTransactionExt;
-import gov.nist.javax.sip.TlsSecurityPolicy;
-import gov.nist.javax.sip.stack.NioMessageProcessorFactory;
-import gov.nist.javax.sip.stack.SIPTransaction;
+import co.ecg.jain_sip.sip.ri.ClientTransactionExt;
+import co.ecg.jain_sip.sip.ri.TlsSecurityPolicy;
+import co.ecg.jain_sip.sip.ri.stack.NioMessageProcessorFactory;
+import co.ecg.jain_sip.sip.ri.stack.SIPTransaction;
 
 import javax.net.ssl.SSLPeerUnverifiedException;
-import javax.sip.*;
-import javax.sip.address.*;
-import javax.sip.header.*;
-import javax.sip.message.*;
+import co.ecg.jain_sip.sip.*;
+import co.ecg.jain_sip.sip.address.*;
+import co.ecg.jain_sip.sip.header.*;
+import co.ecg.jain_sip.sip.message.*;
 
 import test.unit.gov.nist.javax.sip.stack.tls.TlsTest;
 

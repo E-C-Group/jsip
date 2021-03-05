@@ -19,7 +19,7 @@ package co.ecg.jain_sip.sip.ri.address;
 
 import java.text.ParseException;
 
-import javax.sip.address.AddressFactory;
+import co.ecg.jain_sip.sip.address.AddressFactory;
 
 /**
  * This interface is extension to {@link AddressFactory}. It

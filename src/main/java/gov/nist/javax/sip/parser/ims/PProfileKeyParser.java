@@ -25,11 +25,11 @@ package gov.nist.javax.sip.parser.ims;
 *
 */
 import java.text.ParseException;
-import gov.nist.javax.sip.header.SIPHeader;
-import gov.nist.javax.sip.header.ims.PProfileKey;
-import gov.nist.javax.sip.parser.AddressParametersParser;
-import gov.nist.javax.sip.parser.Lexer;
-import gov.nist.javax.sip.parser.TokenTypes;
+import co.ecg.jain_sip.sip.ri.header.SIPHeader;
+import co.ecg.jain_sip.sip.ri.header.ims.PProfileKey;
+import co.ecg.jain_sip.sip.ri.parser.AddressParametersParser;
+import co.ecg.jain_sip.sip.ri.parser.Lexer;
+import co.ecg.jain_sip.sip.ri.parser.TokenTypes;
 
 /**
  *

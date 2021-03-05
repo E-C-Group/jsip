@@ -29,9 +29,9 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-import gov.nist.core.CommonLogger;
-import gov.nist.core.LogLevels;
-import gov.nist.core.StackLogger;
+import co.ecg.jain_sip.core.ri.CommonLogger;
+import co.ecg.jain_sip.core.ri.LogLevels;
+import co.ecg.jain_sip.core.ri.StackLogger;
 
 /**
  * 

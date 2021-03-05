@@ -25,18 +25,18 @@
  */
 package gov.nist.javax.sip.stack;
 
-import gov.nist.core.CommonLogger;
-import gov.nist.core.LogLevels;
-import gov.nist.core.LogWriter;
-import gov.nist.core.StackLogger;
-import gov.nist.javax.sip.SipStackImpl;
-import gov.nist.javax.sip.message.SIPMessage;
-import gov.nist.javax.sip.message.SIPRequest;
-import gov.nist.javax.sip.stack.SSLStateMachine.MessageSendCallback;
+import co.ecg.jain_sip.core.ri.CommonLogger;
+import co.ecg.jain_sip.core.ri.LogLevels;
+import co.ecg.jain_sip.core.ri.LogWriter;
+import co.ecg.jain_sip.core.ri.StackLogger;
+import co.ecg.jain_sip.sip.ri.SipStackImpl;
+import co.ecg.jain_sip.sip.ri.message.SIPMessage;
+import co.ecg.jain_sip.sip.ri.message.SIPRequest;
+import co.ecg.jain_sip.sip.ri.stack.SSLStateMachine.MessageSendCallback;
 
 import javax.net.ssl.SSLSession;
 import javax.net.ssl.SSLContext;
-import javax.sip.address.SipURI;
+import co.ecg.jain_sip.sip.address.SipURI;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -332,7 +332,7 @@ public class NioTlsWebSocketMessageChannel extends NioWebSocketMessageChannel im
 			createBuffers();
 			sendMessage(message, false);
 		} catch (Exception e) {
-			logger.logError("Cant reinit", e);
+			log.error("Cant reinit", e);
 		}
 	}
 
@@ -343,7 +343,7 @@ public class NioTlsWebSocketMessageChannel extends NioWebSocketMessageChannel im
 			try {
 				init(sslStateMachine.sslEngine.getUseClientMode());
 			} catch (Exception ex) {
-				logger.logError("Cannot reset SSL engine", ex);
+				log.error("Cannot reset SSL engine", ex);
 				throw new IOException(ex);
 			}
 		}

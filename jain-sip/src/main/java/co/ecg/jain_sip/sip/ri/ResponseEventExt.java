@@ -1,10 +1,10 @@
 package co.ecg.jain_sip.sip.ri;
 
-import gov.nist.javax.sip.ClientTransactionExt;
+import co.ecg.jain_sip.sip.ri.ClientTransactionExt;
 
-import javax.sip.Dialog;
-import javax.sip.ResponseEvent;
-import javax.sip.message.Response;
+import co.ecg.jain_sip.sip.Dialog;
+import co.ecg.jain_sip.sip.ResponseEvent;
+import co.ecg.jain_sip.sip.message.Response;
 
 /**
  * Extension for ResponseEvent.

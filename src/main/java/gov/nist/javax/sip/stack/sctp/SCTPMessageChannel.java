@@ -1,28 +1,28 @@
 package gov.nist.javax.sip.stack.sctp;
 
-import gov.nist.core.CommonLogger;
-import gov.nist.core.LogWriter;
-import gov.nist.core.ServerLogger;
-import gov.nist.core.StackLogger;
-import gov.nist.javax.sip.header.CSeq;
-import gov.nist.javax.sip.header.CallID;
-import gov.nist.javax.sip.header.From;
-import gov.nist.javax.sip.header.RequestLine;
-import gov.nist.javax.sip.header.StatusLine;
-import gov.nist.javax.sip.header.To;
-import gov.nist.javax.sip.header.Via;
-import gov.nist.javax.sip.message.SIPMessage;
-import gov.nist.javax.sip.message.SIPRequest;
-import gov.nist.javax.sip.message.SIPResponse;
-import gov.nist.javax.sip.parser.ParseExceptionListener;
-import gov.nist.javax.sip.parser.StringMsgParser;
-import gov.nist.javax.sip.stack.MessageChannel;
-import gov.nist.javax.sip.stack.SIPClientTransaction;
-import gov.nist.javax.sip.stack.SIPServerTransaction;
-import gov.nist.javax.sip.stack.SIPTransaction;
-import gov.nist.javax.sip.stack.SIPTransactionStack;
-import gov.nist.javax.sip.stack.ServerRequestInterface;
-import gov.nist.javax.sip.stack.ServerResponseInterface;
+import co.ecg.jain_sip.core.ri.CommonLogger;
+import co.ecg.jain_sip.core.ri.LogWriter;
+import co.ecg.jain_sip.core.ri.ServerLogger;
+import co.ecg.jain_sip.core.ri.StackLogger;
+import co.ecg.jain_sip.sip.ri.header.CSeq;
+import co.ecg.jain_sip.sip.ri.header.CallID;
+import co.ecg.jain_sip.sip.ri.header.From;
+import co.ecg.jain_sip.sip.ri.header.RequestLine;
+import co.ecg.jain_sip.sip.ri.header.StatusLine;
+import co.ecg.jain_sip.sip.ri.header.To;
+import co.ecg.jain_sip.sip.ri.header.Via;
+import co.ecg.jain_sip.sip.ri.message.SIPMessage;
+import co.ecg.jain_sip.sip.ri.message.SIPRequest;
+import co.ecg.jain_sip.sip.ri.message.SIPResponse;
+import co.ecg.jain_sip.sip.ri.parser.ParseExceptionListener;
+import co.ecg.jain_sip.sip.ri.parser.StringMsgParser;
+import co.ecg.jain_sip.sip.ri.stack.MessageChannel;
+import co.ecg.jain_sip.sip.ri.stack.SIPClientTransaction;
+import co.ecg.jain_sip.sip.ri.stack.SIPServerTransaction;
+import co.ecg.jain_sip.sip.ri.stack.SIPTransaction;
+import co.ecg.jain_sip.sip.ri.stack.SIPTransactionStack;
+import co.ecg.jain_sip.sip.ri.stack.ServerRequestInterface;
+import co.ecg.jain_sip.sip.ri.stack.ServerResponseInterface;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -369,8 +369,8 @@ final class SCTPMessageChannel extends MessageChannel
                         || hdrClass.equals(CallID.class)
                         || hdrClass.equals(RequestLine.class) || hdrClass
                         .equals(StatusLine.class))) {
-            logger.logError("BAD MESSAGE!");
-            logger.logError(message);
+            log.error("BAD MESSAGE!");
+            log.error(message);
             throw ex;
         } else {
             sipMessage.addUnparsed(header);

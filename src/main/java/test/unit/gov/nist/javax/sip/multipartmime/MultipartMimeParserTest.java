@@ -5,20 +5,20 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Iterator;
 
-import javax.sip.header.ContentDispositionHeader;
-import javax.sip.header.ContentTypeHeader;
-import javax.sip.message.Request;
+import co.ecg.jain_sip.sip.header.ContentDispositionHeader;
+import co.ecg.jain_sip.sip.header.ContentTypeHeader;
+import co.ecg.jain_sip.sip.message.Request;
 
-import gov.nist.javax.sip.header.ContentType;
-import gov.nist.javax.sip.header.HeaderFactoryExt;
-import gov.nist.javax.sip.header.HeaderFactoryImpl;
-import gov.nist.javax.sip.header.SIPHeader;
-import gov.nist.javax.sip.message.Content;
-import gov.nist.javax.sip.message.MessageExt;
-import gov.nist.javax.sip.message.MessageFactoryExt;
-import gov.nist.javax.sip.message.MessageFactoryImpl;
-import gov.nist.javax.sip.message.MultipartMimeContent;
-import gov.nist.javax.sip.message.SIPRequest;
+import co.ecg.jain_sip.sip.ri.header.ContentType;
+import co.ecg.jain_sip.sip.ri.header.HeaderFactoryExt;
+import co.ecg.jain_sip.sip.ri.header.HeaderFactoryImpl;
+import co.ecg.jain_sip.sip.ri.header.SIPHeader;
+import co.ecg.jain_sip.sip.ri.message.Content;
+import co.ecg.jain_sip.sip.ri.message.MessageExt;
+import co.ecg.jain_sip.sip.ri.message.MessageFactoryExt;
+import co.ecg.jain_sip.sip.ri.message.MessageFactoryImpl;
+import co.ecg.jain_sip.sip.ri.message.MultipartMimeContent;
+import co.ecg.jain_sip.sip.ri.message.SIPRequest;
 import junit.framework.TestCase;
 
 public class MultipartMimeParserTest extends TestCase {

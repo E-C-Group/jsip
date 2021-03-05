@@ -28,7 +28,7 @@
 *******************************************************************************/
 package co.ecg.jain_sip.sip.ri.header;
 
-import javax.sip.header.*;
+import co.ecg.jain_sip.sip.header.*;
 
 /**
  * List of Unsupported headers.

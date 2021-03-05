@@ -35,17 +35,17 @@ package gov.nist.javax.sip.address;
  *pmusgrave@newheights.com (Additions for gruu and outbound drafts)
  *Jeroen van Bemmel ( additions for SCTP transport )
  */
-import gov.nist.core.*;
-import gov.nist.javax.sip.ListeningPointExt;
+import co.ecg.jain_sip.core.ri.*;
+import co.ecg.jain_sip.sip.ri.ListeningPointExt;
 
 import java.util.*;
 import java.text.ParseException;
 
-import javax.sip.PeerUnavailableException;
-import javax.sip.SipFactory;
-import javax.sip.address.SipURI;
-import javax.sip.header.Header;
-import javax.sip.header.HeaderFactory;
+import co.ecg.jain_sip.sip.PeerUnavailableException;
+import co.ecg.jain_sip.sip.SipFactory;
+import co.ecg.jain_sip.sip.address.SipURI;
+import co.ecg.jain_sip.sip.header.Header;
+import co.ecg.jain_sip.sip.header.HeaderFactory;
 
 
 /**

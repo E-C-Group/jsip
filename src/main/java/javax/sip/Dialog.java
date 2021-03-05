@@ -24,13 +24,13 @@
  */
 package javax.sip;
 
-import javax.sip.address.Address;
-import javax.sip.message.Request;
-import javax.sip.message.Response;
+import co.ecg.jain_sip.sip.address.Address;
+import co.ecg.jain_sip.sip.message.Request;
+import co.ecg.jain_sip.sip.message.Response;
 
 import java.text.ParseException;
 import java.util.Iterator;
-import javax.sip.header.CallIdHeader;
+import co.ecg.jain_sip.sip.header.CallIdHeader;
 import java.io.Serializable;
 
 /**

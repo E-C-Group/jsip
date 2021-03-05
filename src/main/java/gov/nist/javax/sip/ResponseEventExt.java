@@ -1,8 +1,8 @@
 package gov.nist.javax.sip;
 
-import javax.sip.Dialog;
-import javax.sip.ResponseEvent;
-import javax.sip.message.Response;
+import co.ecg.jain_sip.sip.Dialog;
+import co.ecg.jain_sip.sip.ResponseEvent;
+import co.ecg.jain_sip.sip.message.Response;
 
 /**
  * Extension for ResponseEvent.

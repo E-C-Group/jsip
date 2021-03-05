@@ -26,7 +26,7 @@
 ******************************************************************************/
 package co.ecg.jain_sip.sip.ri.header;
 
-import gov.nist.javax.sip.header.ims.ParameterNamesIms;
+import co.ecg.jain_sip.sip.ri.header.ims.ParameterNamesIms;
 
 import java.text.ParseException;
  /*

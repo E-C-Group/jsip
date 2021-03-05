@@ -25,22 +25,22 @@
  */
 package gov.nist.javax.sip.stack;
 
-import gov.nist.javax.sip.SipProviderImpl;
-import gov.nist.javax.sip.TransactionExt;
-import gov.nist.javax.sip.header.Via;
-import gov.nist.javax.sip.message.SIPMessage;
-import gov.nist.javax.sip.message.SIPRequest;
-import gov.nist.javax.sip.message.SIPResponse;
+import co.ecg.jain_sip.sip.ri.SipProviderImpl;
+import co.ecg.jain_sip.sip.ri.TransactionExt;
+import co.ecg.jain_sip.sip.ri.header.Via;
+import co.ecg.jain_sip.sip.ri.message.SIPMessage;
+import co.ecg.jain_sip.sip.ri.message.SIPRequest;
+import co.ecg.jain_sip.sip.ri.message.SIPResponse;
 
 import java.io.IOException;
 import java.net.InetAddress;
 import java.util.List;
 
 import javax.net.ssl.SSLPeerUnverifiedException;
-import javax.sip.Dialog;
-import javax.sip.TransactionState;
-import javax.sip.message.Request;
-import javax.sip.message.Response;
+import co.ecg.jain_sip.sip.Dialog;
+import co.ecg.jain_sip.sip.TransactionState;
+import co.ecg.jain_sip.sip.message.Request;
+import co.ecg.jain_sip.sip.message.Response;
 
 public interface SIPTransaction extends TransactionExt {
 

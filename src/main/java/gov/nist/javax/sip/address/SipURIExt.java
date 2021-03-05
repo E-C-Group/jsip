@@ -1,6 +1,6 @@
 package gov.nist.javax.sip.address;
 
-import javax.sip.address.SipURI;
+import co.ecg.jain_sip.sip.address.SipURI;
 
 /**
  * URI Interface extensions that will be added to version 2.0 of the JSR 32 spec.

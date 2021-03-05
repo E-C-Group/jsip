@@ -24,7 +24,7 @@
 package javax.sip;
 
 import java.util.*;
-import javax.sip.message.Request;
+import co.ecg.jain_sip.sip.message.Request;
 
 /**
  * This class represents an Request event that is passed from a SipProvider to

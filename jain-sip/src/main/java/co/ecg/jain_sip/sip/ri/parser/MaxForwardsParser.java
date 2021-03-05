@@ -25,7 +25,7 @@
 */
 package co.ecg.jain_sip.sip.ri.parser;
 
-import javax.sip.*;
+import co.ecg.jain_sip.sip.*;
 import java.text.ParseException;
 
 /**

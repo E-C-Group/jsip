@@ -8,19 +8,19 @@
 * You might find this useful for bulding test frameworks.
 */
 package examples.nistgoodies.match;
-import gov.nist.core.Match;
-import gov.nist.javax.sip.address.SipUri;
-import gov.nist.javax.sip.header.RequestLine;
-import gov.nist.javax.sip.header.StatusLine;
-import gov.nist.javax.sip.message.MessageFactoryImpl;
-import gov.nist.javax.sip.message.SIPRequest;
-import gov.nist.javax.sip.message.SIPResponse;
+import co.ecg.jain_sip.core.ri.Match;
+import co.ecg.jain_sip.sip.ri.address.SipUri;
+import co.ecg.jain_sip.sip.ri.header.RequestLine;
+import co.ecg.jain_sip.sip.ri.header.StatusLine;
+import co.ecg.jain_sip.sip.ri.message.MessageFactoryImpl;
+import co.ecg.jain_sip.sip.ri.message.SIPRequest;
+import co.ecg.jain_sip.sip.ri.message.SIPResponse;
 
 import java.util.regex.Pattern;
 
-import javax.sip.SipFactory;
-import javax.sip.message.MessageFactory;
-import javax.sip.message.Request;
+import co.ecg.jain_sip.sip.SipFactory;
+import co.ecg.jain_sip.sip.message.MessageFactory;
+import co.ecg.jain_sip.sip.message.Request;
 
 
 class Matcher implements Match {

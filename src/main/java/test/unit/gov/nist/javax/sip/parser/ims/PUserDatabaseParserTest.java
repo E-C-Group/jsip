@@ -27,9 +27,9 @@ package test.unit.gov.nist.javax.sip.parser.ims;
 
 import java.text.ParseException;
 
-import gov.nist.javax.sip.header.HeaderFactoryImpl;
-import gov.nist.javax.sip.header.ims.PUserDatabaseHeader;
-import gov.nist.javax.sip.parser.ims.PUserDatabaseParser;
+import co.ecg.jain_sip.sip.ri.header.HeaderFactoryImpl;
+import co.ecg.jain_sip.sip.ri.header.ims.PUserDatabaseHeader;
+import co.ecg.jain_sip.sip.ri.parser.ims.PUserDatabaseParser;
 import test.unit.gov.nist.javax.sip.parser.ParserTestCase;
 /**
  *

@@ -25,8 +25,8 @@
  */
 package gov.nist.javax.sip.stack;
 
-import gov.nist.core.CommonLogger;
-import gov.nist.core.StackLogger;
+import co.ecg.jain_sip.core.ri.CommonLogger;
+import co.ecg.jain_sip.core.ri.StackLogger;
 
 import java.io.IOException;
 import java.util.concurrent.ConcurrentHashMap;

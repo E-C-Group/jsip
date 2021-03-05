@@ -25,8 +25,8 @@
 */
 package gov.nist.javax.sip.parser;
 
-import javax.sip.*;
-import gov.nist.javax.sip.header.*;
+import co.ecg.jain_sip.sip.*;
+import co.ecg.jain_sip.sip.ri.header.*;
 import java.text.ParseException;
 
 /**

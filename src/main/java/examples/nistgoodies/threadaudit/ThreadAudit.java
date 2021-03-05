@@ -1,8 +1,8 @@
 package examples.nistgoodies.threadaudit;
 
-import gov.nist.javax.sip.stack.SIPTransactionStack;
+import co.ecg.jain_sip.sip.ri.stack.SIPTransactionStack;
 
-import javax.sip.*;
+import co.ecg.jain_sip.sip.*;
 import java.util.Properties;
 import java.util.Timer;
 import java.util.TimerTask;

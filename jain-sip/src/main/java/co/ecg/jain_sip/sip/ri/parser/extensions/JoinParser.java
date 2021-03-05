@@ -1,5 +1,11 @@
 package co.ecg.jain_sip.sip.ri.parser.extensions;
 
+import co.ecg.jain_sip.sip.ri.header.SIPHeader;
+import co.ecg.jain_sip.sip.ri.header.extensions.Join;
+import co.ecg.jain_sip.sip.ri.parser.Lexer;
+import co.ecg.jain_sip.sip.ri.parser.ParametersParser;
+import co.ecg.jain_sip.sip.ri.parser.TokenTypes;
+
 import java.text.ParseException;
 
 // Parser for Join Header (RFC3911)
@@ -16,6 +22,7 @@ public class JoinParser extends ParametersParser {
 
     /**
      * Creates new CallIDParser
+     *
      * @param callID message to parse
      */
     public JoinParser(String callID) {
@@ -24,6 +31,7 @@ public class JoinParser extends ParametersParser {
 
     /**
      * Constructor
+     *
      * @param lexer Lexer to set
      */
     protected JoinParser(Lexer lexer) {
@@ -32,12 +40,14 @@ public class JoinParser extends ParametersParser {
 
     /**
      * parse the String message
+     *
      * @return SIPHeader (CallID object)
      * @throws ParseException if the message does not respect the spec.
      */
     public SIPHeader parse() throws ParseException {
-        if (debug)
-            dbg_enter("parse");
+
+        dbg_enter("parse");
+
         try {
             headerName(TokenTypes.JOIN_TO);
 
@@ -49,16 +59,15 @@ public class JoinParser extends ParametersParser {
             join.setCallId(callId);
             return join;
         } finally {
-            if (debug)
-                dbg_leave("parse");
+            dbg_leave("parse");
         }
     }
 
     public static void main(String args[]) throws ParseException {
         String to[] =
-            {   "Join: 12345th5z8z\n",
-                "Join: 12345th5z8z;to-tag=tozght6-45;from-tag=fromzght789-337-2\n",
-            };
+                {"Join: 12345th5z8z\n",
+                        "Join: 12345th5z8z;to-tag=tozght6-45;from-tag=fromzght789-337-2\n",
+                };
 
         for (int i = 0; i < to.length; i++) {
             JoinParser tp = new JoinParser(to[i]);
@@ -66,7 +75,7 @@ public class JoinParser extends ParametersParser {
             System.out.println("Parsing => " + to[i]);
             System.out.print("encoded = " + t.encode() + "==> ");
             System.out.println("callId " + t.getCallId() + " from-tag=" + t.getFromTag()
-                    + " to-tag=" + t.getToTag()) ;
+                    + " to-tag=" + t.getToTag());
 
         }
     }

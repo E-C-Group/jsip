@@ -28,8 +28,8 @@
 *******************************************************************************/
 package co.ecg.jain_sip.sip.ri.header;
 
-import javax.sip.*;
-import javax.sip.header.*;
+import co.ecg.jain_sip.sip.*;
+import co.ecg.jain_sip.sip.header.*;
 
 /**
  * MinExpires SIP Header.

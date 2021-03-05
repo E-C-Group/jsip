@@ -29,8 +29,8 @@
 package javax.sip;
 
 import java.util.*;
-import javax.sip.message.*;
-import javax.sip.header.*;
+import co.ecg.jain_sip.sip.message.*;
+import co.ecg.jain_sip.sip.header.*;
 
 /**
  * This interface represents the messaging entity of a SIP stack and as

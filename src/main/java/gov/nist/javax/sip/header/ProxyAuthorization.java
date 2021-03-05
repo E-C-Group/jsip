@@ -28,7 +28,7 @@
 *******************************************************************************/
 package gov.nist.javax.sip.header;
 
-import javax.sip.header.*;
+import co.ecg.jain_sip.sip.header.*;
 
 /**
  * ProxyAuthorization Header.

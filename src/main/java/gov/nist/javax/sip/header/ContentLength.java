@@ -28,8 +28,8 @@
 *******************************************************************************/
 package gov.nist.javax.sip.header;
 
-import javax.sip.*;
-import javax.sip.header.ContentLengthHeader;
+import co.ecg.jain_sip.sip.*;
+import co.ecg.jain_sip.sip.header.ContentLengthHeader;
 
 /**
 * ContentLength SIPHeader (of which there can be only one in a SIPMessage).

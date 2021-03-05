@@ -25,10 +25,10 @@
  */
 package co.ecg.jain_sip.sip.ri.stack;
 
-import gov.nist.core.CommonLogger;
-import gov.nist.core.HostPort;
-import gov.nist.core.LogWriter;
-import gov.nist.core.StackLogger;
+import co.ecg.jain_sip.core.ri.CommonLogger;
+import co.ecg.jain_sip.core.ri.HostPort;
+import co.ecg.jain_sip.core.ri.LogWriter;
+import co.ecg.jain_sip.core.ri.StackLogger;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -221,7 +221,7 @@ public class NioTcpMessageProcessor extends ConnectionOrientedMessageProcessor {
         		socketChannel.finishConnect();
         	} catch (IOException e) {
         		selectionKey.cancel();
-        		logger.logError("Cant connect", e);
+        		log.error("Cant connect", e);
         		return;
         	}
             synchronized (socketChannel) {
@@ -290,7 +290,7 @@ public class NioTcpMessageProcessor extends ConnectionOrientedMessageProcessor {
         						break;
         					}
         				} catch (Exception e) {
-        					logger.logError("Problem setting changes", e);
+        					log.error("Problem setting changes", e);
         				}
         			}
     				changeRequests.clear(); 
@@ -311,7 +311,7 @@ public class NioTcpMessageProcessor extends ConnectionOrientedMessageProcessor {
                         }
                     }
         		} catch (IOException e) {
-        			logger.logError("problem in select", e);
+        			log.error("problem in select", e);
         			break;
         		} catch (CancelledKeyException cke) {
         			if(logger.isLoggingEnabled(LogWriter.TRACE_INFO)) {
@@ -361,7 +361,7 @@ public class NioTcpMessageProcessor extends ConnectionOrientedMessageProcessor {
                                 connect(selectionKey);
                             }
                         } catch (Exception e) {
-                            logger.logError("Problem processing selection key event", e);
+                            log.error("Problem processing selection key event", e);
                             //NioTcpMessageChannel.get(selectionKey.channel());
                         }
                     }
@@ -372,7 +372,7 @@ public class NioTcpMessageProcessor extends ConnectionOrientedMessageProcessor {
                     }
                     return;
                 } catch (Exception ex) {
-        			logger.logError("Problem in the selector loop", ex);
+        			log.error("Problem in the selector loop", ex);
         		}
         	}
         }
@@ -490,12 +490,12 @@ public class NioTcpMessageProcessor extends ConnectionOrientedMessageProcessor {
     			selector.close();
     		}
     	} catch (Exception ex) {
-    		logger.logError("Problem closing channel " , ex);
+    		log.error("Problem closing channel " , ex);
     	}
         try {
             channel.close();
         } catch (Exception ex) {
-    		logger.logError("Problem closing channel " , ex);
+    		log.error("Problem closing channel " , ex);
     	}
     }
 

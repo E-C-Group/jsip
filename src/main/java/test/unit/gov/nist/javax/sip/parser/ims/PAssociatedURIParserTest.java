@@ -24,7 +24,7 @@
 
 package test.unit.gov.nist.javax.sip.parser.ims;
 
-import gov.nist.javax.sip.parser.ims.PAssociatedURIParser;
+import co.ecg.jain_sip.sip.ri.parser.ims.PAssociatedURIParser;
 import test.unit.gov.nist.javax.sip.parser.*;
 
 /**

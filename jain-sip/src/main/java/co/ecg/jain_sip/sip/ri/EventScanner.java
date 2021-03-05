@@ -27,19 +27,19 @@ package co.ecg.jain_sip.sip.ri;
 
 import java.util.*;
 
-import gov.nist.javax.sip.EventWrapper;
-import gov.nist.javax.sip.SipListenerExt;
-import gov.nist.javax.sip.SipProviderImpl;
-import gov.nist.javax.sip.SipStackImpl;
+import co.ecg.jain_sip.sip.ri.EventWrapper;
+import co.ecg.jain_sip.sip.ri.SipListenerExt;
+import co.ecg.jain_sip.sip.ri.SipProviderImpl;
+import co.ecg.jain_sip.sip.ri.SipStackImpl;
 
-import javax.sip.message.*;
-import javax.sip.*;
+import co.ecg.jain_sip.sip.message.*;
+import co.ecg.jain_sip.sip.*;
 
-import gov.nist.core.CommonLogger;
-import gov.nist.core.LogLevels;
-import gov.nist.core.LogWriter;
-import gov.nist.core.StackLogger;
-import gov.nist.core.ThreadAuditor;
+import co.ecg.jain_sip.core.ri.CommonLogger;
+import co.ecg.jain_sip.core.ri.LogLevels;
+import co.ecg.jain_sip.core.ri.LogWriter;
+import co.ecg.jain_sip.core.ri.StackLogger;
+import co.ecg.jain_sip.core.ri.ThreadAuditor;
 
 /* bug fixes SIPQuest communications and Shu-Lin Chen. */
 
@@ -523,7 +523,7 @@ public class EventScanner implements Runnable {
                         deliverEvent(eventWrapper);
                     } catch (Exception e) {
                         if (logger.isLoggingEnabled()) {
-                            logger.logError(
+                            log.error(
                                     "Unexpected exception caught while delivering event -- carrying on bravely", e);
                         }
                     }

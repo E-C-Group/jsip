@@ -1,16 +1,16 @@
 package test.unit.gov.nist.javax.sip.stack.forkedinvite;
 
-import gov.nist.javax.sip.SipStackImpl;
-import gov.nist.javax.sip.stack.NioMessageProcessorFactory;
+import co.ecg.jain_sip.sip.ri.SipStackImpl;
+import co.ecg.jain_sip.sip.ri.stack.NioMessageProcessorFactory;
 
 import java.util.Properties;
 
-import javax.sip.SipException;
-import javax.sip.SipFactory;
-import javax.sip.SipStack;
-import javax.sip.address.AddressFactory;
-import javax.sip.header.HeaderFactory;
-import javax.sip.message.MessageFactory;
+import co.ecg.jain_sip.sip.SipException;
+import co.ecg.jain_sip.sip.SipFactory;
+import co.ecg.jain_sip.sip.SipStack;
+import co.ecg.jain_sip.sip.address.AddressFactory;
+import co.ecg.jain_sip.sip.header.HeaderFactory;
+import co.ecg.jain_sip.sip.message.MessageFactory;
 
 // import org.sipfoundry.commons.log4j.SipFoundryAppender;
 // import org.sipfoundry.commons.log4j.SipFoundryLayout;

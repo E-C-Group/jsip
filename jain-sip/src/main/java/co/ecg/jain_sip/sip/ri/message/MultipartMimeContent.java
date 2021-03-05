@@ -2,7 +2,7 @@ package co.ecg.jain_sip.sip.ri.message;
 
 import java.util.Iterator;
 
-import javax.sip.header.ContentTypeHeader;
+import co.ecg.jain_sip.sip.header.ContentTypeHeader;
 
 public interface MultipartMimeContent {
 

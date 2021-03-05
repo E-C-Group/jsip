@@ -25,7 +25,7 @@
  */
 package co.ecg.jain_sip.sip;
 
-import javax.sip.message.Request;
+import co.ecg.jain_sip.sip.message.Request;
 import java.io.Serializable;
 
 /**

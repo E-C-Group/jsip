@@ -28,12 +28,12 @@ import java.text.ParseException;
 
 import co.ecg.jain_sip.sip.InvalidArgumentException;
 
-import gov.nist.javax.sip.header.SIPHeader;
-import gov.nist.javax.sip.header.ims.PPreferredService;
-import gov.nist.javax.sip.header.ims.ParameterNamesIms;
-import gov.nist.javax.sip.parser.HeaderParser;
-import gov.nist.javax.sip.parser.Lexer;
-import gov.nist.javax.sip.parser.TokenTypes;
+import co.ecg.jain_sip.sip.ri.header.SIPHeader;
+import co.ecg.jain_sip.sip.ri.header.ims.PPreferredService;
+import co.ecg.jain_sip.sip.ri.header.ims.ParameterNamesIms;
+import co.ecg.jain_sip.sip.ri.parser.HeaderParser;
+import co.ecg.jain_sip.sip.ri.parser.Lexer;
+import co.ecg.jain_sip.sip.ri.parser.TokenTypes;
 
 /**
  *

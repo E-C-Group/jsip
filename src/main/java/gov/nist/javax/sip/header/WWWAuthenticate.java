@@ -28,10 +28,10 @@
 *******************************************************************************/
 package gov.nist.javax.sip.header;
 
-import gov.nist.javax.sip.header.ims.WWWAuthenticateHeaderIms;
+import co.ecg.jain_sip.sip.ri.header.ims.WWWAuthenticateHeaderIms;
 
-import javax.sip.address.URI;
-import javax.sip.header.*;
+import co.ecg.jain_sip.sip.address.URI;
+import co.ecg.jain_sip.sip.header.*;
 
 /**
  * The WWWAuthenticate SIP header.

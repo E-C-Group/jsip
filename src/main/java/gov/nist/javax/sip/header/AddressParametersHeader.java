@@ -23,12 +23,12 @@
 */
 package gov.nist.javax.sip.header;
 
-import javax.sip.address.*;
-import javax.sip.header.FromHeader;
-import javax.sip.header.HeaderAddress;
-import javax.sip.header.Parameters;
+import co.ecg.jain_sip.sip.address.*;
+import co.ecg.jain_sip.sip.header.FromHeader;
+import co.ecg.jain_sip.sip.header.HeaderAddress;
+import co.ecg.jain_sip.sip.header.Parameters;
 
-import gov.nist.javax.sip.address.*;
+import co.ecg.jain_sip.sip.ri.address.*;
 
 /** An abstract class for headers that take an address and parameters.
  *

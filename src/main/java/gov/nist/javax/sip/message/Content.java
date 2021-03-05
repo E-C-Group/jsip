@@ -2,9 +2,9 @@ package gov.nist.javax.sip.message;
 
 import java.util.Iterator;
 
-import javax.sip.header.ContentDispositionHeader;
-import javax.sip.header.ContentTypeHeader;
-import javax.sip.header.Header;
+import co.ecg.jain_sip.sip.header.ContentDispositionHeader;
+import co.ecg.jain_sip.sip.header.ContentTypeHeader;
+import co.ecg.jain_sip.sip.header.Header;
 
 public interface Content {
 

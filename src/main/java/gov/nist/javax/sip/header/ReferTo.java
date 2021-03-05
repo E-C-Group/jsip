@@ -30,7 +30,7 @@
 
 package gov.nist.javax.sip.header;
 
-import gov.nist.javax.sip.address.*;
+import co.ecg.jain_sip.sip.ri.address.*;
 
 /**
  * ReferTo SIP Header.

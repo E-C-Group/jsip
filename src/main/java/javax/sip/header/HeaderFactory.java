@@ -25,9 +25,9 @@
  */
 package javax.sip.header;
 
-import javax.sip.address.*;
+import co.ecg.jain_sip.sip.address.*;
 import java.text.ParseException;
-import javax.sip.InvalidArgumentException;
+import co.ecg.jain_sip.sip.InvalidArgumentException;
 import java.util.*;
 
 /**

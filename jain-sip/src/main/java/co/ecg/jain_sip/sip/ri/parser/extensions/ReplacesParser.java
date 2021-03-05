@@ -1,5 +1,11 @@
 package co.ecg.jain_sip.sip.ri.parser.extensions;
 
+import co.ecg.jain_sip.sip.ri.header.SIPHeader;
+import co.ecg.jain_sip.sip.ri.header.extensions.Replaces;
+import co.ecg.jain_sip.sip.ri.parser.Lexer;
+import co.ecg.jain_sip.sip.ri.parser.ParametersParser;
+import co.ecg.jain_sip.sip.ri.parser.TokenTypes;
+
 import java.text.ParseException;
 
 // Parser for Replaces Header (RFC3891)
@@ -18,6 +24,7 @@ public class ReplacesParser extends ParametersParser {
 
     /**
      * Creates new CallIDParser
+     *
      * @param callID message to parse
      */
     public ReplacesParser(String callID) {
@@ -26,6 +33,7 @@ public class ReplacesParser extends ParametersParser {
 
     /**
      * Constructor
+     *
      * @param lexer Lexer to set
      */
     protected ReplacesParser(Lexer lexer) {
@@ -34,12 +42,14 @@ public class ReplacesParser extends ParametersParser {
 
     /**
      * parse the String message
+     *
      * @return SIPHeader (CallID object)
      * @throws ParseException if the message does not respect the spec.
      */
     public SIPHeader parse() throws ParseException {
-        if (debug)
-            dbg_enter("parse");
+
+        dbg_enter("parse");
+
         try {
             headerName(TokenTypes.REPLACES_TO);
 
@@ -51,16 +61,15 @@ public class ReplacesParser extends ParametersParser {
             replaces.setCallId(callId);
             return replaces;
         } finally {
-            if (debug)
-                dbg_leave("parse");
+            dbg_leave("parse");
         }
     }
 
     public static void main(String args[]) throws ParseException {
         String to[] =
-            {   "Replaces: 12345th5z8z\n",
-                "Replaces: 12345th5z8z;to-tag=tozght6-45;from-tag=fromzght789-337-2\n",
-            };
+                {"Replaces: 12345th5z8z\n",
+                        "Replaces: 12345th5z8z;to-tag=tozght6-45;from-tag=fromzght789-337-2\n",
+                };
 
         for (int i = 0; i < to.length; i++) {
             ReplacesParser tp = new ReplacesParser(to[i]);
@@ -68,7 +77,7 @@ public class ReplacesParser extends ParametersParser {
             System.out.println("Parsing => " + to[i]);
             System.out.print("encoded = " + t.encode() + "==> ");
             System.out.println("callId " + t.getCallId() + " from-tag=" + t.getFromTag()
-                    + " to-tag=" + t.getToTag()) ;
+                    + " to-tag=" + t.getToTag());
 
         }
     }

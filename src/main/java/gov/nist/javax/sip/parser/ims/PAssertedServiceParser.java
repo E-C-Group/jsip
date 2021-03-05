@@ -25,13 +25,13 @@ package gov.nist.javax.sip.parser.ims;
 *
 */
 import java.text.ParseException;
-import javax.sip.InvalidArgumentException;
-import gov.nist.javax.sip.header.SIPHeader;
-import gov.nist.javax.sip.header.ims.PAssertedService;
-import gov.nist.javax.sip.header.ims.ParameterNamesIms;
-import gov.nist.javax.sip.parser.HeaderParser;
-import gov.nist.javax.sip.parser.Lexer;
-import gov.nist.javax.sip.parser.TokenTypes;
+import co.ecg.jain_sip.sip.InvalidArgumentException;
+import co.ecg.jain_sip.sip.ri.header.SIPHeader;
+import co.ecg.jain_sip.sip.ri.header.ims.PAssertedService;
+import co.ecg.jain_sip.sip.ri.header.ims.ParameterNamesIms;
+import co.ecg.jain_sip.sip.ri.parser.HeaderParser;
+import co.ecg.jain_sip.sip.ri.parser.Lexer;
+import co.ecg.jain_sip.sip.ri.parser.TokenTypes;
 
 /**
  *

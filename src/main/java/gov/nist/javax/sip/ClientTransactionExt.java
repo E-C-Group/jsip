@@ -1,8 +1,8 @@
 package gov.nist.javax.sip;
 
-import javax.sip.ClientTransaction;
-import javax.sip.Dialog;
-import javax.sip.address.Hop;
+import co.ecg.jain_sip.sip.ClientTransaction;
+import co.ecg.jain_sip.sip.Dialog;
+import co.ecg.jain_sip.sip.address.Hop;
 
 public interface ClientTransactionExt extends ClientTransaction, TransactionExt {
 

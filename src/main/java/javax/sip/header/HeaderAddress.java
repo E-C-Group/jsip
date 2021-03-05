@@ -21,7 +21,7 @@
  */
 package javax.sip.header;
 
-import javax.sip.address.Address;
+import co.ecg.jain_sip.sip.address.Address;
 
 /**
  * This interface represents methods for manipulating Address object

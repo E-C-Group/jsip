@@ -28,9 +28,9 @@
  ******************************************************************************/
 package co.ecg.jain_sip.sip.ri.header;
 
-import gov.nist.javax.sip.address.AddressImpl;
+import co.ecg.jain_sip.sip.ri.address.AddressImpl;
 
-import javax.sip.header.RouteHeader;
+import co.ecg.jain_sip.sip.header.RouteHeader;
 
 /**
  * Route  SIPHeader Object

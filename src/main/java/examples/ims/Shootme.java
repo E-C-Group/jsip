@@ -1,12 +1,12 @@
 package examples.ims;
 
-import gov.nist.javax.sip.header.HeaderFactoryImpl;
-import gov.nist.javax.sip.header.ims.*;
+import co.ecg.jain_sip.sip.ri.header.HeaderFactoryImpl;
+import co.ecg.jain_sip.sip.ri.header.ims.*;
 
-import javax.sip.*;
-import javax.sip.address.*;
-import javax.sip.header.*;
-import javax.sip.message.*;
+import co.ecg.jain_sip.sip.*;
+import co.ecg.jain_sip.sip.address.*;
+import co.ecg.jain_sip.sip.header.*;
+import co.ecg.jain_sip.sip.message.*;
 import java.util.*;
 
 /**

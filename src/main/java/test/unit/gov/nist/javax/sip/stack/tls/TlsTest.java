@@ -1,6 +1,6 @@
 package test.unit.gov.nist.javax.sip.stack.tls;
 
-import gov.nist.javax.sip.stack.NioMessageProcessorFactory;
+import co.ecg.jain_sip.sip.ri.stack.NioMessageProcessorFactory;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -9,7 +9,7 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.Properties;
 
-import javax.sip.ListeningPoint;
+import co.ecg.jain_sip.sip.ListeningPoint;
 
 import junit.framework.TestCase;
 

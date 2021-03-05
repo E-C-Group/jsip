@@ -1,7 +1,7 @@
 package examples.nistgoodies.pluggablelogger;
 
-import gov.nist.javax.sip.LogRecord;
-import gov.nist.javax.sip.LogRecordFactory;
+import co.ecg.jain_sip.sip.ri.LogRecord;
+import co.ecg.jain_sip.sip.ri.LogRecordFactory;
 
 public class LogRecordFactoryImpl implements LogRecordFactory {
 

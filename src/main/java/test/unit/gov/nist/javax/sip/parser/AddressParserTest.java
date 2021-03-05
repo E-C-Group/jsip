@@ -24,17 +24,17 @@
  */
 package test.unit.gov.nist.javax.sip.parser;
 
-import gov.nist.javax.sip.address.AddressImpl;
-import gov.nist.javax.sip.parser.AddressParser;
+import co.ecg.jain_sip.sip.ri.address.AddressImpl;
+import co.ecg.jain_sip.sip.ri.parser.AddressParser;
 
 import java.text.ParseException;
 import java.util.regex.Pattern;
 
-import javax.sip.PeerUnavailableException;
-import javax.sip.SipFactory;
-import javax.sip.address.Address;
-import javax.sip.address.AddressFactory;
-import javax.sip.address.URI;
+import co.ecg.jain_sip.sip.PeerUnavailableException;
+import co.ecg.jain_sip.sip.SipFactory;
+import co.ecg.jain_sip.sip.address.Address;
+import co.ecg.jain_sip.sip.address.AddressFactory;
+import co.ecg.jain_sip.sip.address.URI;
 
 /**
  *

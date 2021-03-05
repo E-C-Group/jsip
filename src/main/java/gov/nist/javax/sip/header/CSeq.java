@@ -28,10 +28,10 @@
  ******************************************************************************/
 package gov.nist.javax.sip.header;
 
-import gov.nist.javax.sip.message.SIPRequest;
+import co.ecg.jain_sip.sip.ri.message.SIPRequest;
 
-import javax.sip.InvalidArgumentException;
-import javax.sip.header.CSeqHeader;
+import co.ecg.jain_sip.sip.InvalidArgumentException;
+import co.ecg.jain_sip.sip.header.CSeqHeader;
 import java.text.ParseException;
 
 /**

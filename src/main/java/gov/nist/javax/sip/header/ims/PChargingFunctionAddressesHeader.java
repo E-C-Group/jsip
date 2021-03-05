@@ -30,10 +30,10 @@
 
 package gov.nist.javax.sip.header.ims;
 
-import gov.nist.core.NameValue;
+import co.ecg.jain_sip.core.ri.NameValue;
 
-import javax.sip.header.Header;
-import javax.sip.header.Parameters;
+import co.ecg.jain_sip.sip.header.Header;
+import co.ecg.jain_sip.sip.header.Parameters;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.ListIterator;

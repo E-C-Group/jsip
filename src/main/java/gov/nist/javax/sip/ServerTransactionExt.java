@@ -1,6 +1,6 @@
 package gov.nist.javax.sip;
 
-import javax.sip.ServerTransaction;
+import co.ecg.jain_sip.sip.ServerTransaction;
 
 
 public interface ServerTransactionExt extends ServerTransaction, TransactionExt {

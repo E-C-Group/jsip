@@ -19,24 +19,24 @@
  */
 package test.unit.gov.nist.javax.sip.stack.challenge;
 
-import javax.sip.Dialog;
-import javax.sip.DialogTerminatedEvent;
-import javax.sip.IOExceptionEvent;
-import javax.sip.ListeningPoint;
-import javax.sip.RequestEvent;
-import javax.sip.ResponseEvent;
-import javax.sip.ServerTransaction;
-import javax.sip.SipListener;
-import javax.sip.SipProvider;
-import javax.sip.Transaction;
-import javax.sip.TransactionTerminatedEvent;
-import javax.sip.address.Address;
-import javax.sip.header.CSeqHeader;
-import javax.sip.header.ContactHeader;
-import javax.sip.header.ContentTypeHeader;
-import javax.sip.header.ToHeader;
-import javax.sip.message.Request;
-import javax.sip.message.Response;
+import co.ecg.jain_sip.sip.Dialog;
+import co.ecg.jain_sip.sip.DialogTerminatedEvent;
+import co.ecg.jain_sip.sip.IOExceptionEvent;
+import co.ecg.jain_sip.sip.ListeningPoint;
+import co.ecg.jain_sip.sip.RequestEvent;
+import co.ecg.jain_sip.sip.ResponseEvent;
+import co.ecg.jain_sip.sip.ServerTransaction;
+import co.ecg.jain_sip.sip.SipListener;
+import co.ecg.jain_sip.sip.SipProvider;
+import co.ecg.jain_sip.sip.Transaction;
+import co.ecg.jain_sip.sip.TransactionTerminatedEvent;
+import co.ecg.jain_sip.sip.address.Address;
+import co.ecg.jain_sip.sip.header.CSeqHeader;
+import co.ecg.jain_sip.sip.header.ContactHeader;
+import co.ecg.jain_sip.sip.header.ContentTypeHeader;
+import co.ecg.jain_sip.sip.header.ToHeader;
+import co.ecg.jain_sip.sip.message.Request;
+import co.ecg.jain_sip.sip.message.Response;
 
 import org.apache.log4j.ConsoleAppender;
 import org.apache.log4j.Logger;

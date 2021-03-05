@@ -1,7 +1,7 @@
 package test.unit.gov.nist.javax.sip.parser;
 
-import gov.nist.javax.sip.parser.RecordRouteParser;
-import gov.nist.javax.sip.parser.RouteParser;
+import co.ecg.jain_sip.sip.ri.parser.RecordRouteParser;
+import co.ecg.jain_sip.sip.ri.parser.RouteParser;
 
 public class RecordRouteParserTest extends ParserTestCase {
 

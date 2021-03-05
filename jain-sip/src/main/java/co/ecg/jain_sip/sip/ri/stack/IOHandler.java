@@ -28,11 +28,11 @@
  *******************************************************************************/
 package co.ecg.jain_sip.sip.ri.stack;
 
-import gov.nist.core.CommonLogger;
-import gov.nist.core.LogLevels;
-import gov.nist.core.LogWriter;
-import gov.nist.core.StackLogger;
-import gov.nist.javax.sip.SipStackImpl;
+import co.ecg.jain_sip.core.ri.CommonLogger;
+import co.ecg.jain_sip.core.ri.LogLevels;
+import co.ecg.jain_sip.core.ri.LogWriter;
+import co.ecg.jain_sip.core.ri.StackLogger;
+import co.ecg.jain_sip.sip.ri.SipStackImpl;
 
 import javax.net.ssl.SSLHandshakeException;
 import javax.net.ssl.SSLSocket;
@@ -311,7 +311,7 @@ public class IOHandler {
                         	clientSock = sipStack.getNetworkLayer().createSocket(
                         			receiverAddress, contactPort, senderAddress);
                         } catch (SocketException e) { // We must catch the socket timeout exceptions here, any SocketException not just ConnectException
-                        	logger.logError("Problem connecting " +
+                        	log.error("Problem connecting " +
                         			receiverAddress + " " + contactPort + " " + senderAddress + " for message " + new String(bytes, "UTF-8"));
                         	// new connection is bad.
                         	// remove from our table the socket and its semaphore
@@ -363,7 +363,7 @@ public class IOHandler {
                 }
             } catch (IOException ex) {
                 if (logger.isLoggingEnabled(LogWriter.TRACE_ERROR)) {
-                    logger.logError(
+                    log.error(
                             "Problem sending: sendBytes " + transport
                                     + " inAddr "
                                     + receiverAddress.getHostAddress()
@@ -381,9 +381,9 @@ public class IOHandler {
             if (clientSock == null) {
 
                 if (logger.isLoggingEnabled(LogWriter.TRACE_ERROR)) {
-                    logger.logError(
+                    log.error(
                             this.socketTable.toString());
-                    logger.logError(
+                    log.error(
                             "Could not connect to " + receiverAddress + ":"
                                     + contactPort);
                 }

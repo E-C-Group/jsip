@@ -28,47 +28,47 @@
 /**************************************************************************/
 package gov.nist.javax.sip.stack;
 
-import gov.nist.core.CommonLogger;
-import gov.nist.core.InternalErrorHandler;
-import gov.nist.core.LogLevels;
-import gov.nist.core.LogWriter;
-import gov.nist.core.NameValueList;
-import gov.nist.core.StackLogger;
-import gov.nist.javax.sip.DialogExt;
-import gov.nist.javax.sip.ListeningPointImpl;
-import gov.nist.javax.sip.SipListenerExt;
-import gov.nist.javax.sip.SipProviderImpl;
-import gov.nist.javax.sip.SipStackImpl;
-import gov.nist.javax.sip.Utils;
-import gov.nist.javax.sip.address.AddressImpl;
-import gov.nist.javax.sip.address.SipUri;
-import gov.nist.javax.sip.header.Authorization;
-import gov.nist.javax.sip.header.CSeq;
-import gov.nist.javax.sip.header.Contact;
-import gov.nist.javax.sip.header.ContactList;
-import gov.nist.javax.sip.header.Event;
-import gov.nist.javax.sip.header.From;
-import gov.nist.javax.sip.header.MaxForwards;
-import gov.nist.javax.sip.header.RAck;
-import gov.nist.javax.sip.header.RSeq;
-import gov.nist.javax.sip.header.Reason;
-import gov.nist.javax.sip.header.RecordRoute;
-import gov.nist.javax.sip.header.RecordRouteList;
-import gov.nist.javax.sip.header.Require;
-import gov.nist.javax.sip.header.Route;
-import gov.nist.javax.sip.header.RouteList;
-import gov.nist.javax.sip.header.SIPHeader;
-import gov.nist.javax.sip.header.TimeStamp;
-import gov.nist.javax.sip.header.To;
-import gov.nist.javax.sip.header.Via;
-import gov.nist.javax.sip.message.MessageFactoryImpl;
-import gov.nist.javax.sip.message.SIPMessage;
-import gov.nist.javax.sip.message.SIPRequest;
-import gov.nist.javax.sip.message.SIPResponse;
-import gov.nist.javax.sip.parser.AddressParser;
-import gov.nist.javax.sip.parser.CallIDParser;
-import gov.nist.javax.sip.parser.ContactParser;
-import gov.nist.javax.sip.parser.RecordRouteParser;
+import co.ecg.jain_sip.core.ri.CommonLogger;
+import co.ecg.jain_sip.core.ri.InternalErrorHandler;
+import co.ecg.jain_sip.core.ri.LogLevels;
+import co.ecg.jain_sip.core.ri.LogWriter;
+import co.ecg.jain_sip.core.ri.NameValueList;
+import co.ecg.jain_sip.core.ri.StackLogger;
+import co.ecg.jain_sip.sip.ri.DialogExt;
+import co.ecg.jain_sip.sip.ri.ListeningPointImpl;
+import co.ecg.jain_sip.sip.ri.SipListenerExt;
+import co.ecg.jain_sip.sip.ri.SipProviderImpl;
+import co.ecg.jain_sip.sip.ri.SipStackImpl;
+import co.ecg.jain_sip.sip.ri.Utils;
+import co.ecg.jain_sip.sip.ri.address.AddressImpl;
+import co.ecg.jain_sip.sip.ri.address.SipUri;
+import co.ecg.jain_sip.sip.ri.header.Authorization;
+import co.ecg.jain_sip.sip.ri.header.CSeq;
+import co.ecg.jain_sip.sip.ri.header.Contact;
+import co.ecg.jain_sip.sip.ri.header.ContactList;
+import co.ecg.jain_sip.sip.ri.header.Event;
+import co.ecg.jain_sip.sip.ri.header.From;
+import co.ecg.jain_sip.sip.ri.header.MaxForwards;
+import co.ecg.jain_sip.sip.ri.header.RAck;
+import co.ecg.jain_sip.sip.ri.header.RSeq;
+import co.ecg.jain_sip.sip.ri.header.Reason;
+import co.ecg.jain_sip.sip.ri.header.RecordRoute;
+import co.ecg.jain_sip.sip.ri.header.RecordRouteList;
+import co.ecg.jain_sip.sip.ri.header.Require;
+import co.ecg.jain_sip.sip.ri.header.Route;
+import co.ecg.jain_sip.sip.ri.header.RouteList;
+import co.ecg.jain_sip.sip.ri.header.SIPHeader;
+import co.ecg.jain_sip.sip.ri.header.TimeStamp;
+import co.ecg.jain_sip.sip.ri.header.To;
+import co.ecg.jain_sip.sip.ri.header.Via;
+import co.ecg.jain_sip.sip.ri.message.MessageFactoryImpl;
+import co.ecg.jain_sip.sip.ri.message.SIPMessage;
+import co.ecg.jain_sip.sip.ri.message.SIPRequest;
+import co.ecg.jain_sip.sip.ri.message.SIPResponse;
+import co.ecg.jain_sip.sip.ri.parser.AddressParser;
+import co.ecg.jain_sip.sip.ri.parser.CallIDParser;
+import co.ecg.jain_sip.sip.ri.parser.ContactParser;
+import co.ecg.jain_sip.sip.ri.parser.RecordRouteParser;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -88,35 +88,35 @@ import java.util.concurrent.CopyOnWriteArraySet;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
 
-import javax.sip.ClientTransaction;
-import javax.sip.Dialog;
-import javax.sip.DialogDoesNotExistException;
-import javax.sip.DialogState;
-import javax.sip.IOExceptionEvent;
-import javax.sip.InvalidArgumentException;
-import javax.sip.ListeningPoint;
-import javax.sip.ObjectInUseException;
-import javax.sip.SipException;
-import javax.sip.Transaction;
-import javax.sip.TransactionDoesNotExistException;
-import javax.sip.TransactionState;
-import javax.sip.address.Address;
-import javax.sip.address.Hop;
-import javax.sip.address.SipURI;
-import javax.sip.header.CallIdHeader;
-import javax.sip.header.ContactHeader;
-import javax.sip.header.EventHeader;
-import javax.sip.header.OptionTag;
-import javax.sip.header.ProxyAuthorizationHeader;
-import javax.sip.header.RAckHeader;
-import javax.sip.header.RSeqHeader;
-import javax.sip.header.ReasonHeader;
-import javax.sip.header.RequireHeader;
-import javax.sip.header.RouteHeader;
-import javax.sip.header.SupportedHeader;
-import javax.sip.header.TimeStampHeader;
-import javax.sip.message.Request;
-import javax.sip.message.Response;
+import co.ecg.jain_sip.sip.ClientTransaction;
+import co.ecg.jain_sip.sip.Dialog;
+import co.ecg.jain_sip.sip.DialogDoesNotExistException;
+import co.ecg.jain_sip.sip.DialogState;
+import co.ecg.jain_sip.sip.IOExceptionEvent;
+import co.ecg.jain_sip.sip.InvalidArgumentException;
+import co.ecg.jain_sip.sip.ListeningPoint;
+import co.ecg.jain_sip.sip.ObjectInUseException;
+import co.ecg.jain_sip.sip.SipException;
+import co.ecg.jain_sip.sip.Transaction;
+import co.ecg.jain_sip.sip.TransactionDoesNotExistException;
+import co.ecg.jain_sip.sip.TransactionState;
+import co.ecg.jain_sip.sip.address.Address;
+import co.ecg.jain_sip.sip.address.Hop;
+import co.ecg.jain_sip.sip.address.SipURI;
+import co.ecg.jain_sip.sip.header.CallIdHeader;
+import co.ecg.jain_sip.sip.header.ContactHeader;
+import co.ecg.jain_sip.sip.header.EventHeader;
+import co.ecg.jain_sip.sip.header.OptionTag;
+import co.ecg.jain_sip.sip.header.ProxyAuthorizationHeader;
+import co.ecg.jain_sip.sip.header.RAckHeader;
+import co.ecg.jain_sip.sip.header.RSeqHeader;
+import co.ecg.jain_sip.sip.header.ReasonHeader;
+import co.ecg.jain_sip.sip.header.RequireHeader;
+import co.ecg.jain_sip.sip.header.RouteHeader;
+import co.ecg.jain_sip.sip.header.SupportedHeader;
+import co.ecg.jain_sip.sip.header.TimeStampHeader;
+import co.ecg.jain_sip.sip.message.Request;
+import co.ecg.jain_sip.sip.message.Response;
 
 /*
  * Acknowledgements:
@@ -389,7 +389,7 @@ public class SIPDialog implements javax.sip.Dialog, DialogExt {
                     }
                 }
             } catch (Exception ex) {
-                logger.logError(
+                log.error(
                         "Unexpected exception delivering event", ex);
             }
         }
@@ -420,7 +420,7 @@ public class SIPDialog implements javax.sip.Dialog, DialogExt {
                 ctx.terminate();
                 Thread.currentThread().interrupt();
             } catch (ObjectInUseException e) {
-                logger.logError("unexpected error", e);
+                log.error("unexpected error", e);
             }
         }
 
@@ -518,7 +518,7 @@ public class SIPDialog implements javax.sip.Dialog, DialogExt {
                 }
                
             } catch (Exception ex) {
-                logger.logError("Error sending re-INVITE",
+                log.error("Error sending re-INVITE",
                         ex);
             } finally {
                 this.ctx = null;
@@ -673,7 +673,7 @@ public class SIPDialog implements javax.sip.Dialog, DialogExt {
                 dialogDeleteIfNoAckSentTask = null;
                 if (!SIPDialog.this.isBackToBackUserAgent) {
                     if (logger.isLoggingEnabled())
-                        logger.logError(
+                        log.error(
                                 "ACK Was not sent. killing dialog " + dialogId);
                     if (((SipProviderImpl) sipProvider).getSipListener() instanceof SipListenerExt) {
                         raiseErrorEvent(SIPDialogErrorEvent.DIALOG_ACK_NOT_SENT_TIMEOUT);
@@ -682,7 +682,7 @@ public class SIPDialog implements javax.sip.Dialog, DialogExt {
                     }
                 } else {
                     if (logger.isLoggingEnabled())
-                        logger.logError(
+                        log.error(
                                 "ACK Was not sent. Sending BYE " + dialogId);
                     if (((SipProviderImpl) sipProvider).getSipListener() instanceof SipListenerExt) {
                         raiseErrorEvent(SIPDialogErrorEvent.DIALOG_ACK_NOT_SENT_TIMEOUT);
@@ -1223,7 +1223,7 @@ public class SIPDialog implements javax.sip.Dialog, DialogExt {
         if (this.getState() == null
                 || this.getState().getValue() == EARLY_STATE) {
             if (logger.isLoggingEnabled(LogWriter.TRACE_ERROR)) {
-                logger.logError(
+                log.error(
                         "Bad Dialog State for " + this + " dialogID = "
                                 + this.getDialogId());
             }
@@ -1239,7 +1239,7 @@ public class SIPDialog implements javax.sip.Dialog, DialogExt {
                         .logError(
                                 "RequestCallID = "
                                         + ackRequest.getCallId().getCallId());
-                logger.logError("dialog =  " + this);
+                log.error("dialog =  " + this);
             }
             throw new SipException("Bad call ID in request");
         }
@@ -2185,7 +2185,7 @@ public class SIPDialog implements javax.sip.Dialog, DialogExt {
                 this.callIdHeader = (CallIdHeader) new CallIDParser(
                         callIdHeaderString).parse();
             } catch (ParseException e) {
-                logger.logError(
+                log.error(
                         "error reparsing the call id header", e);
             }            
         }
@@ -2213,7 +2213,7 @@ public class SIPDialog implements javax.sip.Dialog, DialogExt {
                 this.localParty = (Address) new AddressParser(
                         localPartyStringified).address(true);
             } catch (ParseException e) {
-                logger.logError(
+                log.error(
                         "error reparsing the localParty", e);
             }
         }
@@ -2246,7 +2246,7 @@ public class SIPDialog implements javax.sip.Dialog, DialogExt {
                 this.remoteParty = (Address) new AddressParser(
                         remotePartyStringified).address(true);
             } catch (ParseException e) {
-                logger.logError(
+                log.error(
                         "error reparsing the remoteParty", e);
             }
         }
@@ -2271,7 +2271,7 @@ public class SIPDialog implements javax.sip.Dialog, DialogExt {
                 this.remoteTarget = (Address) new AddressParser(
                         remoteTargetStringified).address(true);
             } catch (ParseException e) {
-                logger.logError(
+                log.error(
                         "error reparsing the remoteTarget", e);
             }
         }
@@ -2376,7 +2376,7 @@ public class SIPDialog implements javax.sip.Dialog, DialogExt {
             cseq.setSeqNumber(this.getLocalSeqNumber());
         } catch (Exception ex) {
             if (logger.isLoggingEnabled())
-                logger.logError("Unexpected error");
+                log.error("Unexpected error");
             InternalErrorHandler.handleException(ex);
         }
         /*
@@ -2388,7 +2388,7 @@ public class SIPDialog implements javax.sip.Dialog, DialogExt {
                 .getListeningPoint(topMostViaTransport);
         if (lp == null) {
             if (logger.isLoggingEnabled())
-                logger.logError(
+                log.error(
                         "Cannot find listening point for transport "
                                 + topMostViaTransport);
             throw new SipException("Cannot find listening point for transport "
@@ -2614,7 +2614,7 @@ public class SIPDialog implements javax.sip.Dialog, DialogExt {
         if (byeSent && isTerminatedOnBye()
                 && !dialogRequest.getMethod().equals(Request.BYE)) {
             if (logger.isLoggingEnabled())
-                logger.logError(
+                log.error(
                         "BYE already sent for " + this);
             throw new SipException("Cannot send request; BYE already sent");
         }
@@ -2630,10 +2630,10 @@ public class SIPDialog implements javax.sip.Dialog, DialogExt {
             if (logger.isLoggingEnabled()) {
                 logger
                         .logError("CallID " + this.getCallId());
-                logger.logError(
+                log.error(
                         "SIPDialog::sendRequest:RequestCallID = "
                                 + dialogRequest.getCallId().getCallId());
-                logger.logError("dialog =  " + this);
+                log.error("dialog =  " + this);
             }
             throw new SipException("Bad call ID in request");
         }
@@ -3122,12 +3122,12 @@ public class SIPDialog implements javax.sip.Dialog, DialogExt {
                 
                 if ( lp== null) {
                     if (logger.isLoggingEnabled(LogLevels.TRACE_ERROR)) {
-                        logger.logError(
+                        log.error(
                                 "remoteTargetURI "
                                 + this.getRemoteTarget().getURI());
-                        logger.logError(
+                        log.error(
                                 "uri4transport = " + uri4transport);
-                        logger.logError(
+                        log.error(
                                 "No LP found for transport=" + transport);
                     }
                     throw new SipException(
@@ -3959,7 +3959,7 @@ public class SIPDialog implements javax.sip.Dialog, DialogExt {
                 this.contactHeader = (Contact) new ContactParser(
                         contactHeaderStringified).parse();
             } catch (ParseException e) {
-                logger.logError(
+                log.error(
                         "error reparsing the contact header", e);
             }
         }
@@ -4078,7 +4078,7 @@ public class SIPDialog implements javax.sip.Dialog, DialogExt {
         	
             if (!this.ackSem.tryAcquire(2, TimeUnit.SECONDS)) {
                 if (logger.isLoggingEnabled()) {
-                    logger.logError(
+                    log.error(
                             "Cannot aquire ACK semaphore ");
                 }
 
@@ -4099,7 +4099,7 @@ public class SIPDialog implements javax.sip.Dialog, DialogExt {
             }
 
         } catch (InterruptedException ex) {
-            logger.logError("Cannot aquire ACK semaphore");
+            log.error("Cannot aquire ACK semaphore");
             return false;
 
         }

@@ -29,9 +29,9 @@
 
 package co.ecg.jain_sip.sip.ri.header;
 
-import javax.sip.*;
+import co.ecg.jain_sip.sip.*;
 import java.text.ParseException;
-import javax.sip.header.*;
+import co.ecg.jain_sip.sip.header.*;
 
 /**
  * Retry-After SIP Header.

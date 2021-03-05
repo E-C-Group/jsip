@@ -19,7 +19,7 @@
 */
 package test.tck.msgflow;
 
-import javax.sip.*;
+import co.ecg.jain_sip.sip.*;
 
 import org.apache.log4j.Logger;
 

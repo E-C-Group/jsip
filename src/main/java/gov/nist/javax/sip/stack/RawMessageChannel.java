@@ -25,7 +25,7 @@
  */
 package gov.nist.javax.sip.stack;
 
-import gov.nist.javax.sip.message.SIPMessage;
+import co.ecg.jain_sip.sip.ri.message.SIPMessage;
 
 public interface RawMessageChannel {
 

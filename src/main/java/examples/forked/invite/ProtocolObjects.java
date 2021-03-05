@@ -2,13 +2,13 @@ package examples.forked.invite;
 
 import java.util.Properties;
 
-import javax.sip.PeerUnavailableException;
-import javax.sip.SipException;
-import javax.sip.SipFactory;
-import javax.sip.SipStack;
-import javax.sip.address.AddressFactory;
-import javax.sip.header.HeaderFactory;
-import javax.sip.message.MessageFactory;
+import co.ecg.jain_sip.sip.PeerUnavailableException;
+import co.ecg.jain_sip.sip.SipException;
+import co.ecg.jain_sip.sip.SipFactory;
+import co.ecg.jain_sip.sip.SipStack;
+import co.ecg.jain_sip.sip.address.AddressFactory;
+import co.ecg.jain_sip.sip.header.HeaderFactory;
+import co.ecg.jain_sip.sip.message.MessageFactory;
 
 /**
  * @author M. Ranganathan

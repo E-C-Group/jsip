@@ -25,18 +25,18 @@
 * Product of NIST/ITL Advanced Networking Technologies Division (ANTD).        *
 *******************************************************************************/
 package gov.nist.javax.sip.header;
-import gov.nist.javax.sip.header.ims.*; /* IMS headers - issued by Miguel Freitas */
-import gov.nist.javax.sip.header.extensions.*; // extension headers - pmusgrave
-import javax.sip.header.*;
+import co.ecg.jain_sip.sip.ri.header.ims.*; /* IMS headers - issued by Miguel Freitas */
+import co.ecg.jain_sip.sip.ri.header.extensions.*; // extension headers - pmusgrave
+import co.ecg.jain_sip.sip.header.*;
 
-import gov.nist.javax.sip.parser.*;
-import gov.nist.javax.sip.parser.extensions.ReferencesParser;
+import co.ecg.jain_sip.sip.ri.parser.*;
+import co.ecg.jain_sip.sip.ri.parser.extensions.ReferencesParser;
 
-import javax.sip.address.*;
+import co.ecg.jain_sip.sip.address.*;
 import java.text.ParseException;
-import javax.sip.InvalidArgumentException;
+import co.ecg.jain_sip.sip.InvalidArgumentException;
 import java.util.*;
-import gov.nist.javax.sip.address.*;
+import co.ecg.jain_sip.sip.ri.address.*;
 
 /*
 * This file contains enhancements contributed by Alexandre Silva Santos

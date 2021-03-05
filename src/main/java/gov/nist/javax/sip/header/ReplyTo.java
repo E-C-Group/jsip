@@ -28,10 +28,10 @@
 *******************************************************************************/
 package gov.nist.javax.sip.header;
 
-import gov.nist.core.*;
-import gov.nist.javax.sip.address.*;
+import co.ecg.jain_sip.core.ri.*;
+import co.ecg.jain_sip.sip.ri.address.*;
 
-import javax.sip.header.*;
+import co.ecg.jain_sip.sip.header.*;
 
 /**
  * ReplyTo Header.

@@ -25,14 +25,14 @@
  */
 package gov.nist.javax.sip.stack;
 
-import gov.nist.core.CommonLogger;
-import gov.nist.core.Host;
-import gov.nist.core.HostPort;
-import gov.nist.core.LogWriter;
-import gov.nist.core.StackLogger;
-import gov.nist.javax.sip.header.RecordRoute;
-import gov.nist.javax.sip.message.SIPMessage;
-import gov.nist.javax.sip.message.SIPRequest;
+import co.ecg.jain_sip.core.ri.CommonLogger;
+import co.ecg.jain_sip.core.ri.Host;
+import co.ecg.jain_sip.core.ri.HostPort;
+import co.ecg.jain_sip.core.ri.LogWriter;
+import co.ecg.jain_sip.core.ri.StackLogger;
+import co.ecg.jain_sip.sip.ri.header.RecordRoute;
+import co.ecg.jain_sip.sip.ri.message.SIPMessage;
+import co.ecg.jain_sip.sip.ri.message.SIPRequest;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -41,12 +41,12 @@ import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
 import java.text.ParseException;
 
-import javax.sip.address.SipURI;
-import javax.sip.address.URI;
-import javax.sip.header.ContactHeader;
-import javax.sip.header.RecordRouteHeader;
-import javax.sip.header.ViaHeader;
-import javax.sip.message.Request;
+import co.ecg.jain_sip.sip.address.SipURI;
+import co.ecg.jain_sip.sip.address.URI;
+import co.ecg.jain_sip.sip.header.ContactHeader;
+import co.ecg.jain_sip.sip.header.RecordRouteHeader;
+import co.ecg.jain_sip.sip.header.ViaHeader;
+import co.ecg.jain_sip.sip.message.Request;
 
 
 public class NioWebSocketMessageChannel extends NioTcpMessageChannel{
@@ -295,7 +295,7 @@ public class NioWebSocketMessageChannel extends NioTcpMessageChannel{
 				uri.setHost(getPeerAddress());
 			}
 		} catch (ParseException e) {
-			logger.logError("Cant parse address", e);
+			log.error("Cant parse address", e);
 		}
 		uri.setPort(getPeerPort());
 	}

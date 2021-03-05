@@ -32,7 +32,7 @@ import co.ecg.jain_sip.core.ri.HostPort;
 import co.ecg.jain_sip.sip.address.Address;
 import co.ecg.jain_sip.sip.address.URI;
 
-import javax.sip.address.*;
+import co.ecg.jain_sip.sip.address.*;
 
 /*
  * BUG Fix from Antonis Kadris.

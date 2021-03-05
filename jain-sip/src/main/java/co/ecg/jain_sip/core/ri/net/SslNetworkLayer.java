@@ -25,11 +25,11 @@
 */
 package co.ecg.jain_sip.core.ri.net;
 
-import gov.nist.core.CommonLogger;
-import gov.nist.core.LogWriter;
-import gov.nist.core.StackLogger;
-import gov.nist.javax.sip.SipStackImpl;
-import gov.nist.javax.sip.stack.ClientAuthType;
+import co.ecg.jain_sip.core.ri.CommonLogger;
+import co.ecg.jain_sip.core.ri.LogWriter;
+import co.ecg.jain_sip.core.ri.StackLogger;
+import co.ecg.jain_sip.sip.ri.SipStackImpl;
+import co.ecg.jain_sip.sip.ri.stack.ClientAuthType;
 
 import javax.net.ssl.*;
 import java.io.FileInputStream;

@@ -28,7 +28,7 @@
 *******************************************************************************/
 package gov.nist.javax.sip.stack;
 
-import gov.nist.javax.sip.message.*;
+import co.ecg.jain_sip.sip.ri.message.*;
 
 /**
  * An interface for a genereic message processor for SIP Request messages.

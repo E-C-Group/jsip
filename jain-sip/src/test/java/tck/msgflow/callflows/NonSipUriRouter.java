@@ -3,12 +3,12 @@ package test.tck.msgflow.callflows;
 import java.util.LinkedList;
 import java.util.ListIterator;
 
-import javax.sip.SipException;
-import javax.sip.SipStack;
-import javax.sip.address.Hop;
-import javax.sip.address.Router;
-import javax.sip.address.URI;
-import javax.sip.message.Request;
+import co.ecg.jain_sip.sip.SipException;
+import co.ecg.jain_sip.sip.SipStack;
+import co.ecg.jain_sip.sip.address.Hop;
+import co.ecg.jain_sip.sip.address.Router;
+import co.ecg.jain_sip.sip.address.URI;
+import co.ecg.jain_sip.sip.message.Request;
 
 import junit.framework.TestCase;
 

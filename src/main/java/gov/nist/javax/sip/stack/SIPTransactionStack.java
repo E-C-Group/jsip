@@ -25,29 +25,29 @@
  */
 package gov.nist.javax.sip.stack;
 
-import gov.nist.core.*;
-import gov.nist.core.net.AddressResolver;
-import gov.nist.core.net.DefaultNetworkLayer;
-import gov.nist.core.net.NetworkLayer;
-import gov.nist.core.net.SecurityManagerProvider;
-import gov.nist.javax.sip.*;
-import gov.nist.javax.sip.header.Event;
-import gov.nist.javax.sip.header.Via;
-import gov.nist.javax.sip.header.extensions.JoinHeader;
-import gov.nist.javax.sip.header.extensions.ReplacesHeader;
-import gov.nist.javax.sip.message.SIPMessage;
-import gov.nist.javax.sip.message.SIPRequest;
-import gov.nist.javax.sip.message.SIPResponse;
-import gov.nist.javax.sip.parser.MessageParserFactory;
-import gov.nist.javax.sip.stack.timers.SipTimer;
+import co.ecg.jain_sip.core.ri.*;
+import co.ecg.jain_sip.core.ri.net.AddressResolver;
+import co.ecg.jain_sip.core.ri.net.DefaultNetworkLayer;
+import co.ecg.jain_sip.core.ri.net.NetworkLayer;
+import co.ecg.jain_sip.core.ri.net.SecurityManagerProvider;
+import co.ecg.jain_sip.sip.ri.*;
+import co.ecg.jain_sip.sip.ri.header.Event;
+import co.ecg.jain_sip.sip.ri.header.Via;
+import co.ecg.jain_sip.sip.ri.header.extensions.JoinHeader;
+import co.ecg.jain_sip.sip.ri.header.extensions.ReplacesHeader;
+import co.ecg.jain_sip.sip.ri.message.SIPMessage;
+import co.ecg.jain_sip.sip.ri.message.SIPRequest;
+import co.ecg.jain_sip.sip.ri.message.SIPResponse;
+import co.ecg.jain_sip.sip.ri.parser.MessageParserFactory;
+import co.ecg.jain_sip.sip.ri.stack.timers.SipTimer;
 
-import javax.sip.*;
-import javax.sip.address.Hop;
-import javax.sip.address.Router;
-import javax.sip.header.CallIdHeader;
-import javax.sip.header.EventHeader;
-import javax.sip.message.Request;
-import javax.sip.message.Response;
+import co.ecg.jain_sip.sip.*;
+import co.ecg.jain_sip.sip.address.Hop;
+import co.ecg.jain_sip.sip.address.Router;
+import co.ecg.jain_sip.sip.header.CallIdHeader;
+import co.ecg.jain_sip.sip.header.EventHeader;
+import co.ecg.jain_sip.sip.message.Request;
+import co.ecg.jain_sip.sip.message.Response;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.SocketAddress;
@@ -1492,7 +1492,7 @@ public abstract class SIPTransactionStack implements
 	            }
         	} catch(Exception e) {
         		if(logger.isLoggingEnabled(LogWriter.TRACE_ERROR)) {
-                    logger.logError(
+                    log.error(
                             "An issue happening the valve on request " + 
                             		requestReceived + 
                             		" thus the message will not be processed further", e);
@@ -1587,7 +1587,7 @@ public abstract class SIPTransactionStack implements
                 }
             } catch (Exception ex) {
                 if (logger.isLoggingEnabled())
-                    logger.logError("Exception occured sending TRYING");
+                    log.error("Exception occured sending TRYING");
             }
             return null;
         } else {
@@ -1630,7 +1630,7 @@ public abstract class SIPTransactionStack implements
 	            }
         	} catch(Exception e) {
         		if(logger.isLoggingEnabled(LogWriter.TRACE_ERROR)) {
-                    logger.logError(
+                    log.error(
                             "An issue happening the valve on response " + 
                             		responseReceived + 
                             		" thus the message will not be processed further", e);
@@ -1958,7 +1958,7 @@ public abstract class SIPTransactionStack implements
 
                     } catch (Exception ex) {
                         if (logger.isLoggingEnabled()) {
-                            logger.logError(
+                            log.error(
                                     "Exception occured while waiting for room",
                                     ex);
                         }

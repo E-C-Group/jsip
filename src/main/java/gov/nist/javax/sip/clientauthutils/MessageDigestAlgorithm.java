@@ -1,7 +1,7 @@
 package gov.nist.javax.sip.clientauthutils;
 
-import gov.nist.core.LogWriter;
-import gov.nist.core.StackLogger;
+import co.ecg.jain_sip.core.ri.LogWriter;
+import co.ecg.jain_sip.core.ri.StackLogger;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

@@ -2,7 +2,7 @@ package test.unit.gov.nist.javax.sip.stack;
 
 import java.io.ByteArrayInputStream;
 
-import gov.nist.javax.sip.stack.WebSocketCodec;
+import co.ecg.jain_sip.sip.ri.stack.WebSocketCodec;
 import junit.framework.TestCase;
 /**
  * Feed masked websocket frames into the websocket codec to recover from different situations

@@ -37,12 +37,12 @@ package co.ecg.jain_sip.sip.ri.parser.ims;
  */
 
 
-import gov.nist.javax.sip.header.SIPHeader;
-import gov.nist.javax.sip.parser.Lexer;
-import gov.nist.javax.sip.parser.TokenTypes;
+import co.ecg.jain_sip.sip.ri.header.SIPHeader;
+import co.ecg.jain_sip.sip.ri.parser.Lexer;
+import co.ecg.jain_sip.sip.ri.parser.TokenTypes;
 import java.text.ParseException;
-import gov.nist.javax.sip.header.ims.SecurityVerify;
-import gov.nist.javax.sip.header.ims.SecurityVerifyList;
+import co.ecg.jain_sip.sip.ri.header.ims.SecurityVerify;
+import co.ecg.jain_sip.sip.ri.header.ims.SecurityVerifyList;
 
 
 public class SecurityVerifyParser extends SecurityAgreeParser

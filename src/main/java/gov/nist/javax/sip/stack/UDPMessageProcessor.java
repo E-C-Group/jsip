@@ -28,12 +28,12 @@
  *******************************************************************************/
 package gov.nist.javax.sip.stack;
 
-import gov.nist.core.CommonLogger;
-import gov.nist.core.HostPort;
-import gov.nist.core.LogWriter;
-import gov.nist.core.StackLogger;
-import gov.nist.core.ThreadAuditor;
-import gov.nist.javax.sip.SipStackImpl;
+import co.ecg.jain_sip.core.ri.CommonLogger;
+import co.ecg.jain_sip.core.ri.HostPort;
+import co.ecg.jain_sip.core.ri.LogWriter;
+import co.ecg.jain_sip.core.ri.StackLogger;
+import co.ecg.jain_sip.core.ri.ThreadAuditor;
+import co.ecg.jain_sip.sip.ri.SipStackImpl;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
@@ -46,8 +46,8 @@ import java.util.LinkedList;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
-import javax.sip.IOExceptionEvent;
-import javax.sip.SipListener;
+import co.ecg.jain_sip.sip.IOExceptionEvent;
+import co.ecg.jain_sip.sip.SipListener;
 
 /**
  * Sit in a loop and handle incoming udp datagram messages. For each Datagram

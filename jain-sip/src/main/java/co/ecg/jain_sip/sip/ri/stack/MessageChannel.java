@@ -29,50 +29,30 @@
 
 package co.ecg.jain_sip.sip.ri.stack;
 
-import gov.nist.core.CommonLogger;
-import gov.nist.core.Host;
-import gov.nist.core.HostPort;
-import gov.nist.core.InternalErrorHandler;
-import gov.nist.core.LogWriter;
-import gov.nist.core.ServerLogger;
-import gov.nist.core.StackLogger;
-import gov.nist.javax.sip.address.AddressImpl;
-import gov.nist.javax.sip.header.ContentLength;
-import gov.nist.javax.sip.header.ContentType;
-import gov.nist.javax.sip.header.Via;
-import gov.nist.javax.sip.message.MessageFactoryImpl;
-import gov.nist.javax.sip.message.SIPMessage;
-import gov.nist.javax.sip.message.SIPRequest;
-import gov.nist.javax.sip.message.SIPResponse;
+import co.ecg.jain_sip.core.ri.Host;
+import co.ecg.jain_sip.core.ri.HostPort;
+import co.ecg.jain_sip.core.ri.InternalErrorHandler;
+import co.ecg.jain_sip.sip.address.Hop;
+import co.ecg.jain_sip.sip.ri.header.Via;
+import co.ecg.jain_sip.sip.ri.message.SIPMessage;
+import co.ecg.jain_sip.sip.ri.message.SIPRequest;
+import lombok.extern.slf4j.Slf4j;
+
 
 import java.io.IOException;
 import java.net.InetAddress;
 import java.text.ParseException;
 
-import javax.sip.address.Hop;
-import javax.sip.header.CSeqHeader;
-import javax.sip.header.CallIdHeader;
-import javax.sip.header.ContactHeader;
-import javax.sip.header.ContentLengthHeader;
-import javax.sip.header.ContentTypeHeader;
-import javax.sip.header.FromHeader;
-import javax.sip.header.ServerHeader;
-import javax.sip.header.ToHeader;
-import javax.sip.header.ViaHeader;
 
 /**
  * Message channel abstraction for the SIP stack.
  *
  * @author M. Ranganathan <br/> Contains additions for support of symmetric NAT contributed by
- *         Hagai.
- *
+ * Hagai.
  * @version 1.2 $Revision: 1.40 $ $Date: 2010-12-02 22:44:53 $
- *
- *
  */
+@Slf4j
 public abstract class MessageChannel {
-
-    private static StackLogger logger = CommonLogger.getLogger(MessageChannel.class);
 
     // Incremented whenever a transaction gets assigned
     // to the message channel and decremented when
@@ -82,7 +62,8 @@ public abstract class MessageChannel {
     /**
      * Hook method, overridden by subclasses
      */
-    protected void uncache() {}
+    protected void uncache() {
+    }
 
     /**
      * Message processor to whom I belong (if set).
@@ -172,12 +153,12 @@ public abstract class MessageChannel {
     /**
      * Send the message (after it has been formatted), to a specified address and a specified port
      *
-     * @param message Message to send.
+     * @param message         Message to send.
      * @param receiverAddress Address of the receiver.
-     * @param receiverPort Port of the receiver.
+     * @param receiverPort    Port of the receiver.
      */
     protected abstract void sendMessage(byte[] message, InetAddress receiverAddress,
-            int receiverPort, boolean reconnectFlag) throws IOException;
+                                        int receiverPort, boolean reconnectFlag) throws IOException;
 
     /**
      * Get the host of this message channel.
@@ -204,7 +185,7 @@ public abstract class MessageChannel {
      * Send a formatted message to the specified target.
      *
      * @param sipMessage Message to send.
-     * @param hop hop to send it to.
+     * @param hop        hop to send it to.
      * @throws IOException If there is an error sending the message
      */
     public void sendMessage(final SIPMessage sipMessage, Hop hop) throws IOException {
@@ -227,16 +208,16 @@ public abstract class MessageChannel {
                                 try {
                                     ((RawMessageChannel) channel).processMessage((SIPMessage) sipMessage.clone());
                                 } catch (Exception ex) {
-                                    if (logger.isLoggingEnabled(ServerLogger.TRACE_ERROR)) {
-                                        logger.logError("Error self routing message cause by: ", ex);
-                                    }
+
+                                    log.error("Error self routing message cause by: ", ex);
+
                                 }
                             }
                         };
                         getSIPStack().getSelfRoutingThreadpoolExecutor().execute(processMessageTask);
 
-                        if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG))
-                            log.debug("Self routing message");
+
+                        log.debug("Self routing message");
                         return;
                     }
 
@@ -255,24 +236,20 @@ public abstract class MessageChannel {
         } catch (IOException ioe) {
             throw ioe;
         } catch (Exception ex) {
-            if (this.logger.isLoggingEnabled(ServerLogger.TRACE_ERROR)) {
-                this.logger.logError("Error self routing message cause by: ", ex);
-            }
-            // TODO: When moving to Java 6, use the IOExcpetion(message, exception) constructor
+            log.error("Error self routing message cause by: ", ex);
+            // TODO: When moving to Java 6, use the IOException(message, exception) constructor
             throw new IOException("Error self routing message");
         } finally {
-
-            if (this.logger.isLoggingEnabled(ServerLogger.TRACE_MESSAGES))
-                logMessage(sipMessage, hopAddr, hop.getPort(), time);
+            logMessage(sipMessage, hopAddr, hop.getPort(), time);
         }
     }
 
     /**
      * Send a message given SIP message.
      *
-     * @param sipMessage is the messge to send.
+     * @param sipMessage      is the messge to send.
      * @param receiverAddress is the address to which we want to send
-     * @param receiverPort is the port to which we want to send
+     * @param receiverPort    is the port to which we want to send
      */
     public void sendMessage(SIPMessage sipMessage, InetAddress receiverAddress, int receiverPort)
             throws IOException {
@@ -310,7 +287,7 @@ public abstract class MessageChannel {
      * generate a key given the inet address port and transport.
      */
     public static String getKey(InetAddress inetAddr, int port, String transport) {
-    	// http://java.net/jira/browse/JSIP-413 Concurrency issue within MessageChannel.java when using IPv6 addresses
+        // http://java.net/jira/browse/JSIP-413 Concurrency issue within MessageChannel.java when using IPv6 addresses
         return (transport + ":" + inetAddr.getHostAddress().replaceAll("[\\[\\]]", "") + ":" + port).toLowerCase();
     }
 
@@ -318,13 +295,13 @@ public abstract class MessageChannel {
      * Generate a key given host and port.
      */
     public static String getKey(HostPort hostPort, String transport) {
-    	// http://java.net/jira/browse/JSIP-413 Concurrency issue within MessageChannel.java when using IPv6 addresses
-    	String ipAddress = hostPort.getHost().getIpAddress();
-    	if (ipAddress == null) {
-    		ipAddress = hostPort.getHost().getHostname();
-    	}
-    	return (transport + ":" + ipAddress.replaceAll("[\\[\\]]", "") + ":" + hostPort.getPort())
-    			.toLowerCase();
+        // http://java.net/jira/browse/JSIP-413 Concurrency issue within MessageChannel.java when using IPv6 addresses
+        String ipAddress = hostPort.getHost().getIpAddress();
+        if (ipAddress == null) {
+            ipAddress = hostPort.getHost().getHostname();
+        }
+        return (transport + ":" + ipAddress.replaceAll("[\\[\\]]", "") + ":" + hostPort.getPort())
+                .toLowerCase();
     }
 
     /**
@@ -383,8 +360,8 @@ public abstract class MessageChannel {
      * Log a message sent to an address and port via the default interface.
      *
      * @param sipMessage is the message to log.
-     * @param address is the inet address to which the message is sent.
-     * @param port is the port to which the message is directed.
+     * @param address    is the inet address to which the message is sent.
+     * @param port       is the port to which the message is directed.
      */
     public void logMessage(SIPMessage sipMessage, InetAddress address, int port, long time) {
         if (!logger.isLoggingEnabled(ServerLogger.TRACE_MESSAGES))
@@ -393,6 +370,7 @@ public abstract class MessageChannel {
         // Default port.
         if (port == -1)
             port = 5060;
+
         getSIPStack().serverLogger.logMessage(sipMessage, this.getHost() + ":" + this.getPort(),
                 address.getHostAddress().toString() + ":" + port, true, time);
     }
@@ -402,8 +380,7 @@ public abstract class MessageChannel {
      * responses to a client transaction.
      *
      * @param receptionTime is the time at which the response was received.
-     * @param status is the processing status of the message.
-     *
+     * @param status        is the processing status of the message.
      */
     public void logResponse(SIPResponse sipResponse, long receptionTime, String status) {
         int peerport = getPeerPort();
@@ -449,14 +426,14 @@ public abstract class MessageChannel {
 
         // Let's add a Server header too..
         ServerHeader s = MessageFactoryImpl.getDefaultServerHeader();
-        if ( s != null ) {
+        if (s != null) {
             buf.append("\r\n" + s.toString());
         }
         int clength = badReq.length();
-        if (! (this instanceof UDPMessageChannel) ||
+        if (!(this instanceof UDPMessageChannel) ||
                 clength + buf.length() + ContentTypeHeader.NAME.length()
-                + ": message/sipfrag\r\n".length() +
-                ContentLengthHeader.NAME.length()  < 1300) {
+                        + ": message/sipfrag\r\n".length() +
+                        ContentLengthHeader.NAME.length() < 1300) {
 
             /*
              * Check to see we are within one UDP packet.
@@ -480,9 +457,7 @@ public abstract class MessageChannel {
      * @param name
      * @param fromReq
      * @param buf
-     * @return
-     *
-     * Note: some limitations here: does not work for short forms of headers, or continuations;
+     * @return Note: some limitations here: does not work for short forms of headers, or continuations;
      * problems when header names appear in other parts of the request
      */
     private static final boolean copyHeader(String name, String fromReq, StringBuilder buf) {
@@ -504,9 +479,7 @@ public abstract class MessageChannel {
      *
      * @param fromReq
      * @param buf
-     * @return
-     *
-     * Note: some limitations here: does not work for short forms of headers, or continuations
+     * @return Note: some limitations here: does not work for short forms of headers, or continuations
      */
     private static final boolean copyViaHeaders(String fromReq, StringBuilder buf) {
         int start = fromReq.indexOf(ViaHeader.NAME);

@@ -30,8 +30,8 @@
 
 package gov.nist.javax.sip.header.ims;
 
-import javax.sip.InvalidArgumentException;
-import javax.sip.header.Header;
+import co.ecg.jain_sip.sip.InvalidArgumentException;
+import co.ecg.jain_sip.sip.header.Header;
 
 
 /**

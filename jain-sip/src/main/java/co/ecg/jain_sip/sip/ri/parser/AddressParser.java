@@ -1,38 +1,40 @@
 /*
-* Conditions Of Use
-*
-* This software was developed by employees of the National Institute of
-* Standards and Technology (NIST), an agency of the Federal Government.
-* Pursuant to title 15 Untied States Code Section 105, works of NIST
-* employees are not subject to copyright protection in the United States
-* and are considered to be in the public domain.  As a result, a formal
-* license is not needed to use the software.
-*
-* This software is provided by NIST as a service and is expressly
-* provided "AS IS."  NIST MAKES NO WARRANTY OF ANY KIND, EXPRESS, IMPLIED
-* OR STATUTORY, INCLUDING, WITHOUT LIMITATION, THE IMPLIED WARRANTY OF
-* MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, NON-INFRINGEMENT
-* AND DATA ACCURACY.  NIST does not warrant or make any representations
-* regarding the use of the software or the results thereof, including but
-* not limited to the correctness, accuracy, reliability or usefulness of
-* the software.
-*
-* Permission to use this software is contingent upon your acceptance
-* of the terms of this agreement
-*
-* .
-*
-*/
+ * Conditions Of Use
+ *
+ * This software was developed by employees of the National Institute of
+ * Standards and Technology (NIST), an agency of the Federal Government.
+ * Pursuant to title 15 Untied States Code Section 105, works of NIST
+ * employees are not subject to copyright protection in the United States
+ * and are considered to be in the public domain.  As a result, a formal
+ * license is not needed to use the software.
+ *
+ * This software is provided by NIST as a service and is expressly
+ * provided "AS IS."  NIST MAKES NO WARRANTY OF ANY KIND, EXPRESS, IMPLIED
+ * OR STATUTORY, INCLUDING, WITHOUT LIMITATION, THE IMPLIED WARRANTY OF
+ * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, NON-INFRINGEMENT
+ * AND DATA ACCURACY.  NIST does not warrant or make any representations
+ * regarding the use of the software or the results thereof, including but
+ * not limited to the correctness, accuracy, reliability or usefulness of
+ * the software.
+ *
+ * Permission to use this software is contingent upon your acceptance
+ * of the terms of this agreement
+ *
+ * .
+ *
+ */
 package co.ecg.jain_sip.sip.ri.parser;
+
+import co.ecg.jain_sip.sip.ri.address.AddressImpl;
+import co.ecg.jain_sip.sip.ri.address.GenericURI;
 
 import java.text.ParseException;
 
-/** Parser for addresses.
+/**
+ * Parser for addresses.
  *
- * @version 1.2 $Revision: 1.12 $ $Date: 2010-05-06 14:07:44 $
  * @author M. Ranganathan
- *
- *
+ * @version 1.2 $Revision: 1.12 $ $Date: 2010-05-06 14:07:44 $
  */
 public class AddressParser extends Parser {
 
@@ -46,15 +48,15 @@ public class AddressParser extends Parser {
     }
 
     protected AddressImpl nameAddr() throws ParseException {
-        if (debug)
-            dbg_enter("nameAddr");
+
+        dbg_enter("nameAddr");
         try {
             if (this.lexer.lookAhead(0) == '<') {
                 this.lexer.consume(1);
                 this.lexer.selectLexer("sip_urlLexer");
                 this.lexer.SPorHT();
                 URLParser uriParser = new URLParser((Lexer) lexer);
-                GenericURI uri = uriParser.uriReference( true );
+                GenericURI uri = uriParser.uriReference(true);
                 AddressImpl retval = new AddressImpl();
                 retval.setAddressType(AddressImpl.NAME_ADDR);
                 retval.setURI(uri);
@@ -74,7 +76,7 @@ public class AddressParser extends Parser {
                 this.lexer.match('<');
                 this.lexer.SPorHT();
                 URLParser uriParser = new URLParser((Lexer) lexer);
-                GenericURI uri = uriParser.uriReference( true );
+                GenericURI uri = uriParser.uriReference(true);
                 AddressImpl retval = new AddressImpl();
                 addr.setAddressType(AddressImpl.NAME_ADDR);
                 addr.setURI(uri);
@@ -83,23 +85,23 @@ public class AddressParser extends Parser {
                 return addr;
             }
         } finally {
-            if (debug)
-                dbg_leave("nameAddr");
+            dbg_leave("nameAddr");
         }
     }
 
-    public AddressImpl address( boolean inclParams ) throws ParseException {
-        if (debug)
-            dbg_enter("address");
+    public AddressImpl address(boolean inclParams) throws ParseException {
+
+        dbg_enter("address");
+
         AddressImpl retval = null;
         try {
             int k = 0;
             while (lexer.hasMoreChars()) {
                 char la = lexer.lookAhead(k);
                 if (la == '<'
-                    || la == '\"'
-                    || la == ':'
-                    || la == '/')
+                        || la == '\"'
+                        || la == ':'
+                        || la == '/')
                     break;
                 else if (la == '\0')
                     throw createParseException("unexpected EOL");
@@ -112,7 +114,7 @@ public class AddressParser extends Parser {
             } else if (la == ':' || la == '/') {
                 retval = new AddressImpl();
                 URLParser uriParser = new URLParser((Lexer) lexer);
-                GenericURI uri = uriParser.uriReference( inclParams );
+                GenericURI uri = uriParser.uriReference(inclParams);
                 retval.setAddressType(AddressImpl.ADDRESS_SPEC);
                 retval.setURI(uri);
             } else {
@@ -120,15 +122,14 @@ public class AddressParser extends Parser {
             }
             return retval;
         } finally {
-            if (debug)
-                dbg_leave("address");
+            dbg_leave("address");
         }
 
     }
 
     /*
 
-    */
+     */
 }
 /*
  * $Log: not supported by cvs2svn $

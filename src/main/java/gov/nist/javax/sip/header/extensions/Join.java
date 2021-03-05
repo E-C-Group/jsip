@@ -3,9 +3,9 @@
 *******************************************************************************/
 package gov.nist.javax.sip.header.extensions;
 import java.text.ParseException;
-import gov.nist.javax.sip.header.*;
+import co.ecg.jain_sip.sip.ri.header.*;
 
-import javax.sip.header.ExtensionHeader;
+import co.ecg.jain_sip.sip.header.ExtensionHeader;
 /*
 * This code is in the public domain.
 */

@@ -1,9 +1,9 @@
 package co.ecg.jain_sip.sip.ri;
 
-import javax.sip.Dialog;
-import javax.sip.RequestEvent;
-import javax.sip.ServerTransaction;
-import javax.sip.message.Request;
+import co.ecg.jain_sip.sip.Dialog;
+import co.ecg.jain_sip.sip.RequestEvent;
+import co.ecg.jain_sip.sip.ServerTransaction;
+import co.ecg.jain_sip.sip.message.Request;
 
 
 /**

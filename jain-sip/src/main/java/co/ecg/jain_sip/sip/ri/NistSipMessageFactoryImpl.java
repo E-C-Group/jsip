@@ -29,11 +29,16 @@
 
 package co.ecg.jain_sip.sip.ri;
 
-import gov.nist.core.CommonLogger;
-import gov.nist.core.LogLevels;
-import gov.nist.core.StackLogger;
 
-import javax.sip.*;
+
+import co.ecg.jain_sip.sip.ri.message.SIPRequest;
+import co.ecg.jain_sip.sip.ri.stack.SIPTransaction;
+import co.ecg.jain_sip.sip.ri.stack.SIPTransactionStack;
+import co.ecg.jain_sip.sip.ri.stack.ServerRequestInterface;
+import co.ecg.jain_sip.sip.ri.stack.StackMessageFactory;
+import lombok.extern.slf4j.Slf4j;
+
+import co.ecg.jain_sip.sip.*;
 
 /**
  * Implements all the support classes that are necessary for the nist-sip stack
@@ -50,8 +55,9 @@ import javax.sip.*;
  * 
  *  
  */
+@Slf4j
 class NistSipMessageFactoryImpl implements StackMessageFactory {
-	private static StackLogger logger = CommonLogger.getLogger(NistSipMessageFactoryImpl.class);
+
     private SIPTransactionStack sipStack;
 
     /**
@@ -60,8 +66,8 @@ class NistSipMessageFactoryImpl implements StackMessageFactory {
      * @param sipRequest
      *            is the SIPRequest from which the SIPServerRequest is to be
      *            constructed.
-     * @param messageChannel
-     *            is the MessageChannel abstraction for this SIPServerRequest.
+     * @param sipTransaction
+     *            is ?? TODO
      */
     public ServerRequestInterface newSIPServerRequest(SIPRequest sipRequest,
                                                       SIPTransaction sipTransaction) {
@@ -80,7 +86,7 @@ class NistSipMessageFactoryImpl implements StackMessageFactory {
                 .getListeningPoint();
         if (retval.listeningPoint == null)
             return null;
-        if (logger.isLoggingEnabled(LogLevels.TRACE_DEBUG))
+
             log.debug(
                     "Returning request interface for "
                             + sipRequest.getFirstLine() + " " + retval

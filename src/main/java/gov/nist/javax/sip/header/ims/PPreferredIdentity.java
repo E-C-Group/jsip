@@ -31,11 +31,11 @@ package gov.nist.javax.sip.header.ims;
 
 import java.text.ParseException;
 
-import javax.sip.header.ExtensionHeader;
+import co.ecg.jain_sip.sip.header.ExtensionHeader;
 
-import gov.nist.javax.sip.address.AddressImpl;
+import co.ecg.jain_sip.sip.ri.address.AddressImpl;
 
-import gov.nist.javax.sip.header.AddressParametersHeader;
+import co.ecg.jain_sip.sip.ri.header.AddressParametersHeader;
 
 
 

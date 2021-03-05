@@ -28,7 +28,7 @@ package gov.nist.javax.sdp;
 import javax.sdp.*;
 import gov.nist.javax.sdp.fields.*;
 import java.util.*;
-import gov.nist.core.*;
+import co.ecg.jain_sip.core.ri.*;
 
 /*
  * Includes code contributed by

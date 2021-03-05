@@ -25,7 +25,7 @@
 */
 package co.ecg.jain_sip.core.ri.net;
 
-import javax.sip.address.Hop;
+import co.ecg.jain_sip.sip.address.Hop;
 
 /**
  * An interface that allows you to customize address lookup.

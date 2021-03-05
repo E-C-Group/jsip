@@ -28,7 +28,7 @@
  *******************************************/
 package co.ecg.jain_sip.sip.ri.header.ims;
 
-import gov.nist.javax.sip.address.ParameterNames;
+import co.ecg.jain_sip.sip.ri.address.ParameterNames;
 
 /**
  * @author ALEXANDRE MIGUEL SILVA SANTOS - Nú 10045401

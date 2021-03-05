@@ -24,9 +24,9 @@ package test.unit.gov.nist.javax.sip.parser.ims;
 * .
 *
 */
-import gov.nist.javax.sip.header.HeaderFactoryImpl;
-import gov.nist.javax.sip.header.ims.PPreferredServiceHeader;
-import gov.nist.javax.sip.parser.ims.PPreferredServiceParser;
+import co.ecg.jain_sip.sip.ri.header.HeaderFactoryImpl;
+import co.ecg.jain_sip.sip.ri.header.ims.PPreferredServiceHeader;
+import co.ecg.jain_sip.sip.ri.parser.ims.PPreferredServiceParser;
 import test.unit.gov.nist.javax.sip.parser.ParserTestCase;
 /**
  *

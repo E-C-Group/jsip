@@ -1,11 +1,11 @@
 package gov.nist.javax.sip.parser.extensions;
 
-import gov.nist.javax.sip.header.*;
-import gov.nist.javax.sip.header.extensions.*;
-import gov.nist.javax.sip.parser.*;
+import co.ecg.jain_sip.sip.ri.header.*;
+import co.ecg.jain_sip.sip.ri.header.extensions.*;
+import co.ecg.jain_sip.sip.ri.parser.*;
 
 import java.text.ParseException;
-import javax.sip.*;
+import co.ecg.jain_sip.sip.*;
 
 /**
  * Parser for SIP MinSE Parser.

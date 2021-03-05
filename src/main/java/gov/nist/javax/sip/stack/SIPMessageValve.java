@@ -25,10 +25,10 @@
  */
 package gov.nist.javax.sip.stack;
 
-import gov.nist.javax.sip.message.SIPRequest;
+import co.ecg.jain_sip.sip.ri.message.SIPRequest;
 
-import javax.sip.SipStack;
-import javax.sip.message.Response;
+import co.ecg.jain_sip.sip.SipStack;
+import co.ecg.jain_sip.sip.message.Response;
 
 /**
  * This interface has callbacks that are notified for every SIP message arriving at the container.

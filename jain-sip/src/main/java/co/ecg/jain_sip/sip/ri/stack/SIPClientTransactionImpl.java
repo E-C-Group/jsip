@@ -27,30 +27,30 @@ package co.ecg.jain_sip.sip.ri.stack;
 
 import co.ecg.jain_sip.sip.ri.message.SIPMessage;
 import co.ecg.jain_sip.sip.ri.message.SIPResponse;
-import gov.nist.core.CommonLogger;
-import gov.nist.core.InternalErrorHandler;
-import gov.nist.core.LogWriter;
-import gov.nist.core.NameValueList;
-import gov.nist.core.StackLogger;
-import gov.nist.javax.sip.SIPConstants;
-import gov.nist.javax.sip.SipProviderImpl;
-import gov.nist.javax.sip.SipStackImpl;
-import gov.nist.javax.sip.Utils;
-import gov.nist.javax.sip.address.AddressImpl;
-import gov.nist.javax.sip.header.Contact;
-import gov.nist.javax.sip.header.Event;
-import gov.nist.javax.sip.header.Expires;
-import gov.nist.javax.sip.header.RecordRoute;
-import gov.nist.javax.sip.header.RecordRouteList;
-import gov.nist.javax.sip.header.Route;
-import gov.nist.javax.sip.header.RouteList;
-import gov.nist.javax.sip.header.TimeStamp;
-import gov.nist.javax.sip.header.To;
-import gov.nist.javax.sip.header.Via;
-import gov.nist.javax.sip.message.SIPMessage;
-import gov.nist.javax.sip.message.SIPRequest;
-import gov.nist.javax.sip.message.SIPResponse;
-import gov.nist.javax.sip.stack.IllegalTransactionStateException.Reason;
+import co.ecg.jain_sip.core.ri.CommonLogger;
+import co.ecg.jain_sip.core.ri.InternalErrorHandler;
+import co.ecg.jain_sip.core.ri.LogWriter;
+import co.ecg.jain_sip.core.ri.NameValueList;
+import co.ecg.jain_sip.core.ri.StackLogger;
+import co.ecg.jain_sip.sip.ri.SIPConstants;
+import co.ecg.jain_sip.sip.ri.SipProviderImpl;
+import co.ecg.jain_sip.sip.ri.SipStackImpl;
+import co.ecg.jain_sip.sip.ri.Utils;
+import co.ecg.jain_sip.sip.ri.address.AddressImpl;
+import co.ecg.jain_sip.sip.ri.header.Contact;
+import co.ecg.jain_sip.sip.ri.header.Event;
+import co.ecg.jain_sip.sip.ri.header.Expires;
+import co.ecg.jain_sip.sip.ri.header.RecordRoute;
+import co.ecg.jain_sip.sip.ri.header.RecordRouteList;
+import co.ecg.jain_sip.sip.ri.header.Route;
+import co.ecg.jain_sip.sip.ri.header.RouteList;
+import co.ecg.jain_sip.sip.ri.header.TimeStamp;
+import co.ecg.jain_sip.sip.ri.header.To;
+import co.ecg.jain_sip.sip.ri.header.Via;
+import co.ecg.jain_sip.sip.ri.message.SIPMessage;
+import co.ecg.jain_sip.sip.ri.message.SIPRequest;
+import co.ecg.jain_sip.sip.ri.message.SIPResponse;
+import co.ecg.jain_sip.sip.ri.stack.IllegalTransactionStateException.Reason;
 
 import java.io.IOException;
 import java.text.ParseException;
@@ -59,20 +59,20 @@ import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import javax.sip.Dialog;
-import javax.sip.DialogState;
+import co.ecg.jain_sip.sip.Dialog;
+import co.ecg.jain_sip.sip.DialogState;
 import co.ecg.jain_sip.sip.InvalidArgumentException;
-import javax.sip.SipException;
-import javax.sip.Timeout;
-import javax.sip.TimeoutEvent;
-import javax.sip.TransactionState;
-import javax.sip.address.Hop;
-import javax.sip.address.SipURI;
-import javax.sip.header.EventHeader;
-import javax.sip.header.ExpiresHeader;
-import javax.sip.header.RouteHeader;
-import javax.sip.header.TimeStampHeader;
-import javax.sip.message.Request;
+import co.ecg.jain_sip.sip.SipException;
+import co.ecg.jain_sip.sip.Timeout;
+import co.ecg.jain_sip.sip.TimeoutEvent;
+import co.ecg.jain_sip.sip.TransactionState;
+import co.ecg.jain_sip.sip.address.Hop;
+import co.ecg.jain_sip.sip.address.SipURI;
+import co.ecg.jain_sip.sip.header.EventHeader;
+import co.ecg.jain_sip.sip.header.ExpiresHeader;
+import co.ecg.jain_sip.sip.header.RouteHeader;
+import co.ecg.jain_sip.sip.header.TimeStampHeader;
+import co.ecg.jain_sip.sip.message.Request;
 
 /*
  * Jeff Keyser -- initial. Daniel J. Martinez Manzano --Added support for TLS message channel.
@@ -875,7 +875,7 @@ public class SIPClientTransactionImpl extends SIPTransactionImpl implements SIPC
           sendMessage((SIPRequest) createErrorAck());
 
         } catch (Exception ex) {
-          logger.logError("Unexpected Exception sending ACK -- sending error AcK ", ex);
+          log.error("Unexpected Exception sending ACK -- sending error AcK ", ex);
 
         }
 
@@ -990,7 +990,7 @@ public class SIPClientTransactionImpl extends SIPTransactionImpl implements SIPC
       sipRequest.checkHeaders();
     } catch (ParseException ex) {
       if (logger.isLoggingEnabled())
-        logger.logError("missing required header");
+        log.error("missing required header");
       throw new IllegalTransactionStateException(ex.getMessage(), Reason.MissingRequiredHeader);
     }
 
@@ -1597,7 +1597,7 @@ public class SIPClientTransactionImpl extends SIPTransactionImpl implements SIPC
               if (dialog != null) {
                 this.setDialog(dialog, dialog.getDialogId());
               } else {
-                logger.logError("dialog is unexpectedly null", new NullPointerException());
+                log.error("dialog is unexpectedly null", new NullPointerException());
               }
             } else {
               throw new RuntimeException("Response without from-tag");
@@ -1698,7 +1698,7 @@ public class SIPClientTransactionImpl extends SIPTransactionImpl implements SIPC
 
     if (sipDialog == null) {
       if (logger.isLoggingEnabled(LogWriter.TRACE_ERROR))
-        logger.logError("NULL DIALOG!!");
+        log.error("NULL DIALOG!!");
       throw new NullPointerException("bad dialog null");
     }
     if (this.defaultDialog == null && defaultDialogId == null) {
@@ -1884,7 +1884,7 @@ public class SIPClientTransactionImpl extends SIPTransactionImpl implements SIPC
                                                                   null);
           // originalRequestBytes = null;
         } catch (ParseException e) {
-          logger.logError("message " + originalRequestBytes + " could not be reparsed !");
+          log.error("message " + originalRequestBytes + " could not be reparsed !");
         }
       }
     }

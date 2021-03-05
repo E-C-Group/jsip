@@ -29,10 +29,10 @@
 
 package co.ecg.jain_sip.sip.ri.header.ims;
 
-import gov.nist.core.Token;
+import co.ecg.jain_sip.core.ri.Token;
 
-import javax.sip.header.Header;
-import javax.sip.header.Parameters;
+import co.ecg.jain_sip.sip.header.Header;
+import co.ecg.jain_sip.sip.header.Parameters;
 
 
 /**

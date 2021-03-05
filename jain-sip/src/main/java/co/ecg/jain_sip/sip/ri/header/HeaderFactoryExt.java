@@ -2,36 +2,36 @@ package co.ecg.jain_sip.sip.ri.header;
 
 import java.text.ParseException;
 
-import gov.nist.javax.sip.header.extensions.JoinHeader;
-import gov.nist.javax.sip.header.extensions.ReferencesHeader;
-import gov.nist.javax.sip.header.extensions.ReferredByHeader;
-import gov.nist.javax.sip.header.extensions.ReplacesHeader;
-import gov.nist.javax.sip.header.extensions.SessionExpiresHeader;
-import gov.nist.javax.sip.header.ims.PAccessNetworkInfoHeader;
-import gov.nist.javax.sip.header.ims.PAssertedIdentityHeader;
-import gov.nist.javax.sip.header.ims.PAssertedServiceHeader;
-import gov.nist.javax.sip.header.ims.PAssociatedURIHeader;
-import gov.nist.javax.sip.header.ims.PCalledPartyIDHeader;
-import gov.nist.javax.sip.header.ims.PChargingFunctionAddressesHeader;
-import gov.nist.javax.sip.header.ims.PChargingVectorHeader;
-import gov.nist.javax.sip.header.ims.PMediaAuthorizationHeader;
-import gov.nist.javax.sip.header.ims.PPreferredIdentityHeader;
-import gov.nist.javax.sip.header.ims.PPreferredServiceHeader;
-import gov.nist.javax.sip.header.ims.PProfileKeyHeader;
-import gov.nist.javax.sip.header.ims.PServedUserHeader;
-import gov.nist.javax.sip.header.ims.PUserDatabaseHeader;
-import gov.nist.javax.sip.header.ims.PVisitedNetworkIDHeader;
-import gov.nist.javax.sip.header.ims.PathHeader;
-import gov.nist.javax.sip.header.ims.PrivacyHeader;
-import gov.nist.javax.sip.header.ims.SecurityClientHeader;
-import gov.nist.javax.sip.header.ims.SecurityServerHeader;
-import gov.nist.javax.sip.header.ims.SecurityVerifyHeader;
-import gov.nist.javax.sip.header.ims.ServiceRouteHeader;
+import co.ecg.jain_sip.sip.ri.header.extensions.JoinHeader;
+import co.ecg.jain_sip.sip.ri.header.extensions.ReferencesHeader;
+import co.ecg.jain_sip.sip.ri.header.extensions.ReferredByHeader;
+import co.ecg.jain_sip.sip.ri.header.extensions.ReplacesHeader;
+import co.ecg.jain_sip.sip.ri.header.extensions.SessionExpiresHeader;
+import co.ecg.jain_sip.sip.ri.header.ims.PAccessNetworkInfoHeader;
+import co.ecg.jain_sip.sip.ri.header.ims.PAssertedIdentityHeader;
+import co.ecg.jain_sip.sip.ri.header.ims.PAssertedServiceHeader;
+import co.ecg.jain_sip.sip.ri.header.ims.PAssociatedURIHeader;
+import co.ecg.jain_sip.sip.ri.header.ims.PCalledPartyIDHeader;
+import co.ecg.jain_sip.sip.ri.header.ims.PChargingFunctionAddressesHeader;
+import co.ecg.jain_sip.sip.ri.header.ims.PChargingVectorHeader;
+import co.ecg.jain_sip.sip.ri.header.ims.PMediaAuthorizationHeader;
+import co.ecg.jain_sip.sip.ri.header.ims.PPreferredIdentityHeader;
+import co.ecg.jain_sip.sip.ri.header.ims.PPreferredServiceHeader;
+import co.ecg.jain_sip.sip.ri.header.ims.PProfileKeyHeader;
+import co.ecg.jain_sip.sip.ri.header.ims.PServedUserHeader;
+import co.ecg.jain_sip.sip.ri.header.ims.PUserDatabaseHeader;
+import co.ecg.jain_sip.sip.ri.header.ims.PVisitedNetworkIDHeader;
+import co.ecg.jain_sip.sip.ri.header.ims.PathHeader;
+import co.ecg.jain_sip.sip.ri.header.ims.PrivacyHeader;
+import co.ecg.jain_sip.sip.ri.header.ims.SecurityClientHeader;
+import co.ecg.jain_sip.sip.ri.header.ims.SecurityServerHeader;
+import co.ecg.jain_sip.sip.ri.header.ims.SecurityVerifyHeader;
+import co.ecg.jain_sip.sip.ri.header.ims.ServiceRouteHeader;
 
 import co.ecg.jain_sip.sip.InvalidArgumentException;
-import javax.sip.address.Address;
-import javax.sip.header.Header;
-import javax.sip.header.HeaderFactory;
+import co.ecg.jain_sip.sip.address.Address;
+import co.ecg.jain_sip.sip.header.Header;
+import co.ecg.jain_sip.sip.header.HeaderFactory;
 
 /**
  * Header factory extensions. These will be included in the next release of

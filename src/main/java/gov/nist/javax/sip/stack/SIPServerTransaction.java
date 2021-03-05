@@ -1,17 +1,17 @@
 package gov.nist.javax.sip.stack;
 
-import gov.nist.javax.sip.ServerTransactionExt;
-import gov.nist.javax.sip.message.SIPMessage;
-import gov.nist.javax.sip.message.SIPRequest;
+import co.ecg.jain_sip.sip.ri.ServerTransactionExt;
+import co.ecg.jain_sip.sip.ri.message.SIPMessage;
+import co.ecg.jain_sip.sip.ri.message.SIPRequest;
 
 import java.io.IOException;
 
-import javax.sip.Dialog;
-import javax.sip.ObjectInUseException;
-import javax.sip.ServerTransaction;
-import javax.sip.SipException;
-import javax.sip.TransactionState;
-import javax.sip.message.Response;
+import co.ecg.jain_sip.sip.Dialog;
+import co.ecg.jain_sip.sip.ObjectInUseException;
+import co.ecg.jain_sip.sip.ServerTransaction;
+import co.ecg.jain_sip.sip.SipException;
+import co.ecg.jain_sip.sip.TransactionState;
+import co.ecg.jain_sip.sip.message.Response;
 
 public interface SIPServerTransaction extends SIPTransaction, ServerTransaction, ServerTransactionExt, ServerRequestInterface {
 

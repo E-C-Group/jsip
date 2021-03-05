@@ -23,7 +23,7 @@ package javax.sip.header;
 
 import java.text.ParseException;
 
-import javax.sip.header.Header;
+import co.ecg.jain_sip.sip.header.Header;
 
 /**
  * This interface represents the SIP-ETag header, as defined by

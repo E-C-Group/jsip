@@ -25,20 +25,16 @@
  */
 package co.ecg.jain_sip.sip.ri.stack;
 
-import gov.nist.core.CommonLogger;
-import gov.nist.core.LogWriter;
-import gov.nist.core.StackLogger;
+import lombok.extern.slf4j.Slf4j;
 
 import java.nio.ByteBuffer;
 
 /**
  * Contributed by Alexander Saveliev, Avistar Communications for Issue http://java.net/jira/browse/JSIP-430
  * Allows to choose between direct vs non direct buffers
- * 
  */
+@Slf4j
 public class ByteBufferFactory {
-
-    private static StackLogger logger = CommonLogger.getLogger(ByteBufferFactory.class);
 
     private static ByteBufferFactory instance = new ByteBufferFactory();
 
@@ -49,21 +45,17 @@ public class ByteBufferFactory {
     }
 
     public ByteBuffer allocateDirect(int capacity) {
-        if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG))
-            logger.logTrace("Allocating direct buffer " + capacity);
+        log.trace("Allocating direct buffer " + capacity);
         return useDirect ? ByteBuffer.allocateDirect(capacity) : ByteBuffer.allocate(capacity);
     }
 
     public ByteBuffer allocate(int capacity) {
-        if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG))
-            logger.logTrace("Allocating buffer " + capacity);
+        log.trace("Allocating buffer " + capacity);
         return ByteBuffer.allocate(capacity);
     }
 
-
     public void setUseDirect(boolean useDirect) {
-        if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG))
-            logger.logTrace("Direct buffers are " + (useDirect ? "enabled" : "disabled"));
+        log.trace("Direct buffers are " + (useDirect ? "enabled" : "disabled"));
         this.useDirect = useDirect;
     }
 }

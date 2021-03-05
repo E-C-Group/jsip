@@ -27,8 +27,8 @@
 * Product of NIST/ITL Advanced Networking Technologies Division (ANTD).        *
 *******************************************************************************/
 package gov.nist.javax.sdp.fields;
-import gov.nist.core.Host;
-import gov.nist.core.Separators;
+import co.ecg.jain_sip.core.ri.Host;
+import co.ecg.jain_sip.core.ri.Separators;
 
 import javax.sdp.SdpException;
 import javax.sdp.SdpParseException;

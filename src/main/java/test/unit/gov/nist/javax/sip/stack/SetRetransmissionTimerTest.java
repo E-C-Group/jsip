@@ -1,14 +1,14 @@
 package test.unit.gov.nist.javax.sip.stack;
 
-import gov.nist.javax.sip.ResponseEventExt;
-import gov.nist.javax.sip.TransactionExt;
-import gov.nist.javax.sip.stack.NioMessageProcessorFactory;
+import co.ecg.jain_sip.sip.ri.ResponseEventExt;
+import co.ecg.jain_sip.sip.ri.TransactionExt;
+import co.ecg.jain_sip.sip.ri.stack.NioMessageProcessorFactory;
 import junit.framework.TestCase;
 
-import javax.sip.*;
-import javax.sip.address.*;
-import javax.sip.header.*;
-import javax.sip.message.*;
+import co.ecg.jain_sip.sip.*;
+import co.ecg.jain_sip.sip.address.*;
+import co.ecg.jain_sip.sip.header.*;
+import co.ecg.jain_sip.sip.message.*;
 
 import org.apache.log4j.ConsoleAppender;
 import org.apache.log4j.Logger;

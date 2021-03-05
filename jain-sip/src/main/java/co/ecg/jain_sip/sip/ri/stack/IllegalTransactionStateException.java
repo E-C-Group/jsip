@@ -25,7 +25,7 @@
 */
 package co.ecg.jain_sip.sip.ri.stack;
 
-import javax.sip.SipException;
+import co.ecg.jain_sip.sip.SipException;
 
 /**
  * @author jean.deruelle@gmail.com

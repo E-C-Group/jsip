@@ -25,8 +25,8 @@
  */
 package gov.nist.javax.sip.stack;
 
-import gov.nist.javax.sip.ClientTransactionExt;
-import gov.nist.javax.sip.TlsSecurityPolicy;
+import co.ecg.jain_sip.sip.ri.ClientTransactionExt;
+import co.ecg.jain_sip.sip.ri.TlsSecurityPolicy;
 
 public class DefaultTlsSecurityPolicy implements TlsSecurityPolicy {
 

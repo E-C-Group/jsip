@@ -29,7 +29,7 @@
 
 package co.ecg.jain_sip.sip.ri.stack;
 
-import gov.nist.javax.sip.LogRecord;
+import co.ecg.jain_sip.sip.ri.LogRecord;
 
 /**
  * This class stores a message along with some other informations

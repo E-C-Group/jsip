@@ -3,7 +3,7 @@
  */
 package co.ecg.jain_sip.sip.ri.header;
 
-import javax.sip.header.ViaHeader;
+import co.ecg.jain_sip.sip.header.ViaHeader;
 
 
 /**

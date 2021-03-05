@@ -28,18 +28,18 @@
  *******************************************************************************/
 package gov.nist.javax.sip.message;
 
-import gov.nist.core.InternalErrorHandler;
-import gov.nist.javax.sip.address.GenericURI;
-import gov.nist.javax.sip.address.SipUri;
-import gov.nist.javax.sip.header.CSeq;
-import gov.nist.javax.sip.header.RecordRouteList;
-import gov.nist.javax.sip.header.RequestLine;
-import gov.nist.javax.sip.header.SIPHeader;
-import gov.nist.javax.sip.header.SIPHeaderList;
-import gov.nist.javax.sip.header.To;
-import gov.nist.javax.sip.header.Via;
-import gov.nist.javax.sip.header.ViaList;
-import gov.nist.javax.sip.stack.SIPTransactionStack;
+import co.ecg.jain_sip.core.ri.InternalErrorHandler;
+import co.ecg.jain_sip.sip.ri.address.GenericURI;
+import co.ecg.jain_sip.sip.ri.address.SipUri;
+import co.ecg.jain_sip.sip.ri.header.CSeq;
+import co.ecg.jain_sip.sip.ri.header.RecordRouteList;
+import co.ecg.jain_sip.sip.ri.header.RequestLine;
+import co.ecg.jain_sip.sip.ri.header.SIPHeader;
+import co.ecg.jain_sip.sip.ri.header.SIPHeaderList;
+import co.ecg.jain_sip.sip.ri.header.To;
+import co.ecg.jain_sip.sip.ri.header.Via;
+import co.ecg.jain_sip.sip.ri.header.ViaList;
+import co.ecg.jain_sip.sip.ri.stack.SIPTransactionStack;
 
 import java.io.UnsupportedEncodingException;
 import java.text.ParseException;
@@ -49,26 +49,26 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
-import javax.sip.SipException;
-import javax.sip.address.URI;
-import javax.sip.header.CSeqHeader;
-import javax.sip.header.CallIdHeader;
-import javax.sip.header.ContactHeader;
-import javax.sip.header.ContentTypeHeader;
-import javax.sip.header.EventHeader;
-import javax.sip.header.ExpiresHeader;
-import javax.sip.header.FromHeader;
-import javax.sip.header.Header;
-import javax.sip.header.MaxForwardsHeader;
-import javax.sip.header.ProxyAuthorizationHeader;
-import javax.sip.header.RecordRouteHeader;
-import javax.sip.header.RouteHeader;
-import javax.sip.header.ServerHeader;
-import javax.sip.header.SubscriptionStateHeader;
-import javax.sip.header.TimeStampHeader;
-import javax.sip.header.ToHeader;
-import javax.sip.header.ViaHeader;
-import javax.sip.message.Request;
+import co.ecg.jain_sip.sip.SipException;
+import co.ecg.jain_sip.sip.address.URI;
+import co.ecg.jain_sip.sip.header.CSeqHeader;
+import co.ecg.jain_sip.sip.header.CallIdHeader;
+import co.ecg.jain_sip.sip.header.ContactHeader;
+import co.ecg.jain_sip.sip.header.ContentTypeHeader;
+import co.ecg.jain_sip.sip.header.EventHeader;
+import co.ecg.jain_sip.sip.header.ExpiresHeader;
+import co.ecg.jain_sip.sip.header.FromHeader;
+import co.ecg.jain_sip.sip.header.Header;
+import co.ecg.jain_sip.sip.header.MaxForwardsHeader;
+import co.ecg.jain_sip.sip.header.ProxyAuthorizationHeader;
+import co.ecg.jain_sip.sip.header.RecordRouteHeader;
+import co.ecg.jain_sip.sip.header.RouteHeader;
+import co.ecg.jain_sip.sip.header.ServerHeader;
+import co.ecg.jain_sip.sip.header.SubscriptionStateHeader;
+import co.ecg.jain_sip.sip.header.TimeStampHeader;
+import co.ecg.jain_sip.sip.header.ToHeader;
+import co.ecg.jain_sip.sip.header.ViaHeader;
+import co.ecg.jain_sip.sip.message.Request;
 
 /*
  * Acknowledgements: Mark Bednarek made a few fixes to this code. Jeff Keyser added two methods

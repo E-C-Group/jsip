@@ -30,7 +30,7 @@
 package co.ecg.jain_sip.sip.ri.header.ims;
 
 import java.text.ParseException;
-import javax.sip.header.WWWAuthenticateHeader;
+import co.ecg.jain_sip.sip.header.WWWAuthenticateHeader;
 
 
 /**

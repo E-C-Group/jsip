@@ -25,8 +25,8 @@
  */
 package co.ecg.jain_sip.sip.ri.stack;
 
-import gov.nist.javax.sip.ClientTransactionExt;
-import gov.nist.javax.sip.SipStackImpl;
+import co.ecg.jain_sip.sip.ri.ClientTransactionExt;
+import co.ecg.jain_sip.sip.ri.SipStackImpl;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;

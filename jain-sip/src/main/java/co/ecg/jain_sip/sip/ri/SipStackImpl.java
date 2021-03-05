@@ -25,37 +25,10 @@
  */
 package co.ecg.jain_sip.sip.ri;
 
-import gov.nist.core.CommonLogger;
-import gov.nist.core.LogLevels;
-import gov.nist.core.ServerLogger;
-import gov.nist.core.StackLogger;
-import gov.nist.core.net.AddressResolver;
-import gov.nist.core.net.DefaultSecurityManagerProvider;
-import gov.nist.core.net.NetworkLayer;
-import gov.nist.core.net.SecurityManagerProvider;
-import gov.nist.core.net.SslNetworkLayer;
-import gov.nist.javax.sip.clientauthutils.AccountManager;
-import gov.nist.javax.sip.clientauthutils.AuthenticationHelper;
-import gov.nist.javax.sip.clientauthutils.AuthenticationHelperImpl;
-import gov.nist.javax.sip.clientauthutils.SecureAccountManager;
-import gov.nist.javax.sip.parser.MessageParserFactory;
-import gov.nist.javax.sip.parser.PostParseExecutorServices;
-import gov.nist.javax.sip.parser.StringMsgParser;
-import gov.nist.javax.sip.parser.StringMsgParserFactory;
-import gov.nist.javax.sip.stack.ByteBufferFactory;
-import gov.nist.javax.sip.stack.ClientAuthType;
-import gov.nist.javax.sip.stack.ConnectionOrientedMessageProcessor;
-import gov.nist.javax.sip.stack.DefaultMessageLogFactory;
-import gov.nist.javax.sip.stack.DefaultRouter;
-import gov.nist.javax.sip.stack.MessageProcessor;
-import gov.nist.javax.sip.stack.MessageProcessorFactory;
-import gov.nist.javax.sip.stack.OIOMessageProcessorFactory;
-import gov.nist.javax.sip.stack.SIPEventInterceptor;
-import gov.nist.javax.sip.stack.SIPMessageValve;
-import gov.nist.javax.sip.stack.SIPTransactionStack;
-import gov.nist.javax.sip.stack.SocketTimeoutAuditor;
-import gov.nist.javax.sip.stack.timers.DefaultSipTimer;
-import gov.nist.javax.sip.stack.timers.SipTimer;
+import co.ecg.jain_sip.sip.SipListener;
+import co.ecg.jain_sip.sip.SipStack;
+import co.ecg.jain_sip.sip.ri.stack.DefaultMessageLogFactory;
+import co.ecg.jain_sip.sip.ri.stack.SIPTransactionStack;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -75,18 +48,8 @@ import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
 
 import co.ecg.jain_sip.sip.InvalidArgumentException;
-import javax.sip.ListeningPoint;
-import javax.sip.ObjectInUseException;
-import javax.sip.PeerUnavailableException;
-import javax.sip.ProviderDoesNotExistException;
-import javax.sip.SipException;
-import javax.sip.SipListener;
-import javax.sip.SipProvider;
-import javax.sip.SipStack;
-import javax.sip.TransportNotSupportedException;
-import javax.sip.address.Router;
-import javax.sip.header.HeaderFactory;
-import javax.sip.message.Request;
+import lombok.extern.slf4j.Slf4j;
+
 
 /**
  * Implementation of SipStack.
@@ -610,9 +573,10 @@ import javax.sip.message.Request;
  * 
  * 
  */
+@Slf4j
 public class SipStackImpl extends SIPTransactionStack implements
 		SipStack, SipStackExt {
-	private static StackLogger logger = CommonLogger.getLogger(SipStackImpl.class);
+
 	private EventScanner eventScanner;
 
 	protected Hashtable<String, ListeningPointImpl> listeningPoints;
@@ -846,7 +810,7 @@ public class SipStackImpl extends SIPTransactionStack implements
 			throw new PeerUnavailableException(
 					"Cound not instantiate router - check constructor", ex1);
 		} catch (Exception ex) {
-			logger.logError("could not instantiate router",
+			log.error("could not instantiate router",
 					(Exception) ex.getCause());
 			throw new PeerUnavailableException("Could not instantiate router",
 					ex);
@@ -921,7 +885,7 @@ public class SipStackImpl extends SIPTransactionStack implements
 								    trustStorePassword.toCharArray() : null,
 						keyStoreType, trustStoreType);
 			} catch (Exception e1) {
-				logger.logError(
+				log.error(
 						"could not instantiate SSL networking", e1);
 			}
 		}
@@ -1069,7 +1033,7 @@ public class SipStackImpl extends SIPTransactionStack implements
 				this.maxConnections = new Integer(maxConnections).intValue();
 			} catch (NumberFormatException ex) {
 				if (logger.isLoggingEnabled())
-					logger.logError(
+					log.error(
 						"max connections - bad value " + ex.getMessage());
 			}
 		}
@@ -1081,7 +1045,7 @@ public class SipStackImpl extends SIPTransactionStack implements
 				this.threadPoolSize = new Integer(threadPoolSize).intValue();
 			} catch (NumberFormatException ex) {
 				if (logger.isLoggingEnabled())
-					this.logger.logError(
+					this.log.error(
 						"thread pool size - bad value " + ex.getMessage());
 			}
 		}
@@ -1101,7 +1065,7 @@ public class SipStackImpl extends SIPTransactionStack implements
 				PostParseExecutorServices.setPostParseExcutorSize(threads, congetstionControlTimeout);
 			} catch (NumberFormatException ex) {
 				if (logger.isLoggingEnabled())
-					this.logger.logError(
+					this.log.error(
 							"TCP post-parse thread pool size - bad value " + tcpTreadPoolSize + " : " + ex.getMessage());
 			}
 		}
@@ -1211,7 +1175,7 @@ public class SipStackImpl extends SIPTransactionStack implements
 			} catch (NumberFormatException nfe) {
 				// Ignore.
 				if (logger.isLoggingEnabled())
-					logger.logError("Bad read timeout " + readTimeout);
+					log.error("Bad read timeout " + readTimeout);
 			}
 		}
 
@@ -1239,7 +1203,7 @@ public class SipStackImpl extends SIPTransactionStack implements
 			}
 		} catch (NumberFormatException ex) {
 			if (logger.isLoggingEnabled())
-				logger.logError(
+				log.error(
 					"maxMessageSize - bad value " + ex.getMessage());
 		}
 
@@ -1258,7 +1222,7 @@ public class SipStackImpl extends SIPTransactionStack implements
 						Long.valueOf(interval).longValue() / 2);
 			} catch (NumberFormatException ex) {
 				if (logger.isLoggingEnabled())
-					logger.logError(
+					log.error(
 						"THREAD_AUDIT_INTERVAL_IN_MILLISECS - bad value ["
 								+ interval + "] " + ex.getMessage());
 			}
@@ -1354,7 +1318,7 @@ public class SipStackImpl extends SIPTransactionStack implements
 				}
 				logger.setBuildTimeStamp(buildTimeStamp);
 			} catch (IOException ex) {
-				logger.logError("Could not open build timestamp.");
+				log.error("Could not open build timestamp.");
 			}
 		}
 
@@ -1559,7 +1523,7 @@ public class SipStackImpl extends SIPTransactionStack implements
 				return (ListeningPoint) lip;
 			} catch (IOException ex) {
 				if (logger.isLoggingEnabled())
-					logger.logError(
+					log.error(
 						"Invalid argument address = " + address + " port = "
 								+ port + " transport = " + transport);
 				throw new InvalidArgumentException(ex.getMessage(), ex);

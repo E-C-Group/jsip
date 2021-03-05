@@ -1,7 +1,7 @@
 package test.tck;
 
-import gov.nist.javax.sip.address.AddressFactoryImpl;
-import gov.nist.javax.sip.stack.NioMessageProcessorFactory;
+import co.ecg.jain_sip.sip.ri.address.AddressFactoryImpl;
+import co.ecg.jain_sip.sip.ri.stack.NioMessageProcessorFactory;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -10,10 +10,10 @@ import java.io.StringWriter;
 import java.util.Enumeration;
 import java.util.Properties;
 
-import javax.sip.SipFactory;
-import javax.sip.address.AddressFactory;
-import javax.sip.header.HeaderFactory;
-import javax.sip.message.MessageFactory;
+import co.ecg.jain_sip.sip.SipFactory;
+import co.ecg.jain_sip.sip.address.AddressFactory;
+import co.ecg.jain_sip.sip.header.HeaderFactory;
+import co.ecg.jain_sip.sip.message.MessageFactory;
 
 import junit.framework.TestCase;
 import junit.framework.TestResult;

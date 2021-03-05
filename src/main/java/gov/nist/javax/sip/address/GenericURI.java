@@ -26,7 +26,7 @@
 package gov.nist.javax.sip.address;
 import java.text.ParseException;
 
-import javax.sip.address.URI;
+import co.ecg.jain_sip.sip.address.URI;
 
 /**
  * Implementation of the URI class. This relies on the 1.4 URI class.

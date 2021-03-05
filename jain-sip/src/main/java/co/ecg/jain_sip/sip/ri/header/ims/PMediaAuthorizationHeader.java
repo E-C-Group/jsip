@@ -31,7 +31,7 @@
 package co.ecg.jain_sip.sip.ri.header.ims;
 
 import co.ecg.jain_sip.sip.InvalidArgumentException;
-import javax.sip.header.Header;
+import co.ecg.jain_sip.sip.header.Header;
 
 
 /**

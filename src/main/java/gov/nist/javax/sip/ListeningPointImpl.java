@@ -29,22 +29,22 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.text.ParseException;
 
-import javax.sip.*;
-import javax.sip.address.SipURI;
-import javax.sip.header.ContactHeader;
-import javax.sip.header.ViaHeader;
+import co.ecg.jain_sip.sip.*;
+import co.ecg.jain_sip.sip.address.SipURI;
+import co.ecg.jain_sip.sip.header.ContactHeader;
+import co.ecg.jain_sip.sip.header.ViaHeader;
 
-import gov.nist.core.CommonLogger;
-import gov.nist.core.Host;
-import gov.nist.core.HostPort;
-import gov.nist.core.InternalErrorHandler;
-import gov.nist.core.StackLogger;
-import gov.nist.javax.sip.address.AddressImpl;
-import gov.nist.javax.sip.address.SipUri;
-import gov.nist.javax.sip.header.Contact;
-import gov.nist.javax.sip.header.Via;
-import gov.nist.javax.sip.message.SIPRequest;
-import gov.nist.javax.sip.stack.*;
+import co.ecg.jain_sip.core.ri.CommonLogger;
+import co.ecg.jain_sip.core.ri.Host;
+import co.ecg.jain_sip.core.ri.HostPort;
+import co.ecg.jain_sip.core.ri.InternalErrorHandler;
+import co.ecg.jain_sip.core.ri.StackLogger;
+import co.ecg.jain_sip.sip.ri.address.AddressImpl;
+import co.ecg.jain_sip.sip.ri.address.SipUri;
+import co.ecg.jain_sip.sip.ri.header.Contact;
+import co.ecg.jain_sip.sip.ri.header.Via;
+import co.ecg.jain_sip.sip.ri.message.SIPRequest;
+import co.ecg.jain_sip.sip.ri.stack.*;
 
 /**
  * Implementation of the ListeningPoint interface

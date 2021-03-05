@@ -25,11 +25,11 @@ package test.unit.gov.nist.javax.sip.parser.ims;
 *
 */
 import java.text.ParseException;
-import javax.sip.address.AddressFactory;
-import gov.nist.javax.sip.address.AddressFactoryImpl;
-import gov.nist.javax.sip.header.HeaderFactoryImpl;
-import gov.nist.javax.sip.header.ims.PServedUserHeader;
-import gov.nist.javax.sip.parser.ims.PServedUserParser;
+import co.ecg.jain_sip.sip.address.AddressFactory;
+import co.ecg.jain_sip.sip.ri.address.AddressFactoryImpl;
+import co.ecg.jain_sip.sip.ri.header.HeaderFactoryImpl;
+import co.ecg.jain_sip.sip.ri.header.ims.PServedUserHeader;
+import co.ecg.jain_sip.sip.ri.parser.ims.PServedUserParser;
 import test.unit.gov.nist.javax.sip.parser.ParserTestCase;
 
 /**

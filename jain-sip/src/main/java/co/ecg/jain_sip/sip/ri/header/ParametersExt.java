@@ -23,7 +23,7 @@
 */
 package co.ecg.jain_sip.sip.ri.header;
 
-import javax.sip.header.Parameters;
+import co.ecg.jain_sip.sip.header.Parameters;
 
 /**
  * Extensions to the {@link Parameters} interface supported by the implementation and 

@@ -25,7 +25,7 @@
 */
 package co.ecg.jain_sip.sip.ri.parser;
 
-import gov.nist.core.Token;
+import co.ecg.jain_sip.core.ri.Token;
 
 import java.text.ParseException;
 

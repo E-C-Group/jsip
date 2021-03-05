@@ -1,60 +1,57 @@
 /*
-* Conditions Of Use
-*
-* This software was developed by employees of the National Institute of
-* Standards and Technology (NIST), an agency of the Federal Government.
-* Pursuant to title 15 Untied States Code Section 105, works of NIST
-* employees are not subject to copyright protection in the United States
-* and are considered to be in the public domain.  As a result, a formal
-* license is not needed to use the software.
-*
-* This software is provided by NIST as a service and is expressly
-* provided "AS IS."  NIST MAKES NO WARRANTY OF ANY KIND, EXPRESS, IMPLIED
-* OR STATUTORY, INCLUDING, WITHOUT LIMITATION, THE IMPLIED WARRANTY OF
-* MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, NON-INFRINGEMENT
-* AND DATA ACCURACY.  NIST does not warrant or make any representations
-* regarding the use of the software or the results thereof, including but
-* not limited to the correctness, accuracy, reliability or usefulness of
-* the software.
-*
-* Permission to use this software is contingent upon your acceptance
-* of the terms of this agreement
-*
-* .
-*
-*/
+ * Conditions Of Use
+ *
+ * This software was developed by employees of the National Institute of
+ * Standards and Technology (NIST), an agency of the Federal Government.
+ * Pursuant to title 15 Untied States Code Section 105, works of NIST
+ * employees are not subject to copyright protection in the United States
+ * and are considered to be in the public domain.  As a result, a formal
+ * license is not needed to use the software.
+ *
+ * This software is provided by NIST as a service and is expressly
+ * provided "AS IS."  NIST MAKES NO WARRANTY OF ANY KIND, EXPRESS, IMPLIED
+ * OR STATUTORY, INCLUDING, WITHOUT LIMITATION, THE IMPLIED WARRANTY OF
+ * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, NON-INFRINGEMENT
+ * AND DATA ACCURACY.  NIST does not warrant or make any representations
+ * regarding the use of the software or the results thereof, including but
+ * not limited to the correctness, accuracy, reliability or usefulness of
+ * the software.
+ *
+ * Permission to use this software is contingent upon your acceptance
+ * of the terms of this agreement
+ *
+ * .
+ *
+ */
 /*
  * Bug reports contributed by Joao Paulo, Stephen Jones,
  * John Zeng and Alstair Cole.
  *
  */
 /*******************************************************************************
-* Product of NIST/ITL Advanced Networking Technologies Division (ANTD).        *
-*******************************************************************************/
+ * Product of NIST/ITL Advanced Networking Technologies Division (ANTD).        *
+ *******************************************************************************/
 package co.ecg.jain_sip.sip.ri.header;
 
-import gov.nist.core.NameValue;
-import gov.nist.core.NameValueList;
-import gov.nist.javax.sip.address.AddressImpl;
+import co.ecg.jain_sip.core.ri.NameValue;
+import co.ecg.jain_sip.core.ri.NameValueList;
+import co.ecg.jain_sip.sip.address.Address;
+import co.ecg.jain_sip.sip.header.ContactHeader;
 
 import co.ecg.jain_sip.sip.InvalidArgumentException;
-import javax.sip.header.ContactHeader;
+import co.ecg.jain_sip.sip.ri.address.AddressImpl;
+
 import java.text.ParseException;
 
 /**
  * Contact Item.
  *
- * @see ContactList
- *
  * @author M. Ranganathan  <br/>
  * @version 1.2 $Revision: 1.14 $ $Date: 2010-05-06 14:07:50 $
+ * @see ContactList
  * @since 1.1
- *
- *
  */
-public final  class Contact
-    extends AddressParametersHeader
-    implements ContactHeader {
+public final class Contact extends AddressParametersHeader implements ContactHeader {
     /**
      * Comment for <code>serialVersionUID</code>
      */
@@ -68,18 +65,21 @@ public final  class Contact
     // This must be private or the toString will go for a loop!
     private ContactList contactList;
 
-    /** wildCardFlag field.
+    /**
+     * wildCardFlag field.
      */
     protected boolean wildCardFlag;
 
-    /** Default constructor.
+    /**
+     * Default constructor.
      */
     public Contact() {
         super(NAME);
     }
 
-    /** Set a parameter.
-    */
+    /**
+     * Set a parameter.
+     */
     public void setParameter(String name, String value) throws ParseException {
         NameValue nv = parameters.getNameValue(name);
         if (nv != null) {
@@ -94,6 +94,7 @@ public final  class Contact
 
     /**
      * Encode body of the header into a cannonical String.
+     *
      * @return string encoding of the header value.
      */
     protected String encodeBody() {
@@ -103,8 +104,7 @@ public final  class Contact
     protected StringBuilder encodeBody(StringBuilder buffer) {
         if (wildCardFlag) {
             buffer.append('*');
-        }
-        else {
+        } else {
             // Bug report by Joao Paulo
             if (address.getAddressType() == AddressImpl.NAME_ADDR) {
                 address.encode(buffer);
@@ -123,59 +123,75 @@ public final  class Contact
         return buffer;
     }
 
-    /** get the Contact list.
+    /**
+     * get the Contact list.
+     *
      * @return ContactList
      */
     public ContactList getContactList() {
         return contactList;
     }
 
-    /** get the WildCardFlag field
+    /**
+     * get the WildCardFlag field
+     *
      * @return boolean
      */
     public boolean getWildCardFlag() {
         return wildCardFlag;
     }
 
-    /** get the address field.
+    /**
+     * get the address field.
+     *
      * @return Address
      */
-    public javax.sip.address.Address getAddress() {
+    public Address getAddress() {
         // JAIN-SIP stores the wild card as an address!
         return address;
     }
 
-    /** get the parameters List
+    /**
+     * get the parameters List
+     *
      * @return NameValueList
      */
     public NameValueList getContactParms() {
         return parameters;
     }
 
-    /** get Expires parameter.
+    /**
+     * get Expires parameter.
+     *
      * @return the Expires parameter.
      */
     public int getExpires() {
         return getParameterAsInt(EXPIRES);
     }
 
-    /** Set the expiry time in seconds.
-    *@param expiryDeltaSeconds exipry time.
-    */
+    /**
+     * Set the expiry time in seconds.
+     *
+     * @param expiryDeltaSeconds exipry time.
+     */
 
     public void setExpires(int expiryDeltaSeconds) {
         Integer deltaSeconds = Integer.valueOf(expiryDeltaSeconds);
         this.parameters.set(EXPIRES, deltaSeconds);
     }
 
-    /** get the Q-value
+    /**
+     * get the Q-value
+     *
      * @return float
      */
     public float getQValue() {
         return getParameterAsFloat(Q);
     }
 
-    /** set the Contact List
+    /**
+     * set the Contact List
+     *
      * @param cl ContactList to set
      */
     public void setContactList(ContactList cl) {
@@ -184,6 +200,7 @@ public final  class Contact
 
     /**
      * Set the wildCardFlag member
+     *
      * @param w boolean to set
      */
     public void setWildCardFlag(boolean w) {
@@ -197,7 +214,7 @@ public final  class Contact
      *
      * @param address Address to set
      */
-    public void setAddress(javax.sip.address.Address address) {
+    public void setAddress(Address address) {
         // Canonical form must have <> around the address.
         if (address == null)
             throw new NullPointerException("null address");
@@ -207,13 +224,14 @@ public final  class Contact
 
     /**
      * set the Q-value parameter
+     *
      * @param qValue float to set
      */
     public void setQValue(float qValue) throws InvalidArgumentException {
         if (qValue != -1 && (qValue < 0 || qValue > 1))
             throw new InvalidArgumentException(
-                "JAIN-SIP Exception, Contact, setQValue(), "
-                    + "the qValue is not between 0 and 1");
+                    "JAIN-SIP Exception, Contact, setQValue(), "
+                            + "the qValue is not between 0 and 1");
         this.parameters.set(Q, Float.valueOf(qValue));
     }
 
@@ -228,7 +246,7 @@ public final  class Contact
      * @see javax.sip.header.ContactHeader#setWildCard()
      */
     public void setWildCard() {
-       this.setWildCardFlag(true);
+        this.setWildCardFlag(true);
 
     }
 
@@ -258,7 +276,7 @@ public final  class Contact
     }
 
     /**
-     *remove the pub-gruu value from the parameter list if it exists.
+     * remove the pub-gruu value from the parameter list if it exists.
      */
     public void removePubGruuParam() {
         if (parameters != null)
@@ -269,13 +287,12 @@ public final  class Contact
         return (String) parameters.getValue(ParameterNames.PUB_GRUU);
     }
 
-    public void setPubGruuParam(String value)
-    {
+    public void setPubGruuParam(String value) {
         this.parameters.set(ParameterNames.PUB_GRUU, value);
     }
 
     /**
-     *remove the pub-gruu value from the parameter list if it exists.
+     * remove the pub-gruu value from the parameter list if it exists.
      */
     public void removeTempGruuParam() {
         if (parameters != null)
@@ -286,8 +303,7 @@ public final  class Contact
         return (String) parameters.getValue(ParameterNames.TEMP_GRUU);
     }
 
-    public void setTempGruuParam(String value)
-    {
+    public void setTempGruuParam(String value) {
         this.parameters.set(ParameterNames.TEMP_GRUU, value);
     }
 }

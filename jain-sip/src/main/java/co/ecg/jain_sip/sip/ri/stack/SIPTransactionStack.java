@@ -29,6 +29,10 @@ import co.ecg.jain_sip.core.ri.ThreadAuditor;
 import co.ecg.jain_sip.core.ri.net.AddressResolver;
 import co.ecg.jain_sip.core.ri.net.NetworkLayer;
 import co.ecg.jain_sip.core.ri.net.SecurityManagerProvider;
+import co.ecg.jain_sip.sip.DialogState;
+import co.ecg.jain_sip.sip.SipException;
+import co.ecg.jain_sip.sip.address.Hop;
+import co.ecg.jain_sip.sip.address.Router;
 import co.ecg.jain_sip.sip.ri.*;
 import co.ecg.jain_sip.sip.ri.header.Event;
 import co.ecg.jain_sip.sip.ri.header.Via;
@@ -39,15 +43,6 @@ import co.ecg.jain_sip.sip.ri.parser.MessageParserFactory;
 import co.ecg.jain_sip.sip.ri.stack.timers.SipTimer;
 import lombok.extern.slf4j.Slf4j;
 
-import javax.sip.*;
-import javax.sip.DialogState;
-import javax.sip.DialogTerminatedEvent;
-import javax.sip.address.Hop;
-import javax.sip.address.Router;
-import javax.sip.header.CallIdHeader;
-import javax.sip.header.EventHeader;
-import javax.sip.message.Request;
-import javax.sip.message.Response;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.SocketAddress;
@@ -1423,7 +1418,7 @@ public abstract class SIPTransactionStack implements
                 }
             } catch (Exception e) {
                 if (logger.isLoggingEnabled(LogWriter.TRACE_ERROR)) {
-                    logger.logError(
+                    log.error(
                             "An issue happening the valve on request " +
                                     requestReceived +
                                     " thus the message will not be processed further", e);
@@ -1518,7 +1513,7 @@ public abstract class SIPTransactionStack implements
                 }
             } catch (Exception ex) {
                 if (logger.isLoggingEnabled())
-                    logger.logError("Exception occured sending TRYING");
+                    log.error("Exception occured sending TRYING");
             }
             return null;
         } else {
@@ -1558,7 +1553,7 @@ public abstract class SIPTransactionStack implements
                 }
             } catch (Exception e) {
                 if (logger.isLoggingEnabled(LogWriter.TRACE_ERROR)) {
-                    logger.logError(
+                    log.error(
                             "An issue happening the valve on response " +
                                     responseReceived +
                                     " thus the message will not be processed further", e);
@@ -1881,7 +1876,7 @@ public abstract class SIPTransactionStack implements
 
                     } catch (Exception ex) {
                         if (logger.isLoggingEnabled()) {
-                            logger.logError(
+                            log.error(
                                     "Exception occured while waiting for room",
                                     ex);
                         }

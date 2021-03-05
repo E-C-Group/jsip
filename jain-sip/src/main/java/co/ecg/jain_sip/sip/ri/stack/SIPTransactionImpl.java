@@ -27,21 +27,21 @@ package co.ecg.jain_sip.sip.ri.stack;
 
 import co.ecg.jain_sip.sip.ri.message.SIPMessage;
 import co.ecg.jain_sip.sip.ri.message.SIPRequest;
-import gov.nist.core.CommonLogger;
-import gov.nist.core.InternalErrorHandler;
-import gov.nist.core.LogLevels;
-import gov.nist.core.LogWriter;
-import gov.nist.core.ServerLogger;
-import gov.nist.core.StackLogger;
-import gov.nist.javax.sip.SIPConstants;
-import gov.nist.javax.sip.SipProviderImpl;
-import gov.nist.javax.sip.SipStackImpl;
-import gov.nist.javax.sip.address.AddressFactoryImpl;
-import gov.nist.javax.sip.header.Via;
-import gov.nist.javax.sip.message.SIPMessage;
-import gov.nist.javax.sip.message.SIPRequest;
-import gov.nist.javax.sip.message.SIPResponse;
-import gov.nist.javax.sip.stack.SIPClientTransactionImpl.ExpiresTimerTask;
+import co.ecg.jain_sip.core.ri.CommonLogger;
+import co.ecg.jain_sip.core.ri.InternalErrorHandler;
+import co.ecg.jain_sip.core.ri.LogLevels;
+import co.ecg.jain_sip.core.ri.LogWriter;
+import co.ecg.jain_sip.core.ri.ServerLogger;
+import co.ecg.jain_sip.core.ri.StackLogger;
+import co.ecg.jain_sip.sip.ri.SIPConstants;
+import co.ecg.jain_sip.sip.ri.SipProviderImpl;
+import co.ecg.jain_sip.sip.ri.SipStackImpl;
+import co.ecg.jain_sip.sip.ri.address.AddressFactoryImpl;
+import co.ecg.jain_sip.sip.ri.header.Via;
+import co.ecg.jain_sip.sip.ri.message.SIPMessage;
+import co.ecg.jain_sip.sip.ri.message.SIPRequest;
+import co.ecg.jain_sip.sip.ri.message.SIPResponse;
+import co.ecg.jain_sip.sip.ri.stack.SIPClientTransactionImpl.ExpiresTimerTask;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -63,12 +63,12 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.net.ssl.SSLPeerUnverifiedException;
-import javax.sip.Dialog;
-import javax.sip.IOExceptionEvent;
-import javax.sip.TransactionState;
-import javax.sip.address.SipURI;
-import javax.sip.message.Request;
-import javax.sip.message.Response;
+import co.ecg.jain_sip.sip.Dialog;
+import co.ecg.jain_sip.sip.IOExceptionEvent;
+import co.ecg.jain_sip.sip.TransactionState;
+import co.ecg.jain_sip.sip.address.SipURI;
+import co.ecg.jain_sip.sip.message.Request;
+import co.ecg.jain_sip.sip.message.Response;
 
 /*
  * Modifications for TLS Support added by Daniel J. Martinez Manzano
@@ -230,7 +230,7 @@ public abstract class SIPTransactionImpl implements SIPTransaction {
                 }
                 return true;
             } catch (Exception ex) {
-                logger.logError("Unexpected exception acquiring sem",
+                log.error("Unexpected exception acquiring sem",
                         ex);
                 InternalErrorHandler.handleException(ex);
                 return false;
@@ -245,7 +245,7 @@ public abstract class SIPTransactionImpl implements SIPTransaction {
                     return sem.tryAcquire(sipStack.maxListenerResponseTime, TimeUnit.SECONDS);
                 }                
             } catch (Exception ex) {
-                logger.logError("Unexpected exception trying acquiring sem",
+                log.error("Unexpected exception trying acquiring sem",
                         ex);
                 InternalErrorHandler.handleException(ex);
                 return false;
@@ -262,7 +262,7 @@ public abstract class SIPTransactionImpl implements SIPTransaction {
                     sem.release();
                 }                
             } catch (Exception ex) {
-                logger.logError("Unexpected exception releasing sem",
+                log.error("Unexpected exception releasing sem",
                                 ex);
             }        
         }
@@ -313,7 +313,7 @@ public abstract class SIPTransactionImpl implements SIPTransaction {
                  maxTxLifeTimeListener = null;
                  
             } catch (Exception ex) {
-                logger.logError("unexpected exception", ex);
+                log.error("unexpected exception", ex);
             }
         }
     }
@@ -442,7 +442,7 @@ public abstract class SIPTransactionImpl implements SIPTransaction {
                 originalRequest = (SIPRequest) sipStack.getMessageParserFactory().createMessageParser(sipStack).parseSIPMessage(originalRequestBytes, true, false, null);
 //                originalRequestBytes = null;
             } catch (ParseException e) {
-                logger.logError("message " + originalRequestBytes + " could not be reparsed !");
+                log.error("message " + originalRequestBytes + " could not be reparsed !");
             }
         }   
         return (Request) originalRequest;
@@ -819,7 +819,7 @@ public abstract class SIPTransactionImpl implements SIPTransaction {
             						} catch (Exception ex) {
 
             							if (logger.isLoggingEnabled(ServerLogger.TRACE_ERROR)) {
-            								logger.logError("Error self routing TCP message cause by: ", ex);
+            								log.error("Error self routing TCP message cause by: ", ex);
             							}
             						}
             					}
@@ -828,7 +828,7 @@ public abstract class SIPTransactionImpl implements SIPTransaction {
 
             			} catch (Exception e) {
 
-            				logger.logError("Error passing message in self routing TCP", e);
+            				log.error("Error passing message in self routing TCP", e);
 
             			}
             			if (logger.isLoggingEnabled(LogLevels.TRACE_DEBUG))
@@ -847,7 +847,7 @@ public abstract class SIPTransactionImpl implements SIPTransaction {
             							.processMessage((SIPMessage) messageToSend.clone(), getPeerInetAddress());
             						} catch (Exception ex) {
             							if (logger.isLoggingEnabled(ServerLogger.TRACE_ERROR)) {
-            								logger.logError("Error self routing TLS message cause by: ", ex);
+            								log.error("Error self routing TLS message cause by: ", ex);
             							}
             						}
             					}
@@ -855,7 +855,7 @@ public abstract class SIPTransactionImpl implements SIPTransaction {
             				getSIPStack().getSelfRoutingThreadpoolExecutor().execute(processMessageTask);
 
             			} catch (Exception e) {
-            				logger.logError("Error passing message in TLS self routing", e);
+            				log.error("Error passing message in TLS self routing", e);
             			}
             			if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG))
                         	log.debug("Self routing message TLS");
@@ -871,14 +871,14 @@ public abstract class SIPTransactionImpl implements SIPTransaction {
     									((RawMessageChannel) channel).processMessage((SIPMessage) messageToSend.clone());
     								} catch (Exception ex) {
     									if (logger.isLoggingEnabled(ServerLogger.TRACE_ERROR)) {
-    						        		logger.logError("Error self routing message cause by: ", ex);
+    						        		log.error("Error self routing message cause by: ", ex);
     						        	}
     								}
     							}
     						};
     						getSIPStack().getSelfRoutingThreadpoolExecutor().execute(processMessageTask);
 						} catch (Exception e) {
-							logger.logError("Error passing message in self routing", e);
+							log.error("Error passing message in self routing", e);
 						}
                         if (logger.isLoggingEnabled(LogLevels.TRACE_DEBUG))
                         	log.debug("Self routing message");
@@ -1270,7 +1270,7 @@ public abstract class SIPTransactionImpl implements SIPTransaction {
             this.semRelease();
 
         } catch (Exception ex) {
-            logger.logError("Unexpected exception releasing sem",
+            log.error("Unexpected exception releasing sem",
                     ex);
 
         }
@@ -1399,7 +1399,7 @@ public abstract class SIPTransactionImpl implements SIPTransaction {
                     subjAltNames = x509cert.getSubjectAlternativeNames();
                 } catch (CertificateParsingException ex) {
                     if (logger.isLoggingEnabled()) {
-                        logger.logError("Error parsing TLS certificate", ex);
+                        log.error("Error parsing TLS certificate", ex);
                     }
                 }
                 // subjAltName types are defined in rfc2459
@@ -1431,7 +1431,7 @@ public abstract class SIPTransactionImpl implements SIPTransaction {
                                 certIdentities.add(altHostName);
                             } catch (ParseException e) {
                                 if (logger.isLoggingEnabled()) {
-                                    logger.logError(
+                                    log.error(
                                         "certificate contains invalid uri: " + altName.get(1));
                                 }
                             }
@@ -1470,7 +1470,7 @@ public abstract class SIPTransactionImpl implements SIPTransaction {
                         }
                     } catch (Exception ex) {
                         if (logger.isLoggingEnabled()) {
-                            logger.logError("exception while extracting CN", ex);
+                            log.error("exception while extracting CN", ex);
                         }
                     }
                 }

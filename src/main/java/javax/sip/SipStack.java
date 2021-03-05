@@ -27,7 +27,7 @@
  */
 package javax.sip;
 
-import javax.sip.address.Router;
+import co.ecg.jain_sip.sip.address.Router;
 import java.util.*;
 
 /**

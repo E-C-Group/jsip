@@ -25,7 +25,7 @@
 */
 package gov.nist.javax.sip.parser;
 
-import gov.nist.javax.sip.address.*;
+import co.ecg.jain_sip.sip.ri.address.*;
 import java.text.ParseException;
 
 /** Parser for addresses.

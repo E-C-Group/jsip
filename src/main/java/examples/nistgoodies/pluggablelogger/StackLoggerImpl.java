@@ -1,6 +1,6 @@
 package examples.nistgoodies.pluggablelogger;
 
-import gov.nist.core.StackLogger;
+import co.ecg.jain_sip.core.ri.StackLogger;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;

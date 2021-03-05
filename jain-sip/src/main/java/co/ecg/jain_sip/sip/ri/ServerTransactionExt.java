@@ -1,6 +1,6 @@
 package co.ecg.jain_sip.sip.ri;
 
-import javax.sip.ServerTransaction;
+import co.ecg.jain_sip.sip.ServerTransaction;
 
 
 public interface ServerTransactionExt extends ServerTransaction, TransactionExt {

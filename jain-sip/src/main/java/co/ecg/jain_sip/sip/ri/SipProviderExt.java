@@ -1,6 +1,6 @@
 package co.ecg.jain_sip.sip.ri;
 
-import javax.sip.SipProvider;
+import co.ecg.jain_sip.sip.SipProvider;
 
 /**
  * Extensions to SipProvider under consideration for Version 2.0.

@@ -25,7 +25,7 @@
 * Product of NIST/ITL Advanced Networking Technologies Division (ANTD).        *
 *******************************************************************************/
 package co.ecg.jain_sip.sip.ri.header;
-import javax.sip.header.*;
+import co.ecg.jain_sip.sip.header.*;
 
 /**
 * AlertInfo SIPHeader - there can be several AlertInfo headers.

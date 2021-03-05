@@ -27,7 +27,7 @@
 * Product of NIST/ITL Advanced Networking Technologies Division (ANTD).        *
 *******************************************************************************/
 package gov.nist.javax.sip.header;
-import gov.nist.core.*;
+import co.ecg.jain_sip.core.ri.*;
 import java.util.Calendar;
 import java.util.TimeZone;
 import java.util.Locale;

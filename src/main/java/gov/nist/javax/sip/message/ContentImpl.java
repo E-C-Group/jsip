@@ -28,15 +28,15 @@
  *******************************************************************************/
 package gov.nist.javax.sip.message;
 
-import gov.nist.core.Separators;
+import co.ecg.jain_sip.core.ri.Separators;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import javax.sip.header.ContentDispositionHeader;
-import javax.sip.header.ContentTypeHeader;
-import javax.sip.header.Header;
+import co.ecg.jain_sip.sip.header.ContentDispositionHeader;
+import co.ecg.jain_sip.sip.header.ContentTypeHeader;
+import co.ecg.jain_sip.sip.header.Header;
 
 /**
  * Implementation of multipart content type.

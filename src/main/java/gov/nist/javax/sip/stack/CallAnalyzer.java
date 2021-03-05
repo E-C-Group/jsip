@@ -24,9 +24,9 @@
  *
  */
 package gov.nist.javax.sip.stack;
-import gov.nist.core.CommonLogger;
-import gov.nist.core.StackLogger;
-import gov.nist.javax.sip.SipStackImpl;
+import co.ecg.jain_sip.core.ri.CommonLogger;
+import co.ecg.jain_sip.core.ri.StackLogger;
+import co.ecg.jain_sip.sip.ri.SipStackImpl;
 
 import java.util.HashMap;
 import java.util.Iterator;

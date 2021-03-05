@@ -15,10 +15,10 @@
  */
  package test.unit.gov.nist.javax.sip.stack.tx.timeout;
 
-import gov.nist.javax.sip.SipStackImpl;
+import co.ecg.jain_sip.sip.ri.SipStackImpl;
 
-import javax.sip.SipProvider;
-import javax.sip.message.Request;
+import co.ecg.jain_sip.sip.SipProvider;
+import co.ecg.jain_sip.sip.message.Request;
 
 import org.apache.log4j.Logger;
 

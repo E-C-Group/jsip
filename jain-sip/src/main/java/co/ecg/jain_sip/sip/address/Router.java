@@ -26,9 +26,14 @@
  */
 package co.ecg.jain_sip.sip.address;
 
-import javax.sip.SipException;
-import javax.sip.message.Request;
+import co.ecg.jain_sip.sip.SipException;
+import co.ecg.jain_sip.sip.SipFactory;
+import co.ecg.jain_sip.sip.message.Request;
+
+import co.ecg.jain_sip.sip.SipException;
+import co.ecg.jain_sip.sip.message.Request;
 import java.util.ListIterator;
+import java.util.Properties;
 
 /**
  * The Router interface may be implemented by the application to provide custom
@@ -56,7 +61,7 @@ import java.util.ListIterator;
  * <li> Else, if the property <code>javax.sip.OUTBOUND_PROXY</code> is set, use its
  *      value as the next hop
  * <li> Otherwise, use the request URI as next hop. If the request URI is not a SIP
- *      URI, call {@link javax.sip.address.Router#getNextHop(Request)} provided by the application.
+ *      URI, call {@link Router#getNextHop(Request)} provided by the application.
  * </ul>
  *
  * <p><b>Note:</b> In case the topmost Route header contains no 'lr' parameter
@@ -75,7 +80,7 @@ import java.util.ListIterator;
  *
  * <p>The location (classname) of the user-defined Router object is supplied in the
  * Properties object passed to the
- * {@link javax.sip.SipFactory#createSipStack(Properties)} method upon creation
+ * {@link SipFactory#createSipStack(Properties)} method upon creation
  * of the SIP Stack object.
  * The Router object must accept a SipStack as an argument to the constructor in
  * order for the Router to access attributes of the SipStack
@@ -85,7 +90,7 @@ import java.util.ListIterator;
  * The routing policy can not be changed dynamically, i.e. the SipStack needs to be
  * deleted and re-created.
  * Outbound proxy should be passed to the
- * {@link javax.sip.SipFactory#createSipStack(Properties)} method upon creation
+ * {@link SipFactory#createSipStack(Properties)} method upon creation
  * of the SIP Stack object.
  *
  * <p><b>Application Notes</b><br/>
@@ -105,8 +110,6 @@ import java.util.ListIterator;
  */
 
 public interface Router {
-
-
     /**
      * Gets the Outbound Proxy parameter of this Router, this method may return
      * null if no outbound proxy is defined.

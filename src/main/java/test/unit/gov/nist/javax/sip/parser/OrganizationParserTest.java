@@ -24,7 +24,7 @@
  */
 package test.unit.gov.nist.javax.sip.parser;
 
-import gov.nist.javax.sip.parser.OrganizationParser;
+import co.ecg.jain_sip.sip.ri.parser.OrganizationParser;
 
 /**
  *

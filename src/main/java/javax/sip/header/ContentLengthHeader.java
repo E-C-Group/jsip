@@ -23,7 +23,7 @@ package javax.sip.header;
 
 
 
-import javax.sip.*;
+import co.ecg.jain_sip.sip.*;
 
 
 

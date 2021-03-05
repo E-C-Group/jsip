@@ -2,8 +2,8 @@ package tools.sniffer;
 
 import java.util.*;
 import java.text.*;
-import gov.nist.javax.sip.parser.*;
-import gov.nist.javax.sip.message.*;
+import co.ecg.jain_sip.sip.ri.parser.*;
+import co.ecg.jain_sip.sip.ri.message.*;
 
 /**
 * A parser for Sniff files. This  is the main

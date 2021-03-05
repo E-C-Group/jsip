@@ -31,10 +31,10 @@ package gov.nist.javax.sip.header.ims;
 
 import java.text.ParseException;
 
-import javax.sip.header.ExtensionHeader;
-import javax.sip.header.Parameters;
+import co.ecg.jain_sip.sip.header.ExtensionHeader;
+import co.ecg.jain_sip.sip.header.Parameters;
 
-import gov.nist.core.Token;
+import co.ecg.jain_sip.core.ri.Token;
 
 /**
  * P-Visited-Network-ID SIP Private Header: RFC 3455.

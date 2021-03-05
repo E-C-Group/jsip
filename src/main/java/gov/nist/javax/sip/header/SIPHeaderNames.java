@@ -27,8 +27,8 @@
 * Product of NIST/ITL Advanced Networking Technologies Division (ANTD).        *
 *******************************************************************************/
 package gov.nist.javax.sip.header;
-import javax.sip.header.*;
-import gov.nist.javax.sip.header.extensions.*;
+import co.ecg.jain_sip.sip.header.*;
+import co.ecg.jain_sip.sip.ri.header.extensions.*;
 
 /**
  * SIPHeader names that are supported by this parser

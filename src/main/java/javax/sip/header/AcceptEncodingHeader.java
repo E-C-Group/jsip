@@ -21,7 +21,7 @@
  */
 package javax.sip.header;
 
-import javax.sip.InvalidArgumentException;
+import co.ecg.jain_sip.sip.InvalidArgumentException;
 
 /**
  * This interface represents the Accept-Encoding request-header.

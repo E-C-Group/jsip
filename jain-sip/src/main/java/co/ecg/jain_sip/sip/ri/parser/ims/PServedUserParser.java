@@ -28,10 +28,10 @@ package co.ecg.jain_sip.sip.ri.parser.ims;
 
 import java.text.ParseException;
 
-import gov.nist.javax.sip.header.SIPHeader;
-import gov.nist.javax.sip.header.ims.PServedUser;
-import gov.nist.javax.sip.parser.AddressParametersParser;
-import gov.nist.javax.sip.parser.Lexer;
+import co.ecg.jain_sip.sip.ri.header.SIPHeader;
+import co.ecg.jain_sip.sip.ri.header.ims.PServedUser;
+import co.ecg.jain_sip.sip.ri.parser.AddressParametersParser;
+import co.ecg.jain_sip.sip.ri.parser.Lexer;
 
 /**
  *

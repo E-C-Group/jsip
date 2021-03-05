@@ -28,7 +28,7 @@ package gov.nist.core.net;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
-import javax.sip.address.Hop;
+import co.ecg.jain_sip.sip.address.Hop;
 
 /**
  * An interface that allows you to customize address lookup.

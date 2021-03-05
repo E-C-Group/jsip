@@ -25,20 +25,20 @@
  */
 package co.ecg.jain_sip.sip.ri.stack;
 
-import gov.nist.core.CommonLogger;
-import gov.nist.core.InternalErrorHandler;
-import gov.nist.core.LogWriter;
-import gov.nist.core.StackLogger;
-import gov.nist.javax.sip.header.CSeq;
-import gov.nist.javax.sip.header.CallID;
-import gov.nist.javax.sip.header.ContentLength;
-import gov.nist.javax.sip.header.From;
-import gov.nist.javax.sip.header.RequestLine;
-import gov.nist.javax.sip.header.StatusLine;
-import gov.nist.javax.sip.header.To;
-import gov.nist.javax.sip.header.Via;
-import gov.nist.javax.sip.message.SIPMessage;
-import gov.nist.javax.sip.parser.NioPipelineParser;
+import co.ecg.jain_sip.core.ri.CommonLogger;
+import co.ecg.jain_sip.core.ri.InternalErrorHandler;
+import co.ecg.jain_sip.core.ri.LogWriter;
+import co.ecg.jain_sip.core.ri.StackLogger;
+import co.ecg.jain_sip.sip.ri.header.CSeq;
+import co.ecg.jain_sip.sip.ri.header.CallID;
+import co.ecg.jain_sip.sip.ri.header.ContentLength;
+import co.ecg.jain_sip.sip.ri.header.From;
+import co.ecg.jain_sip.sip.ri.header.RequestLine;
+import co.ecg.jain_sip.sip.ri.header.StatusLine;
+import co.ecg.jain_sip.sip.ri.header.To;
+import co.ecg.jain_sip.sip.ri.header.Via;
+import co.ecg.jain_sip.sip.ri.message.SIPMessage;
+import co.ecg.jain_sip.sip.ri.parser.NioPipelineParser;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -244,7 +244,7 @@ public class NioTcpMessageChannel extends ConnectionOrientedMessageChannel {
 				cancelPingKeepAliveTimeoutTaskIfStarted();
 			}
 		} catch (IOException e) {
-			logger.logError("Problem occured while closing", e);
+			log.error("Problem occured while closing", e);
 		}
 
 	}
@@ -311,7 +311,7 @@ public class NioTcpMessageChannel extends ConnectionOrientedMessageChannel {
 	public void sendTCPMessage(byte message[], InetAddress receiverAddress,
 			int receiverPort, boolean retry) throws IOException {
 		if (message == null || receiverAddress == null) {
-			logger.logError("receiverAddress = " + receiverAddress);
+			log.error("receiverAddress = " + receiverAddress);
 			throw new IllegalArgumentException("Null argument");
 		}
 		lastActivityTimeStamp = System.currentTimeMillis();
@@ -428,7 +428,7 @@ public class NioTcpMessageChannel extends ConnectionOrientedMessageChannel {
 
 					} catch (IOException ie) {
 						if (logger.isLoggingEnabled(LogWriter.TRACE_ERROR)) {
-							logger.logError("Exception while closing socket! :"
+							log.error("Exception while closing socket! :"
 									+ socketChannel.toString() + ":" + ie.toString());
 						}
 

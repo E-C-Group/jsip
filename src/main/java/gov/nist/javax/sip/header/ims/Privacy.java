@@ -34,11 +34,11 @@ package gov.nist.javax.sip.header.ims;
 
 import java.text.ParseException;
 
-import javax.sip.header.ExtensionHeader;
-import javax.sip.header.Parameters;
+import co.ecg.jain_sip.sip.header.ExtensionHeader;
+import co.ecg.jain_sip.sip.header.Parameters;
 
-import gov.nist.core.NameValueList;
-import gov.nist.javax.sip.header.SIPHeader;
+import co.ecg.jain_sip.core.ri.NameValueList;
+import co.ecg.jain_sip.sip.ri.header.SIPHeader;
 
 /**
  * Privacy SIP header - RFC 3323.

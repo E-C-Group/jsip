@@ -25,9 +25,9 @@
  */
 package gov.nist.javax.sip.stack;
 
-import gov.nist.core.CommonLogger;
-import gov.nist.core.LogWriter;
-import gov.nist.core.StackLogger;
+import co.ecg.jain_sip.core.ri.CommonLogger;
+import co.ecg.jain_sip.core.ri.LogWriter;
+import co.ecg.jain_sip.core.ri.StackLogger;
 
 import java.nio.ByteBuffer;
 
@@ -50,20 +50,20 @@ public class ByteBufferFactory {
 
     public ByteBuffer allocateDirect(int capacity) {
         if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG))
-            logger.logTrace("Allocating direct buffer " + capacity);
+            log.trace("Allocating direct buffer " + capacity);
         return useDirect ? ByteBuffer.allocateDirect(capacity) : ByteBuffer.allocate(capacity);
     }
 
     public ByteBuffer allocate(int capacity) {
         if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG))
-            logger.logTrace("Allocating buffer " + capacity);
+            log.trace("Allocating buffer " + capacity);
         return ByteBuffer.allocate(capacity);
     }
 
 
     public void setUseDirect(boolean useDirect) {
         if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG))
-            logger.logTrace("Direct buffers are " + (useDirect ? "enabled" : "disabled"));
+            log.trace("Direct buffers are " + (useDirect ? "enabled" : "disabled"));
         this.useDirect = useDirect;
     }
 }

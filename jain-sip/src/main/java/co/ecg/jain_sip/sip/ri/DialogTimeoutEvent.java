@@ -17,8 +17,8 @@ package co.ecg.jain_sip.sip.ri;
 
 import java.util.EventObject;
 
-import javax.sip.ClientTransaction;
-import javax.sip.Dialog;
+import co.ecg.jain_sip.sip.ClientTransaction;
+import co.ecg.jain_sip.sip.Dialog;
 
 /**
  * 

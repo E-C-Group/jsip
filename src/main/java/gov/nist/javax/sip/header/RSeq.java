@@ -25,7 +25,7 @@
 */
 package gov.nist.javax.sip.header;
 
-import javax.sip.InvalidArgumentException;
+import co.ecg.jain_sip.sip.InvalidArgumentException;
 
 /**
  *

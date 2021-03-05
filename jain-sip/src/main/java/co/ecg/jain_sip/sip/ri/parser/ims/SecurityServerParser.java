@@ -37,13 +37,13 @@ package co.ecg.jain_sip.sip.ri.parser.ims;
  */
 
 
-import gov.nist.javax.sip.header.SIPHeader;
-import gov.nist.javax.sip.parser.Lexer;
-import gov.nist.javax.sip.parser.TokenTypes;
+import co.ecg.jain_sip.sip.ri.header.SIPHeader;
+import co.ecg.jain_sip.sip.ri.parser.Lexer;
+import co.ecg.jain_sip.sip.ri.parser.TokenTypes;
 import java.text.ParseException;
 
-import gov.nist.javax.sip.header.ims.SecurityServerList;
-import gov.nist.javax.sip.header.ims.SecurityServer;
+import co.ecg.jain_sip.sip.ri.header.ims.SecurityServerList;
+import co.ecg.jain_sip.sip.ri.header.ims.SecurityServer;
 
 
 public class SecurityServerParser extends SecurityAgreeParser

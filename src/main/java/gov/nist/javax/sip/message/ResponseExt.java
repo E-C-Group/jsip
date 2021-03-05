@@ -1,6 +1,6 @@
 package gov.nist.javax.sip.message;
 
-import javax.sip.message.Response;
+import co.ecg.jain_sip.sip.message.Response;
 
 /**
  *Extension for the co.ecg.jain-sip Response interface. This is a convenience

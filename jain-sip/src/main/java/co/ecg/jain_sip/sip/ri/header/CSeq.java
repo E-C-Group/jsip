@@ -1,46 +1,46 @@
 /*
-* Conditions Of Use
-*
-* This software was developed by employees of the National Institute of
-* Standards and Technology (NIST), an agency of the Federal Government.
-* Pursuant to title 15 Untied States Code Section 105, works of NIST
-* employees are not subject to copyright protection in the United States
-* and are considered to be in the public domain.  As a result, a formal
-* license is not needed to use the software.
-*
-* This software is provided by NIST as a service and is expressly
-* provided "AS IS."  NIST MAKES NO WARRANTY OF ANY KIND, EXPRESS, IMPLIED
-* OR STATUTORY, INCLUDING, WITHOUT LIMITATION, THE IMPLIED WARRANTY OF
-* MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, NON-INFRINGEMENT
-* AND DATA ACCURACY.  NIST does not warrant or make any representations
-* regarding the use of the software or the results thereof, including but
-* not limited to the correctness, accuracy, reliability or usefulness of
-* the software.
-*
-* Permission to use this software is contingent upon your acceptance
-* of the terms of this agreement
-*
-* .
-*
-*/
+ * Conditions Of Use
+ *
+ * This software was developed by employees of the National Institute of
+ * Standards and Technology (NIST), an agency of the Federal Government.
+ * Pursuant to title 15 Untied States Code Section 105, works of NIST
+ * employees are not subject to copyright protection in the United States
+ * and are considered to be in the public domain.  As a result, a formal
+ * license is not needed to use the software.
+ *
+ * This software is provided by NIST as a service and is expressly
+ * provided "AS IS."  NIST MAKES NO WARRANTY OF ANY KIND, EXPRESS, IMPLIED
+ * OR STATUTORY, INCLUDING, WITHOUT LIMITATION, THE IMPLIED WARRANTY OF
+ * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, NON-INFRINGEMENT
+ * AND DATA ACCURACY.  NIST does not warrant or make any representations
+ * regarding the use of the software or the results thereof, including but
+ * not limited to the correctness, accuracy, reliability or usefulness of
+ * the software.
+ *
+ * Permission to use this software is contingent upon your acceptance
+ * of the terms of this agreement
+ *
+ * .
+ *
+ */
 /******************************************************************************
  * Product of NIST/ITL Advanced Networking Technologies Division (ANTD).      *
  ******************************************************************************/
 package co.ecg.jain_sip.sip.ri.header;
 
-import gov.nist.javax.sip.message.SIPRequest;
+import co.ecg.jain_sip.sip.header.CSeqHeader;
 
 import co.ecg.jain_sip.sip.InvalidArgumentException;
-import javax.sip.header.CSeqHeader;
+import co.ecg.jain_sip.sip.ri.message.SIPRequest;
+
 import java.text.ParseException;
 
 /**
- *  CSeq SIP Header.
+ * CSeq SIP Header.
  *
  * @author M. Ranganathan    <br/>
  * @version 1.2 $Revision: 1.11 $ $Date: 2010-05-06 14:07:48 $
  * @since 1.1
- *
  */
 
 public class CSeq extends SIPHeader implements CSeqHeader {
@@ -70,7 +70,7 @@ public class CSeq extends SIPHeader implements CSeqHeader {
     /**
      * Constructor given the sequence number and method.
      *
-     * @param seqno is the sequence number to assign.
+     * @param seqno  is the sequence number to assign.
      * @param method is the method string.
      */
     public CSeq(long seqno, String method) {
@@ -81,6 +81,7 @@ public class CSeq extends SIPHeader implements CSeqHeader {
 
     /**
      * Compare two cseq headers for equality.
+     *
      * @param other Object to compare against.
      * @return true if the two cseq headers are equals, false
      * otherwise.
@@ -90,13 +91,14 @@ public class CSeq extends SIPHeader implements CSeqHeader {
         if (other instanceof CSeqHeader) {
             final CSeqHeader o = (CSeqHeader) other;
             return this.getSeqNumber() == o.getSeqNumber()
-                && this.getMethod().equals( o.getMethod() );
+                    && this.getMethod().equals(o.getMethod());
         }
         return false;
     }
 
     /**
      * Return canonical encoded header.
+     *
      * @return String with canonical encoded header.
      */
     public String encode() {
@@ -118,6 +120,7 @@ public class CSeq extends SIPHeader implements CSeqHeader {
 
     /**
      * Get the method.
+     *
      * @return String the method.
      */
     public String getMethod() {
@@ -129,15 +132,15 @@ public class CSeq extends SIPHeader implements CSeqHeader {
      * @see javax.sip.header.CSeqHeader#setSequenceNumber(long)
      */
     public void setSeqNumber(long sequenceNumber)
-        throws InvalidArgumentException {
-        if (sequenceNumber < 0 )
-            throw new InvalidArgumentException(
-                "JAIN-SIP Exception, CSeq, setSequenceNumber(), "
-                    + "the sequence number parameter is < 0 : " + sequenceNumber);
-        else if ( sequenceNumber >  ((long)1)<<32 - 1)
+            throws InvalidArgumentException {
+        if (sequenceNumber < 0)
             throw new InvalidArgumentException(
                     "JAIN-SIP Exception, CSeq, setSequenceNumber(), "
-                        + "the sequence number parameter is too large : " + sequenceNumber);
+                            + "the sequence number parameter is < 0 : " + sequenceNumber);
+        else if (sequenceNumber > ((long) 1) << 32 - 1)
+            throw new InvalidArgumentException(
+                    "JAIN-SIP Exception, CSeq, setSequenceNumber(), "
+                            + "the sequence number parameter is too large : " + sequenceNumber);
 
         seqno = Long.valueOf(sequenceNumber);
     }
@@ -146,7 +149,7 @@ public class CSeq extends SIPHeader implements CSeqHeader {
      * For backwards compatibility
      */
     public void setSequenceNumber(int sequenceNumber) throws InvalidArgumentException {
-        this.setSeqNumber( (long) sequenceNumber );
+        this.setSeqNumber((long) sequenceNumber);
     }
 
     /*
@@ -156,8 +159,8 @@ public class CSeq extends SIPHeader implements CSeqHeader {
     public void setMethod(String meth) throws ParseException {
         if (meth == null)
             throw new NullPointerException(
-                "JAIN-SIP Exception, CSeq"
-                    + ", setMethod(), the meth parameter is null");
+                    "JAIN-SIP Exception, CSeq"
+                            + ", setMethod(), the meth parameter is null");
         this.method = SIPRequest.getCannonicalName(meth);
     }
 
@@ -171,8 +174,6 @@ public class CSeq extends SIPHeader implements CSeqHeader {
         else
             return this.seqno.intValue();
     }
-
-
 
 
     public long getSeqNumber() {

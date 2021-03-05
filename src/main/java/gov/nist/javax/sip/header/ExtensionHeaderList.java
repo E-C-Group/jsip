@@ -30,8 +30,8 @@ package gov.nist.javax.sip.header;
 
 import java.util.ListIterator;
 
-import javax.sip.header.ExtensionHeader;
-import javax.sip.header.Header;
+import co.ecg.jain_sip.sip.header.ExtensionHeader;
+import co.ecg.jain_sip.sip.header.Header;
 
 /**
  * A generic extension header list.

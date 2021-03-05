@@ -25,7 +25,7 @@
 */
 package gov.nist.core;
 
-import gov.nist.javax.sip.*;
+import co.ecg.jain_sip.sip.ri.*;
 
 import java.text.ParseException;
 import java.util.Map;

@@ -25,25 +25,25 @@
  */
 package gov.nist.javax.sip.stack;
 
-import gov.nist.core.CommonLogger;
-import gov.nist.core.InternalErrorHandler;
-import gov.nist.core.LogWriter;
-import gov.nist.core.ServerLogger;
-import gov.nist.core.StackLogger;
-import gov.nist.javax.sip.IOExceptionEventExt;
-import gov.nist.javax.sip.IOExceptionEventExt.Reason;
-import gov.nist.javax.sip.SipListenerExt;
-import gov.nist.javax.sip.SipProviderImpl;
-import gov.nist.javax.sip.SipStackImpl;
-import gov.nist.javax.sip.header.RetryAfter;
-import gov.nist.javax.sip.header.Via;
-import gov.nist.javax.sip.header.ViaList;
-import gov.nist.javax.sip.message.SIPMessage;
-import gov.nist.javax.sip.message.SIPRequest;
-import gov.nist.javax.sip.message.SIPResponse;
-import gov.nist.javax.sip.parser.Pipeline;
-import gov.nist.javax.sip.parser.PipelinedMsgParser;
-import gov.nist.javax.sip.parser.SIPMessageListener;
+import co.ecg.jain_sip.core.ri.CommonLogger;
+import co.ecg.jain_sip.core.ri.InternalErrorHandler;
+import co.ecg.jain_sip.core.ri.LogWriter;
+import co.ecg.jain_sip.core.ri.ServerLogger;
+import co.ecg.jain_sip.core.ri.StackLogger;
+import co.ecg.jain_sip.sip.ri.IOExceptionEventExt;
+import co.ecg.jain_sip.sip.ri.IOExceptionEventExt.Reason;
+import co.ecg.jain_sip.sip.ri.SipListenerExt;
+import co.ecg.jain_sip.sip.ri.SipProviderImpl;
+import co.ecg.jain_sip.sip.ri.SipStackImpl;
+import co.ecg.jain_sip.sip.ri.header.RetryAfter;
+import co.ecg.jain_sip.sip.ri.header.Via;
+import co.ecg.jain_sip.sip.ri.header.ViaList;
+import co.ecg.jain_sip.sip.ri.message.SIPMessage;
+import co.ecg.jain_sip.sip.ri.message.SIPRequest;
+import co.ecg.jain_sip.sip.ri.message.SIPResponse;
+import co.ecg.jain_sip.sip.ri.parser.Pipeline;
+import co.ecg.jain_sip.sip.ri.parser.PipelinedMsgParser;
+import co.ecg.jain_sip.sip.ri.parser.SIPMessageListener;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -53,10 +53,10 @@ import java.text.ParseException;
 import java.util.Iterator;
 import java.util.concurrent.Semaphore;
 
-import javax.sip.ListeningPoint;
-import javax.sip.SipListener;
-import javax.sip.address.Hop;
-import javax.sip.message.Response;
+import co.ecg.jain_sip.sip.ListeningPoint;
+import co.ecg.jain_sip.sip.SipListener;
+import co.ecg.jain_sip.sip.address.Hop;
+import co.ecg.jain_sip.sip.message.Response;
 
 /**
  * @author jean.deruelle@gmail.com
@@ -257,7 +257,7 @@ public abstract class ConnectionOrientedMessageChannel extends MessageChannel im
         } catch (Exception e) {
             if (logger.isLoggingEnabled(
                     ServerLog.TRACE_ERROR)) {
-                logger.logError(
+                log.error(
                         "ERROR processing self routing", e);
             }
         }
@@ -282,8 +282,8 @@ public abstract class ConnectionOrientedMessageChannel extends MessageChannel im
                     || sipMessage.getViaHeaders() == null) {
                 String badmsg = sipMessage.encode();
                 if (logger.isLoggingEnabled()) {
-                    logger.logError("bad message " + badmsg);
-                    logger.logError(">>> Dropped Bad Msg");
+                    log.error("bad message " + badmsg);
+                    log.error(">>> Dropped Bad Msg");
                 }
                 return;
             }
@@ -488,7 +488,7 @@ public abstract class ConnectionOrientedMessageChannel extends MessageChannel im
                     sipResponse.checkHeaders();
                 } catch (ParseException ex) {
                     if (logger.isLoggingEnabled())
-                        logger.logError(
+                        log.error(
                                 "Dropping Badly formatted response message >>> "
                                         + sipResponse);
                     return;
@@ -517,7 +517,7 @@ public abstract class ConnectionOrientedMessageChannel extends MessageChannel im
                                 && !((SIPClientTransaction) sipServerResponse)
                                         .checkFromTag(sipResponse)) {
                             if (logger.isLoggingEnabled())
-                                logger.logError(
+                                log.error(
                                         "Dropping response message with invalid tag >>> "
                                                 + sipResponse);
                             return;
@@ -715,7 +715,7 @@ public abstract class ConnectionOrientedMessageChannel extends MessageChannel im
     		try {
 				keepAliveSemaphore.acquire();
 			} catch (InterruptedException e) {
-				logger.logError("Couldn't acquire keepAliveSemaphore");
+				log.error("Couldn't acquire keepAliveSemaphore");
 				return;
 			}
 	    	try {

@@ -23,11 +23,11 @@
  */
 package co.ecg.jain_sip.sip.ri.parser;
 
-import gov.nist.javax.sip.address.AddressImpl;
-import gov.nist.javax.sip.address.SipUri;
-import gov.nist.javax.sip.header.Contact;
-import gov.nist.javax.sip.header.ContactList;
-import gov.nist.javax.sip.header.SIPHeader;
+import co.ecg.jain_sip.sip.ri.address.AddressImpl;
+import co.ecg.jain_sip.sip.ri.address.SipUri;
+import co.ecg.jain_sip.sip.ri.header.Contact;
+import co.ecg.jain_sip.sip.ri.header.ContactList;
+import co.ecg.jain_sip.sip.ri.header.SIPHeader;
 
 import java.text.ParseException;
 

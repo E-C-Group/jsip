@@ -29,7 +29,7 @@
 package co.ecg.jain_sip.sip.ri.header;
 
 import co.ecg.jain_sip.sip.InvalidArgumentException;
-import javax.sip.header.SubscriptionStateHeader;
+import co.ecg.jain_sip.sip.header.SubscriptionStateHeader;
 import java.text.ParseException;
 
 /**

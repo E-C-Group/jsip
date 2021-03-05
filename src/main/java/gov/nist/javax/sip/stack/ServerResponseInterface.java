@@ -27,7 +27,7 @@
 * Product of NIST/ITL Advanced Networking Technologies Division (ANTD).        *
 *******************************************************************************/
 package gov.nist.javax.sip.stack;
-import gov.nist.javax.sip.message.*;
+import co.ecg.jain_sip.sip.ri.message.*;
 
 /*
  *  Salvador Rey Calatayud suggested adding a parameter to the processRequest/processResponse

@@ -28,7 +28,7 @@
  *******************************************/
 package co.ecg.jain_sip.sip.ri.header.ims;
 
-import gov.nist.javax.sip.header.SIPHeaderList;
+import co.ecg.jain_sip.sip.ri.header.SIPHeaderList;
 
 /**
  * @author ALEXANDRE MIGUEL SILVA SANTOS - Nú 10045401

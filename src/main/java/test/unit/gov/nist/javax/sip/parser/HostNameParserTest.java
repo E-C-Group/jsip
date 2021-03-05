@@ -1,7 +1,7 @@
 package test.unit.gov.nist.javax.sip.parser;
 
-import gov.nist.core.HostNameParser;
-import gov.nist.core.HostPort;
+import co.ecg.jain_sip.core.ri.HostNameParser;
+import co.ecg.jain_sip.core.ri.HostPort;
 
 import java.text.ParseException;
 

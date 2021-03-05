@@ -32,15 +32,15 @@ package gov.nist.javax.sip.parser.ims;
 
 import java.text.ParseException;
 
-import gov.nist.javax.sip.header.ims.PAccessNetworkInfo;
-import gov.nist.javax.sip.header.ims.SIPHeaderNamesIms;
-import gov.nist.core.Token;
-import gov.nist.core.NameValue;
-import gov.nist.javax.sip.header.SIPHeader;
-import gov.nist.javax.sip.parser.HeaderParser;
-import gov.nist.javax.sip.parser.Lexer;
-import gov.nist.javax.sip.parser.ParametersParser;
-import gov.nist.javax.sip.parser.TokenTypes;
+import co.ecg.jain_sip.sip.ri.header.ims.PAccessNetworkInfo;
+import co.ecg.jain_sip.sip.ri.header.ims.SIPHeaderNamesIms;
+import co.ecg.jain_sip.core.ri.Token;
+import co.ecg.jain_sip.core.ri.NameValue;
+import co.ecg.jain_sip.sip.ri.header.SIPHeader;
+import co.ecg.jain_sip.sip.ri.parser.HeaderParser;
+import co.ecg.jain_sip.sip.ri.parser.Lexer;
+import co.ecg.jain_sip.sip.ri.parser.ParametersParser;
+import co.ecg.jain_sip.sip.ri.parser.TokenTypes;
 
 
 /**

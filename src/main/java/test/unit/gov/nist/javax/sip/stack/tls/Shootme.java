@@ -1,11 +1,11 @@
     package test.unit.gov.nist.javax.sip.stack.tls;
-import gov.nist.javax.sip.TransactionExt;
-import gov.nist.javax.sip.stack.NioMessageProcessorFactory;
+import co.ecg.jain_sip.sip.ri.TransactionExt;
+import co.ecg.jain_sip.sip.ri.stack.NioMessageProcessorFactory;
 
-import javax.sip.*;
-import javax.sip.address.*;
-import javax.sip.header.*;
-import javax.sip.message.*;
+import co.ecg.jain_sip.sip.*;
+import co.ecg.jain_sip.sip.address.*;
+import co.ecg.jain_sip.sip.header.*;
+import co.ecg.jain_sip.sip.message.*;
 
 import java.net.Socket;
 import java.security.cert.Certificate;

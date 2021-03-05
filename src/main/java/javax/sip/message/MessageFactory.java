@@ -24,8 +24,8 @@
 package javax.sip.message;
 
 import java.text.ParseException;
-import javax.sip.header.*;
-import javax.sip.address.URI;
+import co.ecg.jain_sip.sip.header.*;
+import co.ecg.jain_sip.sip.address.URI;
 import java.util.List;
 
 /**

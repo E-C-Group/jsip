@@ -27,23 +27,23 @@ package co.ecg.jain_sip.sip.ri.stack;
 
 import co.ecg.jain_sip.sip.ri.message.SIPMessage;
 import co.ecg.jain_sip.sip.ri.message.SIPRequest;
-import gov.nist.core.CommonLogger;
-import gov.nist.core.HostPort;
-import gov.nist.core.InternalErrorHandler;
-import gov.nist.core.LogWriter;
-import gov.nist.core.ServerLogger;
-import gov.nist.core.StackLogger;
-import gov.nist.javax.sip.SIPConstants;
-import gov.nist.javax.sip.SipProviderImpl;
-import gov.nist.javax.sip.Utils;
-import gov.nist.javax.sip.header.Expires;
-import gov.nist.javax.sip.header.ParameterNames;
-import gov.nist.javax.sip.header.RSeq;
-import gov.nist.javax.sip.header.Via;
-import gov.nist.javax.sip.message.SIPMessage;
-import gov.nist.javax.sip.message.SIPRequest;
-import gov.nist.javax.sip.message.SIPResponse;
-import gov.nist.javax.sip.stack.IllegalTransactionStateException.Reason;
+import co.ecg.jain_sip.core.ri.CommonLogger;
+import co.ecg.jain_sip.core.ri.HostPort;
+import co.ecg.jain_sip.core.ri.InternalErrorHandler;
+import co.ecg.jain_sip.core.ri.LogWriter;
+import co.ecg.jain_sip.core.ri.ServerLogger;
+import co.ecg.jain_sip.core.ri.StackLogger;
+import co.ecg.jain_sip.sip.ri.SIPConstants;
+import co.ecg.jain_sip.sip.ri.SipProviderImpl;
+import co.ecg.jain_sip.sip.ri.Utils;
+import co.ecg.jain_sip.sip.ri.header.Expires;
+import co.ecg.jain_sip.sip.ri.header.ParameterNames;
+import co.ecg.jain_sip.sip.ri.header.RSeq;
+import co.ecg.jain_sip.sip.ri.header.Via;
+import co.ecg.jain_sip.sip.ri.message.SIPMessage;
+import co.ecg.jain_sip.sip.ri.message.SIPRequest;
+import co.ecg.jain_sip.sip.ri.message.SIPResponse;
+import co.ecg.jain_sip.sip.ri.stack.IllegalTransactionStateException.Reason;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -51,21 +51,21 @@ import java.text.ParseException;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
 
-import javax.sip.Dialog;
-import javax.sip.DialogState;
-import javax.sip.DialogTerminatedEvent;
-import javax.sip.ObjectInUseException;
-import javax.sip.SipException;
-import javax.sip.Timeout;
-import javax.sip.TimeoutEvent;
-import javax.sip.TransactionState;
-import javax.sip.address.Hop;
-import javax.sip.header.ContactHeader;
-import javax.sip.header.ContentTypeHeader;
-import javax.sip.header.ExpiresHeader;
-import javax.sip.header.RSeqHeader;
-import javax.sip.message.Request;
-import javax.sip.message.Response;
+import co.ecg.jain_sip.sip.Dialog;
+import co.ecg.jain_sip.sip.DialogState;
+import co.ecg.jain_sip.sip.DialogTerminatedEvent;
+import co.ecg.jain_sip.sip.ObjectInUseException;
+import co.ecg.jain_sip.sip.SipException;
+import co.ecg.jain_sip.sip.Timeout;
+import co.ecg.jain_sip.sip.TimeoutEvent;
+import co.ecg.jain_sip.sip.TransactionState;
+import co.ecg.jain_sip.sip.address.Hop;
+import co.ecg.jain_sip.sip.header.ContactHeader;
+import co.ecg.jain_sip.sip.header.ContentTypeHeader;
+import co.ecg.jain_sip.sip.header.ExpiresHeader;
+import co.ecg.jain_sip.sip.header.RSeqHeader;
+import co.ecg.jain_sip.sip.message.Request;
+import co.ecg.jain_sip.sip.message.Response;
 
 /*
  * Bug fixes / enhancements:Emil Ivov, Antonis Karydas, Daniel J. Martinez Manzano, Daniel, Hagai
@@ -347,7 +347,7 @@ public class SIPServerTransactionImpl extends SIPTransactionImpl implements SIPS
                                 + serverTransaction.getRealState());
                 } catch (IOException ex) {
                     if (logger.isLoggingEnabled())
-                        logger.logError("IO error sending  TRYING");
+                        log.error("IO error sending  TRYING");
                 }
             }
 
@@ -856,7 +856,7 @@ public class SIPServerTransactionImpl extends SIPTransactionImpl implements SIPS
 
         } catch (IOException e) {
             if (logger.isLoggingEnabled())
-                logger.logError("IOException " ,e);
+                log.error("IOException " ,e);
             this.semRelease();
             this.raiseIOExceptionEvent();
         }
@@ -891,7 +891,7 @@ public class SIPServerTransactionImpl extends SIPTransactionImpl implements SIPS
                 if (!originalRequestHasPort)
                     transactionResponse.getTopmostVia().removePort();
             } catch (ParseException ex) {
-               logger.logError("UnexpectedException",ex);
+               log.error("UnexpectedException",ex);
                throw new IOException("Unexpected exception");
             }
 
@@ -1959,7 +1959,7 @@ public class SIPServerTransactionImpl extends SIPTransactionImpl implements SIPS
                     originalRequest = (SIPRequest) sipStack.getMessageParserFactory().createMessageParser(sipStack).parseSIPMessage(originalRequestBytes, true, false, null);
 //                    originalRequestBytes = null;
                 } catch (ParseException e) {
-                    logger.logError("message " + originalRequestBytes + "could not be reparsed !");
+                    log.error("message " + originalRequestBytes + "could not be reparsed !");
                 }
             } else if (originalRequest != null && originalRequestBytes == null) {
                 originalRequestBytes = originalRequest.encodeAsBytes(this.getTransport());

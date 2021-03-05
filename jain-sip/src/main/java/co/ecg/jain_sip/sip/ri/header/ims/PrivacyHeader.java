@@ -34,7 +34,7 @@ package co.ecg.jain_sip.sip.ri.header.ims;
 
 import java.text.ParseException;
 
-import javax.sip.header.Header;
+import co.ecg.jain_sip.sip.header.Header;
 
 /**
  * Privacy Header RFC 3323.

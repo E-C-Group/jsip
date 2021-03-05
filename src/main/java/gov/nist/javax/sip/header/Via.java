@@ -28,15 +28,15 @@
 *******************************************************************************/
 package gov.nist.javax.sip.header;
 
-import gov.nist.core.Host;
-import gov.nist.core.HostPort;
-import gov.nist.core.NameValue;
-import gov.nist.core.NameValueList;
-import gov.nist.javax.sip.stack.HopImpl;
+import co.ecg.jain_sip.core.ri.Host;
+import co.ecg.jain_sip.core.ri.HostPort;
+import co.ecg.jain_sip.core.ri.NameValue;
+import co.ecg.jain_sip.core.ri.NameValueList;
+import co.ecg.jain_sip.sip.ri.stack.HopImpl;
 
-import javax.sip.InvalidArgumentException;
-import javax.sip.address.Hop;
-import javax.sip.header.ViaHeader;
+import co.ecg.jain_sip.sip.InvalidArgumentException;
+import co.ecg.jain_sip.sip.address.Hop;
+import co.ecg.jain_sip.sip.header.ViaHeader;
 import java.text.ParseException;
 
 /**

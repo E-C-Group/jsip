@@ -1,15 +1,15 @@
 package test.tck.factory;
 
-// import gov.nist.javax.sip.header.*;
+// import co.ecg.jain_sip.sip.ri.header.*;
 import java.lang.reflect.*;
 
-import javax.sip.address.SipURI;
-import javax.sip.address.TelURL;
-import javax.sip.address.URI;
-import javax.sip.header.*;
+import co.ecg.jain_sip.sip.address.SipURI;
+import co.ecg.jain_sip.sip.address.TelURL;
+import co.ecg.jain_sip.sip.address.URI;
+import co.ecg.jain_sip.sip.header.*;
 
 import org.apache.log4j.Logger;
-// import gov.nist.core.*;
+// import co.ecg.jain_sip.core.ri.*;
 import java.util.*;
 import java.text.*;
 

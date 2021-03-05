@@ -19,16 +19,16 @@
 */
 package test.unit.gov.nist.javax.sip.stack.reinvitechallenge;
 
-import gov.nist.javax.sip.DialogExt;
-import gov.nist.javax.sip.SipStackExt;
-import gov.nist.javax.sip.address.SipUri;
-import gov.nist.javax.sip.clientauthutils.AuthenticationHelper;
-import gov.nist.javax.sip.clientauthutils.DigestServerAuthenticationHelper;
+import co.ecg.jain_sip.sip.ri.DialogExt;
+import co.ecg.jain_sip.sip.ri.SipStackExt;
+import co.ecg.jain_sip.sip.ri.address.SipUri;
+import co.ecg.jain_sip.sip.ri.clientauthutils.AuthenticationHelper;
+import co.ecg.jain_sip.sip.ri.clientauthutils.DigestServerAuthenticationHelper;
 
-import javax.sip.*;
-import javax.sip.address.*;
-import javax.sip.header.*;
-import javax.sip.message.*;
+import co.ecg.jain_sip.sip.*;
+import co.ecg.jain_sip.sip.address.*;
+import co.ecg.jain_sip.sip.header.*;
+import co.ecg.jain_sip.sip.message.*;
 
 import org.apache.log4j.ConsoleAppender;
 import org.apache.log4j.FileAppender;

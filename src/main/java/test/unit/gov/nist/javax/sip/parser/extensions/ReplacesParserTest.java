@@ -1,7 +1,7 @@
 package test.unit.gov.nist.javax.sip.parser.extensions;
 
 import test.unit.gov.nist.javax.sip.parser.ParserTestCase;
-import gov.nist.javax.sip.parser.extensions.ReplacesParser;
+import co.ecg.jain_sip.sip.ri.parser.extensions.ReplacesParser;
 
 public class ReplacesParserTest extends ParserTestCase {
 

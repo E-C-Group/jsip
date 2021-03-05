@@ -41,16 +41,16 @@ package co.ecg.jain_sip.sip.ri.parser.ims;
  * priv-value   =   "header" / "session" / "user" / "none" / "critical" / token
  */
 
-import gov.nist.javax.sip.header.SIPHeader;
-import gov.nist.javax.sip.parser.Lexer;
-import gov.nist.javax.sip.parser.TokenTypes;
-import gov.nist.javax.sip.parser.HeaderParser;
+import co.ecg.jain_sip.sip.ri.header.SIPHeader;
+import co.ecg.jain_sip.sip.ri.parser.Lexer;
+import co.ecg.jain_sip.sip.ri.parser.TokenTypes;
+import co.ecg.jain_sip.sip.ri.parser.HeaderParser;
 
 import java.text.ParseException;
 
-import gov.nist.javax.sip.header.ims.Privacy;
-import gov.nist.javax.sip.header.ims.PrivacyList;
-import gov.nist.javax.sip.header.ims.SIPHeaderNamesIms;
+import co.ecg.jain_sip.sip.ri.header.ims.Privacy;
+import co.ecg.jain_sip.sip.ri.header.ims.PrivacyList;
+import co.ecg.jain_sip.sip.ri.header.ims.SIPHeaderNamesIms;
 
 
 public class PrivacyParser

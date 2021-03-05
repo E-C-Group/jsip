@@ -30,7 +30,7 @@ package co.ecg.jain_sip.sip.ri.header;
 
 import java.util.*;
 import java.text.ParseException;
-import javax.sip.header.*;
+import co.ecg.jain_sip.sip.header.*;
 
 /**
  * List of ALLOW headers. The sip message can have multiple Allow headers

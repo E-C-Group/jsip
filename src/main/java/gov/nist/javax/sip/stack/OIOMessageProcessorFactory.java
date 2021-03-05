@@ -28,7 +28,7 @@ package gov.nist.javax.sip.stack;
 import java.io.IOException;
 import java.net.InetAddress;
 
-import javax.sip.ListeningPoint;
+import co.ecg.jain_sip.sip.ListeningPoint;
 
 /**
  * Default stack implementation of the MessageProcessorFactory.

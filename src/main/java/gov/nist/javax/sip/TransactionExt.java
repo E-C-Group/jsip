@@ -5,8 +5,8 @@ import java.security.cert.Certificate;
 import java.util.List;
 
 import javax.net.ssl.SSLPeerUnverifiedException;
-import javax.sip.SipProvider;
-import javax.sip.Transaction;
+import co.ecg.jain_sip.sip.SipProvider;
+import co.ecg.jain_sip.sip.Transaction;
 
 public interface TransactionExt extends Transaction {
 

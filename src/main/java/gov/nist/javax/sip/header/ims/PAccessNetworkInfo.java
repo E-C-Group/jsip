@@ -30,10 +30,10 @@ package gov.nist.javax.sip.header.ims;
 
 import java.text.ParseException;
 
-import javax.sip.header.ContactHeader;
-import javax.sip.header.ExtensionHeader;
+import co.ecg.jain_sip.sip.header.ContactHeader;
+import co.ecg.jain_sip.sip.header.ExtensionHeader;
 
-import gov.nist.javax.sip.header.ParametersHeader;
+import co.ecg.jain_sip.sip.ri.header.ParametersHeader;
 
 /**
  * <p>P-Access-Network-Info SIP Private Header</p>

@@ -27,12 +27,12 @@ package co.ecg.jain_sip.sip.ri.stack;
 
 import java.util.Properties;
 
-import gov.nist.javax.sip.SipStackImpl;
-import gov.nist.javax.sip.stack.CallAnalyzer.MetricAnalysisConfiguration;
-import gov.nist.javax.sip.stack.CallAnalyzer.MetricReference;
+import co.ecg.jain_sip.sip.ri.SipStackImpl;
+import co.ecg.jain_sip.sip.ri.stack.CallAnalyzer.MetricAnalysisConfiguration;
+import co.ecg.jain_sip.sip.ri.stack.CallAnalyzer.MetricReference;
 
-import javax.sip.SipStack;
-import javax.sip.message.Message;
+import co.ecg.jain_sip.sip.SipStack;
+import co.ecg.jain_sip.sip.message.Message;
 
 /**
  * This sample interceptor keeps track of requests stuck in JAIN SIP threads and prints a thread dump

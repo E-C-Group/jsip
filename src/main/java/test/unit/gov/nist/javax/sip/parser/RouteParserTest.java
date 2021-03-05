@@ -20,7 +20,7 @@
 package test.unit.gov.nist.javax.sip.parser;
 
 
-import gov.nist.javax.sip.parser.RouteParser;
+import co.ecg.jain_sip.sip.ri.parser.RouteParser;
 
 public class RouteParserTest extends ParserTestCase {
 

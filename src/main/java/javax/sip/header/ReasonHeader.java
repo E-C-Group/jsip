@@ -23,7 +23,7 @@
 package javax.sip.header;
 
 import java.text.ParseException;
-import javax.sip.InvalidArgumentException;
+import co.ecg.jain_sip.sip.InvalidArgumentException;
 
 /**
  * This interface represents the Reason header, as defined by

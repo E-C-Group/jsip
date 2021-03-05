@@ -25,20 +25,20 @@
 */
 package gov.nist.javax.sip.stack;
 
-import gov.nist.core.CommonLogger;
-import gov.nist.core.Host;
-import gov.nist.core.HostPort;
-import gov.nist.core.InternalErrorHandler;
-import gov.nist.core.LogWriter;
-import gov.nist.core.StackLogger;
-import gov.nist.javax.sip.ListeningPointImpl;
-import gov.nist.javax.sip.header.Via;
+import co.ecg.jain_sip.core.ri.CommonLogger;
+import co.ecg.jain_sip.core.ri.Host;
+import co.ecg.jain_sip.core.ri.HostPort;
+import co.ecg.jain_sip.core.ri.InternalErrorHandler;
+import co.ecg.jain_sip.core.ri.LogWriter;
+import co.ecg.jain_sip.core.ri.StackLogger;
+import co.ecg.jain_sip.sip.ri.ListeningPointImpl;
+import co.ecg.jain_sip.sip.ri.header.Via;
 
 import java.io.IOException;
 import java.net.InetAddress;
 import java.text.ParseException;
 
-import javax.sip.InvalidArgumentException;
+import co.ecg.jain_sip.sip.InvalidArgumentException;
 
 /**
  * This is the Stack abstraction for the active object that waits for messages
@@ -190,7 +190,7 @@ public abstract class MessageProcessor  {
     public ListeningPointImpl getListeningPoint() {
         if ( listeningPoint == null )  {
             if ( logger.isLoggingEnabled()) {
-                this.logger.logError("getListeningPoint" + this +
+                this.log.error("getListeningPoint" + this +
                         " returning null listeningpoint");
 
             }

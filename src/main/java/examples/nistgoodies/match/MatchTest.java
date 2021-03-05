@@ -10,12 +10,12 @@
 
 package examples.nistgoodies.match;
 
-import javax.sip.*;
-import javax.sip.header.*;
-import javax.sip.message.*;
+import co.ecg.jain_sip.sip.*;
+import co.ecg.jain_sip.sip.header.*;
+import co.ecg.jain_sip.sip.message.*;
 
-import gov.nist.javax.sip.header.CSeq;
-import gov.nist.javax.sip.message.*;
+import co.ecg.jain_sip.sip.ri.header.CSeq;
+import co.ecg.jain_sip.sip.ri.message.*;
 
 
 public class MatchTest {

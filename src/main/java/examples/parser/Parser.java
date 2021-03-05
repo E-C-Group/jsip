@@ -1,17 +1,17 @@
 package examples.parser;
 
-import gov.nist.javax.sip.header.ims.PAssertedIdentityHeader;
-import gov.nist.javax.sip.header.ims.PPreferredIdentityHeader;
+import co.ecg.jain_sip.sip.ri.header.ims.PAssertedIdentityHeader;
+import co.ecg.jain_sip.sip.ri.header.ims.PPreferredIdentityHeader;
 
 import javax.sdp.SdpFactory;
 import javax.sdp.SessionDescription;
-import javax.sip.SipFactory;
-import javax.sip.address.AddressFactory;
-import javax.sip.header.ExtensionHeader;
-import javax.sip.header.HeaderFactory;
-import javax.sip.message.MessageFactory;
-import javax.sip.message.Request;
-import javax.sip.message.Response;
+import co.ecg.jain_sip.sip.SipFactory;
+import co.ecg.jain_sip.sip.address.AddressFactory;
+import co.ecg.jain_sip.sip.header.ExtensionHeader;
+import co.ecg.jain_sip.sip.header.HeaderFactory;
+import co.ecg.jain_sip.sip.message.MessageFactory;
+import co.ecg.jain_sip.sip.message.Request;
+import co.ecg.jain_sip.sip.message.Response;
 
 /**
  * This example shows you how you can use the message factory to parse SIP

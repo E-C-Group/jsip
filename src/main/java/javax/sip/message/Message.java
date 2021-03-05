@@ -24,8 +24,8 @@
  */
 package javax.sip.message;
 
-import javax.sip.SipException;
-import javax.sip.header.*;
+import co.ecg.jain_sip.sip.SipException;
+import co.ecg.jain_sip.sip.header.*;
 import java.util.*;
 import java.io.Serializable;
 import java.text.ParseException;

@@ -23,7 +23,7 @@
  */
 package co.ecg.jain_sip.sip.ri.parser;
 
-import gov.nist.javax.sip.stack.SIPTransactionStack;
+import co.ecg.jain_sip.sip.ri.stack.SIPTransactionStack;
 
 /**
  * Default Mesasge Parser Factory Implementation

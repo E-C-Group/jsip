@@ -1,6 +1,6 @@
 package test.tck.factory;
 
-import javax.sip.header.*;
+import co.ecg.jain_sip.sip.header.*;
 import test.tck.*;
 
 public class FactoryTestHarness extends TestHarness {

@@ -29,7 +29,7 @@
 package gov.nist.javax.sip.header;
 import java.util.Iterator;
 
-import javax.sip.header.*;
+import co.ecg.jain_sip.sip.header.*;
 
 /**
  * List of Unsupported headers.

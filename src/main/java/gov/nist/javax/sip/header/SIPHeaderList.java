@@ -28,11 +28,11 @@
  ******************************************************************************/
 package gov.nist.javax.sip.header;
 
-import gov.nist.core.GenericObject;
-import gov.nist.core.Separators;
-import gov.nist.javax.sip.header.ims.PrivacyHeader;
+import co.ecg.jain_sip.core.ri.GenericObject;
+import co.ecg.jain_sip.core.ri.Separators;
+import co.ecg.jain_sip.sip.ri.header.ims.PrivacyHeader;
 
-import javax.sip.header.Header;
+import co.ecg.jain_sip.sip.header.Header;
 import java.lang.reflect.Constructor;
 import java.util.*;
 

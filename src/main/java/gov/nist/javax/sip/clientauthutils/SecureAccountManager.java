@@ -1,6 +1,6 @@
 package gov.nist.javax.sip.clientauthutils;
 
-import javax.sip.ClientTransaction;
+import co.ecg.jain_sip.sip.ClientTransaction;
 
 public interface SecureAccountManager  {
     /**

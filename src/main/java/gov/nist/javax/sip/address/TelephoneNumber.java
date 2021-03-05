@@ -25,7 +25,7 @@
 */
 package gov.nist.javax.sip.address;
 
-import gov.nist.core.*;
+import co.ecg.jain_sip.core.ri.*;
 
 import java.util.Iterator;
 

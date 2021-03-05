@@ -33,12 +33,12 @@
 *******************************************************************************/
 package gov.nist.javax.sip.header;
 
-import gov.nist.core.NameValue;
-import gov.nist.core.NameValueList;
-import gov.nist.javax.sip.address.AddressImpl;
+import co.ecg.jain_sip.core.ri.NameValue;
+import co.ecg.jain_sip.core.ri.NameValueList;
+import co.ecg.jain_sip.sip.ri.address.AddressImpl;
 
-import javax.sip.InvalidArgumentException;
-import javax.sip.header.ContactHeader;
+import co.ecg.jain_sip.sip.InvalidArgumentException;
+import co.ecg.jain_sip.sip.header.ContactHeader;
 import java.text.ParseException;
 
 /**

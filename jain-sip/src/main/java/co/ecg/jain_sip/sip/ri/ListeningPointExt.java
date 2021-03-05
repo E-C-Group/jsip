@@ -2,9 +2,9 @@ package co.ecg.jain_sip.sip.ri;
 
 import java.io.IOException;
 
-import javax.sip.ListeningPoint;
-import javax.sip.header.ContactHeader;
-import javax.sip.header.ViaHeader;
+import co.ecg.jain_sip.sip.ListeningPoint;
+import co.ecg.jain_sip.sip.header.ContactHeader;
+import co.ecg.jain_sip.sip.header.ViaHeader;
 
 public interface ListeningPointExt extends ListeningPoint {
 

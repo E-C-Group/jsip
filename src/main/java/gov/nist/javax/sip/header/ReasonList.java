@@ -30,7 +30,7 @@ package gov.nist.javax.sip.header;
 
 import java.util.List;
 
-import javax.sip.header.*;
+import co.ecg.jain_sip.sip.header.*;
 
 /**
  * List of Reason headers.

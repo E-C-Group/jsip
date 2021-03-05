@@ -1,17 +1,22 @@
 package co.ecg.jain_sip.sip.ri.parser.extensions;
 
 import java.text.ParseException;
-import javax.sip.*;
+
+import co.ecg.jain_sip.sip.*;
+import co.ecg.jain_sip.sip.ri.header.SIPHeader;
+import co.ecg.jain_sip.sip.ri.header.extensions.SessionExpires;
+import co.ecg.jain_sip.sip.ri.parser.Lexer;
+import co.ecg.jain_sip.sip.ri.parser.ParametersParser;
+import co.ecg.jain_sip.sip.ri.parser.TokenTypes;
 
 /**
  * Parser for SIP Session Expires Header.
- *
- *
  */
 public class SessionExpiresParser extends ParametersParser {
 
     /**
      * protected constructor.
+     *
      * @param text is the text of the header to parse
      */
     public SessionExpiresParser(String text) {
@@ -20,6 +25,7 @@ public class SessionExpiresParser extends ParametersParser {
 
     /**
      * constructor.
+     *
      * @param lexer is the lexer passed in from the enclosing parser.
      */
     protected SessionExpiresParser(Lexer lexer) {
@@ -31,8 +37,9 @@ public class SessionExpiresParser extends ParametersParser {
      */
     public SIPHeader parse() throws ParseException {
         SessionExpires se = new SessionExpires();
-        if (debug)
-            dbg_enter("parse");
+
+        dbg_enter("parse");
+
         try {
             headerName(TokenTypes.SESSIONEXPIRES_TO);
 
@@ -52,25 +59,24 @@ public class SessionExpiresParser extends ParametersParser {
             return se;
 
         } finally {
-            if (debug)
-                dbg_leave("parse");
+            dbg_leave("parse");
         }
 
     }
 
     public static void main(String args[]) throws ParseException {
         String to[] =
-            {   "Session-Expires: 30\n",
-                "Session-Expires: 45;refresher=uac\n",
-            };
+                {"Session-Expires: 30\n",
+                        "Session-Expires: 45;refresher=uac\n",
+                };
 
         for (int i = 0; i < to.length; i++) {
             SessionExpiresParser tp = new SessionExpiresParser(to[i]);
             SessionExpires t = (SessionExpires) tp.parse();
             System.out.println("encoded = " + t.encode());
-            System.out.println("\ntime=" + t.getExpires() );
-            if ( t.getParameter("refresher") != null)
-                System.out.println("refresher=" + t.getParameter("refresher") );
+            System.out.println("\ntime=" + t.getExpires());
+            if (t.getParameter("refresher") != null)
+                System.out.println("refresher=" + t.getParameter("refresher"));
 
         }
     }

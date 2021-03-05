@@ -30,9 +30,9 @@
  */
 
 package gov.nist.javax.sip.parser;
-import gov.nist.core.*;
-import gov.nist.javax.sip.header.*;
-import javax.sip.*;
+import co.ecg.jain_sip.core.ri.*;
+import co.ecg.jain_sip.sip.ri.header.*;
+import co.ecg.jain_sip.sip.*;
 import java.text.ParseException;
 
 

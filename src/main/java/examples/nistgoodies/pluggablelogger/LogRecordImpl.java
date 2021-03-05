@@ -1,6 +1,6 @@
 package examples.nistgoodies.pluggablelogger;
 
-import gov.nist.javax.sip.LogRecord;
+import co.ecg.jain_sip.sip.ri.LogRecord;
 
 public class LogRecordImpl implements LogRecord {
 

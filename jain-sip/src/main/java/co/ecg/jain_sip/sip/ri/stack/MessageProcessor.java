@@ -1,44 +1,42 @@
 /*
-* Conditions Of Use
-*
-* This software was developed by employees of the National Institute of
-* Standards and Technology (NIST), an agency of the Federal Government.
-* Pursuant to title 15 Untied States Code Section 105, works of NIST
-* employees are not subject to copyright protection in the United States
-* and are considered to be in the public domain.  As a result, a formal
-* license is not needed to use the software.
-*
-* This software is provided by NIST as a service and is expressly
-* provided "AS IS."  NIST MAKES NO WARRANTY OF ANY KIND, EXPRESS, IMPLIED
-* OR STATUTORY, INCLUDING, WITHOUT LIMITATION, THE IMPLIED WARRANTY OF
-* MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, NON-INFRINGEMENT
-* AND DATA ACCURACY.  NIST does not warrant or make any representations
-* regarding the use of the software or the results thereof, including but
-* not limited to the correctness, accuracy, reliability or usefulness of
-* the software.
-*
-* Permission to use this software is contingent upon your acceptance
-* of the terms of this agreement
-*
-* .
-*
-*/
+ * Conditions Of Use
+ *
+ * This software was developed by employees of the National Institute of
+ * Standards and Technology (NIST), an agency of the Federal Government.
+ * Pursuant to title 15 Untied States Code Section 105, works of NIST
+ * employees are not subject to copyright protection in the United States
+ * and are considered to be in the public domain.  As a result, a formal
+ * license is not needed to use the software.
+ *
+ * This software is provided by NIST as a service and is expressly
+ * provided "AS IS."  NIST MAKES NO WARRANTY OF ANY KIND, EXPRESS, IMPLIED
+ * OR STATUTORY, INCLUDING, WITHOUT LIMITATION, THE IMPLIED WARRANTY OF
+ * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, NON-INFRINGEMENT
+ * AND DATA ACCURACY.  NIST does not warrant or make any representations
+ * regarding the use of the software or the results thereof, including but
+ * not limited to the correctness, accuracy, reliability or usefulness of
+ * the software.
+ *
+ * Permission to use this software is contingent upon your acceptance
+ * of the terms of this agreement
+ *
+ * .
+ *
+ */
 package co.ecg.jain_sip.sip.ri.stack;
 
-import gov.nist.core.CommonLogger;
-import gov.nist.core.Host;
-import gov.nist.core.HostPort;
-import gov.nist.core.InternalErrorHandler;
-import gov.nist.core.LogWriter;
-import gov.nist.core.StackLogger;
-import gov.nist.javax.sip.ListeningPointImpl;
-import gov.nist.javax.sip.header.Via;
+import co.ecg.jain_sip.core.ri.Host;
+import co.ecg.jain_sip.core.ri.HostPort;
+import co.ecg.jain_sip.core.ri.InternalErrorHandler;
+import co.ecg.jain_sip.sip.ri.ListeningPointImpl;
+import co.ecg.jain_sip.sip.ri.header.Via;
 
 import java.io.IOException;
 import java.net.InetAddress;
 import java.text.ParseException;
 
 import co.ecg.jain_sip.sip.InvalidArgumentException;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * This is the Stack abstraction for the active object that waits for messages
@@ -47,13 +45,12 @@ import co.ecg.jain_sip.sip.InvalidArgumentException;
  * The main job of the message processor is to instantiate message channels for
  * the given transport.
  *
- * @version 1.2 $Revision: 1.20 $ $Date: 2010-12-02 22:04:15 $
- *
  * @author M. Ranganathan <br/>
- *
+ * @version 1.2 $Revision: 1.20 $ $Date: 2010-12-02 22:04:15 $
  */
-public abstract class MessageProcessor  {
-	private static StackLogger logger = CommonLogger.getLogger(MessageProcessor.class);
+@Slf4j
+public abstract class MessageProcessor {
+
     /**
      * A string containing the 0.0.0.0 IPv4 ANY address.
      */
@@ -66,7 +63,7 @@ public abstract class MessageProcessor  {
     /**
      * My Sent by string ( which I use to set the outgoing via header)
      */
-    private  String sentBy;
+    private String sentBy;
 
     private HostPort sentByHostPort;
 
@@ -102,44 +99,44 @@ public abstract class MessageProcessor  {
      * Our stack (that created us).
      */
     protected SIPTransactionStack sipStack;
-    
-    protected MessageProcessor( String transport ) {
-    	this.transport = transport;
+
+    protected MessageProcessor(String transport) {
+        this.transport = transport;
     }
-    
+
     /**
      * Constructor
      *
      * @param ipAddress -- ip address where I am listening for incoming requests.
-     * @param port -- port where i am listening for incoming requests.
+     * @param port      -- port where i am listening for incoming requests.
      * @param transport -- transport to use for the message processor (UDP/TCP/TLS).
      */
-    protected MessageProcessor( InetAddress ipAddress, int port, String transport,
-    							SIPTransactionStack transactionStack ) {
-    	this( transport );
-    	this.initialize(ipAddress, port, transactionStack);
+    protected MessageProcessor(InetAddress ipAddress, int port, String transport,
+                               SIPTransactionStack transactionStack) {
+        this(transport);
+        this.initialize(ipAddress, port, transactionStack);
     }
 
     /**
      * Initializes this MessageProcessor. Needed for extensions
      * that use classloading
-     * 
-     * @param ipAddress2
+     *
+     * @param ipAddress
+     * @param port
      * @param transactionStack
-     * @param port2
      */
-	public final void initialize( InetAddress ipAddress, int port,
-			SIPTransactionStack transactionStack ) {
-		
-		this.sipStack = transactionStack;
+    public final void initialize(InetAddress ipAddress, int port,
+                                 SIPTransactionStack transactionStack) {
+
+        this.sipStack = transactionStack;
         this.savedIpAddress = ipAddress.getHostAddress();
         this.ipAddress = ipAddress;
         this.port = port;
         this.sentByHostPort = new HostPort();
         this.sentByHostPort.setHost(new Host(ipAddress.getHostAddress()));
-        this.sentByHostPort.setPort(port);		
-	}
-    
+        this.sentByHostPort.setPort(port);
+    }
+
     /**
      * Get the transport string.
      *
@@ -153,7 +150,7 @@ public abstract class MessageProcessor  {
      * Get the port identifier.
      *
      * @return the port for this message processor. This is where you receive
-     *         messages.
+     * messages.
      */
     public int getPort() {
         return this.port;
@@ -187,26 +184,23 @@ public abstract class MessageProcessor  {
             return null;
         }
     }
-    public ListeningPointImpl getListeningPoint() {
-        if ( listeningPoint == null )  {
-            if ( logger.isLoggingEnabled()) {
-                this.logger.logError("getListeningPoint" + this +
-                        " returning null listeningpoint");
 
-            }
+    public ListeningPointImpl getListeningPoint() {
+        if (listeningPoint == null) {
+            log.error("getListeningPoint" + this +
+                    " returning null listeningpoint");
         }
         return listeningPoint;
     }
 
     public void setListeningPoint(ListeningPointImpl lp) {
-        if ( logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
-            this.log.debug("setListeningPoint" + this +
-                    " listeningPoint = " + lp);
+        log.debug("setListeningPoint" + this +
+                " listeningPoint = " + lp);
 
-        }
-        if ( lp.getPort() != this.getPort())
+        if (lp.getPort() != this.getPort())
             InternalErrorHandler.handleException
-            ("lp mismatch with provider",logger);
+                    ("lp mismatch with provider");
+
         this.listeningPoint = lp;
 
     }
@@ -217,17 +211,19 @@ public abstract class MessageProcessor  {
     public String getSavedIpAddress() {
         return this.savedIpAddress;
     }
+
     /**
      * @return the ip address for this message processor.
      */
     public InetAddress getIpAddress() {
-          return this.ipAddress;
+        return this.ipAddress;
     }
+
     /**
      * @param ipAddress the ipAddress to set
      */
     protected void setIpAddress(InetAddress ipAddress) {
-        this.sentByHostPort.setHost( new Host(ipAddress.getHostAddress()));
+        this.sentByHostPort.setHost(new Host(ipAddress.getHostAddress()));
         this.ipAddress = ipAddress;
     }
 
@@ -261,10 +257,9 @@ public abstract class MessageProcessor  {
 
     /**
      * Get the sentby string.
-     *
      */
     public String getSentBy() {
-        if ( this.sentBy == null && this.sentByHostPort != null) {
+        if (this.sentBy == null && this.sentByHostPort != null) {
             this.sentBy = this.sentByHostPort.toString();
         }
         return this.sentBy;
@@ -273,6 +268,7 @@ public abstract class MessageProcessor  {
     ////////////////////////////////////////////////////////////////////////////////////////
     // Abstract methods
     ///////////////////////////////////////////////////////////////////////////////////////
+
     /**
      * Get the SIP Stack.
      *
@@ -294,7 +290,7 @@ public abstract class MessageProcessor  {
      * @return New MessageChannel for this processor.
      */
     public abstract MessageChannel createMessageChannel(InetAddress targetHost,
-            int port) throws IOException;
+                                                        int port) throws IOException;
 
 
     /**
@@ -329,8 +325,6 @@ public abstract class MessageProcessor  {
     public abstract boolean inUse();
 
 
-
-   
     /**
      * @return Returns the sentBySet.
      */
@@ -348,9 +342,8 @@ public abstract class MessageProcessor  {
 
     public static int getDefaultPort(String transport) {
 
-        return transport.equalsIgnoreCase("TLS")?5061:5060;
+        return transport.equalsIgnoreCase("TLS") ? 5061 : 5060;
     }
-
 
 
 }

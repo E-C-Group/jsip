@@ -34,12 +34,12 @@ package gov.nist.javax.sip.header.ims;
 
 import java.text.ParseException;
 
-import gov.nist.javax.sip.address.AddressImpl;
-import gov.nist.javax.sip.address.GenericURI;
-import javax.sip.address.URI;
-import javax.sip.header.ExtensionHeader;
+import co.ecg.jain_sip.sip.ri.address.AddressImpl;
+import co.ecg.jain_sip.sip.ri.address.GenericURI;
+import co.ecg.jain_sip.sip.address.URI;
+import co.ecg.jain_sip.sip.header.ExtensionHeader;
 
-import gov.nist.javax.sip.header.ims.PAssociatedURIHeader;
+import co.ecg.jain_sip.sip.ri.header.ims.PAssociatedURIHeader;
 
 
 /**

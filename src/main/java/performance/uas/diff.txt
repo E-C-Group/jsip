@@ -304,24 +304,24 @@ diff --git a/src/gov/nist/javax/sip/stack/SIPDialog.java b/src/gov/nist/javax/si
 index 3057675..0f7ec92 100755
 --- a/src/gov/nist/javax/sip/stack/SIPDialog.java
 +++ b/src/gov/nist/javax/sip/stack/SIPDialog.java
-@@ -45,6 +45,7 @@ import gov.nist.javax.sip.header.ContactList;
- import gov.nist.javax.sip.header.ContentLength;
- import gov.nist.javax.sip.header.ContentType;
- import gov.nist.javax.sip.header.From;
-+import gov.nist.javax.sip.header.HeaderFactoryImpl;
- import gov.nist.javax.sip.header.MaxForwards;
- import gov.nist.javax.sip.header.RAck;
- import gov.nist.javax.sip.header.RSeq;
-@@ -67,6 +68,12 @@ import gov.nist.javax.sip.message.SIPDuplicateHeaderException;
- import gov.nist.javax.sip.message.SIPMessage;
- import gov.nist.javax.sip.message.SIPRequest;
- import gov.nist.javax.sip.message.SIPResponse;
-+import gov.nist.javax.sip.parser.AddressParser;
-+import gov.nist.javax.sip.parser.CallIDParser;
-+import gov.nist.javax.sip.parser.ContactParser;
-+import gov.nist.javax.sip.parser.HeaderParser;
-+import gov.nist.javax.sip.parser.ParserFactory;
-+import gov.nist.javax.sip.parser.RecordRouteParser;
+@@ -45,6 +45,7 @@ import co.ecg.jain_sip.sip.ri.header.ContactList;
+ import co.ecg.jain_sip.sip.ri.header.ContentLength;
+ import co.ecg.jain_sip.sip.ri.header.ContentType;
+ import co.ecg.jain_sip.sip.ri.header.From;
++import co.ecg.jain_sip.sip.ri.header.HeaderFactoryImpl;
+ import co.ecg.jain_sip.sip.ri.header.MaxForwards;
+ import co.ecg.jain_sip.sip.ri.header.RAck;
+ import co.ecg.jain_sip.sip.ri.header.RSeq;
+@@ -67,6 +68,12 @@ import co.ecg.jain_sip.sip.ri.message.SIPDuplicateHeaderException;
+ import co.ecg.jain_sip.sip.ri.message.SIPMessage;
+ import co.ecg.jain_sip.sip.ri.message.SIPRequest;
+ import co.ecg.jain_sip.sip.ri.message.SIPResponse;
++import co.ecg.jain_sip.sip.ri.parser.AddressParser;
++import co.ecg.jain_sip.sip.ri.parser.CallIDParser;
++import co.ecg.jain_sip.sip.ri.parser.ContactParser;
++import co.ecg.jain_sip.sip.ri.parser.HeaderParser;
++import co.ecg.jain_sip.sip.ri.parser.ParserFactory;
++import co.ecg.jain_sip.sip.ri.parser.RecordRouteParser;
  
  import java.io.IOException;
  import java.io.PrintWriter;
@@ -667,8 +667,8 @@ index b899593..cbe8de6 100644
 @@ -1,6 +1,7 @@
  package performance.uas;
  
- import gov.nist.javax.sip.message.RequestExt;
-+import gov.nist.javax.sip.parser.selective.SelectiveParserFactory;
+ import co.ecg.jain_sip.sip.ri.message.RequestExt;
++import co.ecg.jain_sip.sip.ri.parser.selective.SelectiveParserFactory;
  
  import java.util.Properties;
  import java.util.Timer;

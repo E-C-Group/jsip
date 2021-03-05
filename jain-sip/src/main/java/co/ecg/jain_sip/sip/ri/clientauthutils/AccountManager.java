@@ -1,6 +1,6 @@
 package co.ecg.jain_sip.sip.ri.clientauthutils;
 
-import javax.sip.ClientTransaction;
+import co.ecg.jain_sip.sip.ClientTransaction;
 
 public interface AccountManager {
 

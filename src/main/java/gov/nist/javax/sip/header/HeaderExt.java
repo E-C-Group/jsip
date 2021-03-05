@@ -16,7 +16,7 @@
  */
 package gov.nist.javax.sip.header;
 
-import javax.sip.header.Header;
+import co.ecg.jain_sip.sip.header.Header;
 
 /**
  * Extensions to the Header interface supported by the implementation and 

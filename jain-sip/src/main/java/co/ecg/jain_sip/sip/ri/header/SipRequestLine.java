@@ -1,6 +1,6 @@
 package co.ecg.jain_sip.sip.ri.header;
 
-import javax.sip.address.URI;
+import co.ecg.jain_sip.sip.address.URI;
 
 
 /**

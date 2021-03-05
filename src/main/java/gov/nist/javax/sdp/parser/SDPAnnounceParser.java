@@ -25,7 +25,7 @@
 */
 package gov.nist.javax.sdp.parser;
 import java.util.*;
-import gov.nist.core.*;
+import co.ecg.jain_sip.core.ri.*;
 import gov.nist.javax.sdp.fields.*;
 import gov.nist.javax.sdp.*;
 import java.text.ParseException;

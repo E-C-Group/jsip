@@ -30,9 +30,9 @@
 
 package gov.nist.javax.sip.header.ims;
 
-import javax.sip.header.Header;
-import javax.sip.header.HeaderAddress;
-import javax.sip.header.Parameters;
+import co.ecg.jain_sip.sip.header.Header;
+import co.ecg.jain_sip.sip.header.HeaderAddress;
+import co.ecg.jain_sip.sip.header.Parameters;
 
 
 /**

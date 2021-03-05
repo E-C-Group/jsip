@@ -43,10 +43,10 @@
 package co.ecg.jain_sip.sip.ri.stack;
 
 import co.ecg.jain_sip.sip.ri.parser.PipelinedMsgParser;
-import gov.nist.core.CommonLogger;
-import gov.nist.core.LogWriter;
-import gov.nist.core.StackLogger;
-import gov.nist.javax.sip.message.SIPMessage;
+import co.ecg.jain_sip.core.ri.CommonLogger;
+import co.ecg.jain_sip.core.ri.LogWriter;
+import co.ecg.jain_sip.core.ri.StackLogger;
+import co.ecg.jain_sip.sip.ri.message.SIPMessage;
 
 import javax.net.ssl.HandshakeCompletedListener;
 import javax.net.ssl.SSLSocket;
@@ -243,7 +243,7 @@ public class TLSMessageChannel extends ConnectionOrientedMessageChannel {
         } catch (IOException any) {
         	problem = any;
         	log.warn("Failed to connect " + this.peerAddress + ":" + this.peerPort +" but trying the advertised port=" + this.peerPortAdvertisedInHeaders + " if it's different than the port we just failed on");
-        	logger.logError("Error is ", any);
+        	log.error("Error is ", any);
         }
         if(sock == null) { // http://java.net/jira/browse/JSIP-362 If we couldn't connect to the host, try the advertised host:port as failsafe
         	if(peerAddressAdvertisedInHeaders  != null && peerPortAdvertisedInHeaders > 0) { 
@@ -352,7 +352,7 @@ public class TLSMessageChannel extends ConnectionOrientedMessageChannel {
         			this.peerPortAdvertisedInHeaders + 
         			" if it's different than the port we just failed on, rcv addr=" +
         			receiverAddress + ", port=" + receiverPort);
-        	logger.logError("Error is ", any);
+        	log.error("Error is ", any);
         }
         if(sock == null) { // http://java.net/jira/browse/JSIP-362 If we couldn't connect to the host, try the advertised host:port as failsafe
         	if(peerAddressAdvertisedInHeaders  != null && peerPortAdvertisedInHeaders > 0) {
@@ -540,7 +540,7 @@ public class TLSMessageChannel extends ConnectionOrientedMessageChannel {
 					sslSock.setEnableSessionCreation(false);
 				}
 			} catch (IOException e) {
-				logger.logError("A problem occured while Accepting connection", e);
+				log.error("A problem occured while Accepting connection", e);
 				// https://code.google.com/p/jain-sip/issues/detail?id=14 clean up
                 sslSock.removeHandshakeCompletedListener(handshakeCompletedListener);
                 handshakeCompletedListener = null;

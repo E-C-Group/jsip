@@ -23,7 +23,7 @@ package javax.sip.header;
 
 
 import java.text.ParseException;
-import javax.sip.InvalidArgumentException;
+import co.ecg.jain_sip.sip.InvalidArgumentException;
 
 /**
  * The Via header field indicates the transport used for the transaction and

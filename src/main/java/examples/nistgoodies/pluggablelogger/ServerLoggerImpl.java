@@ -2,17 +2,17 @@ package examples.nistgoodies.pluggablelogger;
 
 import java.util.Properties;
 
-import javax.sip.SipStack;
-import javax.sip.header.TimeStampHeader;
+import co.ecg.jain_sip.sip.SipStack;
+import co.ecg.jain_sip.sip.header.TimeStampHeader;
 
 import examples.nistgoodies.configlogger.LogRecordFactoryImpl;
 
-import gov.nist.core.ServerLogger;
-import gov.nist.javax.sip.LogRecord;
-import gov.nist.javax.sip.LogRecordFactory;
-import gov.nist.javax.sip.header.CallID;
-import gov.nist.javax.sip.message.SIPMessage;
-import gov.nist.javax.sip.stack.SIPTransactionStack;
+import co.ecg.jain_sip.core.ri.ServerLogger;
+import co.ecg.jain_sip.sip.ri.LogRecord;
+import co.ecg.jain_sip.sip.ri.LogRecordFactory;
+import co.ecg.jain_sip.sip.ri.header.CallID;
+import co.ecg.jain_sip.sip.ri.message.SIPMessage;
+import co.ecg.jain_sip.sip.ri.stack.SIPTransactionStack;
 
 public class ServerLoggerImpl implements ServerLogger {
    

@@ -28,15 +28,15 @@
  ******************************************************************************/
 package co.ecg.jain_sip.sip.ri.stack;
 
-import gov.nist.core.net.AddressResolver;
+import co.ecg.jain_sip.core.ri.net.AddressResolver;
 
-import javax.sip.*;
+import co.ecg.jain_sip.sip.*;
 import java.util.LinkedList;
 import java.util.ListIterator;
 
-import javax.sip.header.ViaHeader;
-import javax.sip.message.*;
-import javax.sip.address.*;
+import co.ecg.jain_sip.sip.header.ViaHeader;
+import co.ecg.jain_sip.sip.message.*;
+import co.ecg.jain_sip.sip.address.*;
 
 /*
  * Bug reported by Will Scullin -- maddr was being ignored when routing

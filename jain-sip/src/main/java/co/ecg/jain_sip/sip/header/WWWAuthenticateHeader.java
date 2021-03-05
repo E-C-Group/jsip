@@ -23,7 +23,7 @@
 package co.ecg.jain_sip.sip.header;
 
 import java.text.ParseException;
-import javax.sip.address.URI;
+import co.ecg.jain_sip.sip.address.URI;
 
 /**
  * This interface represents the WWW-Authenticate response-header. A

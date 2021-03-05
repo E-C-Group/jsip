@@ -25,7 +25,7 @@
 */
 package gov.nist.javax.sip.parser;
 
-import gov.nist.core.*;
+import co.ecg.jain_sip.core.ri.*;
 
 /**
  * @version 1.2 $Revision: 1.13 $ $Date: 2010-01-12 00:05:25 $

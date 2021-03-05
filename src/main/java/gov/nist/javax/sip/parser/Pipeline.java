@@ -25,9 +25,9 @@
  */
 package gov.nist.javax.sip.parser;
 
-import gov.nist.core.InternalErrorHandler;
-import gov.nist.javax.sip.stack.SIPStackTimerTask;
-import gov.nist.javax.sip.stack.timers.SipTimer;
+import co.ecg.jain_sip.core.ri.InternalErrorHandler;
+import co.ecg.jain_sip.sip.ri.stack.SIPStackTimerTask;
+import co.ecg.jain_sip.sip.ri.stack.timers.SipTimer;
 
 import java.io.IOException;
 import java.io.InputStream;

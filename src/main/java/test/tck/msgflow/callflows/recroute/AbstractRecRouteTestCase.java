@@ -2,8 +2,8 @@ package test.tck.msgflow.callflows.recroute;
 
 import java.util.Hashtable;
 
-import javax.sip.SipListener;
-import javax.sip.SipProvider;
+import co.ecg.jain_sip.sip.SipListener;
+import co.ecg.jain_sip.sip.SipProvider;
 
 import org.apache.log4j.Logger;
 

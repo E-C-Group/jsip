@@ -29,12 +29,12 @@
 
 package co.ecg.jain_sip.sip.ri.parser.ims;
 
-import gov.nist.javax.sip.header.SIPHeader;
-import gov.nist.javax.sip.header.ims.Path;
-import gov.nist.javax.sip.header.ims.PathList;
-import gov.nist.javax.sip.parser.AddressParametersParser;
-import gov.nist.javax.sip.parser.Lexer;
-import gov.nist.javax.sip.parser.TokenTypes;
+import co.ecg.jain_sip.sip.ri.header.SIPHeader;
+import co.ecg.jain_sip.sip.ri.header.ims.Path;
+import co.ecg.jain_sip.sip.ri.header.ims.PathList;
+import co.ecg.jain_sip.sip.ri.parser.AddressParametersParser;
+import co.ecg.jain_sip.sip.ri.parser.Lexer;
+import co.ecg.jain_sip.sip.ri.parser.TokenTypes;
 
 import java.text.ParseException;
 

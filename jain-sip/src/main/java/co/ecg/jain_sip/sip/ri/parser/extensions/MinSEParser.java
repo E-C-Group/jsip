@@ -1,12 +1,18 @@
 package co.ecg.jain_sip.sip.ri.parser.extensions;
 
 import java.text.ParseException;
-import javax.sip.*;
+
+import co.ecg.jain_sip.sip.*;
+import co.ecg.jain_sip.sip.ri.header.SIPHeader;
+import co.ecg.jain_sip.sip.ri.header.extensions.MinSE;
+import co.ecg.jain_sip.sip.ri.parser.Lexer;
+import co.ecg.jain_sip.sip.ri.parser.ParametersParser;
+import co.ecg.jain_sip.sip.ri.parser.TokenTypes;
 
 /**
  * Parser for SIP MinSE Parser.
- *
- *    Min-SE  =  "Min-SE" HCOLON delta-seconds *(SEMI generic-param)
+ * <p>
+ * Min-SE  =  "Min-SE" HCOLON delta-seconds *(SEMI generic-param)
  *
  * @author P. Musgrave <pmusgrave@newheights.com>
  *
@@ -16,6 +22,7 @@ public class MinSEParser extends ParametersParser {
 
     /**
      * protected constructor.
+     *
      * @param text is the text of the header to parse
      */
     public MinSEParser(String text) {
@@ -24,6 +31,7 @@ public class MinSEParser extends ParametersParser {
 
     /**
      * constructor.
+     *
      * @param lexer is the lexer passed in from the enclosing parser.
      */
     protected MinSEParser(Lexer lexer) {
@@ -35,8 +43,9 @@ public class MinSEParser extends ParametersParser {
      */
     public SIPHeader parse() throws ParseException {
         MinSE minse = new MinSE();
-        if (debug)
-            dbg_enter("parse");
+
+        dbg_enter("parse");
+
         try {
             headerName(TokenTypes.MINSE_TO);
 
@@ -54,30 +63,27 @@ public class MinSEParser extends ParametersParser {
             return minse;
 
         } finally {
-            if (debug)
-                dbg_leave("parse");
+            dbg_leave("parse");
         }
 
     }
 
     public static void main(String args[]) throws ParseException {
         String to[] =
-            {   "Min-SE: 30\n",
-                "Min-SE: 45;some-param=somevalue\n",
-            };
+                {"Min-SE: 30\n",
+                        "Min-SE: 45;some-param=somevalue\n",
+                };
 
         for (int i = 0; i < to.length; i++) {
             MinSEParser tp = new MinSEParser(to[i]);
             MinSE t = (MinSE) tp.parse();
             System.out.println("encoded = " + t.encode());
-            System.out.println("\ntime=" + t.getExpires() );
-            if ( t.getParameter("some-param") != null)
-                System.out.println("some-param=" + t.getParameter("some-param") );
+            System.out.println("\ntime=" + t.getExpires());
+            if (t.getParameter("some-param") != null)
+                System.out.println("some-param=" + t.getParameter("some-param"));
 
         }
     }
-
-
 
 
 }

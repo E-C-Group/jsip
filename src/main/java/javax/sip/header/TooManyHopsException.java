@@ -21,7 +21,7 @@
  */
 package javax.sip.header;
 
-import javax.sip.SipException;
+import co.ecg.jain_sip.sip.SipException;
 
 /**
  * This Exception is thrown when a user attempts decrement the Hop count when

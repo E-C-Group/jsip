@@ -25,8 +25,8 @@
  */
 package gov.nist.javax.sip.header.extensions;
 
-import javax.sip.InvalidArgumentException;
-import javax.sip.header.*;
+import co.ecg.jain_sip.sip.InvalidArgumentException;
+import co.ecg.jain_sip.sip.header.*;
 
 /*
  * Extension for SessionTimer RFC 4028

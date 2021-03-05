@@ -18,9 +18,9 @@ package gov.nist.core;
 
 import java.util.Properties;
 
-import javax.sip.SipStack;
+import co.ecg.jain_sip.sip.SipStack;
 
-import gov.nist.javax.sip.message.SIPMessage;
+import co.ecg.jain_sip.sip.ri.message.SIPMessage;
 
 /**
  * @author jean.deruelle@gmail.com

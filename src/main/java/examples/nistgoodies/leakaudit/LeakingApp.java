@@ -1,17 +1,17 @@
 package examples.nistgoodies.leakaudit;
 
-import gov.nist.javax.sip.stack.SIPDialog;
-import gov.nist.javax.sip.stack.SIPClientTransaction;
-import gov.nist.javax.sip.stack.SIPTransactionStack;
+import co.ecg.jain_sip.sip.ri.stack.SIPDialog;
+import co.ecg.jain_sip.sip.ri.stack.SIPClientTransaction;
+import co.ecg.jain_sip.sip.ri.stack.SIPTransactionStack;
 
-import javax.sip.*;
-import javax.sip.address.Address;
-import javax.sip.address.SipURI;
-import javax.sip.address.AddressFactory;
-import javax.sip.header.*;
-import javax.sip.message.Request;
-import javax.sip.message.Response;
-import javax.sip.message.MessageFactory;
+import co.ecg.jain_sip.sip.*;
+import co.ecg.jain_sip.sip.address.Address;
+import co.ecg.jain_sip.sip.address.SipURI;
+import co.ecg.jain_sip.sip.address.AddressFactory;
+import co.ecg.jain_sip.sip.header.*;
+import co.ecg.jain_sip.sip.message.Request;
+import co.ecg.jain_sip.sip.message.Response;
+import co.ecg.jain_sip.sip.message.MessageFactory;
 import java.util.*;
 import java.text.ParseException;
 

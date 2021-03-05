@@ -1,28 +1,26 @@
 /*******************************************************************************
-* Product of NIST/ITL Advanced Networking Technologies Division (ANTD).        *
-*******************************************************************************/
+ * Product of NIST/ITL Advanced Networking Technologies Division (ANTD).        *
+ *******************************************************************************/
 /*
-* This code has been contributed by the author to the public domain.
-*/
+ * This code has been contributed by the author to the public domain.
+ */
 package co.ecg.jain_sip.sip.ri.header.extensions;
 
 import java.text.ParseException;
 
-import javax.sip.*;
-import javax.sip.header.ExtensionHeader;
+import co.ecg.jain_sip.sip.*;
+import co.ecg.jain_sip.sip.header.ExtensionHeader;
+import co.ecg.jain_sip.sip.ri.header.ParametersHeader;
 
 /**
  * MinSE SIP Header.
- *
+ * <p>
  * (Created by modifying Expires.java)
  *
- * @version JAIN-SIP-1.1 $Revision: 1.5 $ $Date: 2010-05-06 14:07:56 $
- *
  * @author P. Musgrave <pmusgrave@newheights.com>  <br/>
- *
+ * @version JAIN-SIP-1.1 $Revision: 1.5 $ $Date: 2010-05-06 14:07:56 $
  */
-public class MinSE
-    extends ParametersHeader implements ExtensionHeader, MinSEHeader {
+public class MinSE extends ParametersHeader implements ExtensionHeader, MinSEHeader {
 
     // TODO: When the MinSEHeader is added to javax - move this there...pmusgrave
     public static final String NAME = "Min-SE";
@@ -32,11 +30,13 @@ public class MinSE
      */
     private static final long serialVersionUID = 3134344915465784267L;
 
-    /** expires field
+    /**
+     * expires field
      */
     public int expires;
 
-    /** default constructor
+    /**
+     * default constructor
      */
     public MinSE() {
         super(NAME);
@@ -44,6 +44,7 @@ public class MinSE
 
     /**
      * Return canonical form.
+     *
      * @return String
      */
     public StringBuilder encodeBody(StringBuilder retval) {
@@ -58,21 +59,17 @@ public class MinSE
 
     public void setValue(String value) throws ParseException {
         // not implemented.
-        throw new ParseException(value,0);
+        throw new ParseException(value, 0);
 
     }
 
     /**
      * Gets the expires value of the ExpiresHeader. This expires value is
-     *
+     * <p>
      * relative time.
      *
-     *
-     *
      * @return the expires value of the ExpiresHeader.
-     *
      * @since JAIN SIP v1.1
-     *
      */
     public int getExpires() {
         return expires;
@@ -84,11 +81,8 @@ public class MinSE
      * less than 2**31.
      *
      * @param expires - the new expires value of this ExpiresHeader
-     *
      * @throws InvalidArgumentException if supplied value is less than zero.
-     *
      * @since JAIN SIP v1.2
-     *
      */
     public void setExpires(int expires) throws InvalidArgumentException {
         if (expires < 0)

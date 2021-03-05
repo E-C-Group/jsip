@@ -3,8 +3,8 @@ package gov.nist.javax.sip.header;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import javax.sip.address.Address;
-import javax.sip.header.Parameters;
+import co.ecg.jain_sip.sip.address.Address;
+import co.ecg.jain_sip.sip.header.Parameters;
 
 public interface AddressParameters extends Parameters {
 

@@ -30,10 +30,10 @@
  */
 package co.ecg.jain_sip.sip.ri;
 
-import gov.nist.javax.sip.SIPConstants;
-import gov.nist.javax.sip.UtilsExt;
-import gov.nist.javax.sip.header.Via;
-import gov.nist.javax.sip.message.SIPResponse;
+import co.ecg.jain_sip.sip.ri.SIPConstants;
+import co.ecg.jain_sip.sip.ri.UtilsExt;
+import co.ecg.jain_sip.sip.ri.header.Via;
+import co.ecg.jain_sip.sip.ri.message.SIPResponse;
 
 import java.security.MessageDigest;
 import java.util.*;

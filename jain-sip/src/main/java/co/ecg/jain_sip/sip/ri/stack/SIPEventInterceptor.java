@@ -25,8 +25,8 @@
  */
 package co.ecg.jain_sip.sip.ri.stack;
 
-import javax.sip.SipStack;
-import javax.sip.message.Message;
+import co.ecg.jain_sip.sip.SipStack;
+import co.ecg.jain_sip.sip.message.Message;
 
 /**
  * This interface is the solution for https://jain-sip.dev.java.net/issues/show_bug.cgi?id=337

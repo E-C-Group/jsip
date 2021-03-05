@@ -1,19 +1,19 @@
 package co.ecg.jain_sip.sip.ri.stack;
 
-import gov.nist.javax.sip.ClientTransactionExt;
-import gov.nist.javax.sip.header.Contact;
-import gov.nist.javax.sip.header.Event;
-import gov.nist.javax.sip.header.Via;
-import gov.nist.javax.sip.message.SIPMessage;
-import gov.nist.javax.sip.message.SIPResponse;
+import co.ecg.jain_sip.sip.ri.ClientTransactionExt;
+import co.ecg.jain_sip.sip.ri.header.Contact;
+import co.ecg.jain_sip.sip.ri.header.Event;
+import co.ecg.jain_sip.sip.ri.header.Via;
+import co.ecg.jain_sip.sip.ri.message.SIPMessage;
+import co.ecg.jain_sip.sip.ri.message.SIPResponse;
 
 import java.io.IOException;
 
-import javax.sip.Dialog;
-import javax.sip.ObjectInUseException;
-import javax.sip.SipException;
-import javax.sip.address.Hop;
-import javax.sip.message.Request;
+import co.ecg.jain_sip.sip.Dialog;
+import co.ecg.jain_sip.sip.ObjectInUseException;
+import co.ecg.jain_sip.sip.SipException;
+import co.ecg.jain_sip.sip.address.Hop;
+import co.ecg.jain_sip.sip.message.Request;
 
 public interface SIPClientTransaction extends ClientTransactionExt, SIPTransaction, ServerResponseInterface {
 

@@ -31,11 +31,11 @@ package co.ecg.jain_sip.sip.ri.header.ims;
 
 import java.text.ParseException;
 
-import javax.sip.SipException;
-import javax.sip.header.ExtensionHeader;
+import co.ecg.jain_sip.sip.SipException;
+import co.ecg.jain_sip.sip.header.ExtensionHeader;
 
-import gov.nist.javax.sip.header.ims.PChargingVectorHeader;
-import gov.nist.javax.sip.header.ims.ParameterNamesIms;
+import co.ecg.jain_sip.sip.ri.header.ims.PChargingVectorHeader;
+import co.ecg.jain_sip.sip.ri.header.ims.ParameterNamesIms;
 
 /**
  * P-Charging-Vector header SIP Private Header: RFC 3455.

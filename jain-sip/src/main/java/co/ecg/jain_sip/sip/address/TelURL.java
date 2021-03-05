@@ -23,7 +23,7 @@
 package co.ecg.jain_sip.sip.address;
 
 import java.text.ParseException;
-import javax.sip.header.Parameters;
+import co.ecg.jain_sip.sip.header.Parameters;
 
  /**
  * This class represents Tel URLs, which are used for addressing. The Tel URL

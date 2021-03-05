@@ -22,7 +22,7 @@
 package javax.sip.header;
 
 import java.text.ParseException;
-import javax.sip.InvalidArgumentException;
+import co.ecg.jain_sip.sip.InvalidArgumentException;
 
 /**
  * The Warning header field is used to carry additional information about the

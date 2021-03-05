@@ -26,7 +26,7 @@
 package co.ecg.jain_sip.sip.ri.header.extensions;
 
 import co.ecg.jain_sip.sip.InvalidArgumentException;
-import javax.sip.header.*;
+import co.ecg.jain_sip.sip.header.*;
 
 /*
  * Extension for SessionTimer RFC 4028

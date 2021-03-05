@@ -25,12 +25,12 @@
  */
 package gov.nist.javax.sip.stack;
 
-import gov.nist.core.CommonLogger;
-import gov.nist.core.LogLevels;
-import gov.nist.core.LogWriter;
-import gov.nist.core.StackLogger;
-import gov.nist.javax.sip.SipStackImpl;
-import gov.nist.javax.sip.stack.SSLStateMachine.MessageSendCallback;
+import co.ecg.jain_sip.core.ri.CommonLogger;
+import co.ecg.jain_sip.core.ri.LogLevels;
+import co.ecg.jain_sip.core.ri.LogWriter;
+import co.ecg.jain_sip.core.ri.StackLogger;
+import co.ecg.jain_sip.sip.ri.SipStackImpl;
+import co.ecg.jain_sip.sip.ri.stack.SSLStateMachine.MessageSendCallback;
 
 import javax.net.ssl.HandshakeCompletedListener;
 import javax.net.ssl.SSLSession;
@@ -239,7 +239,7 @@ public class NioTlsMessageChannel extends NioTcpMessageChannel implements NioTls
 			createBuffers();
 			sendMessage(message, false);
 		} catch (Exception e) {
-			logger.logError("Cant reinit", e);
+			log.error("Cant reinit", e);
 		}
 	}
 
@@ -250,7 +250,7 @@ public class NioTlsMessageChannel extends NioTcpMessageChannel implements NioTls
 			try {
 				init(sslStateMachine.sslEngine.getUseClientMode());
 			} catch (Exception ex) {
-				logger.logError("Cannot reset SSL engine", ex);
+				log.error("Cannot reset SSL engine", ex);
 				throw new IOException(ex);
 			}
 		}

@@ -1,5 +1,5 @@
 package examples.tls;
-import javax.sip.address.*;
+import co.ecg.jain_sip.sip.address.*;
 import java.util.*;
 
 

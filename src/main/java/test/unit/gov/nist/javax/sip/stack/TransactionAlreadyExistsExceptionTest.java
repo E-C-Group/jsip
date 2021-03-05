@@ -1,36 +1,36 @@
 package test.unit.gov.nist.javax.sip.stack;
 
-import gov.nist.javax.sip.message.MessageFactoryImpl;
-import gov.nist.javax.sip.stack.NioMessageProcessorFactory;
+import co.ecg.jain_sip.sip.ri.message.MessageFactoryImpl;
+import co.ecg.jain_sip.sip.ri.stack.NioMessageProcessorFactory;
 
 import java.text.ParseException;
 import java.util.Properties;
 
-import javax.sip.ClientTransaction;
-import javax.sip.Dialog;
-import javax.sip.DialogTerminatedEvent;
-import javax.sip.IOExceptionEvent;
-import javax.sip.ListeningPoint;
-import javax.sip.PeerUnavailableException;
-import javax.sip.RequestEvent;
-import javax.sip.ResponseEvent;
-import javax.sip.ServerTransaction;
-import javax.sip.SipFactory;
-import javax.sip.SipListener;
-import javax.sip.SipProvider;
-import javax.sip.SipStack;
-import javax.sip.Transaction;
-import javax.sip.TransactionAlreadyExistsException;
-import javax.sip.TransactionTerminatedEvent;
-import javax.sip.address.Address;
-import javax.sip.address.AddressFactory;
-import javax.sip.header.CSeqHeader;
-import javax.sip.header.ContactHeader;
-import javax.sip.header.HeaderFactory;
-import javax.sip.header.ToHeader;
-import javax.sip.message.MessageFactory;
-import javax.sip.message.Request;
-import javax.sip.message.Response;
+import co.ecg.jain_sip.sip.ClientTransaction;
+import co.ecg.jain_sip.sip.Dialog;
+import co.ecg.jain_sip.sip.DialogTerminatedEvent;
+import co.ecg.jain_sip.sip.IOExceptionEvent;
+import co.ecg.jain_sip.sip.ListeningPoint;
+import co.ecg.jain_sip.sip.PeerUnavailableException;
+import co.ecg.jain_sip.sip.RequestEvent;
+import co.ecg.jain_sip.sip.ResponseEvent;
+import co.ecg.jain_sip.sip.ServerTransaction;
+import co.ecg.jain_sip.sip.SipFactory;
+import co.ecg.jain_sip.sip.SipListener;
+import co.ecg.jain_sip.sip.SipProvider;
+import co.ecg.jain_sip.sip.SipStack;
+import co.ecg.jain_sip.sip.Transaction;
+import co.ecg.jain_sip.sip.TransactionAlreadyExistsException;
+import co.ecg.jain_sip.sip.TransactionTerminatedEvent;
+import co.ecg.jain_sip.sip.address.Address;
+import co.ecg.jain_sip.sip.address.AddressFactory;
+import co.ecg.jain_sip.sip.header.CSeqHeader;
+import co.ecg.jain_sip.sip.header.ContactHeader;
+import co.ecg.jain_sip.sip.header.HeaderFactory;
+import co.ecg.jain_sip.sip.header.ToHeader;
+import co.ecg.jain_sip.sip.message.MessageFactory;
+import co.ecg.jain_sip.sip.message.Request;
+import co.ecg.jain_sip.sip.message.Response;
 
 import junit.framework.TestCase;
 

@@ -25,7 +25,7 @@
  */
 package gov.nist.javax.sip.header.extensions;
 
-import javax.sip.header.*;
+import co.ecg.jain_sip.sip.header.*;
 
 /**
  * This header is described in a draft RFC which has expired. HOwever it appears to be

@@ -28,11 +28,11 @@
  *******************************************************************************/
 package gov.nist.javax.sip.header;
 
-import gov.nist.core.HostPort;
-import gov.nist.javax.sip.address.AddressImpl;
-import gov.nist.javax.sip.parser.Parser;
+import co.ecg.jain_sip.core.ri.HostPort;
+import co.ecg.jain_sip.sip.ri.address.AddressImpl;
+import co.ecg.jain_sip.sip.ri.parser.Parser;
 
-import javax.sip.header.ToHeader;
+import co.ecg.jain_sip.sip.header.ToHeader;
 import java.text.ParseException;
 
 /**

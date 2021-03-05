@@ -28,47 +28,47 @@
  ******************************************************************************/
 package co.ecg.jain_sip.sip.ri;
 
-import gov.nist.core.CommonLogger;
-import gov.nist.core.HostPort;
-import gov.nist.core.InternalErrorHandler;
-import gov.nist.core.LogLevels;
-import gov.nist.core.LogWriter;
-import gov.nist.core.StackLogger;
-import gov.nist.javax.sip.address.SipUri;
-import gov.nist.javax.sip.header.Contact;
-import gov.nist.javax.sip.header.Event;
-import gov.nist.javax.sip.header.ReferTo;
-import gov.nist.javax.sip.header.RetryAfter;
-import gov.nist.javax.sip.header.Route;
-import gov.nist.javax.sip.header.RouteList;
-import gov.nist.javax.sip.message.MessageFactoryImpl;
-import gov.nist.javax.sip.message.SIPRequest;
-import gov.nist.javax.sip.message.SIPResponse;
-import gov.nist.javax.sip.stack.MessageChannel;
-import gov.nist.javax.sip.stack.SIPClientTransaction;
-import gov.nist.javax.sip.stack.SIPDialog;
-import gov.nist.javax.sip.stack.SIPServerTransaction;
-import gov.nist.javax.sip.stack.SIPTransaction;
-import gov.nist.javax.sip.stack.SIPTransactionStack;
-import gov.nist.javax.sip.stack.ServerRequestInterface;
-import gov.nist.javax.sip.stack.ServerResponseInterface;
+import co.ecg.jain_sip.core.ri.CommonLogger;
+import co.ecg.jain_sip.core.ri.HostPort;
+import co.ecg.jain_sip.core.ri.InternalErrorHandler;
+import co.ecg.jain_sip.core.ri.LogLevels;
+import co.ecg.jain_sip.core.ri.LogWriter;
+import co.ecg.jain_sip.core.ri.StackLogger;
+import co.ecg.jain_sip.sip.ri.address.SipUri;
+import co.ecg.jain_sip.sip.ri.header.Contact;
+import co.ecg.jain_sip.sip.ri.header.Event;
+import co.ecg.jain_sip.sip.ri.header.ReferTo;
+import co.ecg.jain_sip.sip.ri.header.RetryAfter;
+import co.ecg.jain_sip.sip.ri.header.Route;
+import co.ecg.jain_sip.sip.ri.header.RouteList;
+import co.ecg.jain_sip.sip.ri.message.MessageFactoryImpl;
+import co.ecg.jain_sip.sip.ri.message.SIPRequest;
+import co.ecg.jain_sip.sip.ri.message.SIPResponse;
+import co.ecg.jain_sip.sip.ri.stack.MessageChannel;
+import co.ecg.jain_sip.sip.ri.stack.SIPClientTransaction;
+import co.ecg.jain_sip.sip.ri.stack.SIPDialog;
+import co.ecg.jain_sip.sip.ri.stack.SIPServerTransaction;
+import co.ecg.jain_sip.sip.ri.stack.SIPTransaction;
+import co.ecg.jain_sip.sip.ri.stack.SIPTransactionStack;
+import co.ecg.jain_sip.sip.ri.stack.ServerRequestInterface;
+import co.ecg.jain_sip.sip.ri.stack.ServerResponseInterface;
 
 import java.io.IOException;
 
-import javax.sip.ClientTransaction;
-import javax.sip.DialogState;
-import javax.sip.ListeningPoint;
-import javax.sip.ObjectInUseException;
-import javax.sip.RequestEvent;
-import javax.sip.ServerTransaction;
-import javax.sip.SipException;
-import javax.sip.SipProvider;
-import javax.sip.TransactionState;
-import javax.sip.header.EventHeader;
-import javax.sip.header.ReferToHeader;
-import javax.sip.header.ServerHeader;
-import javax.sip.message.Request;
-import javax.sip.message.Response;
+import co.ecg.jain_sip.sip.ClientTransaction;
+import co.ecg.jain_sip.sip.DialogState;
+import co.ecg.jain_sip.sip.ListeningPoint;
+import co.ecg.jain_sip.sip.ObjectInUseException;
+import co.ecg.jain_sip.sip.RequestEvent;
+import co.ecg.jain_sip.sip.ServerTransaction;
+import co.ecg.jain_sip.sip.SipException;
+import co.ecg.jain_sip.sip.SipProvider;
+import co.ecg.jain_sip.sip.TransactionState;
+import co.ecg.jain_sip.sip.header.EventHeader;
+import co.ecg.jain_sip.sip.header.ReferToHeader;
+import co.ecg.jain_sip.sip.header.ServerHeader;
+import co.ecg.jain_sip.sip.message.Request;
+import co.ecg.jain_sip.sip.message.Response;
 
 /*
  * Bug fixes and Contributions by Lamine Brahimi, Andreas Bystrom, Bill Roome, John Martin, Daniel
@@ -132,7 +132,7 @@ class DialogFilter implements ServerRequestInterface, ServerResponseInterface {
                 transaction.sendResponse(sipResponse);
                 transaction.releaseSem();
             } catch (Exception ex) {
-                logger.logError(
+                log.error(
                         "Problem sending error response", ex);
                 transaction.releaseSem();
                 sipStack.removeTransaction(transaction);
@@ -168,7 +168,7 @@ class DialogFilter implements ServerRequestInterface, ServerResponseInterface {
                 transaction.sendResponse(sipResponse);
                 transaction.releaseSem();
             } catch (Exception ex) {
-                logger.logError(
+                log.error(
                         "Problem sending error response", ex);
                 transaction.releaseSem();
                 sipStack.removeTransaction(transaction);
@@ -203,7 +203,7 @@ class DialogFilter implements ServerRequestInterface, ServerResponseInterface {
                 transaction.sendResponse(sipResponse);
                 transaction.releaseSem();
             } catch (Exception ex) {
-                logger.logError(
+                log.error(
                         "Problem sending error response", ex);
                 transaction.releaseSem();
                 sipStack.removeTransaction(transaction);
@@ -236,7 +236,7 @@ class DialogFilter implements ServerRequestInterface, ServerResponseInterface {
                 transaction.sendResponse(sipResponse);
                 transaction.releaseSem();
             } catch (Exception ex) {
-                logger.logError(
+                log.error(
                         "Problem sending error response", ex);
                 transaction.releaseSem();
                 sipStack.removeTransaction(transaction);
@@ -268,7 +268,7 @@ class DialogFilter implements ServerRequestInterface, ServerResponseInterface {
                 transaction.sendResponse(sipResponse);
                 transaction.releaseSem();
             } catch (Exception ex) {
-                logger.logError(
+                log.error(
                         "Problem sending error response", ex);
                 transaction.releaseSem();
                 sipStack.removeTransaction(transaction);
@@ -308,7 +308,7 @@ class DialogFilter implements ServerRequestInterface, ServerResponseInterface {
                 transaction.sendResponse(sipResponse);
                 transaction.releaseSem();
             } catch (Exception ex) {
-                logger.logError("Problem sending response",
+                log.error("Problem sending response",
                         ex);
                 transaction.releaseSem();
                 sipStack.removeTransaction(transaction);
@@ -574,7 +574,7 @@ class DialogFilter implements ServerRequestInterface, ServerResponseInterface {
                                     .removeTransactionPendingAck(ackTransaction);
                         } catch (Exception ex) {
                             if (logger.isLoggingEnabled()) {
-                                logger.logError(
+                                log.error(
                                         "Problem terminating transaction", ex);
                             }
                         }
@@ -619,7 +619,7 @@ class DialogFilter implements ServerRequestInterface, ServerResponseInterface {
                                             .removeTransactionPendingAck(ackTransaction);
                                 } catch (Exception ex) {
                                     if (logger.isLoggingEnabled()) {
-                                        logger.logError(
+                                        log.error(
                                                 "Problem terminating transaction", ex);
                                     }
                                 }
@@ -728,7 +728,7 @@ class DialogFilter implements ServerRequestInterface, ServerResponseInterface {
                 try {
                     sipProvider.sendResponse(notExist);
                 } catch (SipException e) {
-                    logger.logError(
+                    log.error(
                             "error sending response", e);
                 }
                 if (transaction != null) {
@@ -1069,7 +1069,7 @@ class DialogFilter implements ServerRequestInterface, ServerResponseInterface {
                         transaction.terminate();
                     } catch (ObjectInUseException e) {
                         if (logger.isLoggingEnabled()) {
-                            logger.logError(
+                            log.error(
                                     "Unexpected exception", e);
                         }
                     }
@@ -1364,14 +1364,14 @@ class DialogFilter implements ServerRequestInterface, ServerResponseInterface {
         SipProviderImpl sipProvider = listeningPoint.getProvider();
         if (sipProvider == null) {
             if (logger.isLoggingEnabled()) {
-                logger.logError(
+                log.error(
                         "Dropping message:  no provider");
             }
             return;
         }
         if (sipProvider.getSipListener() == null) {
             if (logger.isLoggingEnabled()) {
-                logger.logError(
+                log.error(
                         "No listener -- dropping response!");
             }
             return;
@@ -1429,7 +1429,7 @@ class DialogFilter implements ServerRequestInterface, ServerResponseInterface {
                             return;
                         } catch (SipException ex) {
                             // What to do here ?? kill the dialog?
-                            logger.logError(
+                            log.error(
                                     "could not resend ack", ex);
                         }
                     }
@@ -1551,7 +1551,7 @@ class DialogFilter implements ServerRequestInterface, ServerResponseInterface {
         if (sipStack.checkBranchId()
                 && !Utils.getInstance().responseBelongsToUs(sipResponse)) {
             if (logger.isLoggingEnabled()) {
-                logger.logError(
+                log.error(
                         "Detected stray response -- dropping");
             }
             return;
@@ -1691,7 +1691,7 @@ class DialogFilter implements ServerRequestInterface, ServerResponseInterface {
                                             .getSeqNumber());
                             sipDialog.sendAck(ackRequest);
                         } catch (Exception ex) {
-                            logger.logError(
+                            log.error(
                                     "Error creating ack", ex);
                         }
                     }

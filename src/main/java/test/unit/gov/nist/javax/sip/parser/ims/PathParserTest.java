@@ -24,7 +24,7 @@
 
 package test.unit.gov.nist.javax.sip.parser.ims;
 
-import gov.nist.javax.sip.parser.ims.PathParser;
+import co.ecg.jain_sip.sip.ri.parser.ims.PathParser;
 import test.unit.gov.nist.javax.sip.parser.ParserTestCase;
 
 public class PathParserTest extends ParserTestCase

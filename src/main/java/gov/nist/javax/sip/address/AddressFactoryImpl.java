@@ -25,12 +25,12 @@
 */
 package gov.nist.javax.sip.address;
 
-import gov.nist.javax.sip.parser.*;
+import co.ecg.jain_sip.sip.ri.parser.*;
 
 import java.text.ParseException;
 import java.util.regex.Pattern;
 
-import javax.sip.address.*;
+import co.ecg.jain_sip.sip.address.*;
 
 /**
  * Implementation of the JAIN-SIP address factory.

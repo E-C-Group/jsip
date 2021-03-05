@@ -29,15 +29,15 @@
 package gov.nist.javax.sip.message;
 
 import java.text.ParseException;
-import javax.sip.header.*;
+import co.ecg.jain_sip.sip.header.*;
 
 import java.util.LinkedList;
 import java.util.List;
-import gov.nist.javax.sip.header.*;
+import co.ecg.jain_sip.sip.ri.header.*;
 
-import javax.sip.message.*;
-import javax.sip.address.*;
-import gov.nist.javax.sip.parser.*;
+import co.ecg.jain_sip.sip.message.*;
+import co.ecg.jain_sip.sip.address.*;
+import co.ecg.jain_sip.sip.ri.parser.*;
 
 /**
  * Message Factory implementation

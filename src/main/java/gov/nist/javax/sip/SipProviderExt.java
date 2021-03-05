@@ -1,7 +1,7 @@
 package gov.nist.javax.sip;
 
-import javax.sip.SipProvider;
-import javax.sip.SipStack;
+import co.ecg.jain_sip.sip.SipProvider;
+import co.ecg.jain_sip.sip.SipStack;
 
 /**
  * Extensions to SipProvider under consideration for Version 2.0.

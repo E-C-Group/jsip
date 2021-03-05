@@ -33,14 +33,14 @@ import java.text.ParseException;
 
 import co.ecg.jain_sip.sip.InvalidArgumentException;
 
-import gov.nist.javax.sip.header.ims.PMediaAuthorizationList;
-import gov.nist.javax.sip.header.ims.PMediaAuthorization;
-import gov.nist.javax.sip.header.ims.SIPHeaderNamesIms;
-import gov.nist.core.Token;
-import gov.nist.javax.sip.header.SIPHeader;
-import gov.nist.javax.sip.parser.HeaderParser;
-import gov.nist.javax.sip.parser.Lexer;
-import gov.nist.javax.sip.parser.TokenTypes;
+import co.ecg.jain_sip.sip.ri.header.ims.PMediaAuthorizationList;
+import co.ecg.jain_sip.sip.ri.header.ims.PMediaAuthorization;
+import co.ecg.jain_sip.sip.ri.header.ims.SIPHeaderNamesIms;
+import co.ecg.jain_sip.core.ri.Token;
+import co.ecg.jain_sip.sip.ri.header.SIPHeader;
+import co.ecg.jain_sip.sip.ri.parser.HeaderParser;
+import co.ecg.jain_sip.sip.ri.parser.Lexer;
+import co.ecg.jain_sip.sip.ri.parser.TokenTypes;
 
 
 /**

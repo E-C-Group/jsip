@@ -28,8 +28,8 @@
  *******************************************************************************/
 package gov.nist.javax.sip.header;
 
-import javax.sip.InvalidArgumentException;
-import javax.sip.header.SubscriptionStateHeader;
+import co.ecg.jain_sip.sip.InvalidArgumentException;
+import co.ecg.jain_sip.sip.header.SubscriptionStateHeader;
 import java.text.ParseException;
 
 /**

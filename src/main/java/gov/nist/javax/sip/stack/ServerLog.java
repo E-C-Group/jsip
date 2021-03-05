@@ -29,13 +29,13 @@
 
 package gov.nist.javax.sip.stack;
 
-import gov.nist.core.CommonLogger;
-import gov.nist.core.LogWriter;
-import gov.nist.core.ServerLogger;
-import gov.nist.core.StackLogger;
-import gov.nist.javax.sip.LogRecord;
-import gov.nist.javax.sip.header.CallID;
-import gov.nist.javax.sip.message.SIPMessage;
+import co.ecg.jain_sip.core.ri.CommonLogger;
+import co.ecg.jain_sip.core.ri.LogWriter;
+import co.ecg.jain_sip.core.ri.ServerLogger;
+import co.ecg.jain_sip.core.ri.StackLogger;
+import co.ecg.jain_sip.sip.ri.LogRecord;
+import co.ecg.jain_sip.sip.ri.header.CallID;
+import co.ecg.jain_sip.sip.ri.message.SIPMessage;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -43,8 +43,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Properties;
 
-import javax.sip.SipStack;
-import javax.sip.header.TimeStampHeader;
+import co.ecg.jain_sip.sip.SipStack;
+import co.ecg.jain_sip.sip.header.TimeStampHeader;
 
 /**
  * Log file wrapper class. Log messages into the message trace file and also write the log into

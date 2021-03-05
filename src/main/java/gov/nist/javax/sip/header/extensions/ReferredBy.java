@@ -7,10 +7,10 @@ package gov.nist.javax.sip.header.extensions;
 
 import java.text.ParseException;
 
-import javax.sip.header.ExtensionHeader;
-import gov.nist.javax.sip.header.*;
+import co.ecg.jain_sip.sip.header.ExtensionHeader;
+import co.ecg.jain_sip.sip.ri.header.*;
 
-import gov.nist.javax.sip.address.*;
+import co.ecg.jain_sip.sip.ri.address.*;
 /*
 * This code has been contributed by the author to the public domain.
 */

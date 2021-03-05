@@ -15,8 +15,8 @@
  */
 package co.ecg.jain_sip.sip.ri;
 
-import javax.sip.Dialog;
-import javax.sip.SipListener;
+import co.ecg.jain_sip.sip.Dialog;
+import co.ecg.jain_sip.sip.SipListener;
 
 /**
  * This interface extends the {@link SipListener} interface and adds the following events to it :

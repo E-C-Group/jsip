@@ -25,11 +25,11 @@
 */
 package gov.nist.javax.sip.stack.timers;
 
-import gov.nist.core.CommonLogger;
-import gov.nist.core.StackLogger;
-import gov.nist.javax.sip.SipStackImpl;
-import gov.nist.javax.sip.stack.SIPStackTimerTask;
-import gov.nist.javax.sip.stack.SIPTransactionStack;
+import co.ecg.jain_sip.core.ri.CommonLogger;
+import co.ecg.jain_sip.core.ri.StackLogger;
+import co.ecg.jain_sip.sip.ri.SipStackImpl;
+import co.ecg.jain_sip.sip.ri.stack.SIPStackTimerTask;
+import co.ecg.jain_sip.sip.ri.stack.SIPTransactionStack;
 
 import java.util.Properties;
 import java.util.Timer;

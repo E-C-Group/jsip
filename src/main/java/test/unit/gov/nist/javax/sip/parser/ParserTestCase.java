@@ -24,9 +24,9 @@
  */
 package test.unit.gov.nist.javax.sip.parser;
 
-import gov.nist.javax.sip.header.SIPHeader;
-import gov.nist.javax.sip.header.SIPHeaderList;
-import gov.nist.javax.sip.parser.HeaderParser;
+import co.ecg.jain_sip.sip.ri.header.SIPHeader;
+import co.ecg.jain_sip.sip.ri.header.SIPHeaderList;
+import co.ecg.jain_sip.sip.ri.parser.HeaderParser;
 
 import java.lang.reflect.Constructor;
 

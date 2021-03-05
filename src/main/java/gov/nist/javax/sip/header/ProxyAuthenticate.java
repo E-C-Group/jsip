@@ -28,8 +28,8 @@
 *******************************************************************************/
 package gov.nist.javax.sip.header;
 
-import javax.sip.address.URI;
-import javax.sip.header.*;
+import co.ecg.jain_sip.sip.address.URI;
+import co.ecg.jain_sip.sip.header.*;
 /**
  * Proxy Authenticate SIP (HTTP ) header.
  *

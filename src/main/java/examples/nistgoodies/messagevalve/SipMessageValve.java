@@ -1,27 +1,27 @@
 package examples.nistgoodies.messagevalve;
 
 import examples.nistgoodies.threadaudit.ThreadAudit;
-import gov.nist.javax.sip.SipStackImpl;
-import gov.nist.javax.sip.message.SIPRequest;
-import gov.nist.javax.sip.stack.MessageChannel;
-import gov.nist.javax.sip.stack.SIPMessageValve;
-import gov.nist.javax.sip.stack.SIPTransactionStack;
+import co.ecg.jain_sip.sip.ri.SipStackImpl;
+import co.ecg.jain_sip.sip.ri.message.SIPRequest;
+import co.ecg.jain_sip.sip.ri.stack.MessageChannel;
+import co.ecg.jain_sip.sip.ri.stack.SIPMessageValve;
+import co.ecg.jain_sip.sip.ri.stack.SIPTransactionStack;
 
 import java.io.IOException;
 import java.util.Properties;
 
-import javax.sip.DialogTerminatedEvent;
-import javax.sip.IOExceptionEvent;
-import javax.sip.ListeningPoint;
-import javax.sip.PeerUnavailableException;
-import javax.sip.RequestEvent;
-import javax.sip.ResponseEvent;
-import javax.sip.SipFactory;
-import javax.sip.SipListener;
-import javax.sip.SipProvider;
-import javax.sip.SipStack;
-import javax.sip.TransactionTerminatedEvent;
-import javax.sip.message.Response;
+import co.ecg.jain_sip.sip.DialogTerminatedEvent;
+import co.ecg.jain_sip.sip.IOExceptionEvent;
+import co.ecg.jain_sip.sip.ListeningPoint;
+import co.ecg.jain_sip.sip.PeerUnavailableException;
+import co.ecg.jain_sip.sip.RequestEvent;
+import co.ecg.jain_sip.sip.ResponseEvent;
+import co.ecg.jain_sip.sip.SipFactory;
+import co.ecg.jain_sip.sip.SipListener;
+import co.ecg.jain_sip.sip.SipProvider;
+import co.ecg.jain_sip.sip.SipStack;
+import co.ecg.jain_sip.sip.TransactionTerminatedEvent;
+import co.ecg.jain_sip.sip.message.Response;
 
 
 public class SipMessageValve implements SIPMessageValve {

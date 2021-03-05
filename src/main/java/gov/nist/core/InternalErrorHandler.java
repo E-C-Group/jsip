@@ -50,7 +50,7 @@ public class InternalErrorHandler {
     */
     public static void handleException(Exception ex, StackLogger stackLogger) {
         System.err.println ("Unexpected internal error  "  + ex.getMessage());
-        stackLogger.logError("UNEXPECTED INTERNAL ERROR " +  ex.getMessage());
+        stacklog.error("UNEXPECTED INTERNAL ERROR " +  ex.getMessage());
         ex.printStackTrace();
         stackLogger.logException(ex);
         throw new RuntimeException("Unexpected internal error !! "  + ex.getMessage(), ex);
@@ -70,7 +70,7 @@ public class InternalErrorHandler {
 
     public static void handleException(String emsg, StackLogger stackLogger) {
         stackLogger.logStackTrace();
-        stackLogger.logError("Unexepcted INTERNAL ERROR !!");
+        stacklog.error("Unexepcted INTERNAL ERROR !!");
         stackLogger.logFatalError(emsg);
         throw new RuntimeException(emsg);
 

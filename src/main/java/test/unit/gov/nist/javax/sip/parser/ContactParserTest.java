@@ -24,15 +24,15 @@
  */
 package test.unit.gov.nist.javax.sip.parser;
 
-import gov.nist.javax.sip.header.ContactList;
-import gov.nist.javax.sip.header.ParametersExt;
-import gov.nist.javax.sip.header.SIPHeader;
-import gov.nist.javax.sip.parser.ContactParser;
-import gov.nist.javax.sip.parser.HeaderParser;
+import co.ecg.jain_sip.sip.ri.header.ContactList;
+import co.ecg.jain_sip.sip.ri.header.ParametersExt;
+import co.ecg.jain_sip.sip.ri.header.SIPHeader;
+import co.ecg.jain_sip.sip.ri.parser.ContactParser;
+import co.ecg.jain_sip.sip.ri.parser.HeaderParser;
 
 import java.text.ParseException;
 
-import javax.sip.header.Parameters;
+import co.ecg.jain_sip.sip.header.Parameters;
 
 /**
  * Test case for contact parser

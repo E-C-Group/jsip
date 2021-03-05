@@ -25,7 +25,7 @@
  */
 package gov.nist.javax.sip.stack;
 
-import gov.nist.core.NamingThreadFactory;
+import co.ecg.jain_sip.core.ri.NamingThreadFactory;
 
 import java.util.Enumeration;
 import java.util.LinkedList;

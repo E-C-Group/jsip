@@ -21,16 +21,16 @@ package test.tck.msgflow;
 
 import java.util.TooManyListenersException;
 
-import javax.sip.ClientTransaction;
-import javax.sip.RequestEvent;
-import javax.sip.ServerTransaction;
-import javax.sip.SipException;
-import javax.sip.Timeout;
-import javax.sip.TimeoutEvent;
-import javax.sip.header.ContactHeader;
-import javax.sip.header.ToHeader;
-import javax.sip.message.Request;
-import javax.sip.message.Response;
+import co.ecg.jain_sip.sip.ClientTransaction;
+import co.ecg.jain_sip.sip.RequestEvent;
+import co.ecg.jain_sip.sip.ServerTransaction;
+import co.ecg.jain_sip.sip.SipException;
+import co.ecg.jain_sip.sip.Timeout;
+import co.ecg.jain_sip.sip.TimeoutEvent;
+import co.ecg.jain_sip.sip.header.ContactHeader;
+import co.ecg.jain_sip.sip.header.ToHeader;
+import co.ecg.jain_sip.sip.message.Request;
+import co.ecg.jain_sip.sip.message.Response;
 
 import org.apache.log4j.Logger;
 

@@ -29,7 +29,7 @@
 package gov.nist.javax.sip.header;
 
 import java.util.*;
-import javax.sip.header.*;
+import co.ecg.jain_sip.sip.header.*;
 
 /**
 * Date Header.

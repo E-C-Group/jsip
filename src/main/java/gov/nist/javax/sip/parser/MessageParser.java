@@ -25,7 +25,7 @@ package gov.nist.javax.sip.parser;
 
 import java.text.ParseException;
 
-import gov.nist.javax.sip.message.SIPMessage;
+import co.ecg.jain_sip.sip.ri.message.SIPMessage;
 
 
 /**

@@ -4,14 +4,14 @@ import java.util.EventObject;
 import java.util.HashSet;
 import java.util.Hashtable;
 
-import javax.sip.DialogTerminatedEvent;
-import javax.sip.IOExceptionEvent;
-import javax.sip.RequestEvent;
-import javax.sip.ResponseEvent;
-import javax.sip.SipListener;
-import javax.sip.SipProvider;
-import javax.sip.TimeoutEvent;
-import javax.sip.TransactionTerminatedEvent;
+import co.ecg.jain_sip.sip.DialogTerminatedEvent;
+import co.ecg.jain_sip.sip.IOExceptionEvent;
+import co.ecg.jain_sip.sip.RequestEvent;
+import co.ecg.jain_sip.sip.ResponseEvent;
+import co.ecg.jain_sip.sip.SipListener;
+import co.ecg.jain_sip.sip.SipProvider;
+import co.ecg.jain_sip.sip.TimeoutEvent;
+import co.ecg.jain_sip.sip.TransactionTerminatedEvent;
 
 import test.tck.TckInternalError;
 import test.tck.TestHarness;

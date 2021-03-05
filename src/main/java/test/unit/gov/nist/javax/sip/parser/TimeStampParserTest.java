@@ -19,7 +19,7 @@
 */
 package test.unit.gov.nist.javax.sip.parser;
 
-import gov.nist.javax.sip.parser.TimeStampParser;
+import co.ecg.jain_sip.sip.ri.parser.TimeStampParser;
 import test.unit.gov.nist.javax.sip.parser.ParserTestCase;
 public class TimeStampParserTest extends ParserTestCase {
 

@@ -28,7 +28,7 @@
 *******************************************************************************/
 package gov.nist.javax.sip.header;
 
-import gov.nist.core.*;
+import co.ecg.jain_sip.core.ri.*;
 
 /**
  * Challenge part of the Auth header. This is only used by the parser interface

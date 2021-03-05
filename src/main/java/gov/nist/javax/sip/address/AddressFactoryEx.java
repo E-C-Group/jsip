@@ -19,7 +19,7 @@ package gov.nist.javax.sip.address;
 
 import java.text.ParseException;
 
-import javax.sip.address.AddressFactory;
+import co.ecg.jain_sip.sip.address.AddressFactory;
 
 /**
  * This interface is extension to {@link javax.sip.address.AddressFactory}. It

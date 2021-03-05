@@ -29,27 +29,27 @@
 
 package co.ecg.jain_sip.sip.ri.stack;
 
-import gov.nist.core.CommonLogger;
-import gov.nist.core.InternalErrorHandler;
-import gov.nist.core.LogLevels;
-import gov.nist.core.LogWriter;
-import gov.nist.core.ServerLogger;
-import gov.nist.core.StackLogger;
-import gov.nist.core.ThreadAuditor;
-import gov.nist.javax.sip.SIPConstants;
-import gov.nist.javax.sip.header.CSeq;
-import gov.nist.javax.sip.header.CallID;
-import gov.nist.javax.sip.header.ContentLength;
-import gov.nist.javax.sip.header.From;
-import gov.nist.javax.sip.header.RequestLine;
-import gov.nist.javax.sip.header.StatusLine;
-import gov.nist.javax.sip.header.To;
-import gov.nist.javax.sip.header.Via;
-import gov.nist.javax.sip.message.SIPMessage;
-import gov.nist.javax.sip.message.SIPRequest;
-import gov.nist.javax.sip.message.SIPResponse;
-import gov.nist.javax.sip.parser.MessageParser;
-import gov.nist.javax.sip.parser.ParseExceptionListener;
+import co.ecg.jain_sip.core.ri.CommonLogger;
+import co.ecg.jain_sip.core.ri.InternalErrorHandler;
+import co.ecg.jain_sip.core.ri.LogLevels;
+import co.ecg.jain_sip.core.ri.LogWriter;
+import co.ecg.jain_sip.core.ri.ServerLogger;
+import co.ecg.jain_sip.core.ri.StackLogger;
+import co.ecg.jain_sip.core.ri.ThreadAuditor;
+import co.ecg.jain_sip.sip.ri.SIPConstants;
+import co.ecg.jain_sip.sip.ri.header.CSeq;
+import co.ecg.jain_sip.sip.ri.header.CallID;
+import co.ecg.jain_sip.sip.ri.header.ContentLength;
+import co.ecg.jain_sip.sip.ri.header.From;
+import co.ecg.jain_sip.sip.ri.header.RequestLine;
+import co.ecg.jain_sip.sip.ri.header.StatusLine;
+import co.ecg.jain_sip.sip.ri.header.To;
+import co.ecg.jain_sip.sip.ri.header.Via;
+import co.ecg.jain_sip.sip.ri.message.SIPMessage;
+import co.ecg.jain_sip.sip.ri.message.SIPRequest;
+import co.ecg.jain_sip.sip.ri.message.SIPResponse;
+import co.ecg.jain_sip.sip.ri.parser.MessageParser;
+import co.ecg.jain_sip.sip.ri.parser.ParseExceptionListener;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -62,8 +62,8 @@ import java.util.Arrays;
 import java.util.Hashtable;
 import java.util.concurrent.TimeUnit;
 
-import javax.sip.address.Hop;
-import javax.sip.message.Response;
+import co.ecg.jain_sip.sip.address.Hop;
+import co.ecg.jain_sip.sip.message.Response;
 
 /*
  * Kim Kirby (Keyvoice) suggested that duplicate checking should be added to the
@@ -317,7 +317,7 @@ public class UDPMessageChannel extends MessageChannel implements
                 processIncomingDataPacket(packet);
             } catch (Exception e) {
 
-                logger.logError(
+                log.error(
                         "Error while processing incoming UDP packet" + Arrays.toString(packet.getData()), e);
             }
 
@@ -454,7 +454,7 @@ public class UDPMessageChannel extends MessageChannel implements
             if (logger.isLoggingEnabled()) {
                 this.logger
                         .logError("bad message " + badmsg);
-                this.logger.logError(
+                this.log.error(
                         ">>> Dropped Bad Msg " + "From = "
                                 + sipMessage.getFrom() + "To = "
                                 + sipMessage.getTo() + "CallId = "
@@ -587,7 +587,7 @@ public class UDPMessageChannel extends MessageChannel implements
                 sipResponse.checkHeaders();
             } catch (ParseException ex) {
                 if (logger.isLoggingEnabled())
-                    logger.logError(
+                    log.error(
                             "Dropping Badly formatted response message >>> "
                                     + sipResponse);
                 return;
@@ -600,7 +600,7 @@ public class UDPMessageChannel extends MessageChannel implements
                             && !((SIPClientTransaction) sipServerResponse)
                                     .checkFromTag(sipResponse)) {
                         if (logger.isLoggingEnabled())
-                            logger.logError(
+                            log.error(
                                     "Dropping response message with invalid tag >>> "
                                             + sipResponse);
                         return;
@@ -664,8 +664,8 @@ public class UDPMessageChannel extends MessageChannel implements
                         || hdrClass.equals(RequestLine.class) || hdrClass
                         .equals(StatusLine.class))) {
             if (logger.isLoggingEnabled()) {
-                logger.logError("BAD MESSAGE!");
-                logger.logError(message);
+                log.error("BAD MESSAGE!");
+                log.error(message);
             }
             throw ex;
         } else {
@@ -757,7 +757,7 @@ public class UDPMessageChannel extends MessageChannel implements
         } catch (IOException ex) {
             throw ex;
         } catch (Exception ex) {
-            logger.logError(
+            log.error(
                     "An exception occured while sending message", ex);
             throw new IOException("An exception occured while sending message");
         } finally {

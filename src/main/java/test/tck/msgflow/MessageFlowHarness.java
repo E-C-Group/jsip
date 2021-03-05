@@ -19,32 +19,32 @@
 */
 package test.tck.msgflow;
 
-import gov.nist.javax.sip.stack.SIPTransactionStack;
+import co.ecg.jain_sip.sip.ri.stack.SIPTransactionStack;
 
 import java.text.ParseException;
 import java.util.LinkedList;
 import java.util.List;
 
-import javax.sip.ListeningPoint;
-import javax.sip.ObjectInUseException;
-import javax.sip.SipProvider;
-import javax.sip.SipStack;
-import javax.sip.address.Address;
-import javax.sip.address.AddressFactory;
-import javax.sip.address.SipURI;
-import javax.sip.header.CSeqHeader;
-import javax.sip.header.CallIdHeader;
-import javax.sip.header.ContactHeader;
-import javax.sip.header.ContentTypeHeader;
-import javax.sip.header.FromHeader;
-import javax.sip.header.Header;
-import javax.sip.header.HeaderFactory;
-import javax.sip.header.MaxForwardsHeader;
-import javax.sip.header.ToHeader;
-import javax.sip.header.ViaHeader;
-import javax.sip.message.MessageFactory;
-import javax.sip.message.Request;
-import javax.sip.message.Response;
+import co.ecg.jain_sip.sip.ListeningPoint;
+import co.ecg.jain_sip.sip.ObjectInUseException;
+import co.ecg.jain_sip.sip.SipProvider;
+import co.ecg.jain_sip.sip.SipStack;
+import co.ecg.jain_sip.sip.address.Address;
+import co.ecg.jain_sip.sip.address.AddressFactory;
+import co.ecg.jain_sip.sip.address.SipURI;
+import co.ecg.jain_sip.sip.header.CSeqHeader;
+import co.ecg.jain_sip.sip.header.CallIdHeader;
+import co.ecg.jain_sip.sip.header.ContactHeader;
+import co.ecg.jain_sip.sip.header.ContentTypeHeader;
+import co.ecg.jain_sip.sip.header.FromHeader;
+import co.ecg.jain_sip.sip.header.Header;
+import co.ecg.jain_sip.sip.header.HeaderFactory;
+import co.ecg.jain_sip.sip.header.MaxForwardsHeader;
+import co.ecg.jain_sip.sip.header.ToHeader;
+import co.ecg.jain_sip.sip.header.ViaHeader;
+import co.ecg.jain_sip.sip.message.MessageFactory;
+import co.ecg.jain_sip.sip.message.Request;
+import co.ecg.jain_sip.sip.message.Response;
 
 import test.tck.TckInternalError;
 import test.tck.TestHarness;

@@ -23,7 +23,7 @@
 */
 package gov.nist.javax.sip.header;
 
-import gov.nist.core.*;
+import co.ecg.jain_sip.core.ri.*;
 import java.text.ParseException;
 
 /**

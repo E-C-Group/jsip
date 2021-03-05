@@ -17,14 +17,14 @@ package gov.nist.javax.sip.clientauthutils;
  * proposed a way to fix them (his proposition was taken into account).
  */
 
-import gov.nist.core.CommonLogger;
-import gov.nist.core.LogWriter;
-import gov.nist.core.StackLogger;
-import gov.nist.javax.sip.address.SipUri;
-import gov.nist.javax.sip.header.SIPHeader;
-import gov.nist.javax.sip.message.SIPRequest;
-import gov.nist.javax.sip.stack.SIPClientTransaction;
-import gov.nist.javax.sip.stack.SIPTransactionStack;
+import co.ecg.jain_sip.core.ri.CommonLogger;
+import co.ecg.jain_sip.core.ri.LogWriter;
+import co.ecg.jain_sip.core.ri.StackLogger;
+import co.ecg.jain_sip.sip.ri.address.SipUri;
+import co.ecg.jain_sip.sip.ri.header.SIPHeader;
+import co.ecg.jain_sip.sip.ri.message.SIPRequest;
+import co.ecg.jain_sip.sip.ri.stack.SIPClientTransaction;
+import co.ecg.jain_sip.sip.ri.stack.SIPTransactionStack;
 
 import java.text.ParseException;
 import java.util.Collection;
@@ -32,24 +32,24 @@ import java.util.Iterator;
 import java.util.ListIterator;
 import java.util.Timer;
 
-import javax.sip.ClientTransaction;
-import javax.sip.DialogState;
-import javax.sip.InvalidArgumentException;
-import javax.sip.SipException;
-import javax.sip.SipProvider;
-import javax.sip.address.Hop;
-import javax.sip.address.SipURI;
-import javax.sip.address.URI;
-import javax.sip.header.AuthorizationHeader;
-import javax.sip.header.CSeqHeader;
-import javax.sip.header.Header;
-import javax.sip.header.HeaderFactory;
-import javax.sip.header.ProxyAuthenticateHeader;
-import javax.sip.header.ProxyAuthorizationHeader;
-import javax.sip.header.ViaHeader;
-import javax.sip.header.WWWAuthenticateHeader;
-import javax.sip.message.Request;
-import javax.sip.message.Response;
+import co.ecg.jain_sip.sip.ClientTransaction;
+import co.ecg.jain_sip.sip.DialogState;
+import co.ecg.jain_sip.sip.InvalidArgumentException;
+import co.ecg.jain_sip.sip.SipException;
+import co.ecg.jain_sip.sip.SipProvider;
+import co.ecg.jain_sip.sip.address.Hop;
+import co.ecg.jain_sip.sip.address.SipURI;
+import co.ecg.jain_sip.sip.address.URI;
+import co.ecg.jain_sip.sip.header.AuthorizationHeader;
+import co.ecg.jain_sip.sip.header.CSeqHeader;
+import co.ecg.jain_sip.sip.header.Header;
+import co.ecg.jain_sip.sip.header.HeaderFactory;
+import co.ecg.jain_sip.sip.header.ProxyAuthenticateHeader;
+import co.ecg.jain_sip.sip.header.ProxyAuthorizationHeader;
+import co.ecg.jain_sip.sip.header.ViaHeader;
+import co.ecg.jain_sip.sip.header.WWWAuthenticateHeader;
+import co.ecg.jain_sip.sip.message.Request;
+import co.ecg.jain_sip.sip.message.Response;
 
 /**
  * The class handles authentication challenges, caches user credentials and takes care (through
@@ -294,7 +294,7 @@ public class AuthenticationHelperImpl implements AuthenticationHelper {
         } catch (SipException ex) {
             throw ex;
         } catch (Exception ex) {
-            logger.logError("Unexpected exception ", ex);
+            log.error("Unexpected exception ", ex);
             throw new SipException("Unexpected exception ", ex);
         }
     }

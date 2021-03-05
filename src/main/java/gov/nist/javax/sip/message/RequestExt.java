@@ -1,6 +1,6 @@
 package gov.nist.javax.sip.message;
 
-import javax.sip.message.Request;
+import co.ecg.jain_sip.sip.message.Request;
 
 /**
  * Extensions for the JAIN-SIP Request interface.

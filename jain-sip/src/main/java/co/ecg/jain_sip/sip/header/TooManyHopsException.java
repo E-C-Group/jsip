@@ -3,25 +3,25 @@
  * Unpublished - rights reserved under the Copyright Laws of the United States.
  * Copyright (C) 2003 Sun Microsystems, Inc. All rights reserved.
  * Copyright (C) 2005 BEA Systems, Inc. All rights reserved.
- *
+ * <p>
  * Use is subject to license terms.
- *
- * This distribution may include materials developed by third parties. 
- *
+ * <p>
+ * This distribution may include materials developed by third parties.
+ * <p>
  * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- *
+ * <p>
  * Module Name   : JSIP Specification
  * File Name     : TooManyHopsException.java
  * Author        : Phelim O'Doherty
- *
- *  HISTORY
- *  Version   Date      Author              Comments
- *  1.1     20/12/2002  Phelim O'Doherty    Initial version
- *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ * <p>
+ * HISTORY
+ * Version   Date      Author              Comments
+ * 1.1     20/12/2002  Phelim O'Doherty    Initial version
+ * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  */
 package co.ecg.jain_sip.sip.header;
 
-import javax.sip.SipException;
+import co.ecg.jain_sip.sip.SipException;
 
 /**
  * This Exception is thrown when a user attempts decrement the Hop count when
@@ -35,7 +35,7 @@ public class TooManyHopsException extends SipException {
     /**
      * Constructs a new <code>TooManyHopsException</code>
      */
-    public TooManyHopsException(){
+    public TooManyHopsException() {
         super();
     }
 
@@ -50,13 +50,13 @@ public class TooManyHopsException extends SipException {
     }
 
     /**
-    * Constructs a new <code>TooManyHopsException</code> with the
-    * specified error message and specialized cause that triggered this error
-    * condition.
-    *
-    * @param  message the detail of the error message
-    * @param  cause  the specialized cause that triggered this exception
-    */
+     * Constructs a new <code>TooManyHopsException</code> with the
+     * specified error message and specialized cause that triggered this error
+     * condition.
+     *
+     * @param  message the detail of the error message
+     * @param  cause  the specialized cause that triggered this exception
+     */
     public TooManyHopsException(String message, Throwable cause) {
         super(message, cause);
     }

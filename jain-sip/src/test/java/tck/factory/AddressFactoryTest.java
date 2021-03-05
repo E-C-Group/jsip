@@ -1,7 +1,7 @@
 package test.tck.factory;
 import java.text.ParseException;
 
-import javax.sip.address.*;
+import co.ecg.jain_sip.sip.address.*;
 
 import junit.framework.*;
 import test.tck.*;

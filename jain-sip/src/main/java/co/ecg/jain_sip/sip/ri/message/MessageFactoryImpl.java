@@ -28,13 +28,19 @@
  *******************************************************************************/
 package co.ecg.jain_sip.sip.ri.message;
 
+import co.ecg.jain_sip.sip.address.URI;
+import co.ecg.jain_sip.sip.header.*;
+import co.ecg.jain_sip.sip.message.MessageFactory;
+import co.ecg.jain_sip.sip.message.Request;
+import co.ecg.jain_sip.sip.message.Response;
+import co.ecg.jain_sip.sip.ri.header.ContentType;
+import co.ecg.jain_sip.sip.ri.header.StatusLine;
+
 import java.text.ParseException;
-import javax.sip.header.*;
 
 import java.util.List;
 
-import javax.sip.message.*;
-import javax.sip.address.*;
+
 
 /**
  * Message Factory implementation
@@ -281,9 +287,9 @@ public class MessageFactoryImpl implements MessageFactory, MessageFactoryExt {
      *             while parsing the statusCode or the body.
      */
     public Response createResponse(int statusCode, CallIdHeader callId,
-            CSeqHeader cSeq, FromHeader from, ToHeader to, List via,
-            MaxForwardsHeader maxForwards, Object content,
-            ContentTypeHeader contentType) throws ParseException {
+                                   CSeqHeader cSeq, FromHeader from, ToHeader to, List via,
+                                   MaxForwardsHeader maxForwards, Object content,
+                                   ContentTypeHeader contentType) throws ParseException {
         if (callId == null || cSeq == null || from == null || to == null
                 || via == null || maxForwards == null || content == null
                 || contentType == null)

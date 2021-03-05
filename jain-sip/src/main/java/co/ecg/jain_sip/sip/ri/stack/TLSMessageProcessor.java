@@ -40,11 +40,11 @@
  ******************************************************************************/
 package co.ecg.jain_sip.sip.ri.stack;
 
-import gov.nist.core.CommonLogger;
-import gov.nist.core.HostPort;
-import gov.nist.core.LogWriter;
-import gov.nist.core.StackLogger;
-import gov.nist.javax.sip.SipStackImpl;
+import co.ecg.jain_sip.core.ri.CommonLogger;
+import co.ecg.jain_sip.core.ri.HostPort;
+import co.ecg.jain_sip.core.ri.LogWriter;
+import co.ecg.jain_sip.core.ri.StackLogger;
+import co.ecg.jain_sip.sip.ri.SipStackImpl;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -169,22 +169,22 @@ public class TLSMessageProcessor extends ConnectionOrientedMessageProcessor impl
 
             } catch (SocketException ex) {
                 if ( this.isRunning ) {
-                  logger.logError(
+                  log.error(
                     "Fatal - SocketException occured while Accepting connection", ex);
                   	this.isRunning = false;
                   	break;
                 }
             } catch (SSLException ex) {
                 this.isRunning = false;
-                logger.logError(
+                log.error(
                         "Fatal - SSSLException occured while Accepting connection", ex);
                 break;
             } catch (IOException ex) {
                 // Problem accepting connection.
-                logger.logError("Problem Accepting Connection", ex);
+                log.error("Problem Accepting Connection", ex);
 				continue;
             } catch (Exception ex) {
-                logger.logError("Unexpected Exception!", ex);
+                log.error("Unexpected Exception!", ex);
                 continue;
             }
             
@@ -202,7 +202,7 @@ public class TLSMessageProcessor extends ConnectionOrientedMessageProcessor impl
 		                incomingMessageChannels.put(newChannel.getKey(), newChannel);
 		            }
 	            } catch (Exception ex) {
-	                logger.logError("A problem occured while Accepting connection", ex);
+	                log.error("A problem occured while Accepting connection", ex);
 	            }
             }
         }

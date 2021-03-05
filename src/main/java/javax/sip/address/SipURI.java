@@ -22,9 +22,9 @@
 package javax.sip.address;
 
 import java.util.Iterator;
-import javax.sip.header.Parameters;
+import co.ecg.jain_sip.sip.header.Parameters;
 import java.text.ParseException;
-import javax.sip.InvalidArgumentException;
+import co.ecg.jain_sip.sip.InvalidArgumentException;
 
 
 /**

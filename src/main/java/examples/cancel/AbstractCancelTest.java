@@ -8,14 +8,14 @@ import java.util.Hashtable;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import javax.sip.DialogTerminatedEvent;
-import javax.sip.IOExceptionEvent;
-import javax.sip.RequestEvent;
-import javax.sip.ResponseEvent;
-import javax.sip.SipListener;
-import javax.sip.SipProvider;
-import javax.sip.TimeoutEvent;
-import javax.sip.TransactionTerminatedEvent;
+import co.ecg.jain_sip.sip.DialogTerminatedEvent;
+import co.ecg.jain_sip.sip.IOExceptionEvent;
+import co.ecg.jain_sip.sip.RequestEvent;
+import co.ecg.jain_sip.sip.ResponseEvent;
+import co.ecg.jain_sip.sip.SipListener;
+import co.ecg.jain_sip.sip.SipProvider;
+import co.ecg.jain_sip.sip.TimeoutEvent;
+import co.ecg.jain_sip.sip.TransactionTerminatedEvent;
 
 import org.apache.log4j.Appender;
 import org.apache.log4j.ConsoleAppender;

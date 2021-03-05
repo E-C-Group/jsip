@@ -1,20 +1,20 @@
 package gov.nist.javax.sip;
 
-import gov.nist.core.net.AddressResolver;
-import gov.nist.javax.sip.clientauthutils.AccountManager;
-import gov.nist.javax.sip.clientauthutils.AuthenticationHelper;
-import gov.nist.javax.sip.clientauthutils.SecureAccountManager;
-import gov.nist.javax.sip.header.extensions.JoinHeader;
-import gov.nist.javax.sip.header.extensions.ReplacesHeader;
+import co.ecg.jain_sip.core.ri.net.AddressResolver;
+import co.ecg.jain_sip.sip.ri.clientauthutils.AccountManager;
+import co.ecg.jain_sip.sip.ri.clientauthutils.AuthenticationHelper;
+import co.ecg.jain_sip.sip.ri.clientauthutils.SecureAccountManager;
+import co.ecg.jain_sip.sip.ri.header.extensions.JoinHeader;
+import co.ecg.jain_sip.sip.ri.header.extensions.ReplacesHeader;
 
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.SocketAddress;
 import java.util.Collection;
 
-import javax.sip.Dialog;
-import javax.sip.SipStack;
-import javax.sip.header.HeaderFactory;
+import co.ecg.jain_sip.sip.Dialog;
+import co.ecg.jain_sip.sip.SipStack;
+import co.ecg.jain_sip.sip.header.HeaderFactory;
 
 /**
  * SIP Stack extensions to be added to the next spec revision. Only these may be safely used in

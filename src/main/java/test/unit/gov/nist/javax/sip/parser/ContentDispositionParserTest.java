@@ -23,7 +23,7 @@
  *The Open SLEE project
  */
 package test.unit.gov.nist.javax.sip.parser;
-import gov.nist.javax.sip.parser.*;
+import co.ecg.jain_sip.sip.ri.parser.*;
 
 
 /**

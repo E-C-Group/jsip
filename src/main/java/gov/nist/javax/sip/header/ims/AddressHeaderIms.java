@@ -30,10 +30,10 @@
 
 package gov.nist.javax.sip.header.ims;
 
-import javax.sip.address.Address;
+import co.ecg.jain_sip.sip.address.Address;
 
-import gov.nist.javax.sip.address.AddressImpl;
-import gov.nist.javax.sip.header.SIPHeader;
+import co.ecg.jain_sip.sip.ri.address.AddressImpl;
+import co.ecg.jain_sip.sip.ri.header.SIPHeader;
 
 /**
  * AddressHeader base class.

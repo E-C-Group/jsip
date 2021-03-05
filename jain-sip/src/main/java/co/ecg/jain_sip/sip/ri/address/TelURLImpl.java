@@ -25,7 +25,7 @@
 */
 package co.ecg.jain_sip.sip.ri.address;
 
-import gov.nist.core.NameValueList;
+import co.ecg.jain_sip.core.ri.NameValueList;
 
 import java.text.ParseException;
 import java.util.Iterator;

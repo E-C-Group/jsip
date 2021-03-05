@@ -28,9 +28,9 @@
 *******************************************************************************/
 package gov.nist.javax.sip.header;
 
-import gov.nist.javax.sip.header.ims.AuthorizationHeaderIms;
+import co.ecg.jain_sip.sip.ri.header.ims.AuthorizationHeaderIms;
 
-import javax.sip.header.*;
+import co.ecg.jain_sip.sip.header.*;
 
 /**
  * Authorization SIP header.

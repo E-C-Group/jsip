@@ -1,14 +1,14 @@
 package test.unit.gov.nist.javax.sip.stack;
-import gov.nist.javax.sip.SipStackImpl;
-import gov.nist.javax.sip.message.SIPMessage;
-import gov.nist.javax.sip.message.SIPRequest;
-import gov.nist.javax.sip.stack.MessageChannel;
-import gov.nist.javax.sip.stack.SIPMessageValve;
+import co.ecg.jain_sip.sip.ri.SipStackImpl;
+import co.ecg.jain_sip.sip.ri.message.SIPMessage;
+import co.ecg.jain_sip.sip.ri.message.SIPRequest;
+import co.ecg.jain_sip.sip.ri.stack.MessageChannel;
+import co.ecg.jain_sip.sip.ri.stack.SIPMessageValve;
 
 import java.io.IOException;
 
-import javax.sip.SipStack;
-import javax.sip.message.Response;
+import co.ecg.jain_sip.sip.SipStack;
+import co.ecg.jain_sip.sip.message.Response;
 
     public class SIPMessageValveImpl implements SIPMessageValve {
     	public static int lastResponseCode;

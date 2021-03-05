@@ -28,23 +28,19 @@
 
 package co.ecg.jain_sip.sip.ri.header.ims;
 
+import co.ecg.jain_sip.sip.header.ExtensionHeader;
+import co.ecg.jain_sip.sip.ri.header.ParametersHeader;
+
 import java.text.ParseException;
-
-import javax.sip.header.ExtensionHeader;
-
-import gov.nist.javax.sip.header.ParametersHeader;
 
 /**
  * <p>P-Access-Network-Info SIP Private Header</p>
  *
  * @author Miguel Freitas (IT) PT-Inovacao
- *
  * @since 1.2
  */
 
-public class PAccessNetworkInfo
-    extends ParametersHeader
-    implements PAccessNetworkInfoHeader, ExtensionHeader {
+public class PAccessNetworkInfo extends ParametersHeader implements PAccessNetworkInfoHeader, ExtensionHeader {
 
     // TODO: serialVersionUID
 
@@ -91,10 +87,9 @@ public class PAccessNetworkInfo
     }
 
     /**
-     *
      * @param cgi -- String CGI value
      * @throws NullPointerException -- if null argument passed in
-     * @throws ParseException -- if bad argument passed in.
+     * @throws ParseException       -- if bad argument passed in.
      */
     public void setCGI3GPP(String cgi) throws ParseException {
 
@@ -108,7 +103,6 @@ public class PAccessNetworkInfo
     }
 
     /**
-     *
      * @return String CGI value
      */
     public String getCGI3GPP() {
@@ -118,7 +112,7 @@ public class PAccessNetworkInfo
     /**
      * Set the UtranCellID field.
      *
-     * @param  utranCellID -- String UTRAN Cell ID value
+     * @param utranCellID -- String UTRAN Cell ID value
      * @throws NullPointerException
      * @throws ParseException
      */
@@ -134,7 +128,6 @@ public class PAccessNetworkInfo
     }
 
     /**
-     *
      * @return String UTRAN Cell ID value
      */
     public String getUtranCellID3GPP() {
@@ -142,7 +135,6 @@ public class PAccessNetworkInfo
     }
 
     /**
-     *
      * @param dslLocation - String with the DSL location value
      * @throws NullPointerException
      * @throws ParseException
@@ -159,7 +151,6 @@ public class PAccessNetworkInfo
     }
 
     /**
-     *
      * @return String DSL location value
      */
     public String getDSLLocation() {
@@ -167,10 +158,9 @@ public class PAccessNetworkInfo
     }
 
     /**
-     *
      * @param ci3Gpp2 -- String CI 3GPP2 value
      * @throws NullPointerException -- if arg is null
-     * @throws ParseException -- if arg is bad.
+     * @throws ParseException       -- if arg is bad.
      */
     public void setCI3GPP2(String ci3Gpp2) throws ParseException {
         if (ci3Gpp2 == null)
@@ -182,7 +172,6 @@ public class PAccessNetworkInfo
     }
 
     /**
-     *
      * @return String CI 3GPP2 value
      */
     public String getCI3GPP2() {
@@ -190,11 +179,10 @@ public class PAccessNetworkInfo
     }
 
     /**
-     *
-     * @param name --
-     *            parameter name
+     * @param name  --
+     *              parameter name
      * @param value --
-     *            value of parameter
+     *              value of parameter
      */
     public void setParameter(String name, Object value) {
         /**

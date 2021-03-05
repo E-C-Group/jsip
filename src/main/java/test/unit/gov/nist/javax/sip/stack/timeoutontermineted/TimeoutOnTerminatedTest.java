@@ -3,7 +3,7 @@
  */
 package test.unit.gov.nist.javax.sip.stack.timeoutontermineted;
 
-import javax.sip.SipProvider;
+import co.ecg.jain_sip.sip.SipProvider;
 
 import junit.framework.TestCase;
 

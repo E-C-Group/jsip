@@ -1,6 +1,6 @@
 package test.unit.gov.nist.javax.sip.stack.reinvitechallenge;
 
-import gov.nist.javax.sip.clientauthutils.UserCredentials;
+import co.ecg.jain_sip.sip.ri.clientauthutils.UserCredentials;
 
 public class UserCredentialsImpl implements UserCredentials {
 	

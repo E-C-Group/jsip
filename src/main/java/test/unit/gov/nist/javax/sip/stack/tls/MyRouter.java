@@ -1,7 +1,7 @@
 package test.unit.gov.nist.javax.sip.stack.tls;
-import javax.sip.*;
-import javax.sip.address.*;
-import javax.sip.message.*;
+import co.ecg.jain_sip.sip.*;
+import co.ecg.jain_sip.sip.address.*;
+import co.ecg.jain_sip.sip.message.*;
 
 import java.util.*;
 

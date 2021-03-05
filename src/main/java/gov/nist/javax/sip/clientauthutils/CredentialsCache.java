@@ -1,7 +1,7 @@
 package gov.nist.javax.sip.clientauthutils;
 
-import gov.nist.javax.sip.stack.SIPStackTimerTask;
-import gov.nist.javax.sip.stack.timers.SipTimer;
+import co.ecg.jain_sip.sip.ri.stack.SIPStackTimerTask;
+import co.ecg.jain_sip.sip.ri.stack.timers.SipTimer;
 
 import java.util.Collection;
 import java.util.LinkedList;
@@ -10,7 +10,7 @@ import java.util.ListIterator;
 import java.util.TimerTask;
 import java.util.concurrent.ConcurrentHashMap;
 
-import javax.sip.header.AuthorizationHeader;
+import co.ecg.jain_sip.sip.header.AuthorizationHeader;
 
 /**
  * A cache of authorization headers to be used for subsequent processing when we

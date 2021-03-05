@@ -25,8 +25,9 @@
  */
 package co.ecg.jain_sip.sip.ri.stack;
 
-import gov.nist.javax.sip.LogRecord;
-import gov.nist.javax.sip.LogRecordFactory;
+import co.ecg.jain_sip.sip.ri.LogRecord;
+import co.ecg.jain_sip.sip.ri.LogRecordFactory;
+
 
 /**
  * The Default Message log factory. This can be replaced as a stack
@@ -38,8 +39,8 @@ import gov.nist.javax.sip.LogRecordFactory;
 public class DefaultMessageLogFactory implements LogRecordFactory {
 
     public LogRecord createLogRecord(String message, String source,
-            String destination, String timeStamp, boolean isSender,
-            String firstLine, String tid, String callId, long tsHeaderValue) {
+                                     String destination, String timeStamp, boolean isSender,
+                                     String firstLine, String tid, String callId, long tsHeaderValue) {
         return new MessageLog(message, source, destination, timeStamp,
                 isSender, firstLine, tid, callId, tsHeaderValue);
     }

@@ -1,9 +1,9 @@
 package examples.websocket;
 
-import javax.sip.*;
-import javax.sip.address.*;
-import javax.sip.header.*;
-import javax.sip.message.*;
+import co.ecg.jain_sip.sip.*;
+import co.ecg.jain_sip.sip.address.*;
+import co.ecg.jain_sip.sip.header.*;
+import co.ecg.jain_sip.sip.message.*;
 
 import org.apache.log4j.ConsoleAppender;
 import org.apache.log4j.Level;
@@ -11,7 +11,7 @@ import org.apache.log4j.Logger;
 import org.apache.log4j.PatternLayout;
 
 import examples.simplecallsetup.Shootist;
-import gov.nist.javax.sip.stack.NioMessageProcessorFactory;
+import co.ecg.jain_sip.sip.ri.stack.NioMessageProcessorFactory;
 
 import java.text.ParseException;
 import java.util.*;

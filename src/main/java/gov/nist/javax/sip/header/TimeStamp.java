@@ -29,8 +29,8 @@
 
 package gov.nist.javax.sip.header;
 
-import javax.sip.InvalidArgumentException;
-import javax.sip.header.*;
+import co.ecg.jain_sip.sip.InvalidArgumentException;
+import co.ecg.jain_sip.sip.header.*;
 
 /**
  * TimeStamp SIP Header.

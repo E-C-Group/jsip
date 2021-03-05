@@ -1,7 +1,7 @@
 package gov.nist.javax.sip;
 
-import javax.sip.Dialog;
-import javax.sip.SipProvider;
+import co.ecg.jain_sip.sip.Dialog;
+import co.ecg.jain_sip.sip.SipProvider;
 
 /**
  * Extensions for Next specification revision. These interfaces will remain unchanged and be

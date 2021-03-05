@@ -30,9 +30,9 @@
 
 package co.ecg.jain_sip.sip.ri.header.ims;
 
-import gov.nist.core.NameValue;
+import co.ecg.jain_sip.core.ri.NameValue;
 
-import javax.sip.header.ExtensionHeader;
+import co.ecg.jain_sip.sip.header.ExtensionHeader;
 import java.text.ParseException;
 import java.util.Iterator;
 import java.util.LinkedList;

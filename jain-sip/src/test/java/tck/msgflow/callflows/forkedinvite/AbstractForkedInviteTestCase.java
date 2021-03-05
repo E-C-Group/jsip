@@ -3,12 +3,12 @@
  */
 package test.tck.msgflow.callflows.forkedinvite;
 
-import gov.nist.javax.sip.SipProviderImpl;
+import co.ecg.jain_sip.sip.ri.SipProviderImpl;
 
 import java.util.Hashtable;
 
-import javax.sip.SipListener;
-import javax.sip.SipProvider;
+import co.ecg.jain_sip.sip.SipListener;
+import co.ecg.jain_sip.sip.SipProvider;
 
 import org.apache.log4j.Appender;
 import org.apache.log4j.ConsoleAppender;

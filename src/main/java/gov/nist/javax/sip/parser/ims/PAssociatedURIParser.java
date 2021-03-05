@@ -31,23 +31,23 @@ package gov.nist.javax.sip.parser.ims;
 
 import java.text.ParseException;
 
-import gov.nist.core.Token;
-import gov.nist.javax.sip.address.GenericURI;
-import gov.nist.javax.sip.header.ims.PAssociatedURI;
-import gov.nist.javax.sip.header.ims.PAssociatedURIList;
-import gov.nist.javax.sip.header.ims.SIPHeaderNamesIms;
+import co.ecg.jain_sip.core.ri.Token;
+import co.ecg.jain_sip.sip.ri.address.GenericURI;
+import co.ecg.jain_sip.sip.ri.header.ims.PAssociatedURI;
+import co.ecg.jain_sip.sip.ri.header.ims.PAssociatedURIList;
+import co.ecg.jain_sip.sip.ri.header.ims.SIPHeaderNamesIms;
 
-import gov.nist.javax.sip.header.Allow;
-import gov.nist.javax.sip.header.ErrorInfo;
-import gov.nist.javax.sip.header.SIPHeader;
-import gov.nist.javax.sip.header.SIPHeaderNames;
-import gov.nist.javax.sip.parser.Lexer;
-import gov.nist.javax.sip.parser.TokenTypes;
-import gov.nist.javax.sip.parser.AddressParametersParser;
-import gov.nist.javax.sip.parser.URLParser;
+import co.ecg.jain_sip.sip.ri.header.Allow;
+import co.ecg.jain_sip.sip.ri.header.ErrorInfo;
+import co.ecg.jain_sip.sip.ri.header.SIPHeader;
+import co.ecg.jain_sip.sip.ri.header.SIPHeaderNames;
+import co.ecg.jain_sip.sip.ri.parser.Lexer;
+import co.ecg.jain_sip.sip.ri.parser.TokenTypes;
+import co.ecg.jain_sip.sip.ri.parser.AddressParametersParser;
+import co.ecg.jain_sip.sip.ri.parser.URLParser;
 
-import gov.nist.javax.sip.parser.ParametersParser;
-import gov.nist.javax.sip.parser.HeaderParser;
+import co.ecg.jain_sip.sip.ri.parser.ParametersParser;
+import co.ecg.jain_sip.sip.ri.parser.HeaderParser;
 
 
 /**

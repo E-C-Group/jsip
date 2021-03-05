@@ -29,7 +29,7 @@
 package co.ecg.jain_sip.sip.ri.header;
 
 import java.text.ParseException;
-import javax.sip.header.*;
+import co.ecg.jain_sip.sip.header.*;
 
 /**
  * ProxyRequire Header.

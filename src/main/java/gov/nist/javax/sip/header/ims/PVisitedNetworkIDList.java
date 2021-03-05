@@ -29,8 +29,8 @@
 
 package gov.nist.javax.sip.header.ims;
 
-import gov.nist.javax.sip.header.SIPHeaderList;
-import gov.nist.javax.sip.header.ims.PVisitedNetworkIDHeader;
+import co.ecg.jain_sip.sip.ri.header.SIPHeaderList;
+import co.ecg.jain_sip.sip.ri.header.ims.PVisitedNetworkIDHeader;
 
 /**
  * List of P-Visited-Network-ID headers.

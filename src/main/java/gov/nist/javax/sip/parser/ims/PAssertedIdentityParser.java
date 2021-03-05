@@ -29,17 +29,17 @@
 
 package gov.nist.javax.sip.parser.ims;
 
-import gov.nist.javax.sip.parser.Lexer;
-import gov.nist.javax.sip.parser.TokenTypes;
+import co.ecg.jain_sip.sip.ri.parser.Lexer;
+import co.ecg.jain_sip.sip.ri.parser.TokenTypes;
 
 import java.text.ParseException;
 
-import gov.nist.javax.sip.header.SIPHeader;
-import gov.nist.javax.sip.header.ims.PAssertedIdentity;
-import gov.nist.javax.sip.header.ims.PAssertedIdentityList;
-import gov.nist.javax.sip.header.ims.SIPHeaderNamesIms;
+import co.ecg.jain_sip.sip.ri.header.SIPHeader;
+import co.ecg.jain_sip.sip.ri.header.ims.PAssertedIdentity;
+import co.ecg.jain_sip.sip.ri.header.ims.PAssertedIdentityList;
+import co.ecg.jain_sip.sip.ri.header.ims.SIPHeaderNamesIms;
 
-import gov.nist.javax.sip.parser.AddressParametersParser;
+import co.ecg.jain_sip.sip.ri.parser.AddressParametersParser;
 
 /**
  * @author ALEXANDRE MIGUEL SILVA SANTOS

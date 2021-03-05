@@ -24,7 +24,7 @@
 *
 */
 package gov.nist.javax.sdp.parser;
-import gov.nist.core.*;
+import co.ecg.jain_sip.core.ri.*;
 
 public class Lexer extends LexerCore {
     public Lexer(String lexerName, String buffer) {

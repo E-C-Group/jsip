@@ -28,9 +28,9 @@
  *******************************************************************************/
 package co.ecg.jain_sip.sip.ri.message;
 
-import gov.nist.core.Separators;
-import gov.nist.javax.sip.header.HeaderFactoryExt;
-import gov.nist.javax.sip.header.HeaderFactoryImpl;
+import co.ecg.jain_sip.core.ri.Separators;
+import co.ecg.jain_sip.sip.ri.header.HeaderFactoryExt;
+import co.ecg.jain_sip.sip.ri.header.HeaderFactoryImpl;
 
 import java.text.ParseException;
 import java.util.Iterator;
@@ -39,9 +39,9 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
-import javax.sip.header.ContentDispositionHeader;
-import javax.sip.header.ContentTypeHeader;
-import javax.sip.header.Header;
+import co.ecg.jain_sip.sip.header.ContentDispositionHeader;
+import co.ecg.jain_sip.sip.header.ContentTypeHeader;
+import co.ecg.jain_sip.sip.header.Header;
 
 /**
  * Content list for multipart mime content type.

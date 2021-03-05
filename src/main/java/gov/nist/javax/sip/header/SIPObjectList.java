@@ -31,7 +31,7 @@ import java.util.ListIterator;
 import java.util.LinkedList;
 import java.util.Iterator;
 import java.lang.reflect.*;
-import gov.nist.core.*;
+import co.ecg.jain_sip.core.ri.*;
 
 /**
  * Root class for all the collection objects in this list:

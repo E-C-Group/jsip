@@ -24,9 +24,9 @@
  */
 package test.unit.gov.nist.javax.sip.parser;
 
-import gov.nist.javax.sip.header.Supported;
-import gov.nist.javax.sip.header.SupportedList;
-import gov.nist.javax.sip.parser.SupportedParser;
+import co.ecg.jain_sip.sip.ri.header.Supported;
+import co.ecg.jain_sip.sip.ri.header.SupportedList;
+import co.ecg.jain_sip.sip.ri.parser.SupportedParser;
 
 /**
  *

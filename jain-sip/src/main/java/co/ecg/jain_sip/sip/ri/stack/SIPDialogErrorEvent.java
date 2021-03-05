@@ -16,7 +16,7 @@
 package co.ecg.jain_sip.sip.ri.stack;
 
 
-import gov.nist.javax.sip.DialogTimeoutEvent;
+import co.ecg.jain_sip.sip.ri.DialogTimeoutEvent;
 
 import java.util.EventObject;
 

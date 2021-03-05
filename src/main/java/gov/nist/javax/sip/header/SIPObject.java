@@ -27,9 +27,9 @@
  * Product of NIST/ITL Advanced Networking Technologies Division (ANTD).     *
  *****************************************************************************/
 package gov.nist.javax.sip.header;
-import gov.nist.core.GenericObject;
-import gov.nist.core.GenericObjectList;
-import gov.nist.core.InternalErrorHandler;
+import co.ecg.jain_sip.core.ri.GenericObject;
+import co.ecg.jain_sip.core.ri.GenericObjectList;
+import co.ecg.jain_sip.core.ri.InternalErrorHandler;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;

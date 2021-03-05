@@ -28,7 +28,7 @@
  *******************************************************************************/
 package gov.nist.javax.sip.header;
 
-import gov.nist.javax.sip.SIPConstants;
+import co.ecg.jain_sip.sip.ri.SIPConstants;
 
 /**
  * Status Line (for SIPReply) messages.

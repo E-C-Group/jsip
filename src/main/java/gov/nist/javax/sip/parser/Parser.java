@@ -24,10 +24,10 @@
 *
 */
 package gov.nist.javax.sip.parser;
-import gov.nist.core.Debug;
-import gov.nist.core.LexerCore;
-import gov.nist.core.ParserCore;
-import gov.nist.core.Token;
+import co.ecg.jain_sip.core.ri.Debug;
+import co.ecg.jain_sip.core.ri.LexerCore;
+import co.ecg.jain_sip.core.ri.ParserCore;
+import co.ecg.jain_sip.core.ri.Token;
 import java.text.ParseException;
 
 /**

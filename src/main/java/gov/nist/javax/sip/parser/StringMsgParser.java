@@ -30,23 +30,23 @@
 
 package gov.nist.javax.sip.parser;
 
-import gov.nist.core.CommonLogger;
-import gov.nist.core.Host;
-import gov.nist.core.HostNameParser;
-import gov.nist.core.StackLogger;
-import gov.nist.javax.sip.SIPConstants;
-import gov.nist.javax.sip.address.AddressImpl;
-import gov.nist.javax.sip.address.GenericURI;
-import gov.nist.javax.sip.address.SipUri;
-import gov.nist.javax.sip.address.TelephoneNumber;
-import gov.nist.javax.sip.header.ExtensionHeaderImpl;
-import gov.nist.javax.sip.header.NameMap;
-import gov.nist.javax.sip.header.RequestLine;
-import gov.nist.javax.sip.header.SIPHeader;
-import gov.nist.javax.sip.header.StatusLine;
-import gov.nist.javax.sip.message.SIPMessage;
-import gov.nist.javax.sip.message.SIPRequest;
-import gov.nist.javax.sip.message.SIPResponse;
+import co.ecg.jain_sip.core.ri.CommonLogger;
+import co.ecg.jain_sip.core.ri.Host;
+import co.ecg.jain_sip.core.ri.HostNameParser;
+import co.ecg.jain_sip.core.ri.StackLogger;
+import co.ecg.jain_sip.sip.ri.SIPConstants;
+import co.ecg.jain_sip.sip.ri.address.AddressImpl;
+import co.ecg.jain_sip.sip.ri.address.GenericURI;
+import co.ecg.jain_sip.sip.ri.address.SipUri;
+import co.ecg.jain_sip.sip.ri.address.TelephoneNumber;
+import co.ecg.jain_sip.sip.ri.header.ExtensionHeaderImpl;
+import co.ecg.jain_sip.sip.ri.header.NameMap;
+import co.ecg.jain_sip.sip.ri.header.RequestLine;
+import co.ecg.jain_sip.sip.ri.header.SIPHeader;
+import co.ecg.jain_sip.sip.ri.header.StatusLine;
+import co.ecg.jain_sip.sip.ri.message.SIPMessage;
+import co.ecg.jain_sip.sip.ri.message.SIPRequest;
+import co.ecg.jain_sip.sip.ri.message.SIPResponse;
 
 import java.io.UnsupportedEncodingException;
 import java.text.ParseException;

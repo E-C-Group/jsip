@@ -23,7 +23,7 @@
 package javax.sip;
 
 import java.util.*;
-import javax.sip.message.Response;
+import co.ecg.jain_sip.sip.message.Response;
 
 /**
  * This class represents a Response event that is passed from a SipProvider to

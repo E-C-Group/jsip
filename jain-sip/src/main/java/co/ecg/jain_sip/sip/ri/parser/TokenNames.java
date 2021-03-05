@@ -24,7 +24,7 @@
 *
 */
 package co.ecg.jain_sip.sip.ri.parser;
-import javax.sip.message.Request;
+import co.ecg.jain_sip.sip.message.Request;
 
 /**
  * A grab bag of SIP Token names.

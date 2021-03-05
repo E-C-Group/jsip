@@ -31,7 +31,7 @@
 
 package gov.nist.javax.sdp.parser;
 import gov.nist.javax.sdp.fields.*;
-import gov.nist.core.*;
+import co.ecg.jain_sip.core.ri.*;
 import java.text.*;
 
 /**

@@ -38,7 +38,7 @@
 
 package gov.nist.javax.sip.header;
 
-import gov.nist.javax.sip.Utils;
+import co.ecg.jain_sip.sip.ri.Utils;
 
 import java.text.ParseException;
 

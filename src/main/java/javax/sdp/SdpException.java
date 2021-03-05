@@ -6,7 +6,7 @@
 
 package javax.sdp;
 
-import gov.nist.core.Separators;
+import co.ecg.jain_sip.core.ri.Separators;
 
 /** The SdpException defines a general exception for the SDP classes to throw when they encounter a difficulty.
  *

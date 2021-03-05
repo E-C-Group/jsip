@@ -19,12 +19,12 @@
 */
 package test.unit.gov.nist.javax.sip.stack.uasreinvite;
 
-import gov.nist.javax.sip.DialogExt;
+import co.ecg.jain_sip.sip.ri.DialogExt;
 
-import javax.sip.*;
-import javax.sip.address.*;
-import javax.sip.header.*;
-import javax.sip.message.*;
+import co.ecg.jain_sip.sip.*;
+import co.ecg.jain_sip.sip.address.*;
+import co.ecg.jain_sip.sip.header.*;
+import co.ecg.jain_sip.sip.message.*;
 
 import org.apache.log4j.ConsoleAppender;
 import org.apache.log4j.Logger;

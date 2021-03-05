@@ -25,8 +25,8 @@
 */
 package gov.nist.javax.sip.stack.timers;
 
-import gov.nist.javax.sip.SipStackImpl;
-import gov.nist.javax.sip.stack.SIPStackTimerTask;
+import co.ecg.jain_sip.sip.ri.SipStackImpl;
+import co.ecg.jain_sip.sip.ri.stack.SIPStackTimerTask;
 
 import java.util.Properties;
 

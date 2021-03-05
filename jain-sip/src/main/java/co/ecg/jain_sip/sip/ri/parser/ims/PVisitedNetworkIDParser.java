@@ -29,13 +29,13 @@
 
 package co.ecg.jain_sip.sip.ri.parser.ims;
 
-import gov.nist.core.Token;
-import gov.nist.javax.sip.header.SIPHeader;
-import gov.nist.javax.sip.header.ims.PVisitedNetworkID;
-import gov.nist.javax.sip.header.ims.PVisitedNetworkIDList;
-import gov.nist.javax.sip.parser.Lexer;
-import gov.nist.javax.sip.parser.ParametersParser;
-import gov.nist.javax.sip.parser.TokenTypes;
+import co.ecg.jain_sip.core.ri.Token;
+import co.ecg.jain_sip.sip.ri.header.SIPHeader;
+import co.ecg.jain_sip.sip.ri.header.ims.PVisitedNetworkID;
+import co.ecg.jain_sip.sip.ri.header.ims.PVisitedNetworkIDList;
+import co.ecg.jain_sip.sip.ri.parser.Lexer;
+import co.ecg.jain_sip.sip.ri.parser.ParametersParser;
+import co.ecg.jain_sip.sip.ri.parser.TokenTypes;
 
 import java.text.ParseException;
 

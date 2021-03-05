@@ -1,6 +1,6 @@
 package test.load.concurrency;
 
-import javax.sip.SipProvider;
+import co.ecg.jain_sip.sip.SipProvider;
 
 public class SelfTest {
 

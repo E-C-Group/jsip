@@ -27,15 +27,15 @@ package co.ecg.jain_sip.sip.ri.stack;
 
 import java.io.IOException;
 
-import gov.nist.core.CommonLogger;
-import gov.nist.core.StackLogger;
-import gov.nist.javax.sip.SipStackImpl;
-import gov.nist.javax.sip.message.SIPRequest;
-import gov.nist.javax.sip.message.SIPResponse;
+import co.ecg.jain_sip.core.ri.CommonLogger;
+import co.ecg.jain_sip.core.ri.StackLogger;
+import co.ecg.jain_sip.sip.ri.SipStackImpl;
+import co.ecg.jain_sip.sip.ri.message.SIPRequest;
+import co.ecg.jain_sip.sip.ri.message.SIPResponse;
 
-import javax.sip.SipStack;
-import javax.sip.message.Request;
-import javax.sip.message.Response;
+import co.ecg.jain_sip.sip.SipStack;
+import co.ecg.jain_sip.sip.message.Request;
+import co.ecg.jain_sip.sip.message.Response;
 
 /**
  * This is just a simple reusable congestion control valve JSIP apps can use to stop traffic when the number of
@@ -83,7 +83,7 @@ public class CongestionControlMessageValve implements SIPMessageValve{
 					try {
 						messageChannel.sendMessage(response);
 					} catch (IOException e) {
-						logger.logError("Failed to send congestion control error response" + response, e);
+						log.error("Failed to send congestion control error response" + response, e);
 					}
 				}
 				return false; // Do not pass this request to the pipeline

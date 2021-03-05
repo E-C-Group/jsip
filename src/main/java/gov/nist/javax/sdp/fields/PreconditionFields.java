@@ -35,7 +35,7 @@ import java.io.Serializable;
 import java.util.Vector;
 import javax.sdp.SdpException;
 import javax.sdp.SdpParseException;
-import gov.nist.core.NameValue;
+import co.ecg.jain_sip.core.ri.NameValue;
 
 
 

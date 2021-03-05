@@ -28,11 +28,11 @@ package gov.nist.javax.sip;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
-import javax.sip.address.Hop;
+import co.ecg.jain_sip.sip.address.Hop;
 
-import gov.nist.core.net.AddressResolver;
-import gov.nist.javax.sip.stack.HopImpl;
-import gov.nist.javax.sip.stack.MessageProcessor;
+import co.ecg.jain_sip.core.ri.net.AddressResolver;
+import co.ecg.jain_sip.sip.ri.stack.HopImpl;
+import co.ecg.jain_sip.sip.ri.stack.MessageProcessor;
 
 /**
  * This is the default implementation of the AddressResolver. The AddressResolver is a NIST-SIP specific

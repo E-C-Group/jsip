@@ -13,10 +13,10 @@ import java.util.concurrent.ConcurrentSkipListSet;
 import com.sun.nio.sctp.SctpChannel;
 import com.sun.nio.sctp.SctpServerChannel;
 
-import gov.nist.core.HostPort;
-import gov.nist.javax.sip.stack.MessageChannel;
-import gov.nist.javax.sip.stack.MessageProcessor;
-import gov.nist.javax.sip.stack.SIPTransactionStack;
+import co.ecg.jain_sip.core.ri.HostPort;
+import co.ecg.jain_sip.sip.ri.stack.MessageChannel;
+import co.ecg.jain_sip.sip.ri.stack.MessageProcessor;
+import co.ecg.jain_sip.sip.ri.stack.SIPTransactionStack;
 
 /**
  * SCTP Message Processor

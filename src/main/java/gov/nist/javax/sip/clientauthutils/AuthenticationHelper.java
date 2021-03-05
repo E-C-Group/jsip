@@ -3,13 +3,13 @@ package gov.nist.javax.sip.clientauthutils;
 import java.text.ParseException;
 import java.util.Collection;
 
-import javax.sip.ClientTransaction;
-import javax.sip.InvalidArgumentException;
-import javax.sip.SipException;
-import javax.sip.SipProvider;
-import javax.sip.header.AuthorizationHeader;
-import javax.sip.message.Request;
-import javax.sip.message.Response;
+import co.ecg.jain_sip.sip.ClientTransaction;
+import co.ecg.jain_sip.sip.InvalidArgumentException;
+import co.ecg.jain_sip.sip.SipException;
+import co.ecg.jain_sip.sip.SipProvider;
+import co.ecg.jain_sip.sip.header.AuthorizationHeader;
+import co.ecg.jain_sip.sip.message.Request;
+import co.ecg.jain_sip.sip.message.Response;
 
 /**
  * A helper interface that provides useful functionality for clients that need to authenticate

@@ -25,9 +25,9 @@
 
 package javax.sip;
 
-import javax.sip.address.AddressFactory;
-import javax.sip.message.MessageFactory;
-import javax.sip.header.HeaderFactory;
+import co.ecg.jain_sip.sip.address.AddressFactory;
+import co.ecg.jain_sip.sip.message.MessageFactory;
+import co.ecg.jain_sip.sip.header.HeaderFactory;
 import java.util.*;
 import java.lang.reflect.Constructor;
 

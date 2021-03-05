@@ -25,9 +25,9 @@
 */
 package gov.nist.javax.sip.parser;
 
-import gov.nist.javax.sip.header.RecordRoute;
-import gov.nist.javax.sip.header.RecordRouteList;
-import gov.nist.javax.sip.header.SIPHeader;
+import co.ecg.jain_sip.sip.ri.header.RecordRoute;
+import co.ecg.jain_sip.sip.ri.header.RecordRouteList;
+import co.ecg.jain_sip.sip.ri.header.SIPHeader;
 
 import java.text.ParseException;
 

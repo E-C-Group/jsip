@@ -34,8 +34,8 @@ package co.ecg.jain_sip.sip.ri.header.ims;
 
 
 
-import gov.nist.javax.sip.header.SIPHeaderList;
-import gov.nist.javax.sip.header.ims.SecurityVerify;
+import co.ecg.jain_sip.sip.ri.header.SIPHeaderList;
+import co.ecg.jain_sip.sip.ri.header.ims.SecurityVerify;
 
 
 /**

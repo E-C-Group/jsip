@@ -32,8 +32,8 @@ package co.ecg.jain_sip.sip.ri.header.ims;
 
 
 import java.text.ParseException;
-import javax.sip.header.Header;
-import javax.sip.header.Parameters;
+import co.ecg.jain_sip.sip.header.Header;
+import co.ecg.jain_sip.sip.header.Parameters;
 
 
 /**

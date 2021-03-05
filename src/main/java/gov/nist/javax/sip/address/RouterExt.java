@@ -25,8 +25,8 @@
 
 package gov.nist.javax.sip.address;
 
-import javax.sip.address.Hop;
-import javax.sip.address.Router;
+import co.ecg.jain_sip.sip.address.Hop;
+import co.ecg.jain_sip.sip.address.Router;
 
 /**
  * 

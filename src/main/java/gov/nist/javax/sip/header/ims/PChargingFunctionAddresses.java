@@ -30,17 +30,17 @@
 
 package gov.nist.javax.sip.header.ims;
 
-import gov.nist.core.NameValue;
+import co.ecg.jain_sip.core.ri.NameValue;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.ListIterator;
 
-import javax.sip.header.ExtensionHeader;
+import co.ecg.jain_sip.sip.header.ExtensionHeader;
 
-import gov.nist.javax.sip.header.ims.PChargingFunctionAddressesHeader;
-import gov.nist.javax.sip.header.ims.ParameterNamesIms;
+import co.ecg.jain_sip.sip.ri.header.ims.PChargingFunctionAddressesHeader;
+import co.ecg.jain_sip.sip.ri.header.ims.ParameterNamesIms;
 
 
 /**

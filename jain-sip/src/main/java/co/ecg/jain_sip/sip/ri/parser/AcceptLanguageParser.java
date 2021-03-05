@@ -32,7 +32,7 @@
 package co.ecg.jain_sip.sip.ri.parser;
 import co.ecg.jain_sip.sip.ri.header.AcceptLanguageList;
 
-import javax.sip.*;
+import co.ecg.jain_sip.sip.*;
 import java.text.ParseException;
 
 

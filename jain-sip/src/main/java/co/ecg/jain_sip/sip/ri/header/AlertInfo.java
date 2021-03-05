@@ -32,7 +32,7 @@ import co.ecg.jain_sip.sip.ri.address.GenericURI;
 
 import java.text.ParseException;
 
-import javax.sip.address.*;
+import co.ecg.jain_sip.sip.address.*;
 
 /**
  * AlertInfo SIP Header.

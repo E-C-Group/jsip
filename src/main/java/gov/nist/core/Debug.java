@@ -50,14 +50,14 @@ public class Debug {
     }
     public static void printStackTrace(Exception ex) {
         if ((parserDebug || debug ) && stackLogger != null) {
-            stackLogger.logError("Stack Trace",ex);
+            stacklog.error("Stack Trace",ex);
         }
     }
 
     public static void logError(String message, Exception ex) {
       if ((parserDebug || debug) &&  stackLogger != null ) {
           if ( stackLogger.isLoggingEnabled(LogWriter.TRACE_DEBUG))
-              stackLogger.logError(message,ex);
+              stacklog.error(message,ex);
       }
     }
 

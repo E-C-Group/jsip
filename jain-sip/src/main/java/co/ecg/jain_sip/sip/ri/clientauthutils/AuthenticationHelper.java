@@ -1,10 +1,10 @@
 package co.ecg.jain_sip.sip.ri.clientauthutils;
 
-import javax.sip.ClientTransaction;
-import javax.sip.SipException;
-import javax.sip.SipProvider;
-import javax.sip.message.Request;
-import javax.sip.message.Response;
+import co.ecg.jain_sip.sip.ClientTransaction;
+import co.ecg.jain_sip.sip.SipException;
+import co.ecg.jain_sip.sip.SipProvider;
+import co.ecg.jain_sip.sip.message.Request;
+import co.ecg.jain_sip.sip.message.Response;
 
 /**
  * A helper interface that provides useful functionality for clients that need to authenticate

@@ -5,12 +5,12 @@
 
 package co.ecg.jain_sip.sip.ri.header.extensions;
 
-import gov.nist.javax.sip.header.ParametersHeader;
+import co.ecg.jain_sip.sip.ri.header.ParametersHeader;
 
 import java.text.ParseException;
 
 import co.ecg.jain_sip.sip.InvalidArgumentException;
-import javax.sip.header.ExtensionHeader;
+import co.ecg.jain_sip.sip.header.ExtensionHeader;
 
 /**
  * ReferredBy SIP Header.

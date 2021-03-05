@@ -1,14 +1,14 @@
 package test.unit.gov.nist.javax.sip.stack.subsnotify;
 
-import gov.nist.javax.sip.ResponseEventExt;
-import gov.nist.javax.sip.message.MessageExt;
-import gov.nist.javax.sip.message.ResponseExt;
-import gov.nist.javax.sip.stack.NioMessageProcessorFactory;
+import co.ecg.jain_sip.sip.ri.ResponseEventExt;
+import co.ecg.jain_sip.sip.ri.message.MessageExt;
+import co.ecg.jain_sip.sip.ri.message.ResponseExt;
+import co.ecg.jain_sip.sip.ri.stack.NioMessageProcessorFactory;
 
-import javax.sip.*;
-import javax.sip.address.*;
-import javax.sip.header.*;
-import javax.sip.message.*;
+import co.ecg.jain_sip.sip.*;
+import co.ecg.jain_sip.sip.address.*;
+import co.ecg.jain_sip.sip.header.*;
+import co.ecg.jain_sip.sip.message.*;
 
 import java.util.*;
 

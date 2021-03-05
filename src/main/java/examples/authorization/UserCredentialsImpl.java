@@ -1,6 +1,6 @@
 package examples.authorization;
 
-import gov.nist.javax.sip.clientauthutils.UserCredentials;
+import co.ecg.jain_sip.sip.ri.clientauthutils.UserCredentials;
 
 public class UserCredentialsImpl implements UserCredentials {
     private String userName;

@@ -21,9 +21,9 @@ package test.tck.msgflow;
 
 import junit.framework.*;
 
-import javax.sip.*;
-import javax.sip.message.*;
-import javax.sip.header.*;
+import co.ecg.jain_sip.sip.*;
+import co.ecg.jain_sip.sip.message.*;
+import co.ecg.jain_sip.sip.header.*;
 import java.util.List;
 import java.util.*;
 import java.text.*;

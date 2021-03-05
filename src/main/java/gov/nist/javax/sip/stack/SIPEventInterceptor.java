@@ -25,8 +25,8 @@
  */
 package gov.nist.javax.sip.stack;
 
-import javax.sip.SipStack;
-import javax.sip.message.Message;
+import co.ecg.jain_sip.sip.SipStack;
+import co.ecg.jain_sip.sip.message.Message;
 /**
  * This interface is the solution for https://jain-sip.dev.java.net/issues/show_bug.cgi?id=337
  * It allows to wrap the JSIP pipeline and execute custom analysis logic as SIP messages advance

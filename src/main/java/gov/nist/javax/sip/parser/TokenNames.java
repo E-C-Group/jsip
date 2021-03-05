@@ -24,9 +24,9 @@
 *
 */
 package gov.nist.javax.sip.parser;
-import javax.sip.message.Request;
-import gov.nist.javax.sip.address.*;
-import gov.nist.javax.sip.header.*;
+import co.ecg.jain_sip.sip.message.Request;
+import co.ecg.jain_sip.sip.ri.address.*;
+import co.ecg.jain_sip.sip.ri.header.*;
 
 /**
  * A grab bag of SIP Token names.

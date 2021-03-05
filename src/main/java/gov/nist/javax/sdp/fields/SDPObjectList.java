@@ -27,7 +27,7 @@
 * Product of NIST/ITL Advanced Networking Technologies Division (ANTD).        *
 *******************************************************************************/
 package gov.nist.javax.sdp.fields;
-import gov.nist.core.*;
+import co.ecg.jain_sip.core.ri.*;
 import java.util.ListIterator;
 import java.util.Iterator;
 import java.util.LinkedList;

@@ -34,13 +34,13 @@ package gov.nist.javax.sip.header.ims;
 
 
 import java.text.ParseException;
-import javax.sip.InvalidArgumentException;
-import javax.sip.header.Parameters;
+import co.ecg.jain_sip.sip.InvalidArgumentException;
+import co.ecg.jain_sip.sip.header.Parameters;
 
-import gov.nist.core.NameValue;
-import gov.nist.core.Separators;
-import gov.nist.javax.sip.header.ims.ParameterNamesIms;
-import gov.nist.javax.sip.header.ParametersHeader;
+import co.ecg.jain_sip.core.ri.NameValue;
+import co.ecg.jain_sip.core.ri.Separators;
+import co.ecg.jain_sip.sip.ri.header.ims.ParameterNamesIms;
+import co.ecg.jain_sip.sip.ri.header.ParametersHeader;
 
 
 /**

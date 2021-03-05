@@ -1,13 +1,13 @@
 package co.ecg.jain_sip.sip.ri.parser.extensions;
 
-import gov.nist.core.Token;
-import gov.nist.javax.sip.header.Reason;
-import gov.nist.javax.sip.header.ReasonList;
-import gov.nist.javax.sip.header.SIPHeader;
-import gov.nist.javax.sip.header.extensions.References;
-import gov.nist.javax.sip.parser.Lexer;
-import gov.nist.javax.sip.parser.ParametersParser;
-import gov.nist.javax.sip.parser.TokenTypes;
+import co.ecg.jain_sip.core.ri.Token;
+import co.ecg.jain_sip.sip.ri.header.Reason;
+import co.ecg.jain_sip.sip.ri.header.ReasonList;
+import co.ecg.jain_sip.sip.ri.header.SIPHeader;
+import co.ecg.jain_sip.sip.ri.header.extensions.References;
+import co.ecg.jain_sip.sip.ri.parser.Lexer;
+import co.ecg.jain_sip.sip.ri.parser.ParametersParser;
+import co.ecg.jain_sip.sip.ri.parser.TokenTypes;
 
 import java.text.ParseException;
 

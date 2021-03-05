@@ -30,10 +30,10 @@
 
 package test.torture;
 
-import gov.nist.javax.sip.address.*;
-import gov.nist.javax.sip.parser.*;
-import gov.nist.javax.sip.header.*;
-import gov.nist.javax.sip.message.*;
+import co.ecg.jain_sip.sip.ri.address.*;
+import co.ecg.jain_sip.sip.ri.parser.*;
+import co.ecg.jain_sip.sip.ri.header.*;
+import co.ecg.jain_sip.sip.ri.message.*;
 import java.io.*;
 import java.util.Hashtable;
 import java.util.Enumeration;

@@ -25,8 +25,8 @@
  */
 package gov.nist.javax.sip.stack;
 
-import gov.nist.javax.sip.LogRecord;
-import gov.nist.javax.sip.LogRecordFactory;
+import co.ecg.jain_sip.sip.ri.LogRecord;
+import co.ecg.jain_sip.sip.ri.LogRecordFactory;
 
 /**
  * The Default Message log factory. This can be replaced as a stack

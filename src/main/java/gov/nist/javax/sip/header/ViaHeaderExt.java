@@ -3,7 +3,7 @@
  */
 package gov.nist.javax.sip.header;
 
-import javax.sip.header.ViaHeader;
+import co.ecg.jain_sip.sip.header.ViaHeader;
 
 
 /**

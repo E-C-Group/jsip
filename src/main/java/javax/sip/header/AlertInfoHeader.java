@@ -21,7 +21,7 @@
  */
 package javax.sip.header;
 
-import javax.sip.address.URI;
+import co.ecg.jain_sip.sip.address.URI;
 
 /**
  * When present in an INVITE request, the Alert-Info header field

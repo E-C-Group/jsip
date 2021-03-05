@@ -29,36 +29,36 @@
 
 package gov.nist.javax.sip.stack;
 
-import gov.nist.core.CommonLogger;
-import gov.nist.core.Host;
-import gov.nist.core.HostPort;
-import gov.nist.core.InternalErrorHandler;
-import gov.nist.core.LogWriter;
-import gov.nist.core.ServerLogger;
-import gov.nist.core.StackLogger;
-import gov.nist.javax.sip.address.AddressImpl;
-import gov.nist.javax.sip.header.ContentLength;
-import gov.nist.javax.sip.header.ContentType;
-import gov.nist.javax.sip.header.Via;
-import gov.nist.javax.sip.message.MessageFactoryImpl;
-import gov.nist.javax.sip.message.SIPMessage;
-import gov.nist.javax.sip.message.SIPRequest;
-import gov.nist.javax.sip.message.SIPResponse;
+import co.ecg.jain_sip.core.ri.CommonLogger;
+import co.ecg.jain_sip.core.ri.Host;
+import co.ecg.jain_sip.core.ri.HostPort;
+import co.ecg.jain_sip.core.ri.InternalErrorHandler;
+import co.ecg.jain_sip.core.ri.LogWriter;
+import co.ecg.jain_sip.core.ri.ServerLogger;
+import co.ecg.jain_sip.core.ri.StackLogger;
+import co.ecg.jain_sip.sip.ri.address.AddressImpl;
+import co.ecg.jain_sip.sip.ri.header.ContentLength;
+import co.ecg.jain_sip.sip.ri.header.ContentType;
+import co.ecg.jain_sip.sip.ri.header.Via;
+import co.ecg.jain_sip.sip.ri.message.MessageFactoryImpl;
+import co.ecg.jain_sip.sip.ri.message.SIPMessage;
+import co.ecg.jain_sip.sip.ri.message.SIPRequest;
+import co.ecg.jain_sip.sip.ri.message.SIPResponse;
 
 import java.io.IOException;
 import java.net.InetAddress;
 import java.text.ParseException;
 
-import javax.sip.address.Hop;
-import javax.sip.header.CSeqHeader;
-import javax.sip.header.CallIdHeader;
-import javax.sip.header.ContactHeader;
-import javax.sip.header.ContentLengthHeader;
-import javax.sip.header.ContentTypeHeader;
-import javax.sip.header.FromHeader;
-import javax.sip.header.ServerHeader;
-import javax.sip.header.ToHeader;
-import javax.sip.header.ViaHeader;
+import co.ecg.jain_sip.sip.address.Hop;
+import co.ecg.jain_sip.sip.header.CSeqHeader;
+import co.ecg.jain_sip.sip.header.CallIdHeader;
+import co.ecg.jain_sip.sip.header.ContactHeader;
+import co.ecg.jain_sip.sip.header.ContentLengthHeader;
+import co.ecg.jain_sip.sip.header.ContentTypeHeader;
+import co.ecg.jain_sip.sip.header.FromHeader;
+import co.ecg.jain_sip.sip.header.ServerHeader;
+import co.ecg.jain_sip.sip.header.ToHeader;
+import co.ecg.jain_sip.sip.header.ViaHeader;
 
 /**
  * Message channel abstraction for the SIP stack.
@@ -228,7 +228,7 @@ public abstract class MessageChannel {
                                     ((RawMessageChannel) channel).processMessage((SIPMessage) sipMessage.clone());
                                 } catch (Exception ex) {
                                     if (logger.isLoggingEnabled(ServerLogger.TRACE_ERROR)) {
-                                        logger.logError("Error self routing message cause by: ", ex);
+                                        log.error("Error self routing message cause by: ", ex);
                                     }
                                 }
                             }
@@ -256,7 +256,7 @@ public abstract class MessageChannel {
             throw ioe;
         } catch (Exception ex) {
             if (this.logger.isLoggingEnabled(ServerLogger.TRACE_ERROR)) {
-                this.logger.logError("Error self routing message cause by: ", ex);
+                this.log.error("Error self routing message cause by: ", ex);
             }
             // TODO: When moving to Java 6, use the IOExcpetion(message, exception) constructor
             throw new IOException("Error self routing message");

@@ -29,18 +29,18 @@
 package co.ecg.jain_sip.sip.ri.stack;
 
 import co.ecg.jain_sip.sip.ri.parser.PipelinedMsgParser;
-import gov.nist.core.CommonLogger;
-import gov.nist.core.LogWriter;
-import gov.nist.core.StackLogger;
-import gov.nist.javax.sip.header.CSeq;
-import gov.nist.javax.sip.header.CallID;
-import gov.nist.javax.sip.header.ContentLength;
-import gov.nist.javax.sip.header.From;
-import gov.nist.javax.sip.header.RequestLine;
-import gov.nist.javax.sip.header.StatusLine;
-import gov.nist.javax.sip.header.To;
-import gov.nist.javax.sip.header.Via;
-import gov.nist.javax.sip.message.SIPMessage;
+import co.ecg.jain_sip.core.ri.CommonLogger;
+import co.ecg.jain_sip.core.ri.LogWriter;
+import co.ecg.jain_sip.core.ri.StackLogger;
+import co.ecg.jain_sip.sip.ri.header.CSeq;
+import co.ecg.jain_sip.sip.ri.header.CallID;
+import co.ecg.jain_sip.sip.ri.header.ContentLength;
+import co.ecg.jain_sip.sip.ri.header.From;
+import co.ecg.jain_sip.sip.ri.header.RequestLine;
+import co.ecg.jain_sip.sip.ri.header.StatusLine;
+import co.ecg.jain_sip.sip.ri.header.To;
+import co.ecg.jain_sip.sip.ri.header.Via;
+import co.ecg.jain_sip.sip.ri.message.SIPMessage;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -360,7 +360,7 @@ public class TCPMessageChannel extends ConnectionOrientedMessageChannel {
         } catch (IOException any) {
         	problem = any;
         	log.warn("Failed to connect " + this.peerAddress + ":" + receiverPort +" but trying the advertised port=" + this.peerPortAdvertisedInHeaders + " if it's different than the port we just failed on");
-        	logger.logError("Error is ", any);
+        	log.error("Error is ", any);
 
         }
         if(sock == null) { // http://java.net/jira/browse/JSIP-362 If we couldn't connect to the host, try the advertised host:port as failsafe
@@ -467,7 +467,7 @@ public class TCPMessageChannel extends ConnectionOrientedMessageChannel {
             	if(mySock != null)
             	{
 	            	 if (logger.isLoggingEnabled(LogWriter.TRACE_ERROR)) {
-	            		 logger.logError("Malformed mandatory headers: closing socket! :" + mySock.toString());
+	            		 log.error("Malformed mandatory headers: closing socket! :" + mySock.toString());
 	            	 }
 	                
 	            	try
@@ -477,7 +477,7 @@ public class TCPMessageChannel extends ConnectionOrientedMessageChannel {
 	            	} catch(IOException ie)
 	            	{
 	            		if (logger.isLoggingEnabled(LogWriter.TRACE_ERROR)) {
-	            			logger.logError("Exception while closing socket! :" + mySock.toString() + ":" + ie.toString());
+	            			log.error("Exception while closing socket! :" + mySock.toString() + ":" + ie.toString());
 	            		}
 	            		
 	            	}

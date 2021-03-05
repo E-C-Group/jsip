@@ -1,10 +1,10 @@
 package test.unit.gov.nist.javax.sip.parser;
 
-import gov.nist.javax.sip.message.MessageFactoryImpl;
+import co.ecg.jain_sip.sip.ri.message.MessageFactoryImpl;
 
 import java.text.ParseException;
 
-import javax.sip.message.Request;
+import co.ecg.jain_sip.sip.message.Request;
 
 import junit.framework.TestCase;
 

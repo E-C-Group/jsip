@@ -26,7 +26,7 @@
 package co.ecg.jain_sip.sip.ri.parser;
 
 import java.text.ParseException;
-import javax.sip.*;
+import co.ecg.jain_sip.sip.*;
 
 /**
  * Parser for MimeVersion header.

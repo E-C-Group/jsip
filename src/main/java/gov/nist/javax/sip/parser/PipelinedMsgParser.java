@@ -36,17 +36,17 @@ package gov.nist.javax.sip.parser;
  * life goes slower but more reliably.
  *
  */
-import gov.nist.core.CommonLogger;
-import gov.nist.core.InternalErrorHandler;
-import gov.nist.core.LogLevels;
-import gov.nist.core.LogWriter;
-import gov.nist.core.StackLogger;
-import gov.nist.javax.sip.header.ContentLength;
-import gov.nist.javax.sip.message.SIPMessage;
-import gov.nist.javax.sip.stack.BlockingQueueDispatchAuditor;
-import gov.nist.javax.sip.stack.ConnectionOrientedMessageChannel;
-import gov.nist.javax.sip.stack.QueuedMessageDispatchBase;
-import gov.nist.javax.sip.stack.SIPTransactionStack;
+import co.ecg.jain_sip.core.ri.CommonLogger;
+import co.ecg.jain_sip.core.ri.InternalErrorHandler;
+import co.ecg.jain_sip.core.ri.LogLevels;
+import co.ecg.jain_sip.core.ri.LogWriter;
+import co.ecg.jain_sip.core.ri.StackLogger;
+import co.ecg.jain_sip.sip.ri.header.ContentLength;
+import co.ecg.jain_sip.sip.ri.message.SIPMessage;
+import co.ecg.jain_sip.sip.ri.stack.BlockingQueueDispatchAuditor;
+import co.ecg.jain_sip.sip.ri.stack.ConnectionOrientedMessageChannel;
+import co.ecg.jain_sip.sip.ri.stack.QueuedMessageDispatchBase;
+import co.ecg.jain_sip.sip.ri.stack.SIPTransactionStack;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -275,7 +275,7 @@ public final class PipelinedMsgParser implements Runnable {
             try {                                                                                
                 semaphore.acquire();                                        
             } catch (InterruptedException e) {
-                logger.logError("Semaphore acquisition for callId " + callId + " interrupted", e);
+                log.error("Semaphore acquisition for callId " + callId + " interrupted", e);
             }
             // once acquired we get the first message to process
             SIPMessage message = messagesForCallID.poll();
@@ -286,7 +286,7 @@ public final class PipelinedMsgParser implements Runnable {
             try {
                 sipMessageListener.processMessage(message);
             } catch (Exception e) {
-            	logger.logError("Error occured processing message", e);    
+            	log.error("Error occured processing message", e);
                 // We do not break the TCP connection because other calls use the same socket here
             } finally {                                        
                 if(messagesForCallID.size() <= 0) {
@@ -368,7 +368,7 @@ public final class PipelinedMsgParser implements Runnable {
                             	try {
             						sipMessageListener.sendSingleCRLF();
             					} catch (Exception e) {						
-            						logger.logError("A problem occured while trying to send a single CRLF in response to a double CRLF", e);
+            						log.error("A problem occured while trying to send a single CRLF in response to a double CRLF", e);
             					}                	
                             	continue;
                         	} else {
@@ -477,7 +477,7 @@ public final class PipelinedMsgParser implements Runnable {
                     }
                 } catch (ParseException ex) {
                     // Just ignore the parse exception.
-                    stackLogger.logError("Detected a parse error", ex);
+                    stacklog.error("Detected a parse error", ex);
                     continue;
                 }
 
@@ -527,7 +527,7 @@ public final class PipelinedMsgParser implements Runnable {
                                 break;
                             }
                         } catch (IOException ex) {
-                            stackLogger.logError("Exception Reading Content",ex);
+                            stacklog.error("Exception Reading Content",ex);
                             break;
                         } finally {
                             // Stop my starvation timer.

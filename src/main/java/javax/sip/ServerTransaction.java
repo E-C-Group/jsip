@@ -21,7 +21,7 @@
  */
 package javax.sip;
 
-import javax.sip.message.Response;
+import co.ecg.jain_sip.sip.message.Response;
 
 /**
  * A server transaction is used by a SipProvider to handle incoming Request

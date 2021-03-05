@@ -273,7 +273,7 @@ public class AuthenticationHelperImpl implements AuthenticationHelper {
         } catch (SipException ex) {
             throw ex;
         } catch (Exception ex) {
-            logger.logError("Unexpected exception ", ex);
+            log.error("Unexpected exception ", ex);
             throw new SipException("Unexpected exception ", ex);
         }
     }

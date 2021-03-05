@@ -26,9 +26,9 @@ package co.ecg.jain_sip.sip.ri.header.ims;
 */
 import java.text.ParseException;
 
-import gov.nist.javax.sip.address.AddressImpl;
-import gov.nist.javax.sip.header.AddressParametersHeader;
-import javax.sip.header.ExtensionHeader;
+import co.ecg.jain_sip.sip.ri.address.AddressImpl;
+import co.ecg.jain_sip.sip.ri.header.AddressParametersHeader;
+import co.ecg.jain_sip.sip.header.ExtensionHeader;
 
 /**
  *

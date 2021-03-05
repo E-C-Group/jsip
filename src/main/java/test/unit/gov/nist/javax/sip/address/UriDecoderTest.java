@@ -25,7 +25,7 @@
 */
 package test.unit.gov.nist.javax.sip.address;
 
-import gov.nist.javax.sip.address.UriDecoder;
+import co.ecg.jain_sip.sip.ri.address.UriDecoder;
 import junit.framework.TestCase;
 
 /**

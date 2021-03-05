@@ -1,6 +1,6 @@
 package co.ecg.jain_sip.sip.ri;
 
-import gov.nist.javax.sip.ClientTransactionExt;
+import co.ecg.jain_sip.sip.ri.ClientTransactionExt;
 
 /**
  * An implementation of this interface can be registered with the sip stack using the 

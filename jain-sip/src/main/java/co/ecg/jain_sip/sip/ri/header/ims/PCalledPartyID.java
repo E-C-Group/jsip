@@ -32,10 +32,10 @@ package co.ecg.jain_sip.sip.ri.header.ims;
 
 import java.text.ParseException;
 
-import javax.sip.header.ExtensionHeader;
+import co.ecg.jain_sip.sip.header.ExtensionHeader;
 
-import gov.nist.javax.sip.address.AddressImpl;
-import gov.nist.javax.sip.header.ims.PCalledPartyIDHeader;
+import co.ecg.jain_sip.sip.ri.address.AddressImpl;
+import co.ecg.jain_sip.sip.ri.header.ims.PCalledPartyIDHeader;
 
 /**
  * P-Called-Party-ID SIP Private Header.
