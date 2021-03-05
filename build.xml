@@ -77,16 +77,16 @@ c:/jakarta-ant/bin/ant all
     <property name="href.nist.homepage" value="http://www-x.antd.nist.gov/" />
     <property name="href.uncopyright" value="../uncopyright.html" />
     <property name="href.copyright" value="../copyright.html" />
-    <property name="href.mailto" value="mailto:users@jain-sip.dev.java.net" />
-    <property name="href.distribution" value="http://jain-sip.dev.java.net" />
+    <property name="href.mailto" value="mailto:users@co.ecg.jain-sip.dev.java.net" />
+    <property name="href.distribution" value="http://co.ecg.jain-sip.dev.java.net" />
 
     <property name="classes" value="${root}/classes" />
     <property name="retrowoven" value="${root}/retrowoven" />
     <property name="docdir" value="${root}/javadoc" />
     <property name="srcroot" value="${root}/src" />
     <property name="dist" value="dist" />
-    <property name="jain-sip-api-jar" value="${root}/jain-sip-api-1.2.jar" />
-    <property name="jain-sip-api-src-jar" value="${root}/jain-sip-api-1.2-src.jar" />
+    <property name="co.ecg.jain-sip-api-jar" value="${root}/co.ecg.jain-sip-api-1.2.jar" />
+    <property name="co.ecg.jain-sip-api-src-jar" value="${root}/co.ecg.jain-sip-api-1.2-src.jar" />
     <property name='j2se_api' value='http://java.sun.com/j2se/1.5/docs/api' />
     <property name="junit_jar" value="${junit}" />
     <property name="log4j_jar" value="${log4j}" />
@@ -118,7 +118,7 @@ c:/jakarta-ant/bin/ant all
 
     <target name="all-android" depends="make,compiletools,javadoc,javadoc-jain,android-copy,android-replace,android-jar-sip-stack" />
 
-    <target name="make" depends="compileapi,compileri,compilesdp,jain-sip-sdp-jar" />
+    <target name="make" depends="compileapi,compileri,compilesdp,co.ecg.jain-sip-sdp-jar" />
 
 
     <target name="cleanlogs">
@@ -181,7 +181,7 @@ c:/jakarta-ant/bin/ant all
         <javadoc packagenames="javax.sip.*,javax.sip.header.*,javax.sip.message.*,javax.sip.address.*,gov.nist.javax.sip.*,gov.nist.javax.sip.address.*,gov.nist.javax.sip.message.*,gov.nist.javax.sip.header.*,gov.nist.javas.sip.header.ims.*,gov.nist.javax.sip.stack.*,gov.nist.core.net.*,gov.nist.javax.sip.parser.*,javax.sdp.*,gov.nist.javax.sdp.*,gov.nist.javax.sdp.fields.*" sourcepath="${srcroot}" overview="${docdir}/overview.html" destdir="javadoc" use="true" splitindex="true" windowtitle="The JAIN-SIP-1.2 RI For the People !" doctitle="NIST-SIP: The Reference Implementation for JAIN-SIP 1.2" public="true" author="true" version="true" defaultexcludes="yes" additionalparam="-breakiterator">
             <classpath>
                 <pathelement location="${log4j_jar}" />
-                <pathelement location="${jain-sip-api-jar}" />
+                <pathelement location="${co.ecg.jain-sip-api-jar}" />
             </classpath>
             <link href="${j2se_api}" />
             <header>
@@ -210,7 +210,7 @@ c:/jakarta-ant/bin/ant all
 
             <javadoc packagenames="javax.sip.*,javax.sip.header.*,javax.sip.message.*,javax.sip.address.*,javax.sdp.*" sourcepath="${srcroot}" overview="${docdir}/overview.html" destdir="javadoc-jain" use="true" splitindex="true" windowtitle="JAIN-SIP-1.2 RI For the People !" doctitle="NIST SIP/SDP Parser and Stack (v1.3)" public="true" author="true" version="true" defaultexcludes="yes" additionalparam="-breakiterator">
                 <classpath>
-                    <pathelement location="${jain-sip-api-jar}" />
+                    <pathelement location="${co.ecg.jain-sip-api-jar}" />
                 </classpath>
                 <link href="${j2se_api}" />
                 <header>
@@ -236,16 +236,16 @@ c:/jakarta-ant/bin/ant all
                 <!-- Compile the stack and libraries -->
                 <target name="compileapi" depends="init">
                     <jain-javac includes="javax/sip/**/*.java" />
-                    <jar destfile="${jain-sip-api-jar}" basedir="${classes}" includes="javax/sip/**/*.class" >
+                    <jar destfile="${co.ecg.jain-sip-api-jar}" basedir="${classes}" includes="javax/sip/**/*.class" >
                         <manifest>
                             <attribute	name="Original-Jar-Name"
-                                        value="${jain-sip-api-jar}"/>
+                                        value="${co.ecg.jain-sip-api-jar}"/>
                         </manifest>
                     </jar>
-                    <jar destfile="${jain-sip-api-src-jar}" basedir="${srcroot}" includes="TIMESTAMP,javax/sip/**/*.java">
+                    <jar destfile="${co.ecg.jain-sip-api-src-jar}" basedir="${srcroot}" includes="TIMESTAMP,javax/sip/**/*.java">
                         <manifest>
                             <attribute	name="Original-Jar-Name"
-                                        value="${jain-sip-api-src-jar}"/>
+                                        value="${co.ecg.jain-sip-api-src-jar}"/>
                         </manifest>
                     </jar>
 
@@ -279,18 +279,18 @@ c:/jakarta-ant/bin/ant all
                         </classpath>
                     </jain-javac>
                     <copy file="TIMESTAMP" toDir="classes/" />
-                    <jar destfile="${jain-sip-ri-jar}" basedir="${classes}" includes="TIMESTAMP,gov/nist/**/*.class"
+                    <jar destfile="${co.ecg.jain-sip-ri-jar}" basedir="${classes}" includes="TIMESTAMP,gov/nist/**/*.class"
                                                                             excludes="gov/nist/javax/sip/stack/sctp/**/*.class">
                         <manifest>
                             <attribute	name="Original-Jar-Name"
-                                        value="${jain-sip-ri-jar}"/>
+                                        value="${co.ecg.jain-sip-ri-jar}"/>
                         </manifest>
                     </jar>
-                    <jar destfile="${jain-sip-src-jar}" basedir="${srcroot}" includes="TIMESTAMP,gov/nist/**/*.java"
+                    <jar destfile="${co.ecg.jain-sip-src-jar}" basedir="${srcroot}" includes="TIMESTAMP,gov/nist/**/*.java"
                                                                             excludes="gov/nist/javax/sip/stack/sctp/**/*.java">
                         <manifest>
                             <attribute	name="Original-Jar-Name"
-                                        value="${jain-sip-src-jar}"/>
+                                        value="${co.ecg.jain-sip-src-jar}"/>
                         </manifest>
                     </jar>
                 </target>
@@ -326,7 +326,7 @@ c:/jakarta-ant/bin/ant all
                 			<pathelement location="${log4j_jar}" />
                 		</classpath>
                 	</javac>
-                	<jar destfile="${jain-sip-sctp-jar}" basedir="${classes}"  
+                	<jar destfile="${co.ecg.jain-sip-sctp-jar}" basedir="${classes}"
                 	  includes="gov/nist/javax/sip/stack/sctp/**/*.class" />
                 </target>
 
@@ -343,13 +343,13 @@ c:/jakarta-ant/bin/ant all
                     <jar destfile="${unit_test_jar}" basedir="${classes}" includes="test/unit/**/*.class,test/torture/**/*" />
                 </target>
 
-                <target name="jain-sip-sdp-jar" depends="compilejain,generate-version">
+                <target name="co.ecg.jain-sip-sdp-jar" depends="compilejain,generate-version">
                     <copy file="TIMESTAMP" toDir="classes/" />
                     <copy file="version.txt" toDir="classes/" />
-                    <jar destfile="${jain-sip-sdp-jar}" basedir="${classes}" includes="TIMESTAMP,version.txt,javax/**/*.class,gov/nist/**/*.class" >
+                    <jar destfile="${co.ecg.jain-sip-sdp-jar}" basedir="${classes}" includes="TIMESTAMP,version.txt,javax/**/*.class,gov/nist/**/*.class" >
                         <manifest>
                             <attribute	name="Original-Jar-Name"
-                                        value="${jain-sip-sdp-jar}"/>
+                                        value="${co.ecg.jain-sip-sdp-jar}"/>
                         </manifest>
                     </jar>
                 </target>
@@ -378,7 +378,7 @@ c:/jakarta-ant/bin/ant all
                             <pathelement location='${log4j_jar}' />
                         </classpath>
                     </jain-javac>
-                    <jar destfile="${jain-sip-tck-jar}" basedir="${classes}">
+                    <jar destfile="${co.ecg.jain-sip-tck-jar}" basedir="${classes}">
                         <include name="test/tck/**/*.class" />
                         <include name="test/rihelper/**/*.class" />
                         <manifest>
@@ -400,14 +400,14 @@ c:/jakarta-ant/bin/ant all
                     <junit fork="yes" showoutput="yes" failureproperty="testing.failed">                    	
                     	<sysproperty key="enableNIO" value="${enableNIO}"/>
                         <classpath>
-                            <pathelement location="${jain-sip-api-jar}" />
-                            <pathelement location="${jain-sip-ri-jar}" />
+                            <pathelement location="${co.ecg.jain-sip-api-jar}" />
+                            <pathelement location="${co.ecg.jain-sip-ri-jar}" />
                             <pathelement location="${log4j_jar}" />
-                            <pathelement location="${jain-sip-tck-jar}" />
+                            <pathelement location="${co.ecg.jain-sip-tck-jar}" />
                             <pathelement location='${junit_jar}' />
                             <pathelement location='${log4j_jar}' />
                             
-                            <pathelement location='${jain-sip-sctp-jar}'/> <!-- only for Java 7 -->
+                            <pathelement location='${co.ecg.jain-sip-sctp-jar}'/> <!-- only for Java 7 -->
 
                             <!-- add source path since this will pick up test.tck.gui.images -->
                             <pathelement location='src' />
@@ -448,10 +448,10 @@ c:/jakarta-ant/bin/ant all
                     <junit fork="yes" showoutput="yes" failureproperty="testing.failed">
                     	<sysproperty key="enableNIO" value="${enableNIO}"/>
                         <classpath>
-                            <pathelement location="${jain-sip-api-jar}" />
-                            <pathelement location="${jain-sip-ri-jar}" />
+                            <pathelement location="${co.ecg.jain-sip-api-jar}" />
+                            <pathelement location="${co.ecg.jain-sip-ri-jar}" />
                             <pathelement location="${log4j_jar}" />
-                            <pathelement location="${jain-sip-tck-jar}" />
+                            <pathelement location="${co.ecg.jain-sip-tck-jar}" />
                             <pathelement location='${junit_jar}' />
                             <pathelement location='${log4j_jar}' />
 
@@ -540,10 +540,10 @@ c:/jakarta-ant/bin/ant all
 
                     <junit fork="yes" showoutput="yes" failureproperty="testing.failed">
                         <classpath>
-                            <pathelement location="${jain-sip-api-jar}" />
-                            <pathelement location="${jain-sip-ri-jar}" />
+                            <pathelement location="${co.ecg.jain-sip-api-jar}" />
+                            <pathelement location="${co.ecg.jain-sip-ri-jar}" />
                             <pathelement location="${log4j_jar}" />
-                            <pathelement location="${jain-sip-tck-jar}" />
+                            <pathelement location="${co.ecg.jain-sip-tck-jar}" />
                             <pathelement location='${junit_jar}' />
                             <pathelement location='${log4j_jar}' />
                             <pathelement location='${unit_test_jar}' />
@@ -584,10 +584,10 @@ c:/jakarta-ant/bin/ant all
                     <junit fork="yes" showoutput="yes" failureproperty="testing.failed">
                     	<sysproperty key="enableNIO" value="${enableNIO}"/>
                         <classpath>
-                            <pathelement location="${jain-sip-api-jar}" />
-                            <pathelement location="${jain-sip-ri-jar}" />
+                            <pathelement location="${co.ecg.jain-sip-api-jar}" />
+                            <pathelement location="${co.ecg.jain-sip-ri-jar}" />
                             <pathelement location="${log4j_jar}" />
-                            <pathelement location="${jain-sip-tck-jar}" />
+                            <pathelement location="${co.ecg.jain-sip-tck-jar}" />
                             <pathelement location='${junit_jar}' />
                             <pathelement location='${log4j_jar}' />
                             <pathelement location='${unit_test_jar}' />
@@ -633,8 +633,8 @@ c:/jakarta-ant/bin/ant all
                     <junit fork="yes" showoutput="yes" failureproperty="testing.failed">
                         <classpath>
                             <pathelement location="${classes}" />
-                            <pathelement location="${jain-sip-sdp-jar}" />
-                            <pathelement location="${jain-sip-ri-jar}" />
+                            <pathelement location="${co.ecg.jain-sip-sdp-jar}" />
+                            <pathelement location="${co.ecg.jain-sip-ri-jar}" />
                             <pathelement location="${log4j_jar}" />
                             <pathelement location='${junit_jar}' />
                             <pathelement location='${log4j_jar}' />
@@ -669,8 +669,8 @@ c:/jakarta-ant/bin/ant all
                     <junit fork="yes" showoutput="yes" failureproperty="testing.failed">
                     	<sysproperty key="enableNIO" value="${enableNIO}"/>
                         <classpath>
-                            <pathelement location="${jain-sip-sdp-jar}" />
-                            <pathelement location="${jain-sip-ri-jar}" />
+                            <pathelement location="${co.ecg.jain-sip-sdp-jar}" />
+                            <pathelement location="${co.ecg.jain-sip-ri-jar}" />
                             <pathelement location="${log4j_jar}" />
                             <pathelement location='${junit_jar}' />
                             <pathelement location='${log4j_jar}' />
@@ -704,17 +704,17 @@ c:/jakarta-ant/bin/ant all
                 <!-- Generate a tar file -->
 
                 <target name="srctar" depends="init"  >
-                    <tar compression="gzip" basedir="../" destfile="${jain-sip-src-tar}"
+                    <tar compression="gzip" basedir="../" destfile="${co.ecg.jain-sip-src-tar}"
                     includes="${top}/**/*/"
                                 excludes="${top}/www/**/*,${top}/javax/**/*,${top}/repo/**/*,${top}/ant-tasks/lib/**/*,${top}/test-reports/**/*,${top}/classes/**/*,${top}/javadoc/**/*,${top}/*.jar,${top}/lib/**/*,${top}/tckoutput.txt,${top}/*.gz,${top}/poms/**/*" />
                 </target>
                 <target name="javadoctar" depends="init,javadoc"  >
-                    <touch file="${jain-sip-javadoc-tar}" />
-                    <tar compression="gzip" basedir="../" destfile="${jain-sip-javadoc-tar}"
+                    <touch file="${co.ecg.jain-sip-javadoc-tar}" />
+                    <tar compression="gzip" basedir="../" destfile="${co.ecg.jain-sip-javadoc-tar}"
                     includes="${top}/javadoc/**/*" />
                 </target>
                 <target name="alltar" depends="init"  >
-                    <tar compression="gzip" basedir="../" destfile="${jain-sip-all-tar}"
+                    <tar compression="gzip" basedir="../" destfile="${co.ecg.jain-sip-all-tar}"
                     includes="${top}/**/*/"
                     excludes="${top}/*.tar.gz" />
                 </target>
@@ -723,21 +723,21 @@ c:/jakarta-ant/bin/ant all
                 <target name="dist" depends="make,compiletck,javadoctar,alltar,srctar">
                     <mkdir dir="${dist}" />
                     <mkdir dir="${dist}/jain-sdp" />
-                    <mkdir dir="${dist}/jain-sip-javadoc" />
-                    <mkdir dir="${dist}/jain-sip-sdp"/>
-                    <mkdir dir="${dist}/jain-sip-api"/>
-                    <mkdir dir="${dist}/jain-sip-ri"/>
-                    <mkdir dir="${dist}/jain-sip-tck" />
-                    <mkdir dir="${dist}/jain-sip-src" />
-                    <mkdir dir="${dist}/jain-sip-all" />
-                    <copy file="${jain-sip-javadoc-tar}" todir="${dist}/jain-sip-javadoc"  />
-                    <copy file="${jain-sip-src-tar}" todir="${dist}/jain-sip-src"  />
-                    <copy file="${jain-sip-api-jar}" todir="${dist}/jain-sip-api"/>
-                    <copy file="${jain-sip-ri-jar}" todir="${dist}/jain-sip-ri"/>
-                    <copy file="${jain-sip-sdp-jar}" todir="${dist}/jain-sip-sdp"/>
+                    <mkdir dir="${dist}/co.ecg.jain-sip-javadoc" />
+                    <mkdir dir="${dist}/co.ecg.jain-sip-sdp"/>
+                    <mkdir dir="${dist}/co.ecg.jain-sip-api"/>
+                    <mkdir dir="${dist}/co.ecg.jain-sip-ri"/>
+                    <mkdir dir="${dist}/co.ecg.jain-sip-tck" />
+                    <mkdir dir="${dist}/co.ecg.jain-sip-src" />
+                    <mkdir dir="${dist}/co.ecg.jain-sip-all" />
+                    <copy file="${co.ecg.jain-sip-javadoc-tar}" todir="${dist}/co.ecg.jain-sip-javadoc"  />
+                    <copy file="${co.ecg.jain-sip-src-tar}" todir="${dist}/co.ecg.jain-sip-src"  />
+                    <copy file="${co.ecg.jain-sip-api-jar}" todir="${dist}/co.ecg.jain-sip-api"/>
+                    <copy file="${co.ecg.jain-sip-ri-jar}" todir="${dist}/co.ecg.jain-sip-ri"/>
+                    <copy file="${co.ecg.jain-sip-sdp-jar}" todir="${dist}/co.ecg.jain-sip-sdp"/>
                     <copy file="${sdp_jar}" todir="${dist}/jain-sdp"/>
-                    <copy file="${jain-sip-tck-jar}" todir ="${dist}/jain-sip-tck" />
-                    <copy file="${jain-sip-all-tar}"   todir="${dist}/jain-sip-all" />
+                    <copy file="${co.ecg.jain-sip-tck-jar}" todir ="${dist}/co.ecg.jain-sip-tck" />
+                    <copy file="${co.ecg.jain-sip-all-tar}"   todir="${dist}/co.ecg.jain-sip-all" />
                     <copy file="README-DISTRIBUTION"  todir="${dist}"/>
 
                 </target>
@@ -790,8 +790,8 @@ c:/jakarta-ant/bin/ant all
                     <delete dir="build/maven-repo" />
                     <!-- clean it -->
                     <maven-repository-importer destdir="build/maven-repo" version="1.2">
-                        <artifact jar="jain-sip-api-1.2.jar" pom="poms/api-pom.xml" />
-                        <artifact jar="jain-sip-ri-1.2.jar" pom="poms/ri-pom.xml" />
+                        <artifact jar="co.ecg.jain-sip-api-1.2.jar" pom="poms/api-pom.xml" />
+                        <artifact jar="co.ecg.jain-sip-ri-1.2.jar" pom="poms/ri-pom.xml" />
                     </maven-repository-importer>
                 </target>
 
@@ -804,7 +804,7 @@ c:/jakarta-ant/bin/ant all
                             <argument value="-d:pserver:${user.name}@cvs.dev.java.net:/cvs" />
                             <argument line="-z9 import -ko -W *.jar -kb -m" />
                             <argument value="deploying new jars to the java.net maven repository" />
-                            <argument value="jain-sip/repo" />
+                            <argument value="co.ecg.jain-sip/repo" />
                             <argument line="deployment-to-maven-repository t${DSTAMP}${TSTAMP}" />
                         </commandline>
                     </cvs>
@@ -860,8 +860,8 @@ c:/jakarta-ant/bin/ant all
                 <target name="perform-m2-release" depends="ant-tools" description="Performs m2 deployment" >
                     <antcall target="update-from-cvs" />
                                         <taskdef name="versioner" classname="net.java.jsip.ant.tasks.VersionerTask" classpath="classes"/>
-                    <versioner cvsversionfile="${ant.file.NIST-SIP}/../version.txt" incrementcvsversion="false" parent="true" pomfile="${ant.file.NIST-SIP}/../m2/jain-sip-api/pom.xml" />
-                    <versioner cvsversionfile="${ant.file.NIST-SIP}/../version.txt" incrementcvsversion="false" parent="true" pomfile="${ant.file.NIST-SIP}/../m2/jain-sip-ri/pom.xml" />
+                    <versioner cvsversionfile="${ant.file.NIST-SIP}/../version.txt" incrementcvsversion="false" parent="true" pomfile="${ant.file.NIST-SIP}/../m2/co.ecg.jain-sip-api/pom.xml" />
+                    <versioner cvsversionfile="${ant.file.NIST-SIP}/../version.txt" incrementcvsversion="false" parent="true" pomfile="${ant.file.NIST-SIP}/../m2/co.ecg.jain-sip-ri/pom.xml" />
                     <versioner cvsversionfile="${ant.file.NIST-SIP}/../version.txt" incrementcvsversion="false" parent="true" pomfile="${ant.file.NIST-SIP}/../m2/nist-sdp/pom.xml" />
                     <versioner cvsversionfile="${ant.file.NIST-SIP}/../version.txt" incrementcvsversion="false" parent="false" pomfile="${ant.file.NIST-SIP}/../m2/pom.xml" />
 
@@ -958,7 +958,7 @@ c:/jakarta-ant/bin/ant all
 			additionalparam="-breakiterator">
 			<classpath>
 				<pathelement location="${log4j_jar}" />
-				<pathelement location="${jain-sip-api-jar}" />
+				<pathelement location="${co.ecg.jain-sip-api-jar}" />
 			</classpath>
 			<link href="${j2se_api}" />
 			<header>

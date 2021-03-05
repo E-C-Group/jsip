@@ -5,17 +5,17 @@
 	<parent>
 		<groupId>javax.sip</groupId>
 		<version>1.2.0</version>
-		<artifactId>jain-sip</artifactId>
+		<artifactId>co.ecg.jain-sip</artifactId>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 
 	<groupId>javax.sip</groupId>
-	<artifactId>jain-sip-ri</artifactId>
+	<artifactId>co.ecg.jain-sip-ri</artifactId>
 	<version>1.2.X-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>jain-sip-ri</name>
-	<url>http://code.google.com/p/jain-sip/</url>
+	<name>co.ecg.jain-sip-ri</name>
+	<url>http://code.google.com/p/co.ecg.jain-sip/</url>
 	<build>
 		<sourceDirectory>../../src</sourceDirectory>
 		<plugins>
@@ -151,7 +151,7 @@
 		</dependency>
 		<dependency>
 			<groupId>javax.sip</groupId>
-			<artifactId>jain-sip-api</artifactId>
+			<artifactId>co.ecg.jain-sip-api</artifactId>
 			<version>1.2.0</version>
 			<scope>provided</scope>
 		</dependency>
@@ -182,8 +182,8 @@
 	</repositories>	
 
 	<scm>
-		<connection>scm:git:https://code.google.com/p/jain-sip/</connection>
-		<developerConnection>scm:git:https://code.google.com/p/jain-sip/</developerConnection>
-		<url>https://code.google.com/p/jain-sip/</url>
+		<connection>scm:git:https://code.google.com/p/co.ecg.jain-sip/</connection>
+		<developerConnection>scm:git:https://code.google.com/p/co.ecg.jain-sip/</developerConnection>
+		<url>https://code.google.com/p/co.ecg.jain-sip/</url>
 	</scm>
 </project>

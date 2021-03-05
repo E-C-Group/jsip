@@ -144,31 +144,31 @@ public class VersionerTask extends Task {
         	super.getProject().setProperty("svnversion", Integer.toString(localVersion));
 
         	
-        	getProject().setProperty("jain-sip-ri-jar",
-					"jain-sip-ri-1.2." + localVersion + ".jar");
-			getProject().setProperty("jain-sip-sdp-jar",
-					"jain-sip-sdp-1.2." + localVersion + ".jar");
-			getProject().setProperty("jain-sip-src-tar",
-					"jain-sip-src-1.2." + localVersion + ".tar.gz");
+        	getProject().setProperty("co.ecg.jain-sip-ri-jar",
+					"co.ecg.jain-sip-ri-1.2." + localVersion + ".jar");
+			getProject().setProperty("co.ecg.jain-sip-sdp-jar",
+					"co.ecg.jain-sip-sdp-1.2." + localVersion + ".jar");
+			getProject().setProperty("co.ecg.jain-sip-src-tar",
+					"co.ecg.jain-sip-src-1.2." + localVersion + ".tar.gz");
 
-			getProject().setProperty("jain-sip-javadoc-tar",
-					"jain-sip-javadoc-1.2." + localVersion + ".tar.gz");
+			getProject().setProperty("co.ecg.jain-sip-javadoc-tar",
+					"co.ecg.jain-sip-javadoc-1.2." + localVersion + ".tar.gz");
 
-			getProject().setProperty("jain-sip-all-tar",
-					"jain-sip-1.2." + localVersion + ".tar.gz");
-			getProject().setProperty("jain-sip-tck-jar",
-					"jain-sip-tck-1.2." + localVersion + ".jar");
+			getProject().setProperty("co.ecg.jain-sip-all-tar",
+					"co.ecg.jain-sip-1.2." + localVersion + ".tar.gz");
+			getProject().setProperty("co.ecg.jain-sip-tck-jar",
+					"co.ecg.jain-sip-tck-1.2." + localVersion + ".jar");
 			getProject().setProperty("sdp_jar",
 					"jain-sdp-1.0." + localVersion + ".jar");
 			getProject().setProperty("sdp-src-jar",
 					"jain-sdp-src-1.0." + localVersion + ".jar");
-			getProject().setProperty("jain-sip-src-jar",
-					"jain-sip-src-1.2." + localVersion + ".jar");
+			getProject().setProperty("co.ecg.jain-sip-src-jar",
+					"co.ecg.jain-sip-src-1.2." + localVersion + ".jar");
 
-			getProject().setProperty("jain-sip-sctp-jar",
-					"jain-sip-sctp-1.2." + localVersion + ".jar");
+			getProject().setProperty("co.ecg.jain-sip-sctp-jar",
+					"co.ecg.jain-sip-sctp-1.2." + localVersion + ".jar");
 			getProject().setProperty("unit_test_jar",
-					"jain-sip-unit-test-1.2." + localVersion + ".jar");
+					"co.ecg.jain-sip-unit-test-1.2." + localVersion + ".jar");
 			
 			String cwd = System.getProperty("user.dir");
 			getProject().setProperty("top",new File(cwd).getName());

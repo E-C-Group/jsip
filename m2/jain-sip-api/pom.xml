@@ -5,14 +5,14 @@
   <parent>
     <groupId>javax.sip</groupId>
     <version>1.2.0</version>
-    <artifactId>jain-sip</artifactId>
+    <artifactId>co.ecg.jain-sip</artifactId>
     <relativePath>../pom.xml</relativePath>
   </parent>
 
-  <artifactId>jain-sip-api</artifactId>
+  <artifactId>co.ecg.jain-sip-api</artifactId>
   <packaging>jar</packaging>
-  <name>jain-sip-api</name>
-  <url>http://code.google.com/p/jain-sip/</url>
+  <name>co.ecg.jain-sip-api</name>
+  <url>http://code.google.com/p/co.ecg.jain-sip/</url>
    <build>
 	<sourceDirectory>../../src/javax/</sourceDirectory>
 	<plugins>

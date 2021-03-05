@@ -1,12 +1,12 @@
 <project>
   <modelVersion>4.0.0</modelVersion>
   <groupId>javax.sip</groupId>
-  <artifactId>jain-sip-api</artifactId>
+  <artifactId>co.ecg.jain-sip-api</artifactId>
   <version>1.2</version>
   <packaging>jar</packaging>
   <name>JAIN-SIP API</name>
 
-  <url>https://jain-sip.dev.java.net/</url>
+  <url>https://co.ecg.jain-sip.dev.java.net/</url>
 
   <organization>
     <name>NIST</name>

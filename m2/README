@@ -12,7 +12,7 @@ maven2 file in the conf directory of your maven 2 installation directory :
 
 Replace username by your java.net id and the passwrod by your java password. 
  
-open up a shell and move until your in the m2 directory of this jain-sip project and do 
+open up a shell and move until your in the m2 directory of this co.ecg.jain_sip project and do
 mvn deploy
 
 The artifacts should be uploaded.

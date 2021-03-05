@@ -3,14 +3,14 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>javax.sip</groupId>
-	<artifactId>jain-sip</artifactId>
+	<artifactId>co.ecg.jain-sip</artifactId>
 	<version>1.2.1-SNAPSHOT</version>
 
 	<packaging>pom</packaging>
 
-	<name>jain-sip</name>
+	<name>co.ecg.jain-sip</name>
 	<description>JAIN SIP Parent pom</description>
-	<url>http://code.google.com/p/jain-sip/</url>
+	<url>http://code.google.com/p/co.ecg.jain-sip/</url>
 
 	<developers>
 		<developer>
@@ -56,8 +56,8 @@
 	</licenses>
 
 	<modules>
-		<module>jain-sip-api</module>
-		<module>jain-sip-ri</module>
+		<module>co.ecg.jain-sip-api</module>
+		<module>co.ecg.jain-sip-ri</module>
 	</modules>
 
 	<properties>
@@ -70,7 +70,7 @@
 				<jdk>1.7</jdk>
 			</activation>
 			<modules>
-				<module>jain-sip-sctp</module>
+				<module>co.ecg.jain-sip-sctp</module>
 			</modules>
 		</profile>
 		<profile>
@@ -148,9 +148,9 @@
 	</build>
 
 	<scm>
-		<connection>scm:git:https://code.google.com/p/jain-sip/</connection>
-		<developerConnection>scm:git:https://code.google.com/p/jain-sip/</developerConnection>
-		<url>https://code.google.com/p/jain-sip/</url>
+		<connection>scm:git:https://code.google.com/p/co.ecg.jain-sip/</connection>
+		<developerConnection>scm:git:https://code.google.com/p/co.ecg.jain-sip/</developerConnection>
+		<url>https://code.google.com/p/co.ecg.jain-sip/</url>
 	</scm>
 
 </project>

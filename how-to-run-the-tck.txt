@@ -22,7 +22,7 @@ console.
 
 You can look at the results of your run in test-reports/html/index.html
 
-To post a challenge to the tck : send mail to the user@jain-sip.dev.java.net
+To post a challenge to the tck : send mail to the user@co.ecg.jain_sip.dev.java.net
 mailing list 
 
 

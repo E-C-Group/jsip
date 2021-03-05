@@ -61,11 +61,11 @@
 		- pomfile - path to pom file in which tak should switch version
 		- parent - indicates wheather task should change version in root element or root-parent element
 		- mainversionparts - tells task how many version parts version number has (default 3) - for instnace 1.2.1 - has 3 main version parts, in case of value set to 3 and 1.2.1.23 only first 3 will be taken into result and 23 will be disscarded
-		- toversion - file that will get suffix before extension part - ./jain-sip-ri-1.2.1.jar ==> ./jain-sip-ri-1.2.1.156.jar 
+		- toversion - file that will get suffix before extension part - ./co.ecg.jain_sip-ri-1.2.1.jar ==> ./co.ecg.jain_sip-ri-1.2.1.156.jar
 	-->
 	
 	<target name="test" depends="build-ant-tasks">
-		<versioner cvsversionfile="../../version.txt" incrementcvsversion="true"  pomfile="D:/java/jprojects/jain-sip/poms/api-pom.xml"/>
+		<versioner cvsversionfile="../../version.txt" incrementcvsversion="true"  pomfile="D:/java/jprojects/co.ecg.jain-sip/poms/api-pom.xml"/>
 	</target>
 	
 </project>
