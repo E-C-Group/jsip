@@ -62,7 +62,7 @@ public class PPreferredIdentityParser
 
     public SIPHeader parse() throws ParseException {
 
-        if (debug)
+
             dbg_enter("PreferredIdentityParser.parse");
 
         try {
@@ -75,7 +75,7 @@ public class PPreferredIdentityParser
             super.parse( p );
             return p;
         } finally {
-            if (debug)
+
                 dbg_leave("PreferredIdentityParser.parse");
             }
 

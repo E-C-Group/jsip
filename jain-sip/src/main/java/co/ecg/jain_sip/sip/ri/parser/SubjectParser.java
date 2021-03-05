@@ -25,6 +25,9 @@
 */
 package co.ecg.jain_sip.sip.ri.parser;
 
+import co.ecg.jain_sip.sip.ri.header.SIPHeader;
+import co.ecg.jain_sip.sip.ri.header.Subject;
+
 import java.text.ParseException;
 
 /**
@@ -58,11 +61,11 @@ public class SubjectParser extends HeaderParser {
     /**
      * parse the String message
      * @return SIPHeader (Subject object)
-     * @throws SIPParseException if the message does not respect the spec.
+     * @throws ParseException if the message does not respect the spec.
      */
     public SIPHeader parse() throws ParseException {
         Subject subject = new Subject();
-        if (debug)
+
             dbg_enter("SubjectParser.parse");
 
         try {
@@ -71,7 +74,7 @@ public class SubjectParser extends HeaderParser {
             subject.setSubject(s.trim());
 
         } finally {
-            if (debug)
+
                 dbg_leave("SubjectParser.parse");
         }
 

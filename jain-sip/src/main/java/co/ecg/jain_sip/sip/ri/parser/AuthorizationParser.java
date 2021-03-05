@@ -25,6 +25,9 @@
 */
 package co.ecg.jain_sip.sip.ri.parser;
 
+import co.ecg.jain_sip.sip.ri.header.Authorization;
+import co.ecg.jain_sip.sip.ri.header.SIPHeader;
+
 import java.text.ParseException;
 
 /**
@@ -58,10 +61,10 @@ public class AuthorizationParser extends ChallengeParser {
     /**
      * parse the String message
      * @return SIPHeader (Authorization object)
-     * @throws SIPParseException if the message does not respect the spec.
+     * @throws ParseException if the message does not respect the spec.
      */
     public SIPHeader parse() throws ParseException {
-    	if (debug)
+
     		dbg_enter("parse");
         try {
             headerName(TokenTypes.AUTHORIZATION);
@@ -69,7 +72,7 @@ public class AuthorizationParser extends ChallengeParser {
             super.parse(auth);
             return auth;
         } finally {
-        	if (debug)
+
         		dbg_leave("parse");
         }
     }

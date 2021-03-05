@@ -28,6 +28,8 @@
 *******************************************************************************/
 package co.ecg.jain_sip.sip.ri.header;
 
+import co.ecg.jain_sip.sip.header.ContentEncodingHeader;
+
 import java.text.ParseException;
 
 /**
@@ -79,7 +81,7 @@ import java.text.ParseException;
  */
 public class ContentEncoding
     extends SIPHeader
-    implements javax.sip.header.ContentEncodingHeader {
+    implements ContentEncodingHeader {
 
     /**
      * Comment for <code>serialVersionUID</code>

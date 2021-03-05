@@ -212,9 +212,6 @@ public class LexerCore extends StringTokenizer {
      * can be matched.
      */
     public Token match(int tok) throws ParseException {
-        if (Debug.parserDebug) {
-            Debug.println("match " + tok);
-        }
         if (tok > START && tok < END) {
             if (tok == ID) {
                 // Generic ID sought.

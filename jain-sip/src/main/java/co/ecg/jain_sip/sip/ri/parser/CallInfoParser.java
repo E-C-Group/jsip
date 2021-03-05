@@ -25,6 +25,12 @@
 */
 package co.ecg.jain_sip.sip.ri.parser;
 
+import co.ecg.jain_sip.sip.ri.address.GenericURI;
+import co.ecg.jain_sip.sip.ri.header.CallInfo;
+import co.ecg.jain_sip.sip.ri.header.CallInfoList;
+import co.ecg.jain_sip.sip.ri.header.SIPHeader;
+import co.ecg.jain_sip.sip.ri.header.SIPHeaderNames;
+
 import java.text.ParseException;
 
 /**
@@ -57,11 +63,11 @@ public class CallInfoParser  extends ParametersParser{
     /**
      * parse the CallInfo String header
      * @return SIPHeader (CallInfoList object)
-     * @throws SIPParseException if the message does not respect the spec.
+     * @throws ParseException if the message does not respect the spec.
      */
     public SIPHeader parse() throws ParseException {
         
-        if (debug) dbg_enter("CallInfoParser.parse");
+         dbg_enter("CallInfoParser.parse");
         CallInfoList list=new CallInfoList();
         
         try {
@@ -74,7 +80,7 @@ public class CallInfoParser  extends ParametersParser{
                 this.lexer.SPorHT();
                 this.lexer.match('<');
                 URLParser urlParser=new URLParser((Lexer)this.lexer);
-                GenericURI uri=urlParser.uriReference(true); 
+                GenericURI uri=urlParser.uriReference(true);
                 callInfo.setInfo(uri);
                 this.lexer.match('>');
                 this.lexer.SPorHT();
@@ -104,7 +110,7 @@ public class CallInfoParser  extends ParametersParser{
             return list;
         }
         finally {
-            if (debug) dbg_leave("CallInfoParser.parse");
+             dbg_leave("CallInfoParser.parse");
         }
     }
     

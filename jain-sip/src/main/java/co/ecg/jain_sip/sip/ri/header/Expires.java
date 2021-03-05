@@ -29,6 +29,7 @@
 package co.ecg.jain_sip.sip.ri.header;
 
 import co.ecg.jain_sip.sip.*;
+import co.ecg.jain_sip.sip.header.ExpiresHeader;
 
 /**
  * Expires SIP Header.
@@ -42,7 +43,7 @@ import co.ecg.jain_sip.sip.*;
  */
 public class Expires
     extends SIPHeader
-    implements javax.sip.header.ExpiresHeader {
+    implements ExpiresHeader {
 
     /**
      * Comment for <code>serialVersionUID</code>

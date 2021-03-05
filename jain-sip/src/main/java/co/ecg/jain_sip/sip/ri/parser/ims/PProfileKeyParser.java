@@ -49,7 +49,7 @@ public class PProfileKeyParser extends AddressParametersParser implements TokenT
     }
 
     public SIPHeader parse() throws ParseException {
-        if (debug)
+
             dbg_enter("PProfileKey.parse");
         try {
 
@@ -63,7 +63,7 @@ public class PProfileKeyParser extends AddressParametersParser implements TokenT
             return p;
 
         } finally {
-            if (debug)
+
                 dbg_leave("PProfileKey.parse");
             }
 

@@ -74,7 +74,7 @@ public class PMediaAuthorizationParser
     {
         PMediaAuthorizationList mediaAuthorizationList = new PMediaAuthorizationList();
 
-        if (debug)
+
             dbg_enter("MediaAuthorizationParser.parse");
 
 
@@ -110,7 +110,7 @@ public class PMediaAuthorizationParser
         }
         finally
         {
-            if (debug)
+
                 dbg_leave("MediaAuthorizationParser.parse");
         }
 

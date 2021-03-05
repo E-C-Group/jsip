@@ -26,6 +26,7 @@
 package co.ecg.jain_sip.sip.ri.header;
 
 import co.ecg.jain_sip.sip.InvalidArgumentException;
+import co.ecg.jain_sip.sip.header.RSeqHeader;
 
 /**
  *
@@ -35,7 +36,7 @@ import co.ecg.jain_sip.sip.InvalidArgumentException;
  *
  *
  */
-public class RSeq extends SIPHeader implements javax.sip.header.RSeqHeader {
+public class RSeq extends SIPHeader implements RSeqHeader {
     /**
      * Comment for <code>serialVersionUID</code>
      */
@@ -78,7 +79,7 @@ public class RSeq extends SIPHeader implements javax.sip.header.RSeqHeader {
 
     /**
      * @deprecated
-     * @see javax.sip.header.RSeqHeader#setSequenceNumber(int)
+     * @see RSeqHeader#setSequenceNumber(int)
      */
     public void setSequenceNumber(int sequenceNumber) throws InvalidArgumentException {
         this.setSeqNumber(sequenceNumber);

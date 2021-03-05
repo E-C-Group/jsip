@@ -50,7 +50,7 @@ public class PServedUserParser extends AddressParametersParser {
 
     public SIPHeader parse() throws ParseException {
 
-        if (debug)
+
             dbg_enter("PServedUser.parse");
 
         try {
@@ -61,7 +61,7 @@ public class PServedUserParser extends AddressParametersParser {
             return servedUser;
         }
         finally {
-            if (debug)
+
                 dbg_leave("PServedUser.parse");
         }
     }

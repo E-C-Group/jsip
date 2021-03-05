@@ -20,15 +20,21 @@ package co.ecg.jain_sip.sip.ri.clientauthutils;
 
 import java.text.ParseException;
 
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.ListIterator;
 import java.util.Timer;
 
 import co.ecg.jain_sip.sip.*;
-import co.ecg.jain_sip.sip.header.HeaderFactory;
+import co.ecg.jain_sip.sip.address.Hop;
+import co.ecg.jain_sip.sip.address.SipURI;
+import co.ecg.jain_sip.sip.address.URI;
+import co.ecg.jain_sip.sip.header.*;
 import co.ecg.jain_sip.sip.message.Request;
 import co.ecg.jain_sip.sip.message.Response;
+import co.ecg.jain_sip.sip.ri.header.SIPHeader;
 import co.ecg.jain_sip.sip.ri.message.SIPRequest;
+import co.ecg.jain_sip.sip.ri.stack.SIPClientTransaction;
 import co.ecg.jain_sip.sip.ri.stack.SIPTransactionStack;
 import lombok.extern.slf4j.Slf4j;
 
@@ -288,7 +294,7 @@ public class AuthenticationHelperImpl implements AuthenticationHelper {
      * @param authHeader      the challenge that we should respond to
      * @param userCredentials username and pass
      * @return an authorisation header in response to authHeader.
-     * @throws OperationFailedException if auth header was malformated.
+     * @throws RuntimeException
      */
     private AuthorizationHeader getAuthorization(String method, String uri, String requestBody,
                                                  WWWAuthenticateHeader authHeader, UserCredentials userCredentials) {
@@ -305,7 +311,7 @@ public class AuthenticationHelperImpl implements AuthenticationHelper {
                 userCredentials.getUserName(), authHeader.getRealm(), userCredentials
                         .getPassword(), authHeader.getNonce(), nc_value, // JvB added
                 cnonce, // JvB added
-                method, uri, requestBody, qop, logger);// jvb changed
+                method, uri, requestBody, qop, log);// jvb changed
 
         AuthorizationHeader authorization = null;
         try {
@@ -354,7 +360,7 @@ public class AuthenticationHelperImpl implements AuthenticationHelper {
      * @param authHeader      the challenge that we should respond to
      * @param userCredentials username and pass
      * @return an authorisation header in response to authHeader.
-     * @throws OperationFailedException if auth header was malformated.
+     * @throws RuntimeException
      */
     private AuthorizationHeader getAuthorization(String method, String uri, String requestBody,
                                                  WWWAuthenticateHeader authHeader, UserCredentialHash userCredentials) {
@@ -370,7 +376,7 @@ public class AuthenticationHelperImpl implements AuthenticationHelper {
         response = MessageDigestAlgorithm.calculateResponse(authHeader.getAlgorithm(),
                 userCredentials.getHashUserDomainPassword(), authHeader.getNonce(), nc_value, // JvB added
                 cnonce, // JvB added
-                method, uri, requestBody, qop, logger);// jvb changed
+                method, uri, requestBody, qop, log);// jvb changed
 
         AuthorizationHeader authorization = null;
         try {

@@ -25,6 +25,10 @@
 */
 package co.ecg.jain_sip.sip.ri.parser;
 
+import co.ecg.jain_sip.core.ri.Token;
+import co.ecg.jain_sip.sip.ri.header.SIPETag;
+import co.ecg.jain_sip.sip.ri.header.SIPHeader;
+
 import java.text.ParseException;
 
 /**
@@ -59,11 +63,11 @@ public class SIPETagParser extends HeaderParser {
     /**
      * parse the String header
      * @return SIPHeader (Priority object)
-     * @throws SIPParseException if the message does not respect the spec.
+     * @throws ParseException if the message does not respect the spec.
      */
     public SIPHeader parse() throws ParseException {
 
-        if (debug)
+
             dbg_enter("SIPEtag.parse");
 
         SIPETag sipEtag = new SIPETag();
@@ -81,7 +85,7 @@ public class SIPETagParser extends HeaderParser {
 
             return sipEtag;
         } finally {
-            if (debug)
+
                 dbg_leave("SIPEtag.parse");
         }
     }

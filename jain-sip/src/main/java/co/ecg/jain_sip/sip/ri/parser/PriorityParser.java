@@ -25,6 +25,10 @@
 */
 package co.ecg.jain_sip.sip.ri.parser;
 
+import co.ecg.jain_sip.sip.ri.header.Priority;
+import co.ecg.jain_sip.sip.ri.header.SIPHeader;
+import co.ecg.jain_sip.sip.ri.header.SIPHeaderNames;
+
 import java.text.ParseException;
 
 /**
@@ -60,11 +64,11 @@ public class PriorityParser extends HeaderParser {
     /**
      * parse the String header
      * @return SIPHeader (Priority object)
-     * @throws SIPParseException if the message does not respect the spec.
+     * @throws ParseException if the message does not respect the spec.
      */
     public SIPHeader parse() throws ParseException {
 
-        if (debug)
+
             dbg_enter("PriorityParser.parse");
         Priority priority = new Priority();
         try {
@@ -87,7 +91,7 @@ public class PriorityParser extends HeaderParser {
 
             return priority;
         } finally {
-            if (debug)
+
                 dbg_leave("PriorityParser.parse");
         }
     }

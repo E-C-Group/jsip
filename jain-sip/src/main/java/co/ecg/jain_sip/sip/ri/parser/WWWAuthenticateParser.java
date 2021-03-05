@@ -24,6 +24,9 @@
 *
 */
 package co.ecg.jain_sip.sip.ri.parser;
+import co.ecg.jain_sip.sip.ri.header.SIPHeader;
+import co.ecg.jain_sip.sip.ri.header.WWWAuthenticate;
+
 import java.text.ParseException;
 
 /**
@@ -57,10 +60,10 @@ public class WWWAuthenticateParser extends ChallengeParser {
     /**
      * parse the String message
      * @return SIPHeader (WWWAuthenticate object)
-     * @throws SIPParseException if the message does not respect the spec.
+     * @throws ParseException if the message does not respect the spec.
      */
     public SIPHeader parse() throws ParseException {
-        if (debug)
+
             dbg_enter("parse");
         try {
             headerName(TokenTypes.WWW_AUTHENTICATE);
@@ -68,7 +71,7 @@ public class WWWAuthenticateParser extends ChallengeParser {
             super.parse(wwwAuthenticate);
             return wwwAuthenticate;
         } finally {
-            if (debug)
+
                 dbg_leave("parse");
         }
     }

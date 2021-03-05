@@ -35,7 +35,7 @@ public class ReferencesParser extends ParametersParser {
      */
     public SIPHeader parse() throws ParseException {
        
-        if (debug)
+
             dbg_enter("ReasonParser.parse");
 
         try {
@@ -49,7 +49,7 @@ public class ReferencesParser extends ParametersParser {
             super.parse(references);
             return references;
        } finally {
-            if (debug)
+
                 dbg_leave("ReferencesParser.parse");
         }
 

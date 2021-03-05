@@ -25,6 +25,10 @@
 */
 package co.ecg.jain_sip.sip.ri.parser;
 
+import co.ecg.jain_sip.core.ri.NameValue;
+import co.ecg.jain_sip.core.ri.Token;
+import co.ecg.jain_sip.sip.ri.header.AuthenticationHeader;
+
 import java.text.ParseException;
 
 /**
@@ -42,7 +46,7 @@ public abstract class ChallengeParser extends HeaderParser {
 
     /**
      * Constructor
-     * @param String challenge  message to parse to set
+     * @param challenge String message to parse to set
      */
     protected ChallengeParser(String challenge) {
         super(challenge);
@@ -50,7 +54,7 @@ public abstract class ChallengeParser extends HeaderParser {
 
     /**
      * Constructor
-     * @param String challenge  message to parse to set
+     * @param lexer -
      */
     protected ChallengeParser(Lexer lexer) {
         super(lexer);
@@ -63,13 +67,13 @@ public abstract class ChallengeParser extends HeaderParser {
     protected void parseParameter(AuthenticationHeader header)
         throws ParseException {
 
-        if (debug)
+
             dbg_enter("parseParameter");
         try {
             NameValue nv = this.nameValue('=');
             header.setParameter(nv);
         } finally {
-            if (debug)
+
                 dbg_leave("parseParameter");
         }
 

@@ -26,7 +26,11 @@
 package co.ecg.jain_sip.sip.ri.parser;
 
 import java.text.ParseException;
+
+import co.ecg.jain_sip.core.ri.Token;
 import co.ecg.jain_sip.sip.*;
+import co.ecg.jain_sip.sip.ri.header.RetryAfter;
+import co.ecg.jain_sip.sip.ri.header.SIPHeader;
 
 /**
  * Parser for RetryAfter header.
@@ -60,11 +64,11 @@ public class RetryAfterParser extends HeaderParser {
     /**
      * parse the String message
      * @return SIPHeader (RetryAfter object)
-     * @throws SIPParseException if the message does not respect the spec.
+     * @throws ParseException if the message does not respect the spec.
      */
     public SIPHeader parse() throws ParseException {
 
-        if (debug)
+
             dbg_enter("RetryAfterParser.parse");
 
         RetryAfter retryAfter = new RetryAfter();
@@ -119,7 +123,7 @@ public class RetryAfterParser extends HeaderParser {
                 this.lexer.SPorHT();
             }
         } finally {
-            if (debug)
+
                 dbg_leave("RetryAfterParser.parse");
         }
 

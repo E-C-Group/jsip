@@ -24,6 +24,10 @@
 *
 */
 package co.ecg.jain_sip.sip.ri.parser;
+import co.ecg.jain_sip.sip.ri.header.Route;
+import co.ecg.jain_sip.sip.ri.header.RouteList;
+import co.ecg.jain_sip.sip.ri.header.SIPHeader;
+
 import java.text.ParseException;
 
 /**
@@ -53,11 +57,11 @@ public class RouteParser extends AddressParametersParser {
 
     /** parse the String message and generate the Route List Object
      * @return SIPHeader the Route List object
-     * @throws SIPParseException if errors occur during the parsing
+     * @throws ParseException if errors occur during the parsing
      */
     public SIPHeader parse() throws ParseException {
         RouteList routeList = new RouteList();
-        if (debug)
+
             dbg_enter("parse");
 
         try {
@@ -81,7 +85,7 @@ public class RouteParser extends AddressParametersParser {
             }
             return routeList;
         } finally {
-            if (debug)
+
                 dbg_leave("parse");
         }
 

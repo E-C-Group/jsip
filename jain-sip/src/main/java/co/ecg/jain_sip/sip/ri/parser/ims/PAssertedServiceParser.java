@@ -54,7 +54,7 @@ public class PAssertedServiceParser extends HeaderParser implements TokenTypes{
     }
 
     public SIPHeader parse() throws ParseException {
-        if(debug)
+
             dbg_enter("PAssertedServiceParser.parse");
         try
         {
@@ -108,7 +108,7 @@ public class PAssertedServiceParser extends HeaderParser implements TokenTypes{
             return pps;
         }
         finally{
-            if(debug)
+
                 dbg_enter("PAssertedServiceParser.parse");
         }
 

@@ -28,6 +28,8 @@
 *******************************************************************************/
 package co.ecg.jain_sip.sip.ri.header;
 
+import co.ecg.jain_sip.sip.header.ExtensionHeader;
+
 /**
  * A generic extension header for the stack.
  * The input text of the header gets recorded here.
@@ -41,7 +43,7 @@ package co.ecg.jain_sip.sip.ri.header;
  */
 public class ExtensionHeaderImpl
     extends SIPHeader
-    implements javax.sip.header.ExtensionHeader {
+    implements ExtensionHeader {
 
     /**
      * Comment for <code>serialVersionUID</code>

@@ -86,7 +86,7 @@ public class PChargingFunctionAddressesParser
     public SIPHeader parse() throws ParseException {
 
 
-        if (debug)
+
             dbg_enter("parse");
         try {
             headerName(TokenTypes.P_CHARGING_FUNCTION_ADDRESSES);
@@ -112,14 +112,14 @@ public class PChargingFunctionAddressesParser
             super.parse(chargingFunctionAddresses);
             return chargingFunctionAddresses;
         } finally {
-            if (debug)
+
                 dbg_leave("parse");
         }
     }
 
     protected void parseParameter(PChargingFunctionAddresses chargingFunctionAddresses) throws ParseException {
 
-        if (debug)
+
             dbg_enter("parseParameter");
         try {
 
@@ -129,7 +129,7 @@ public class PChargingFunctionAddressesParser
             chargingFunctionAddresses.setMultiParameter(nv);
 
         } finally {
-            if (debug)
+
                 dbg_leave("parseParameter");
         }
 

@@ -24,9 +24,8 @@
  *
  */
 package co.ecg.jain_sip.sip.ri.stack;
-import co.ecg.jain_sip.core.ri.CommonLogger;
-import co.ecg.jain_sip.core.ri.StackLogger;
 import co.ecg.jain_sip.sip.ri.SipStackImpl;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -52,9 +51,9 @@ import java.util.concurrent.TimeUnit;
  * @author Vladimir Ralev
  *
  */
+@Slf4j
 public  class CallAnalyzer {
-	private static StackLogger logger = CommonLogger.getLogger(CallAnalyzer.class);
-	
+
 	/*
 	 * This is a Thread -> Hashmap association, each hashmap can contain multiple metricts for the thread
 	 */
@@ -244,7 +243,7 @@ public  class CallAnalyzer {
 								Long delta = System.currentTimeMillis() - entryTime;
 								
 								// if a thread is stuck for too long log it
-								if(logger != null && delta>statInfo.config.stuckTimeBeforeDump) {
+								if(delta>statInfo.config.stuckTimeBeforeDump) {
 									log.warn("Offending thread:\n" + getCurrentStack(info.getKey()));
 
 									StringBuilder sb = new StringBuilder();
@@ -325,8 +324,7 @@ public  class CallAnalyzer {
 	/**
 	 * Enter a traced zone by the name of metricReference for the current thread. This puts the enter timestamp
 	 * and all lost call calculations will be based on this timestamp
-	 * 
-	 * @param threadId
+	 *
 	 * @param metricReference
 	 */
 	public void enter(MetricReference metricReference) {
@@ -337,8 +335,7 @@ public  class CallAnalyzer {
 	/**
 	 * Leave a traced zone by the name of metricReference for the specified thread. This puts the timestamp in
 	 * inactive mode. No more analysis will be done on this thread.
-	 * 
-	 * @param threadId
+	 *
 	 * @param metricReference
 	 */
 	public void leave(MetricReference metricReference) {

@@ -25,6 +25,11 @@
 */
 package co.ecg.jain_sip.sip.ri.parser;
 
+import co.ecg.jain_sip.core.ri.NameValue;
+import co.ecg.jain_sip.sip.ri.header.AuthenticationInfo;
+import co.ecg.jain_sip.sip.ri.header.SIPHeader;
+import co.ecg.jain_sip.sip.ri.header.SIPHeaderNames;
+
 import java.text.ParseException;
 
 /**
@@ -57,11 +62,11 @@ public class AuthenticationInfoParser extends ParametersParser {
     /**
      * parse the AuthenticationInfo String header
      * @return SIPHeader (AuthenticationInfoList object)
-     * @throws SIPParseException if the message does not respect the spec.
+     * @throws ParseException if the message does not respect the spec.
      */
     public SIPHeader parse() throws ParseException {
 
-        if (debug)
+
             dbg_enter("AuthenticationInfoParser.parse");
 
         try {
@@ -93,7 +98,7 @@ public class AuthenticationInfoParser extends ParametersParser {
 
             return authenticationInfo;
         } finally {
-            if (debug)
+
                 dbg_leave("AuthenticationInfoParser.parse");
         }
     }

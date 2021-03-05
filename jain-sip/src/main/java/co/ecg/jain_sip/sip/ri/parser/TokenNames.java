@@ -25,6 +25,8 @@
 */
 package co.ecg.jain_sip.sip.ri.parser;
 import co.ecg.jain_sip.sip.message.Request;
+import co.ecg.jain_sip.sip.ri.address.GenericURI;
+import co.ecg.jain_sip.sip.ri.header.SIPDate;
 
 /**
  * A grab bag of SIP Token names.
@@ -37,8 +39,8 @@ import co.ecg.jain_sip.sip.message.Request;
  */
 public interface TokenNames
     extends
-        gov.nist.javax.sip.header.ParameterNames,
-        gov.nist.javax.sip.address.ParameterNames {
+        co.ecg.jain_sip.sip.ri.address.ParameterNames,
+        co.ecg.jain_sip.sip.ri.header.ParameterNames {
     // And now dreaded short forms....
     public static final String INVITE = Request.INVITE;
     public static final String ACK = Request.ACK;

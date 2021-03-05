@@ -27,8 +27,6 @@ package co.ecg.jain_sip.sip.ri.stack;
 
 import java.io.IOException;
 
-import co.ecg.jain_sip.core.ri.CommonLogger;
-import co.ecg.jain_sip.core.ri.StackLogger;
 import co.ecg.jain_sip.sip.ri.SipStackImpl;
 import co.ecg.jain_sip.sip.ri.message.SIPRequest;
 import co.ecg.jain_sip.sip.ri.message.SIPResponse;
@@ -36,6 +34,7 @@ import co.ecg.jain_sip.sip.ri.message.SIPResponse;
 import co.ecg.jain_sip.sip.SipStack;
 import co.ecg.jain_sip.sip.message.Request;
 import co.ecg.jain_sip.sip.message.Response;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * This is just a simple reusable congestion control valve JSIP apps can use to stop traffic when the number of
@@ -53,8 +52,9 @@ import co.ecg.jain_sip.sip.message.Response;
  * @author vladimirralev
  *
  */
+@Slf4j
 public class CongestionControlMessageValve implements SIPMessageValve{
-	private static StackLogger logger = CommonLogger.getLogger(CongestionControlMessageValve.class);
+
 	protected SipStackImpl sipStack;
     // High water mark for ServerTransaction Table
     // after which requests are dropped.

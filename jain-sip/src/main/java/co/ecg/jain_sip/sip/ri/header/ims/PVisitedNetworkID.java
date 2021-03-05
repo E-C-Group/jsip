@@ -35,6 +35,7 @@ import co.ecg.jain_sip.sip.header.ExtensionHeader;
 import co.ecg.jain_sip.sip.header.Parameters;
 
 import co.ecg.jain_sip.core.ri.Token;
+import co.ecg.jain_sip.sip.ri.header.ParametersHeader;
 
 /**
  * P-Visited-Network-ID SIP Private Header: RFC 3455.
@@ -46,7 +47,7 @@ import co.ecg.jain_sip.core.ri.Token;
 
 
 public class PVisitedNetworkID
-    extends gov.nist.javax.sip.header.ParametersHeader
+    extends ParametersHeader
     implements PVisitedNetworkIDHeader, SIPHeaderNamesIms, ExtensionHeader {
 
     /**

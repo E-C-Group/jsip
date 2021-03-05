@@ -25,6 +25,11 @@
 */
 package co.ecg.jain_sip.sip.ri.parser;
 
+import co.ecg.jain_sip.core.ri.Token;
+import co.ecg.jain_sip.sip.ri.header.AllowEvents;
+import co.ecg.jain_sip.sip.ri.header.AllowEventsList;
+import co.ecg.jain_sip.sip.ri.header.SIPHeader;
+
 import java.text.ParseException;
 
 /**
@@ -58,11 +63,11 @@ public class AllowEventsParser extends HeaderParser {
     /**
      * parse the AllowEvents String header
      * @return SIPHeader (AllowEventsList object)
-     * @throws SIPParseException if the message does not respect the spec.
+     * @throws ParseException if the message does not respect the spec.
      */
     public SIPHeader parse() throws ParseException {
 
-        if (debug)
+
             dbg_enter("AllowEventsParser.parse");
         AllowEventsList list = new AllowEventsList();
 
@@ -93,7 +98,7 @@ public class AllowEventsParser extends HeaderParser {
 
             return list;
         } finally {
-            if (debug)
+
                 dbg_leave("AllowEventsParser.parse");
         }
     }

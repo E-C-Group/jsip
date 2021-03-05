@@ -26,7 +26,12 @@
 package co.ecg.jain_sip.sip.ri.parser;
 
 import java.text.ParseException;
+
+import co.ecg.jain_sip.core.ri.Token;
 import co.ecg.jain_sip.sip.*;
+import co.ecg.jain_sip.sip.ri.header.SIPHeader;
+import co.ecg.jain_sip.sip.ri.header.SIPHeaderNames;
+import co.ecg.jain_sip.sip.ri.header.SubscriptionState;
 
 /**
  * Parser for SubscriptionState header.
@@ -58,11 +63,11 @@ public class SubscriptionStateParser extends HeaderParser {
     /**
      * parse the String message
      * @return SIPHeader (SubscriptionState  object)
-     * @throws SIPParseException if the message does not respect the spec.
+     * @throws ParseException if the message does not respect the spec.
      */
     public SIPHeader parse() throws ParseException {
 
-        if (debug)
+
             dbg_enter("SubscriptionStateParser.parse");
 
         SubscriptionState subscriptionState = new SubscriptionState();
@@ -128,7 +133,7 @@ public class SubscriptionStateParser extends HeaderParser {
                 this.lexer.SPorHT();
             }
         } finally {
-            if (debug)
+
                 dbg_leave("SubscriptionStateParser.parse");
         }
 

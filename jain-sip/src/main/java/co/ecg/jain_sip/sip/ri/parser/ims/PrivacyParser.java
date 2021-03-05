@@ -72,7 +72,7 @@ public class PrivacyParser
 
     public SIPHeader parse() throws ParseException
     {
-        if (debug)
+
             dbg_enter("PrivacyParser.parse");
 
         PrivacyList privacyList = new PrivacyList();
@@ -112,7 +112,7 @@ public class PrivacyParser
 
         }
         finally {
-            if (debug)
+
                 dbg_leave("PrivacyParser.parse");
         }
 

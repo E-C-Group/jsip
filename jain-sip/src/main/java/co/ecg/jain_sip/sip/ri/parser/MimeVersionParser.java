@@ -27,6 +27,9 @@ package co.ecg.jain_sip.sip.ri.parser;
 
 import java.text.ParseException;
 import co.ecg.jain_sip.sip.*;
+import co.ecg.jain_sip.sip.ri.header.MimeVersion;
+import co.ecg.jain_sip.sip.ri.header.SIPHeader;
+import co.ecg.jain_sip.sip.ri.header.SIPHeaderNames;
 
 /**
  * Parser for MimeVersion header.
@@ -59,11 +62,11 @@ public class MimeVersionParser extends HeaderParser {
     /**
      * parse the String message
      * @return SIPHeader (MimeVersion object)
-     * @throws SIPParseException if the message does not respect the spec.
+     * @throws ParseException if the message does not respect the spec.
      */
     public SIPHeader parse() throws ParseException {
 
-        if (debug)
+
             dbg_enter("MimeVersionParser.parse");
         MimeVersion mimeVersion = new MimeVersion();
         try {
@@ -87,7 +90,7 @@ public class MimeVersionParser extends HeaderParser {
 
             return mimeVersion;
         } finally {
-            if (debug)
+
                 dbg_leave("MimeVersionParser.parse");
         }
     }

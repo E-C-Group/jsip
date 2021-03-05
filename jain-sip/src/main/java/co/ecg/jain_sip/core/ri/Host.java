@@ -1,32 +1,34 @@
 /*
-* Conditions Of Use
-*
-* This software was developed by employees of the National Institute of
-* Standards and Technology (NIST), an agency of the Federal Government.
-* Pursuant to title 15 Untied States Code Section 105, works of NIST
-* employees are not subject to copyright protection in the United States
-* and are considered to be in the public domain.  As a result, a formal
-* license is not needed to use the software.
-*
-* This software is provided by NIST as a service and is expressly
-* provided "AS IS."  NIST MAKES NO WARRANTY OF ANY KIND, EXPRESS, IMPLIED
-* OR STATUTORY, INCLUDING, WITHOUT LIMITATION, THE IMPLIED WARRANTY OF
-* MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, NON-INFRINGEMENT
-* AND DATA ACCURACY.  NIST does not warrant or make any representations
-* regarding the use of the software or the results thereof, including but
-* not limited to the correctness, accuracy, reliability or usefulness of
-* the software.
-*
-* Permission to use this software is contingent upon your acceptance
-* of the terms of this agreement
-*
-* .
-*
-*/
+ * Conditions Of Use
+ *
+ * This software was developed by employees of the National Institute of
+ * Standards and Technology (NIST), an agency of the Federal Government.
+ * Pursuant to title 15 Untied States Code Section 105, works of NIST
+ * employees are not subject to copyright protection in the United States
+ * and are considered to be in the public domain.  As a result, a formal
+ * license is not needed to use the software.
+ *
+ * This software is provided by NIST as a service and is expressly
+ * provided "AS IS."  NIST MAKES NO WARRANTY OF ANY KIND, EXPRESS, IMPLIED
+ * OR STATUTORY, INCLUDING, WITHOUT LIMITATION, THE IMPLIED WARRANTY OF
+ * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, NON-INFRINGEMENT
+ * AND DATA ACCURACY.  NIST does not warrant or make any representations
+ * regarding the use of the software or the results thereof, including but
+ * not limited to the correctness, accuracy, reliability or usefulness of
+ * the software.
+ *
+ * Permission to use this software is contingent upon your acceptance
+ * of the terms of this agreement
+ *
+ * .
+ *
+ */
 /***************************************************************************
  * Product of NIST/ITL Advanced Networking Technologies Division(ANTD).   *
  **************************************************************************/
 package co.ecg.jain_sip.core.ri;
+
+import lombok.extern.slf4j.Slf4j;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -43,17 +45,17 @@ import java.net.UnknownHostException;
 
 /**
  * Stores hostname.
- * @version 1.2
  *
  * @author M. Ranganathan
  * @author Emil Ivov <emil_ivov@yahoo.com> IPV6 Support. <br/>
- *
- *
- *
-
+ * <p>
+ * <p>
+ * <p>
+ * <p>
  * Marc Bednarek <bednarek@nist.gov> (Bugfixes).<br/>
- *
+ * @version 1.2
  */
+@Slf4j
 public class Host extends GenericObject {
 
     /**
@@ -72,37 +74,43 @@ public class Host extends GenericObject {
     protected static final int IPV6ADDRESS = 3;
 
     static {
-    	stripAddressScopeZones = Boolean.getBoolean("gov.nist.core.STRIP_ADDR_SCOPES");
+        stripAddressScopeZones = Boolean.getBoolean("gov.nist.core.STRIP_ADDR_SCOPES");
     }
-    
-    /** hostName field
+
+    /**
+     * hostName field
      */
     protected String hostname;
 
-    /** address field
+    /**
+     * address field
      */
 
     protected int addressType;
 
     private InetAddress inetAddress;
 
-    /** default constructor
+    /**
+     * default constructor
      */
     public Host() {
         addressType = HOSTNAME;
     }
 
-    /** Constructor given host name or IP address.
+    /**
+     * Constructor given host name or IP address.
      */
     public Host(String hostName) throws IllegalArgumentException {
         if (hostName == null)
-            throw new IllegalArgumentException("null host name");        
+            throw new IllegalArgumentException("null host name");
 
         setHost(hostName, IPV4ADDRESS);
     }
 
-    /** constructor
-     * @param name String to set
+    /**
+     * constructor
+     *
+     * @param name     String to set
      * @param addrType int to set
      */
     public Host(String name, int addrType) {
@@ -111,6 +119,7 @@ public class Host extends GenericObject {
 
     /**
      * Return the host name in encoded form.
+     *
      * @return String
      */
     public String encode() {
@@ -130,11 +139,12 @@ public class Host extends GenericObject {
      * Compare for equality of hosts.
      * Host names are compared by textual equality. No dns lookup
      * is performed.
+     *
      * @param obj Object to set
      * @return boolean
      */
     public boolean equals(Object obj) {
-        if ( obj == null ) return false;
+        if (obj == null) return false;
         if (!this.getClass().equals(obj.getClass())) {
             return false;
         }
@@ -143,14 +153,18 @@ public class Host extends GenericObject {
 
     }
 
-    /** get the HostName field
+    /**
+     * get the HostName field
+     *
      * @return String
      */
     public String getHostname() {
         return hostname;
     }
 
-    /** get the Address field
+    /**
+     * get the Address field
+     *
      * @return String
      */
     public String getAddress() {
@@ -160,6 +174,7 @@ public class Host extends GenericObject {
     /**
      * Convenience function to get the raw IP destination address
      * of a SIP message as a String.
+     *
      * @return String
      */
     public String getIpAddress() {
@@ -172,7 +187,7 @@ public class Host extends GenericObject {
                     inetAddress = InetAddress.getByName(hostname);
                 rawIpAddress = inetAddress.getHostAddress();
             } catch (UnknownHostException ex) {
-                dbgPrint("Could not resolve hostname " + ex);
+                log.debug("Could not resolve hostname " + ex);
             }
         } else {
             rawIpAddress = hostname;
@@ -182,14 +197,17 @@ public class Host extends GenericObject {
 
     /**
      * Set the hostname member.
+     *
      * @param h String to set
      */
     public void setHostname(String h) {
         setHost(h, HOSTNAME);
     }
 
-    /** Set the IP Address.
-     *@param address is the address string to set.
+    /**
+     * Set the IP Address.
+     *
+     * @param address is the address string to set.
      */
     public void setHostAddress(String address) {
         setHost(address, IPV4ADDRESS);
@@ -201,7 +219,7 @@ public class Host extends GenericObject {
      * @param host that host address/name value
      * @param type determines whether host is an address or a host name
      */
-    private void setHost(String host, int type){
+    private void setHost(String host, int type) {
         //set inetAddress to null so that it would be reinited
         //upon next call to getInetAddress()
         inetAddress = null;
@@ -212,25 +230,25 @@ public class Host extends GenericObject {
             addressType = type;
 
         // Null check bug fix sent in by jpaulo@ipb.pt
-        if (host != null){
+        if (host != null) {
             hostname = host.trim();
 
             //if this is an FQDN, make it lowercase to simplify processing
-            if(addressType == HOSTNAME)
+            if (addressType == HOSTNAME)
                 hostname = hostname.toLowerCase();
 
             //remove address scope zones if this is an IPv6 address as they
             //are not allowed by the RFC
             int zoneStart = -1;
-            if(addressType == IPV6ADDRESS
-                && stripAddressScopeZones
-                && (zoneStart = hostname.indexOf('%'))!= -1){
+            if (addressType == IPV6ADDRESS
+                    && stripAddressScopeZones
+                    && (zoneStart = hostname.indexOf('%')) != -1) {
 
                 hostname = hostname.substring(0, zoneStart);
 
                 //if the above was an IPv6 literal, then we would need to
                 //restore the closing bracket
-                if( hostname.startsWith("[") && !hostname.endsWith("]"))
+                if (hostname.startsWith("[") && !hostname.endsWith("]"))
                     hostname += ']';
             }
         }
@@ -238,33 +256,39 @@ public class Host extends GenericObject {
 
     /**
      * Set the address member
+     *
      * @param address address String to set
      */
     public void setAddress(String address) {
         this.setHostAddress(address);
     }
 
-    /** Return true if the address is a DNS host name
-     *  (and not an IPV4 address)
-     *@return true if the hostname is a DNS name
+    /**
+     * Return true if the address is a DNS host name
+     * (and not an IPV4 address)
+     *
+     * @return true if the hostname is a DNS name
      */
     public boolean isHostname() {
         return addressType == HOSTNAME;
     }
 
-    /** Return true if the address is a DNS host name
-     *  (and not an IPV4 address)
-     *@return true if the hostname is host address.
+    /**
+     * Return true if the address is a DNS host name
+     * (and not an IPV4 address)
+     *
+     * @return true if the hostname is host address.
      */
     public boolean isIPAddress() {
         return addressType != HOSTNAME;
     }
 
-    /** Get the inet address from this host.
+    /**
+     * Get the inet address from this host.
      * Caches the inet address returned from dns lookup to avoid
      * lookup delays.
      *
-     *@throws UnknownHostException when the host name cannot be resolved.
+     * @throws UnknownHostException when the host name cannot be resolved.
      */
     public InetAddress getInetAddress() throws UnknownHostException {
         if (hostname == null)
@@ -277,6 +301,7 @@ public class Host extends GenericObject {
     }
 
     //----- IPv6
+
     /**
      * Verifies whether the <code>address</code> could
      * be an IPv6 address
@@ -291,7 +316,7 @@ public class Host extends GenericObject {
      */
     public static boolean isIPv6Reference(String address) {
         return address.charAt(0) == '['
-            && address.charAt(address.length() - 1) == ']';
+                && address.charAt(address.length() - 1) == ']';
     }
 
     @Override

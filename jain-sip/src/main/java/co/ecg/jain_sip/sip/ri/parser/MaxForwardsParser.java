@@ -26,6 +26,9 @@
 package co.ecg.jain_sip.sip.ri.parser;
 
 import co.ecg.jain_sip.sip.*;
+import co.ecg.jain_sip.sip.ri.header.MaxForwards;
+import co.ecg.jain_sip.sip.ri.header.SIPHeader;
+
 import java.text.ParseException;
 
 /**
@@ -48,7 +51,7 @@ public class MaxForwardsParser extends HeaderParser {
     }
 
     public SIPHeader parse() throws ParseException {
-        if (debug)
+
             dbg_enter("MaxForwardsParser.enter");
         try {
             MaxForwards contentLength = new MaxForwards();
@@ -63,7 +66,7 @@ public class MaxForwardsParser extends HeaderParser {
         } catch (NumberFormatException ex) {
             throw createParseException(ex.getMessage());
         } finally {
-            if (debug)
+
                 dbg_leave("MaxForwardsParser.leave");
         }
     }

@@ -26,6 +26,8 @@
 package co.ecg.jain_sip.sip.ri.parser;
 
 import co.ecg.jain_sip.core.ri.Token;
+import co.ecg.jain_sip.sip.ri.header.SIPHeader;
+import co.ecg.jain_sip.sip.ri.header.UserAgent;
 
 import java.text.ParseException;
 
@@ -66,11 +68,11 @@ public class UserAgentParser extends HeaderParser {
      * user agents tend to be very bad about specifying the user agent according to RFC.
      *
      * @return SIPHeader (UserAgent object)
-     * @throws SIPParseException
+     * @throws ParseException
      *             if the message does not respect the spec.
      */
     public SIPHeader parse() throws ParseException {
-        if (debug)
+
             dbg_enter("UserAgentParser.parse");
         UserAgent userAgent = new UserAgent();
         try {
@@ -124,7 +126,7 @@ public class UserAgentParser extends HeaderParser {
                 this.lexer.SPorHT();
             }
         } finally {
-            if (debug)
+
                 dbg_leave("UserAgentParser.parse");
         }
 

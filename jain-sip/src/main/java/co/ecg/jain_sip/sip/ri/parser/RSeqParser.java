@@ -27,6 +27,9 @@ package co.ecg.jain_sip.sip.ri.parser;
 
 import java.text.ParseException;
 import co.ecg.jain_sip.sip.*;
+import co.ecg.jain_sip.sip.ri.header.RSeq;
+import co.ecg.jain_sip.sip.ri.header.SIPHeader;
+import co.ecg.jain_sip.sip.ri.header.SIPHeaderNames;
 
 /**
  * Parser for RSeq header.
@@ -59,11 +62,11 @@ public class RSeqParser extends HeaderParser {
     /**
      * parse the String message
      * @return SIPHeader ( RSeq object)
-     * @throws SIPParseException if the message does not respect the spec.
+     * @throws ParseException if the message does not respect the spec.
      */
     public SIPHeader parse() throws ParseException {
 
-        if (debug)
+
             dbg_enter("RSeqParser.parse");
         RSeq rseq = new RSeq();
         try {
@@ -83,7 +86,7 @@ public class RSeqParser extends HeaderParser {
 
             return rseq;
         } finally {
-            if (debug)
+
                 dbg_leave("RSeqParser.parse");
         }
     }

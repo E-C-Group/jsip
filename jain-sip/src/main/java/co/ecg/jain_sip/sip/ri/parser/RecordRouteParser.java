@@ -62,7 +62,7 @@ public class RecordRouteParser extends AddressParametersParser {
     public SIPHeader parse() throws ParseException {
         RecordRouteList recordRouteList = new RecordRouteList();
 
-        if (debug)
+
             dbg_enter("RecordRouteParser.parse");
 
         try {
@@ -86,7 +86,7 @@ public class RecordRouteParser extends AddressParametersParser {
             }
             return recordRouteList;
         } finally {
-            if (debug)
+
                 dbg_leave("RecordRouteParser.parse");
         }
 

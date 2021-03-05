@@ -1,47 +1,51 @@
 /*
-* Conditions Of Use
-*
-* This software was developed by employees of the National Institute of
-* Standards and Technology (NIST), an agency of the Federal Government.
-* Pursuant to title 15 Untied States Code Section 105, works of NIST
-* employees are not subject to copyright protection in the United States
-* and are considered to be in the public domain.  As a result, a formal
-* license is not needed to use the software.
-*
-* This software is provided by NIST as a service and is expressly
-* provided "AS IS."  NIST MAKES NO WARRANTY OF ANY KIND, EXPRESS, IMPLIED
-* OR STATUTORY, INCLUDING, WITHOUT LIMITATION, THE IMPLIED WARRANTY OF
-* MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, NON-INFRINGEMENT
-* AND DATA ACCURACY.  NIST does not warrant or make any representations
-* regarding the use of the software or the results thereof, including but
-* not limited to the correctness, accuracy, reliability or usefulness of
-* the software.
-*
-* Permission to use this software is contingent upon your acceptance
-* of the terms of this agreement
-*
-* .
-*
-*/
+ * Conditions Of Use
+ *
+ * This software was developed by employees of the National Institute of
+ * Standards and Technology (NIST), an agency of the Federal Government.
+ * Pursuant to title 15 Untied States Code Section 105, works of NIST
+ * employees are not subject to copyright protection in the United States
+ * and are considered to be in the public domain.  As a result, a formal
+ * license is not needed to use the software.
+ *
+ * This software is provided by NIST as a service and is expressly
+ * provided "AS IS."  NIST MAKES NO WARRANTY OF ANY KIND, EXPRESS, IMPLIED
+ * OR STATUTORY, INCLUDING, WITHOUT LIMITATION, THE IMPLIED WARRANTY OF
+ * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, NON-INFRINGEMENT
+ * AND DATA ACCURACY.  NIST does not warrant or make any representations
+ * regarding the use of the software or the results thereof, including but
+ * not limited to the correctness, accuracy, reliability or usefulness of
+ * the software.
+ *
+ * Permission to use this software is contingent upon your acceptance
+ * of the terms of this agreement
+ *
+ * .
+ *
+ */
 package co.ecg.jain_sip.sip.ri.parser;
+
+import co.ecg.jain_sip.core.ri.Token;
+import co.ecg.jain_sip.sip.ri.header.Accept;
+import co.ecg.jain_sip.sip.ri.header.AcceptList;
+import co.ecg.jain_sip.sip.ri.header.SIPHeader;
+import co.ecg.jain_sip.sip.ri.header.SIPHeaderNames;
 
 import java.text.ParseException;
 
 /**
  * Parser for Accept header.
  *
- * @version 1.2 $Revision: 1.7 $ $Date: 2009-07-17 18:57:56 $
- *
  * @author Olivier Deruelle
  * @author M. Ranganathan   <br/>
- *
- *
+ * @version 1.2 $Revision: 1.7 $ $Date: 2009-07-17 18:57:56 $
  */
 public class AcceptParser extends ParametersParser {
 
     /**
      * Creates a new instance of Accept Parser
-     * @param accept  the header to parse
+     *
+     * @param accept the header to parse
      */
     public AcceptParser(String accept) {
         super(accept);
@@ -49,6 +53,7 @@ public class AcceptParser extends ParametersParser {
 
     /**
      * Constructor
+     *
      * @param lexer the lexer to use to parse the header
      */
     protected AcceptParser(Lexer lexer) {
@@ -57,13 +62,13 @@ public class AcceptParser extends ParametersParser {
 
     /**
      * parse the Accept  String header
+     *
      * @return SIPHeader (AcceptList  object)
-     * @throws SIPParseException if the message does not respect the spec.
+     * @throws ParseException if the message does not respect the spec.
      */
     public SIPHeader parse() throws ParseException {
 
-        if (debug)
-            dbg_enter("AcceptParser.parse");
+        dbg_enter("AcceptParser.parse");
         AcceptList list = new AcceptList();
 
         try {
@@ -73,16 +78,16 @@ public class AcceptParser extends ParametersParser {
             accept.setHeaderName(SIPHeaderNames.ACCEPT);
 
             this.lexer.SPorHT();
-            if ( lexer.startsId() ) {	// allow can be empty
-	            this.lexer.match(TokenTypes.ID);
-	            Token token = lexer.getNextToken();
-	            accept.setContentType(token.getTokenValue());
-	            this.lexer.match('/');
-	            this.lexer.match(TokenTypes.ID);
-	            token = lexer.getNextToken();
-	            accept.setContentSubType(token.getTokenValue());
-	            this.lexer.SPorHT();	
-	            super.parse(accept);
+            if (lexer.startsId()) {    // allow can be empty
+                this.lexer.match(TokenTypes.ID);
+                Token token = lexer.getNextToken();
+                accept.setContentType(token.getTokenValue());
+                this.lexer.match('/');
+                this.lexer.match(TokenTypes.ID);
+                token = lexer.getNextToken();
+                accept.setContentSubType(token.getTokenValue());
+                this.lexer.SPorHT();
+                super.parse(accept);
             }
             list.add(accept);
 
@@ -91,23 +96,23 @@ public class AcceptParser extends ParametersParser {
                 this.lexer.SPorHT();
 
                 accept = new Accept();
-                if ( lexer.startsId() ) {
-	                this.lexer.match(TokenTypes.ID);
-	                Token token = lexer.getNextToken();
-	                accept.setContentType(token.getTokenValue());
-	                this.lexer.match('/');
-	                this.lexer.match(TokenTypes.ID);
-	                token = lexer.getNextToken();
-	                accept.setContentSubType(token.getTokenValue());
-	                this.lexer.SPorHT();
-	                super.parse(accept);
+                if (lexer.startsId()) {
+                    this.lexer.match(TokenTypes.ID);
+                    Token token = lexer.getNextToken();
+                    accept.setContentType(token.getTokenValue());
+                    this.lexer.match('/');
+                    this.lexer.match(TokenTypes.ID);
+                    token = lexer.getNextToken();
+                    accept.setContentSubType(token.getTokenValue());
+                    this.lexer.SPorHT();
+                    super.parse(accept);
                 }
                 list.add(accept);
             }
             return list;
         } finally {
-            if (debug)
-                dbg_leave("AcceptParser.parse");
+
+            dbg_leave("AcceptParser.parse");
         }
     }
 }

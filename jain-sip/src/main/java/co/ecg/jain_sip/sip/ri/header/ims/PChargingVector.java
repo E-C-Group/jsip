@@ -31,11 +31,10 @@ package co.ecg.jain_sip.sip.ri.header.ims;
 
 import java.text.ParseException;
 
+import co.ecg.jain_sip.core.ri.NameValue;
 import co.ecg.jain_sip.sip.SipException;
 import co.ecg.jain_sip.sip.header.ExtensionHeader;
-
-import co.ecg.jain_sip.sip.ri.header.ims.PChargingVectorHeader;
-import co.ecg.jain_sip.sip.ri.header.ims.ParameterNamesIms;
+import co.ecg.jain_sip.sip.ri.header.ParametersHeader;
 
 /**
  * P-Charging-Vector header SIP Private Header: RFC 3455.
@@ -43,7 +42,7 @@ import co.ecg.jain_sip.sip.ri.header.ims.ParameterNamesIms;
  * @author ALEXANDRE MIGUEL SILVA SANTOS
  */
 
-public class PChargingVector extends gov.nist.javax.sip.header.ParametersHeader
+public class PChargingVector extends ParametersHeader
         implements PChargingVectorHeader, SIPHeaderNamesIms, ExtensionHeader {
 
     /**
@@ -71,7 +70,7 @@ public class PChargingVector extends gov.nist.javax.sip.header.ParametersHeader
          * 
          * Aayush: 29th November 2011 : Added fix for P-Charging-Vector header's parameters to accept quoted string values.
          */
-       gov.nist.core.NameValue nv = getNameValue( ParameterNamesIms.ICID_VALUE );
+       NameValue nv = getNameValue( ParameterNamesIms.ICID_VALUE );
        		if(nv!=null)
         this.parameters.encode(encoding);
 			else

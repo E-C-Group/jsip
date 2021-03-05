@@ -55,7 +55,7 @@ abstract class AddressHeaderParser extends HeaderParser {
 
     protected void parse(AddressHeaderIms addressHeader)
         throws ParseException {
-    	if (debug)
+
     		dbg_enter("AddressHeaderParser.parse");
         try {
             AddressParser addressParser = new AddressParser(this.getLexer());
@@ -66,7 +66,7 @@ abstract class AddressHeaderParser extends HeaderParser {
         } catch (ParseException ex) {
             throw ex;
         } finally {
-        	if (debug)
+
         		dbg_leave("AddressParametersParser.parse");
         }
     }

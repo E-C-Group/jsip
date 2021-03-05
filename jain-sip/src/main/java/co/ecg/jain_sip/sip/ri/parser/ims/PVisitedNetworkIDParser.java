@@ -80,7 +80,7 @@ public class PVisitedNetworkIDParser extends ParametersParser implements TokenTy
 
         PVisitedNetworkIDList visitedNetworkIDList = new PVisitedNetworkIDList();
 
-        if (debug)
+
             dbg_enter("VisitedNetworkIDParser.parse");
 
         try {
@@ -112,7 +112,7 @@ public class PVisitedNetworkIDParser extends ParametersParser implements TokenTy
             }
             return visitedNetworkIDList;
         } finally {
-            if (debug)
+
                 dbg_leave("VisitedNetworkIDParser.parse");
         }
 
@@ -120,7 +120,7 @@ public class PVisitedNetworkIDParser extends ParametersParser implements TokenTy
 
     protected void parseQuotedString(PVisitedNetworkID visitedNetworkID) throws ParseException {
 
-        if (debug)
+
             dbg_enter("parseQuotedString");
 
         try {
@@ -153,7 +153,7 @@ public class PVisitedNetworkIDParser extends ParametersParser implements TokenTy
 
 
         }finally {
-            if (debug)
+
                 dbg_leave("parseQuotedString.parse");
         }
 

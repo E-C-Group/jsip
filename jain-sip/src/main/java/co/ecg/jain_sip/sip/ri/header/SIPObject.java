@@ -58,13 +58,6 @@ public abstract class SIPObject extends GenericObject {
     }
 
 
-
-    /** Debug function
-     */
-    public void dbgPrint() {
-        super.dbgPrint();
-    }
-
     /** Encode the header into a String.
      * @return String
      */

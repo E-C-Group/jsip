@@ -25,11 +25,11 @@
 */
 package co.ecg.jain_sip.sip.ri.stack.timers;
 
-import co.ecg.jain_sip.core.ri.CommonLogger;
+
 import co.ecg.jain_sip.core.ri.NamingThreadFactory;
-import co.ecg.jain_sip.core.ri.StackLogger;
 import co.ecg.jain_sip.sip.ri.SipStackImpl;
 import co.ecg.jain_sip.sip.ri.stack.SIPStackTimerTask;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.Properties;
 import java.util.concurrent.ScheduledFuture;
@@ -43,8 +43,8 @@ import java.util.concurrent.TimeUnit;
  * @author jean.deruelle@gmail.com
  *
  */
+@Slf4j
 public class ScheduledExecutorSipTimer implements SipTimer {
-	private static StackLogger logger = CommonLogger.getLogger(ScheduledExecutorSipTimer.class);
 	protected SipStackImpl sipStackImpl;
 	ScheduledThreadPoolExecutor threadPoolExecutor;
 	// Counts the number of cancelled tasks
@@ -59,7 +59,7 @@ public class ScheduledExecutorSipTimer implements SipTimer {
 	 */
 	public void stop() {
 		threadPoolExecutor.shutdown();
-		logger.logStackTrace(StackLogger.TRACE_DEBUG);
+
 		if(log.isInfoEnabled()) {
 			log.info("the sip stack timer " + this.getClass().getName() + " has been stopped");
 		}

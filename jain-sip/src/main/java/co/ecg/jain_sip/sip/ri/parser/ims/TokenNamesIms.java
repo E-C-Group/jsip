@@ -30,6 +30,8 @@
 
 package co.ecg.jain_sip.sip.ri.parser.ims;
 
+import co.ecg.jain_sip.sip.ri.parser.TokenNames;
+
 /**
  *
  * @author Miguel Freitas (IT) PT-Inovacao
@@ -37,7 +39,7 @@ package co.ecg.jain_sip.sip.ri.parser.ims;
 
 
 public interface TokenNamesIms
-    extends gov.nist.javax.sip.parser.TokenNames
+    extends TokenNames
 {
 
     public static final String IEEE_802_11A = "IEEE-802.11a";

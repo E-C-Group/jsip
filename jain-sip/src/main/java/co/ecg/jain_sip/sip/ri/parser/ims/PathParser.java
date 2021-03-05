@@ -71,7 +71,7 @@ public class PathParser extends AddressParametersParser implements TokenTypes {
 
         PathList pathList = new PathList();
 
-        if (debug)
+
             dbg_enter("PathParser.parse");
 
         try {
@@ -95,7 +95,7 @@ public class PathParser extends AddressParametersParser implements TokenTypes {
             }
             return pathList;
         } finally {
-            if (debug)
+
                 dbg_leave("PathParser.parse");
         }
 

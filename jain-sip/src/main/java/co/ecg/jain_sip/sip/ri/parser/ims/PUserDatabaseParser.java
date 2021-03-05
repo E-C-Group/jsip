@@ -70,7 +70,7 @@ public class PUserDatabaseParser extends ParametersParser implements TokenTypes{
 
     public SIPHeader parse() throws ParseException {
 
-        if (debug)
+
             dbg_enter("PUserDatabase.parse");
 
         try{

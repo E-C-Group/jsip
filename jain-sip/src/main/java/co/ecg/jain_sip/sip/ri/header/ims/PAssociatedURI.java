@@ -39,6 +39,7 @@ import co.ecg.jain_sip.sip.ri.address.GenericURI;
 import co.ecg.jain_sip.sip.address.URI;
 import co.ecg.jain_sip.sip.header.ExtensionHeader;
 
+import co.ecg.jain_sip.sip.ri.header.AddressParametersHeader;
 import co.ecg.jain_sip.sip.ri.header.ims.PAssociatedURIHeader;
 
 
@@ -62,7 +63,7 @@ import co.ecg.jain_sip.sip.ri.header.ims.PAssociatedURIHeader;
 
 
 public class PAssociatedURI
-    extends gov.nist.javax.sip.header.AddressParametersHeader
+    extends AddressParametersHeader
     implements PAssociatedURIHeader, SIPHeaderNamesIms, ExtensionHeader
 {
     // TODO: Need a unique UID

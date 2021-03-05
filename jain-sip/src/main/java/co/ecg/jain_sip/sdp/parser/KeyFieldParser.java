@@ -25,6 +25,10 @@
 */
 package co.ecg.jain_sip.sdp.parser;
 
+import co.ecg.jain_sip.core.ri.NameValue;
+import co.ecg.jain_sip.sdp.fields.KeyField;
+import co.ecg.jain_sip.sdp.fields.SDPField;
+
 import java.text.ParseException;
 
 /**

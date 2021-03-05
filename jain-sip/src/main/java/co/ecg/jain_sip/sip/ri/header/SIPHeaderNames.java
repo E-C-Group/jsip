@@ -28,6 +28,7 @@
 *******************************************************************************/
 package co.ecg.jain_sip.sip.ri.header;
 import co.ecg.jain_sip.sip.header.*;
+import co.ecg.jain_sip.sip.ri.header.extensions.*;
 
 /**
  * SIPHeader names that are supported by this parser

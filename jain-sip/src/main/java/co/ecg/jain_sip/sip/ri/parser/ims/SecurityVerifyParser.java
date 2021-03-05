@@ -61,7 +61,7 @@ public class SecurityVerifyParser extends SecurityAgreeParser
 
     public SIPHeader parse() throws ParseException
     {
-    	if (debug)
+
     		dbg_enter("SecuriryVerify parse");
         try {
 
@@ -72,7 +72,7 @@ public class SecurityVerifyParser extends SecurityAgreeParser
             return secVerifyList;
 
         } finally {
-        	if (debug)
+
         		dbg_leave("SecuriryVerify parse");
         }
     }

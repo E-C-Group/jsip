@@ -25,7 +25,12 @@
 */
 package co.ecg.jain_sip.sip.ri.parser;
 import java.text.ParseException;
+
+import co.ecg.jain_sip.core.ri.Token;
 import co.ecg.jain_sip.sip.*;
+import co.ecg.jain_sip.sip.ri.header.AcceptEncoding;
+import co.ecg.jain_sip.sip.ri.header.AcceptEncodingList;
+import co.ecg.jain_sip.sip.ri.header.SIPHeader;
 
 /**
  * Accept-Encoding SIP (HTTP) Header parser.
@@ -83,7 +88,7 @@ public class AcceptEncodingParser extends HeaderParser {
      */
     public SIPHeader parse() throws ParseException {
         AcceptEncodingList acceptEncodingList = new AcceptEncodingList();
-        if (debug)
+
             dbg_enter("AcceptEncodingParser.parse");
 
         try {
@@ -133,7 +138,7 @@ public class AcceptEncodingParser extends HeaderParser {
             }
             return acceptEncodingList;
         } finally {
-            if (debug)
+
                 dbg_leave("AcceptEncodingParser.parse");
         }
     }

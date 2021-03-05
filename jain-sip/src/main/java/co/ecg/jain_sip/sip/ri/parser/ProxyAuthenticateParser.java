@@ -25,6 +25,9 @@
 */
 package co.ecg.jain_sip.sip.ri.parser;
 
+import co.ecg.jain_sip.sip.ri.header.ProxyAuthenticate;
+import co.ecg.jain_sip.sip.ri.header.SIPHeader;
+
 import java.text.ParseException;
 
 /**
@@ -48,7 +51,7 @@ public class ProxyAuthenticateParser extends ChallengeParser {
 
     /**
      * Cosntructor
-     * @param Lexer lexer to set
+     * @param lexer -
      */
     protected ProxyAuthenticateParser(Lexer lexer) {
         super(lexer);

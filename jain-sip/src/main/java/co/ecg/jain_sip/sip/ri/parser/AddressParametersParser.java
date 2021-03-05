@@ -25,6 +25,9 @@
 */
 package co.ecg.jain_sip.sip.ri.parser;
 
+import co.ecg.jain_sip.sip.ri.address.AddressImpl;
+import co.ecg.jain_sip.sip.ri.header.AddressParametersHeader;
+
 import java.text.ParseException;
 
 /**
@@ -47,7 +50,7 @@ public class AddressParametersParser extends ParametersParser {
 
     protected void parse(AddressParametersHeader addressParametersHeader)
         throws ParseException {
-    	if (debug)
+
     		dbg_enter("AddressParametersParser.parse");
         try {
             AddressParser addressParser = new AddressParser(this.getLexer());
@@ -68,7 +71,7 @@ public class AddressParametersParser extends ParametersParser {
         } catch (ParseException ex) {
             throw ex;
         } finally {
-        	if (debug)
+
         		dbg_leave("AddressParametersParser.parse");
         }
     }

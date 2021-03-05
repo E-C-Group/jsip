@@ -28,6 +28,8 @@
 *******************************************************************************/
 package co.ecg.jain_sip.sip.ri.header;
 
+import co.ecg.jain_sip.sip.header.UnsupportedHeader;
+
 import java.text.ParseException;
 
 /**
@@ -41,7 +43,7 @@ import java.text.ParseException;
  */
 public class Unsupported
     extends SIPHeader
-    implements javax.sip.header.UnsupportedHeader {
+    implements UnsupportedHeader {
 
     /**
      * Comment for <code>serialVersionUID</code>

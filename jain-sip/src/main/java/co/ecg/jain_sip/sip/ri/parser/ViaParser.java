@@ -25,6 +25,12 @@
 */
 package co.ecg.jain_sip.sip.ri.parser;
 
+import co.ecg.jain_sip.core.ri.*;
+import co.ecg.jain_sip.sip.ri.header.Protocol;
+import co.ecg.jain_sip.sip.ri.header.SIPHeader;
+import co.ecg.jain_sip.sip.ri.header.Via;
+import co.ecg.jain_sip.sip.ri.header.ViaList;
+
 import java.text.ParseException;
 
 /**
@@ -140,7 +146,7 @@ public class ViaParser extends HeaderParser {
      * IPV6 addresses in the received parameter.
      */
     protected NameValue nameValue() throws ParseException {
-        if (debug)
+
             dbg_enter("nameValue");
         try {
 
@@ -186,14 +192,14 @@ public class ViaParser extends HeaderParser {
             }
 
         } finally {
-            if (debug)
+
                 dbg_leave("nameValue");
         }
 
     }
 
     public SIPHeader parse() throws ParseException {
-        if (debug)
+
             dbg_enter("parse");
         try {
             ViaList viaList = new ViaList();
@@ -218,7 +224,7 @@ public class ViaParser extends HeaderParser {
             this.lexer.match('\n');
             return viaList;
         } finally {
-            if (debug)
+
                 dbg_leave("parse");
         }
 

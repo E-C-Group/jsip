@@ -1,54 +1,62 @@
 /*
-* Conditions Of Use
-*
-* This software was developed by employees of the National Institute of
-* Standards and Technology (NIST), an agency of the Federal Government.
-* Pursuant to title 15 Untied States Code Section 105, works of NIST
-* employees are not subject to copyright protection in the United States
-* and are considered to be in the public domain.  As a result, a formal
-* license is not needed to use the software.
-*
-* This software is provided by NIST as a service and is expressly
-* provided "AS IS."  NIST MAKES NO WARRANTY OF ANY KIND, EXPRESS, IMPLIED
-* OR STATUTORY, INCLUDING, WITHOUT LIMITATION, THE IMPLIED WARRANTY OF
-* MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, NON-INFRINGEMENT
-* AND DATA ACCURACY.  NIST does not warrant or make any representations
-* regarding the use of the software or the results thereof, including but
-* not limited to the correctness, accuracy, reliability or usefulness of
-* the software.
-*
-* Permission to use this software is contingent upon your acceptance
-* of the terms of this agreement.
-*
-*/
+ * Conditions Of Use
+ *
+ * This software was developed by employees of the National Institute of
+ * Standards and Technology (NIST), an agency of the Federal Government.
+ * Pursuant to title 15 Untied States Code Section 105, works of NIST
+ * employees are not subject to copyright protection in the United States
+ * and are considered to be in the public domain.  As a result, a formal
+ * license is not needed to use the software.
+ *
+ * This software is provided by NIST as a service and is expressly
+ * provided "AS IS."  NIST MAKES NO WARRANTY OF ANY KIND, EXPRESS, IMPLIED
+ * OR STATUTORY, INCLUDING, WITHOUT LIMITATION, THE IMPLIED WARRANTY OF
+ * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, NON-INFRINGEMENT
+ * AND DATA ACCURACY.  NIST does not warrant or make any representations
+ * regarding the use of the software or the results thereof, including but
+ * not limited to the correctness, accuracy, reliability or usefulness of
+ * the software.
+ *
+ * Permission to use this software is contingent upon your acceptance
+ * of the terms of this agreement.
+ *
+ */
 /*******************************************************************************
-* Product of NIST/ITL Advanced Networking Technologies Division (ANTD).        *
-*******************************************************************************/
+ * Product of NIST/ITL Advanced Networking Technologies Division (ANTD).        *
+ *******************************************************************************/
 package co.ecg.jain_sip.sip.ri.header;
+
+import co.ecg.jain_sip.sip.address.Address;
 import co.ecg.jain_sip.sip.header.*;
 
 import co.ecg.jain_sip.sip.address.URI;
 import co.ecg.jain_sip.sip.header.*;
 
 import java.text.ParseException;
+
 import co.ecg.jain_sip.sip.InvalidArgumentException;
+import co.ecg.jain_sip.sip.ri.address.GenericURI;
+import co.ecg.jain_sip.sip.ri.header.extensions.*;
+import co.ecg.jain_sip.sip.ri.header.ims.*;
+import co.ecg.jain_sip.sip.ri.parser.RequestLineParser;
+import co.ecg.jain_sip.sip.ri.parser.StatusLineParser;
+import co.ecg.jain_sip.sip.ri.parser.StringMsgParser;
+
 import java.util.*;
 
 /*
-* This file contains enhancements contributed by Alexandre Silva Santos
-* (PT-Inovacao) and Miguel Freitas
-*/
+ * This file contains enhancements contributed by Alexandre Silva Santos
+ * (PT-Inovacao) and Miguel Freitas
+ */
 
-/** Implementation of the JAIN SIP  HeaderFactory
-*
-* @version 1.2 $Revision: 1.23 $ $Date: 2010-05-06 14:07:51 $
-* @since 1.1
-*
-*@author M. Ranganathan   <br/>
-*@author Olivier Deruelle <br/>
-*
-*
-*/
+/**
+ * Implementation of the JAIN SIP  HeaderFactory
+ *
+ * @author M. Ranganathan   <br/>
+ * @author Olivier Deruelle <br/>
+ * @version 1.2 $Revision: 1.23 $ $Date: 2010-05-06 14:07:51 $
+ * @since 1.1
+ */
 public class HeaderFactoryImpl implements HeaderFactory, HeaderFactoryExt {
 
     /**
@@ -65,23 +73,22 @@ public class HeaderFactoryImpl implements HeaderFactory, HeaderFactoryExt {
      * Set pretty encoding on / off.
      * This splits up via headers into multiple lines for readability ( better for
      * debugging ).
-     *
      */
     public void setPrettyEncoding(boolean flag) {
         SIPHeaderList.setPrettyEncode(flag);
     }
 
     /**
-    * Creates a new AcceptEncodingHeader based on the newly supplied encoding
-    * value.
-    *
-    * @param encoding - the new string containing the encoding value.
-    * @throws ParseException which signals that an error has been reached
-    * unexpectedly while parsing the encoding value.
-    * @return the newly created AcceptEncodingHeader object.
-    */
+     * Creates a new AcceptEncodingHeader based on the newly supplied encoding
+     * value.
+     *
+     * @param encoding - the new string containing the encoding value.
+     * @return the newly created AcceptEncodingHeader object.
+     * @throws ParseException which signals that an error has been reached
+     *                        unexpectedly while parsing the encoding value.
+     */
     public AcceptEncodingHeader createAcceptEncodingHeader(String encoding)
-        throws ParseException {
+            throws ParseException {
         if (encoding == null)
             throw new NullPointerException("the encoding parameter is null");
         AcceptEncoding acceptEncoding = new AcceptEncoding();
@@ -93,16 +100,16 @@ public class HeaderFactoryImpl implements HeaderFactory, HeaderFactoryExt {
      * Creates a new AcceptHeader based on the newly supplied contentType and
      * contentSubType values.
      *
-     * @param contentType The new string content type value.
+     * @param contentType    The new string content type value.
      * @param contentSubType The new string content sub-type value.
-     * @throws ParseException which signals that an error has been reached
-     * unexpectedly while parsing the content type or content subtype value.
      * @return the newly created AcceptHeader object.
+     * @throws ParseException which signals that an error has been reached
+     *                        unexpectedly while parsing the content type or content subtype value.
      */
     public AcceptHeader createAcceptHeader(
-        String contentType,
-        String contentSubType)
-        throws ParseException {
+            String contentType,
+            String contentSubType)
+            throws ParseException {
         if (contentType == null || contentSubType == null)
             throw new NullPointerException("contentType or subtype is null ");
         Accept accept = new Accept();
@@ -148,13 +155,13 @@ public class HeaderFactoryImpl implements HeaderFactory, HeaderFactoryExt {
      * value.
      *
      * @param eventType - the new string containing the eventType value.
-     * @throws ParseException which signals that an error has been reached
-     * unexpectedly while parsing the eventType value.
      * @return the newly created AllowEventsHeader object.
+     * @throws ParseException which signals that an error has been reached
+     *                        unexpectedly while parsing the eventType value.
      * @since v1.1
      */
     public AllowEventsHeader createAllowEventsHeader(String eventType)
-        throws ParseException {
+            throws ParseException {
         if (eventType == null)
             throw new NullPointerException("null arg eventType");
         AllowEvents allowEvents = new AllowEvents();
@@ -166,9 +173,9 @@ public class HeaderFactoryImpl implements HeaderFactory, HeaderFactoryExt {
      * Creates a new AllowHeader based on the newly supplied method value.
      *
      * @param method - the new string containing the method value.
-     * @throws ParseException which signals that an error has been reached
-     * unexpectedly while parsing the method value.
      * @return the newly created AllowHeader object.
+     * @throws ParseException which signals that an error has been reached
+     *                        unexpectedly while parsing the method value.
      */
     public AllowHeader createAllowHeader(String method) throws ParseException {
         if (method == null)
@@ -184,13 +191,13 @@ public class HeaderFactoryImpl implements HeaderFactory, HeaderFactoryExt {
      * response value.
      *
      * @param response - the new string value of the response.
-     * @throws ParseException which signals that an error has been reached
-     * unexpectedly while parsing the response value.
      * @return the newly created AuthenticationInfoHeader object.
+     * @throws ParseException which signals that an error has been reached
+     *                        unexpectedly while parsing the response value.
      * @since v1.1
      */
     public AuthenticationInfoHeader createAuthenticationInfoHeader(String response)
-        throws ParseException {
+            throws ParseException {
         if (response == null)
             throw new NullPointerException("null arg response");
         AuthenticationInfo auth = new AuthenticationInfo();
@@ -204,12 +211,12 @@ public class HeaderFactoryImpl implements HeaderFactory, HeaderFactoryExt {
      * scheme value.
      *
      * @param scheme - the new string value of the scheme.
-     * @throws ParseException which signals that an error has been reached
-     * unexpectedly while parsing the scheme value.
      * @return the newly created AuthorizationHeader object.
+     * @throws ParseException which signals that an error has been reached
+     *                        unexpectedly while parsing the scheme value.
      */
     public AuthorizationHeader createAuthorizationHeader(String scheme)
-        throws ParseException {
+            throws ParseException {
         if (scheme == null)
             throw new NullPointerException("null arg scheme ");
         Authorization auth = new Authorization();
@@ -223,15 +230,15 @@ public class HeaderFactoryImpl implements HeaderFactory, HeaderFactoryExt {
      * method values.
      *
      * @param sequenceNumber - the new integer value of the sequence number.
-     * @param method - the new string value of the method.
-     * @throws InvalidArgumentException if supplied sequence number is less
-     * than zero.
-     * @throws ParseException which signals that an error has been reached
-     * unexpectedly while parsing the method value.
+     * @param method         - the new string value of the method.
      * @return the newly created CSeqHeader object.
+     * @throws InvalidArgumentException if supplied sequence number is less
+     *                                  than zero.
+     * @throws ParseException           which signals that an error has been reached
+     *                                  unexpectedly while parsing the method value.
      */
-    public CSeqHeader createCSeqHeader( long sequenceNumber, String method)
-        throws ParseException, InvalidArgumentException {
+    public CSeqHeader createCSeqHeader(long sequenceNumber, String method)
+            throws ParseException, InvalidArgumentException {
         if (sequenceNumber < 0)
             throw new InvalidArgumentException("bad arg " + sequenceNumber);
         if (method == null)
@@ -245,23 +252,24 @@ public class HeaderFactoryImpl implements HeaderFactory, HeaderFactoryExt {
 
     /**
      * For backwards compatibility, also accept int
+     *
      * @deprecated
      */
-    public CSeqHeader createCSeqHeader( int sequenceNumber, String method)
-        throws ParseException, InvalidArgumentException {
-        return this.createCSeqHeader( (long) sequenceNumber, method );
+    public CSeqHeader createCSeqHeader(int sequenceNumber, String method)
+            throws ParseException, InvalidArgumentException {
+        return this.createCSeqHeader((long) sequenceNumber, method);
     }
 
     /**
      * Creates a new CallIdHeader based on the newly supplied callId value.
      *
      * @param callId - the new string value of the call-id.
-     * @throws ParseException which signals that an error has been reached
-     * unexpectedly while parsing the callId value.
      * @return the newly created CallIdHeader object.
+     * @throws ParseException which signals that an error has been reached
+     *                        unexpectedly while parsing the callId value.
      */
     public CallIdHeader createCallIdHeader(String callId)
-        throws ParseException {
+            throws ParseException {
         if (callId == null)
             throw new NullPointerException("null arg callId");
         CallID c = new CallID();
@@ -300,18 +308,18 @@ public class HeaderFactoryImpl implements HeaderFactory, HeaderFactoryExt {
     }
 
     /**
-    * Creates a new wildcard ContactHeader. This is used in Register requests
-    * to indicate to the server that it should remove all locations the
-    * at which the user is currently available. This implies that the
-    * following conditions are met:
-    * <ul>
-    * <li><code>ContactHeader.getAddress.getAddress.getUserInfo() == *;</code>
-    * <li><code>ContactHeader.getAddress.getAddress.isWildCard() == true;</code>
-    * <li><code>ContactHeader.getExpires() == 0;</code>
-    * </ul>
-    *
-    * @return the newly created wildcard ContactHeader.
-    */
+     * Creates a new wildcard ContactHeader. This is used in Register requests
+     * to indicate to the server that it should remove all locations the
+     * at which the user is currently available. This implies that the
+     * following conditions are met:
+     * <ul>
+     * <li><code>ContactHeader.getAddress.getAddress.getUserInfo() == *;</code>
+     * <li><code>ContactHeader.getAddress.getAddress.isWildCard() == true;</code>
+     * <li><code>ContactHeader.getExpires() == 0;</code>
+     * </ul>
+     *
+     * @return the newly created wildcard ContactHeader.
+     */
     public ContactHeader createContactHeader() {
         Contact contact = new Contact();
         contact.setWildCardFlag(true);
@@ -325,13 +333,13 @@ public class HeaderFactoryImpl implements HeaderFactory, HeaderFactoryExt {
      * contentDisposition value.
      *
      * @param contentDisposition - the new string value of the contentDisposition.
-     * @throws ParseException which signals that an error has been reached
-     * unexpectedly while parsing the contentDisposition value.
      * @return the newly created ContentDispositionHeader object.
+     * @throws ParseException which signals that an error has been reached
+     *                        unexpectedly while parsing the contentDisposition value.
      * @since v1.1
      */
     public ContentDispositionHeader createContentDispositionHeader(String contentDisposition)
-        throws ParseException {
+            throws ParseException {
         if (contentDisposition == null)
             throw new NullPointerException("null arg contentDisposition");
         ContentDisposition c = new ContentDisposition();
@@ -341,16 +349,16 @@ public class HeaderFactoryImpl implements HeaderFactory, HeaderFactoryExt {
     }
 
     /**
-    * Creates a new ContentEncodingHeader based on the newly supplied encoding
-    * value.
-    *
-    * @param encoding - the new string containing the encoding value.
-    * @throws ParseException which signals that an error has been reached
-    * unexpectedly while parsing the encoding value.
-    * @return the newly created ContentEncodingHeader object.
-    */
+     * Creates a new ContentEncodingHeader based on the newly supplied encoding
+     * value.
+     *
+     * @param encoding - the new string containing the encoding value.
+     * @return the newly created ContentEncodingHeader object.
+     * @throws ParseException which signals that an error has been reached
+     *                        unexpectedly while parsing the encoding value.
+     */
     public ContentEncodingHeader createContentEncodingHeader(String encoding)
-        throws ParseException {
+            throws ParseException {
         if (encoding == null)
             throw new NullPointerException("null encoding");
         ContentEncoding c = new ContentEncoding();
@@ -380,12 +388,12 @@ public class HeaderFactoryImpl implements HeaderFactory, HeaderFactoryExt {
      * Creates a new CSeqHeader based on the newly supplied contentLength value.
      *
      * @param contentLength - the new integer value of the contentLength.
-     * @throws InvalidArgumentException if supplied contentLength is less
-     * than zero.
      * @return the newly created ContentLengthHeader object.
+     * @throws InvalidArgumentException if supplied contentLength is less
+     *                                  than zero.
      */
     public ContentLengthHeader createContentLengthHeader(int contentLength)
-        throws InvalidArgumentException {
+            throws InvalidArgumentException {
         if (contentLength < 0)
             throw new InvalidArgumentException("bad contentLength");
         ContentLength c = new ContentLength();
@@ -398,16 +406,16 @@ public class HeaderFactoryImpl implements HeaderFactory, HeaderFactoryExt {
      * Creates a new ContentTypeHeader based on the newly supplied contentType and
      * contentSubType values.
      *
-     * @param contentType - the new string content type value.
+     * @param contentType    - the new string content type value.
      * @param contentSubType - the new string content sub-type value.
-     * @throws ParseException which signals that an error has been reached
-     * unexpectedly while parsing the content type or content subtype value.
      * @return the newly created ContentTypeHeader object.
+     * @throws ParseException which signals that an error has been reached
+     *                        unexpectedly while parsing the content type or content subtype value.
      */
     public ContentTypeHeader createContentTypeHeader(
-        String contentType,
-        String contentSubType)
-        throws ParseException {
+            String contentType,
+            String contentSubType)
+            throws ParseException {
         if (contentType == null || contentSubType == null)
             throw new NullPointerException("null contentType or subType");
         ContentType c = new ContentType();
@@ -417,11 +425,11 @@ public class HeaderFactoryImpl implements HeaderFactory, HeaderFactoryExt {
     }
 
     /**
-    * Creates a new DateHeader based on the newly supplied date value.
-    *
-    * @param date - the new Calender value of the date.
-    * @return the newly created DateHeader object.
-    */
+     * Creates a new DateHeader based on the newly supplied date value.
+     *
+     * @param date - the new Calender value of the date.
+     * @return the newly created DateHeader object.
+     */
     public DateHeader createDateHeader(Calendar date) {
         SIPDateHeader d = new SIPDateHeader();
         if (date == null)
@@ -435,13 +443,13 @@ public class HeaderFactoryImpl implements HeaderFactory, HeaderFactoryExt {
      * Creates a new EventHeader based on the newly supplied eventType value.
      *
      * @param eventType - the new string value of the eventType.
-     * @throws ParseException which signals that an error has been reached
-     * unexpectedly while parsing the eventType value.
      * @return the newly created EventHeader object.
+     * @throws ParseException which signals that an error has been reached
+     *                        unexpectedly while parsing the eventType value.
      * @since v1.1
      */
     public EventHeader createEventHeader(String eventType)
-        throws ParseException {
+            throws ParseException {
         if (eventType == null)
             throw new NullPointerException("null eventType");
         Event event = new Event();
@@ -454,12 +462,12 @@ public class HeaderFactoryImpl implements HeaderFactory, HeaderFactoryExt {
      * Creates a new ExpiresHeader based on the newly supplied expires value.
      *
      * @param expires - the new integer value of the expires.
-     * @throws InvalidArgumentException if supplied expires is less
-     * than zero.
      * @return the newly created ExpiresHeader object.
+     * @throws InvalidArgumentException if supplied expires is less
+     *                                  than zero.
      */
     public ExpiresHeader createExpiresHeader(long expires)
-        throws InvalidArgumentException {
+            throws InvalidArgumentException {
         if (expires < 0 || expires > 4294967295L)
             throw new InvalidArgumentException("bad value " + expires);
         Expires e = new Expires();
@@ -467,17 +475,17 @@ public class HeaderFactoryImpl implements HeaderFactory, HeaderFactoryExt {
 
         return e;
     }
-    
+
     /**
      * Creates a new ExpiresHeader based on the newly supplied expires value.
      *
      * @param expires - the new integer value of the expires.
-     * @throws InvalidArgumentException if supplied expires is less
-     * than zero.
      * @return the newly created ExpiresHeader object.
+     * @throws InvalidArgumentException if supplied expires is less
+     *                                  than zero.
      */
     public ExpiresHeader createExpiresHeader(int expires)
-        throws InvalidArgumentException {
+            throws InvalidArgumentException {
         return createExpiresHeader((long) expires);
     }
 
@@ -485,21 +493,20 @@ public class HeaderFactoryImpl implements HeaderFactory, HeaderFactoryExt {
      * Creates a new ExtensionHeader based on the newly supplied name and
      * value values.
      *
-     * @param name - the new string name of the ExtensionHeader value.
+     * @param name  - the new string name of the ExtensionHeader value.
      * @param value - the new string value of the ExtensionHeader.
-     * @throws ParseException which signals that an error has been reached
-     * unexpectedly while parsing the name or value values.
      * @return the newly created ExtensionHeader object.
+     * @throws ParseException which signals that an error has been reached
+     *                        unexpectedly while parsing the name or value values.
      */
     public ExtensionHeader createExtensionHeader(
-        String name,
-        String value)
-        throws ParseException {
+            String name,
+            String value)
+            throws ParseException {
         if (name == null)
             throw new NullPointerException("bad name");
 
-        gov.nist.javax.sip.header.ExtensionHeaderImpl ext =
-            new gov.nist.javax.sip.header.ExtensionHeaderImpl();
+        ExtensionHeaderImpl ext = new ExtensionHeaderImpl();
         ext.setName(name);
         ext.setValue(value);
 
@@ -511,13 +518,13 @@ public class HeaderFactoryImpl implements HeaderFactory, HeaderFactoryExt {
      * tag values.
      *
      * @param address - the new Address object of the address.
-     * @param tag - the new string value of the tag.
-     * @throws ParseException which signals that an error has been reached
-     * unexpectedly while parsing the tag value.
+     * @param tag     - the new string value of the tag.
      * @return the newly created FromHeader object.
+     * @throws ParseException which signals that an error has been reached
+     *                        unexpectedly while parsing the tag value.
      */
     public FromHeader createFromHeader(Address address, String tag)
-        throws ParseException {
+            throws ParseException {
         if (address == null)
             throw new NullPointerException("null address arg");
         From from = new From();
@@ -533,13 +540,13 @@ public class HeaderFactoryImpl implements HeaderFactory, HeaderFactoryExt {
      * value.
      *
      * @param callId - the new string containing the callId value.
-     * @throws ParseException which signals that an error has been reached
-     * unexpectedly while parsing the callId value.
      * @return the newly created InReplyToHeader object.
+     * @throws ParseException which signals that an error has been reached
+     *                        unexpectedly while parsing the callId value.
      * @since v1.1
      */
     public InReplyToHeader createInReplyToHeader(String callId)
-        throws ParseException {
+            throws ParseException {
         if (callId == null)
             throw new NullPointerException("null callId arg");
         InReplyTo inReplyTo = new InReplyTo();
@@ -547,20 +554,21 @@ public class HeaderFactoryImpl implements HeaderFactory, HeaderFactoryExt {
 
         return inReplyTo;
     }
+
     /**
-    * Creates a new MaxForwardsHeader based on the newly
-    * supplied maxForwards value.
-    *
-    * @param maxForwards The new integer value of the maxForwards.
-    * @throws InvalidArgumentException if supplied maxForwards is less
-    * than zero or greater than 255.
-    * @return the newly created MaxForwardsHeader object.
-    */
+     * Creates a new MaxForwardsHeader based on the newly
+     * supplied maxForwards value.
+     *
+     * @param maxForwards The new integer value of the maxForwards.
+     * @return the newly created MaxForwardsHeader object.
+     * @throws InvalidArgumentException if supplied maxForwards is less
+     *                                  than zero or greater than 255.
+     */
     public MaxForwardsHeader createMaxForwardsHeader(int maxForwards)
-        throws InvalidArgumentException {
+            throws InvalidArgumentException {
         if (maxForwards < 0 || maxForwards > 255)
             throw new InvalidArgumentException(
-                "bad maxForwards arg " + maxForwards);
+                    "bad maxForwards arg " + maxForwards);
         MaxForwards m = new MaxForwards();
         m.setMaxForwards(maxForwards);
 
@@ -573,18 +581,18 @@ public class HeaderFactoryImpl implements HeaderFactory, HeaderFactoryExt {
      *
      * @param majorVersion - the new integer value of the majorVersion.
      * @param minorVersion - the new integer value of the minorVersion.
-     * @throws InvalidArgumentException if supplied mimeVersion is less
-     * than zero.
      * @return the newly created MimeVersionHeader object.
+     * @throws InvalidArgumentException if supplied mimeVersion is less
+     *                                  than zero.
      * @since v1.1
      */
     public MimeVersionHeader createMimeVersionHeader(
-        int majorVersion,
-        int minorVersion)
-        throws InvalidArgumentException {
+            int majorVersion,
+            int minorVersion)
+            throws InvalidArgumentException {
         if (majorVersion < 0 || minorVersion < 0)
             throw new InvalidArgumentException(
-                "bad major/minor version");
+                    "bad major/minor version");
         MimeVersion m = new MimeVersion();
         m.setMajorVersion(majorVersion);
         m.setMinorVersion(minorVersion);
@@ -596,13 +604,13 @@ public class HeaderFactoryImpl implements HeaderFactory, HeaderFactoryExt {
      * Creates a new MinExpiresHeader based on the newly supplied minExpires value.
      *
      * @param minExpires - the new integer value of the minExpires.
-     * @throws InvalidArgumentException if supplied minExpires is less
-     * than zero.
      * @return the newly created MinExpiresHeader object.
+     * @throws InvalidArgumentException if supplied minExpires is less
+     *                                  than zero.
      * @since v1.1
      */
     public MinExpiresHeader createMinExpiresHeader(long minExpires)
-        throws InvalidArgumentException {
+            throws InvalidArgumentException {
         if (minExpires < 0 || minExpires > 4294967295L)
             throw new InvalidArgumentException("bad minExpires " + minExpires);
         MinExpires min = new MinExpires();
@@ -615,13 +623,13 @@ public class HeaderFactoryImpl implements HeaderFactory, HeaderFactoryExt {
      * Creates a new MinExpiresHeader based on the newly supplied minExpires value.
      *
      * @param minExpires - the new integer value of the minExpires.
-     * @throws InvalidArgumentException if supplied minExpires is less
-     * than zero.
      * @return the newly created MinExpiresHeader object.
+     * @throws InvalidArgumentException if supplied minExpires is less
+     *                                  than zero.
      * @since v1.1
      */
     public MinExpiresHeader createMinExpiresHeader(int minExpires)
-        throws InvalidArgumentException {
+            throws InvalidArgumentException {
         return createMinExpiresHeader((long) minExpires);
     }
 
@@ -629,17 +637,17 @@ public class HeaderFactoryImpl implements HeaderFactory, HeaderFactoryExt {
      * Creates a new MinSEHeader based on the newly supplied expires value.
      *
      * @param expires - the new integer value of the expires.
-     * @throws InvalidArgumentException if supplied expires is less
-     * than zero.
      * @return the newly created ExpiresHeader object.
-     *
+     * <p>
      * TODO: Once interfaces are in javax, change the type to MinSEHeader
      * and add to HeaderFactory. - pmusgrave
-     *
+     * <p>
      * pmusgrave
+     * @throws InvalidArgumentException if supplied expires is less
+     *                                  than zero.
      */
     public ExtensionHeader createMinSEHeader(int expires)
-        throws InvalidArgumentException {
+            throws InvalidArgumentException {
         if (expires < 0)
             throw new InvalidArgumentException("bad value " + expires);
         MinSE e = new MinSE();
@@ -653,12 +661,12 @@ public class HeaderFactoryImpl implements HeaderFactory, HeaderFactoryExt {
      * organization value.
      *
      * @param organization - the new string value of the organization.
-     * @throws ParseException which signals that an error has been reached
-     * unexpectedly while parsing the organization value.
      * @return the newly created OrganizationHeader object.
+     * @throws ParseException which signals that an error has been reached
+     *                        unexpectedly while parsing the organization value.
      */
     public OrganizationHeader createOrganizationHeader(String organization)
-        throws ParseException {
+            throws ParseException {
         if (organization == null)
             throw new NullPointerException("bad organization arg");
         Organization o = new Organization();
@@ -671,12 +679,12 @@ public class HeaderFactoryImpl implements HeaderFactory, HeaderFactoryExt {
      * Creates a new PriorityHeader based on the newly supplied priority value.
      *
      * @param priority - the new string value of the priority.
-     * @throws ParseException which signals that an error has been reached
-     * unexpectedly while parsing the priority value.
      * @return the newly created PriorityHeader object.
+     * @throws ParseException which signals that an error has been reached
+     *                        unexpectedly while parsing the priority value.
      */
     public PriorityHeader createPriorityHeader(String priority)
-        throws ParseException {
+            throws ParseException {
         if (priority == null)
             throw new NullPointerException("bad priority arg");
         Priority p = new Priority();
@@ -690,12 +698,12 @@ public class HeaderFactoryImpl implements HeaderFactory, HeaderFactoryExt {
      * scheme value.
      *
      * @param scheme - the new string value of the scheme.
-     * @throws ParseException which signals that an error has been reached
-     * unexpectedly while parsing the scheme value.
      * @return the newly created ProxyAuthenticateHeader object.
+     * @throws ParseException which signals that an error has been reached
+     *                        unexpectedly while parsing the scheme value.
      */
     public ProxyAuthenticateHeader createProxyAuthenticateHeader(String scheme)
-        throws ParseException {
+            throws ParseException {
         if (scheme == null)
             throw new NullPointerException("bad scheme arg");
         ProxyAuthenticate p = new ProxyAuthenticate();
@@ -709,12 +717,12 @@ public class HeaderFactoryImpl implements HeaderFactory, HeaderFactoryExt {
      * scheme value.
      *
      * @param scheme - the new string value of the scheme.
-     * @throws ParseException which signals that an error has been reached
-     * unexpectedly while parsing the scheme value.
      * @return the newly created ProxyAuthorizationHeader object.
+     * @throws ParseException which signals that an error has been reached
+     *                        unexpectedly while parsing the scheme value.
      */
     public ProxyAuthorizationHeader createProxyAuthorizationHeader(String scheme)
-        throws ParseException {
+            throws ParseException {
         if (scheme == null)
             throw new NullPointerException("bad scheme arg");
         ProxyAuthorization p = new ProxyAuthorization();
@@ -730,10 +738,10 @@ public class HeaderFactoryImpl implements HeaderFactory, HeaderFactoryExt {
      * @param optionTag - the new string OptionTag value.
      * @return the newly created ProxyRequireHeader object.
      * @throws ParseException which signals that an error has been reached
-     * unexpectedly while parsing the optionTag value.
+     *                        unexpectedly while parsing the optionTag value.
      */
     public ProxyRequireHeader createProxyRequireHeader(String optionTag)
-        throws ParseException {
+            throws ParseException {
         if (optionTag == null)
             throw new NullPointerException("bad optionTag arg");
         ProxyRequire p = new ProxyRequire();
@@ -748,19 +756,19 @@ public class HeaderFactoryImpl implements HeaderFactory, HeaderFactoryExt {
      *
      * @param rSeqNumber - the new integer value of the rSeqNumber.
      * @param cSeqNumber - the new integer value of the cSeqNumber.
-     * @param method - the new string value of the method.
-     * @throws InvalidArgumentException if supplied rSeqNumber or cSeqNumber is
-     * less than zero or greater than than 2**31-1.
-     * @throws ParseException which signals that an error has been reached
-     * unexpectedly while parsing the method value.
+     * @param method     - the new string value of the method.
      * @return the newly created RAckHeader object.
+     * @throws InvalidArgumentException if supplied rSeqNumber or cSeqNumber is
+     *                                  less than zero or greater than than 2**31-1.
+     * @throws ParseException           which signals that an error has been reached
+     *                                  unexpectedly while parsing the method value.
      * @since v1.1
      */
     public RAckHeader createRAckHeader(
-        long rSeqNumber,
-        long cSeqNumber,
-        String method)
-        throws InvalidArgumentException, ParseException {
+            long rSeqNumber,
+            long cSeqNumber,
+            String method)
+            throws InvalidArgumentException, ParseException {
         if (method == null)
             throw new NullPointerException("Bad method");
         if (cSeqNumber < 0 || rSeqNumber < 0)
@@ -774,38 +782,38 @@ public class HeaderFactoryImpl implements HeaderFactory, HeaderFactoryExt {
     }
 
     /**
-     * @deprecated
      * @see HeaderFactory#createRAckHeader(int, int, String)
+     * @deprecated
      */
     public RAckHeader createRAckHeader(int rSeqNumber, int cSeqNumber, String method) throws InvalidArgumentException, ParseException {
 
-        return createRAckHeader((long)rSeqNumber, (long)cSeqNumber, method);
+        return createRAckHeader((long) rSeqNumber, (long) cSeqNumber, method);
     }
 
 
     /**
-     * @deprecated
      * @see HeaderFactory#createRSeqHeader(int)
+     * @deprecated
      */
     public RSeqHeader createRSeqHeader(int sequenceNumber) throws InvalidArgumentException {
 
-        return createRSeqHeader((long) sequenceNumber) ;
+        return createRSeqHeader((long) sequenceNumber);
     }
 
     /**
      * Creates a new RSeqHeader based on the newly supplied sequenceNumber value.
      *
      * @param sequenceNumber - the new integer value of the sequenceNumber.
-     * @throws InvalidArgumentException if supplied sequenceNumber is
-     * less than zero or greater than than 2**31-1.
      * @return the newly created RSeqHeader object.
+     * @throws InvalidArgumentException if supplied sequenceNumber is
+     *                                  less than zero or greater than than 2**31-1.
      * @since v1.1
      */
     public RSeqHeader createRSeqHeader(long sequenceNumber)
-        throws InvalidArgumentException {
+            throws InvalidArgumentException {
         if (sequenceNumber < 0)
             throw new InvalidArgumentException(
-                "invalid sequenceNumber arg " + sequenceNumber);
+                    "invalid sequenceNumber arg " + sequenceNumber);
         RSeq rseq = new RSeq();
         rseq.setSeqNumber(sequenceNumber);
 
@@ -816,18 +824,18 @@ public class HeaderFactoryImpl implements HeaderFactory, HeaderFactoryExt {
      * Creates a new ReasonHeader based on the newly supplied reason value.
      *
      * @param protocol - the new string value of the protocol.
-     * @param cause - the new integer value of the cause.
-     * @param text - the new string value of the text.
-     * @throws ParseException which signals that an error has been reached
-     * unexpectedly while parsing the protocol, cause or text value.
+     * @param cause    - the new integer value of the cause.
+     * @param text     - the new string value of the text.
      * @return the newly created ReasonHeader object.
+     * @throws ParseException which signals that an error has been reached
+     *                        unexpectedly while parsing the protocol, cause or text value.
      * @since v1.1
      */
     public ReasonHeader createReasonHeader(
-        String protocol,
-        int cause,
-        String text)
-        throws InvalidArgumentException, ParseException {
+            String protocol,
+            int cause,
+            String text)
+            throws InvalidArgumentException, ParseException {
         if (protocol == null)
             throw new NullPointerException("bad protocol arg");
         if (cause < 0)
@@ -841,13 +849,13 @@ public class HeaderFactoryImpl implements HeaderFactory, HeaderFactoryExt {
     }
 
     /**
-    * Creates a new RecordRouteHeader based on the newly supplied address value.
-    *
-    * @param address - the new Address object of the address.
-    * @return the newly created RecordRouteHeader object.
-    */
+     * Creates a new RecordRouteHeader based on the newly supplied address value.
+     *
+     * @param address - the new Address object of the address.
+     * @return the newly created RecordRouteHeader object.
+     */
     public RecordRouteHeader createRecordRouteHeader(Address address) {
-        if ( address == null) throw new NullPointerException("Null argument!");
+        if (address == null) throw new NullPointerException("Null argument!");
         RecordRoute recordRoute = new RecordRoute();
         recordRoute.setAddress(address);
 
@@ -855,12 +863,12 @@ public class HeaderFactoryImpl implements HeaderFactory, HeaderFactoryExt {
     }
 
     /**
-    * Creates a new ReplyToHeader based on the newly supplied address value.
-    *
-    * @param address - the new Address object of the address.
-    * @return the newly created ReplyToHeader object.
-    * @since v1.1
-    */
+     * Creates a new ReplyToHeader based on the newly supplied address value.
+     *
+     * @param address - the new Address object of the address.
+     * @return the newly created ReplyToHeader object.
+     * @since v1.1
+     */
     public ReplyToHeader createReplyToHeader(Address address) {
         if (address == null)
             throw new NullPointerException("null address");
@@ -875,12 +883,12 @@ public class HeaderFactoryImpl implements HeaderFactory, HeaderFactoryExt {
      * value.
      *
      * @param optionTag - the new string value containing the optionTag value.
-     * @throws ParseException which signals that an error has been reached
-     * unexpectedly while parsing the List of optionTag value.
      * @return the newly created RequireHeader object.
+     * @throws ParseException which signals that an error has been reached
+     *                        unexpectedly while parsing the List of optionTag value.
      */
     public RequireHeader createRequireHeader(String optionTag)
-        throws ParseException {
+            throws ParseException {
         if (optionTag == null)
             throw new NullPointerException("null optionTag");
         Require require = new Require();
@@ -894,12 +902,12 @@ public class HeaderFactoryImpl implements HeaderFactory, HeaderFactoryExt {
      * value.
      *
      * @param retryAfter - the new integer value of the retryAfter.
-     * @throws InvalidArgumentException if supplied retryAfter is less
-     * than zero.
      * @return the newly created RetryAfterHeader object.
+     * @throws InvalidArgumentException if supplied retryAfter is less
+     *                                  than zero.
      */
     public RetryAfterHeader createRetryAfterHeader(int retryAfter)
-        throws InvalidArgumentException {
+            throws InvalidArgumentException {
         if (retryAfter < 0)
             throw new InvalidArgumentException("bad retryAfter arg");
         RetryAfter r = new RetryAfter();
@@ -927,12 +935,12 @@ public class HeaderFactoryImpl implements HeaderFactory, HeaderFactoryExt {
      * Creates a new ServerHeader based on the newly supplied product value.
      *
      * @param product - the new list value of the product.
-     * @throws ParseException which signals that an error has been reached
-     * unexpectedly while parsing the product value.
      * @return the newly created ServerHeader object.
+     * @throws ParseException which signals that an error has been reached
+     *                        unexpectedly while parsing the product value.
      */
     public ServerHeader createServerHeader(List product)
-        throws ParseException {
+            throws ParseException {
         if (product == null)
             throw new NullPointerException("null productList arg");
         Server server = new Server();
@@ -945,12 +953,12 @@ public class HeaderFactoryImpl implements HeaderFactory, HeaderFactoryExt {
      * Creates a new SubjectHeader based on the newly supplied subject value.
      *
      * @param subject - the new string value of the subject.
-     * @throws ParseException which signals that an error has been reached
-     * unexpectedly while parsing the subject value.
      * @return the newly created SubjectHeader object.
+     * @throws ParseException which signals that an error has been reached
+     *                        unexpectedly while parsing the subject value.
      */
     public SubjectHeader createSubjectHeader(String subject)
-        throws ParseException {
+            throws ParseException {
         if (subject == null)
             throw new NullPointerException("null subject arg");
         Subject s = new Subject();
@@ -964,13 +972,13 @@ public class HeaderFactoryImpl implements HeaderFactory, HeaderFactoryExt {
      * subscriptionState value.
      *
      * @param subscriptionState - the new string value of the subscriptionState.
-     * @throws ParseException which signals that an error has been reached
-     * unexpectedly while parsing the subscriptionState value.
      * @return the newly created SubscriptionStateHeader object.
+     * @throws ParseException which signals that an error has been reached
+     *                        unexpectedly while parsing the subscriptionState value.
      * @since v1.1
      */
     public SubscriptionStateHeader createSubscriptionStateHeader(String subscriptionState)
-        throws ParseException {
+            throws ParseException {
         if (subscriptionState == null)
             throw new NullPointerException("null subscriptionState arg");
         SubscriptionState s = new SubscriptionState();
@@ -984,12 +992,12 @@ public class HeaderFactoryImpl implements HeaderFactory, HeaderFactoryExt {
      * value.
      *
      * @param optionTag - the new string containing the optionTag value.
-     * @throws ParseException which signals that an error has been reached
-     * unexpectedly while parsing the optionTag value.
      * @return the newly created SupportedHeader object.
+     * @throws ParseException which signals that an error has been reached
+     *                        unexpectedly while parsing the optionTag value.
      */
     public SupportedHeader createSupportedHeader(String optionTag)
-        throws ParseException {
+            throws ParseException {
         if (optionTag == null)
             throw new NullPointerException("null optionTag arg");
         Supported supported = new Supported();
@@ -1002,12 +1010,12 @@ public class HeaderFactoryImpl implements HeaderFactory, HeaderFactoryExt {
      * Creates a new TimeStampHeader based on the newly supplied timeStamp value.
      *
      * @param timeStamp - the new float value of the timeStamp.
-     * @throws InvalidArgumentException if supplied timeStamp is less
-     * than zero.
      * @return the newly created TimeStampHeader object.
+     * @throws InvalidArgumentException if supplied timeStamp is less
+     *                                  than zero.
      */
     public TimeStampHeader createTimeStampHeader(float timeStamp)
-        throws InvalidArgumentException {
+            throws InvalidArgumentException {
         if (timeStamp < 0)
             throw new IllegalArgumentException("illegal timeStamp");
         TimeStamp t = new TimeStamp();
@@ -1021,13 +1029,13 @@ public class HeaderFactoryImpl implements HeaderFactory, HeaderFactoryExt {
      * tag values.
      *
      * @param address - the new Address object of the address.
-     * @param tag - the new string value of the tag.
-     * @throws ParseException which signals that an error has been reached
-     * unexpectedly while parsing the tag value.
+     * @param tag     - the new string value of the tag.
      * @return the newly created ToHeader object.
+     * @throws ParseException which signals that an error has been reached
+     *                        unexpectedly while parsing the tag value.
      */
     public ToHeader createToHeader(Address address, String tag)
-        throws ParseException {
+            throws ParseException {
         if (address == null)
             throw new NullPointerException("null address");
         To to = new To();
@@ -1043,12 +1051,12 @@ public class HeaderFactoryImpl implements HeaderFactory, HeaderFactoryExt {
      * value.
      *
      * @param optionTag - the new string containing the optionTag value.
-     * @throws ParseException which signals that an error has been reached
-     * unexpectedly while parsing the List of optionTag value.
      * @return the newly created UnsupportedHeader object.
+     * @throws ParseException which signals that an error has been reached
+     *                        unexpectedly while parsing the List of optionTag value.
      */
     public UnsupportedHeader createUnsupportedHeader(String optionTag)
-        throws ParseException {
+            throws ParseException {
         if (optionTag == null)
             throw new NullPointerException(optionTag);
         Unsupported unsupported = new Unsupported();
@@ -1061,12 +1069,12 @@ public class HeaderFactoryImpl implements HeaderFactory, HeaderFactoryExt {
      * Creates a new UserAgentHeader based on the newly supplied product value.
      *
      * @param product - the new list value of the product.
-     * @throws ParseException which signals that an error has been reached
-     * unexpectedly while parsing the product value.
      * @return the newly created UserAgentHeader object.
+     * @throws ParseException which signals that an error has been reached
+     *                        unexpectedly while parsing the product value.
      */
     public UserAgentHeader createUserAgentHeader(List product)
-        throws ParseException {
+            throws ParseException {
 
         if (product == null)
             throw new NullPointerException("null user agent");
@@ -1079,20 +1087,20 @@ public class HeaderFactoryImpl implements HeaderFactory, HeaderFactoryExt {
     /**
      * Creates a new ViaHeader based on the newly supplied uri and branch values.
      *
-     * @param host the new host value of uri.
-     * @param port the new port value of uri.
+     * @param host      the new host value of uri.
+     * @param port      the new port value of uri.
      * @param transport the new transport value of uri.
-     * @param branch the new string value of the branch.
-     * @throws ParseException which signals that an error has been reached
-     * unexpectedly while parsing the branch value.
+     * @param branch    the new string value of the branch.
      * @return the newly created ViaHeader object.
+     * @throws ParseException which signals that an error has been reached
+     *                        unexpectedly while parsing the branch value.
      */
     public ViaHeader createViaHeader(
-        String host,
-        int port,
-        String transport,
-        String branch)
-        throws ParseException, InvalidArgumentException {
+            String host,
+            int port,
+            String transport,
+            String branch)
+            throws ParseException, InvalidArgumentException {
         // This should be changed.
         if (host == null || transport == null)
             throw new NullPointerException("null arg");
@@ -1101,14 +1109,12 @@ public class HeaderFactoryImpl implements HeaderFactory, HeaderFactoryExt {
             via.setBranch(branch);
 
         // for supporting IPv6 addresses
-        if(host.indexOf(':') >= 0
-            && host.indexOf('[') < 0)
-        {
+        if (host.indexOf(':') >= 0
+                && host.indexOf('[') < 0) {
             //strip address scope zones if any
-            if(stripAddressScopeZones)
-            {
+            if (stripAddressScopeZones) {
                 int zoneStart = host.indexOf('%');
-                if(zoneStart != -1)
+                if (zoneStart != -1)
                     host = host.substring(0, zoneStart);
             }
             host = '[' + host + ']';
@@ -1126,12 +1132,12 @@ public class HeaderFactoryImpl implements HeaderFactory, HeaderFactoryExt {
      * scheme value.
      *
      * @param scheme - the new string value of the scheme.
-     * @throws ParseException which signals that an error has been reached
-     * unexpectedly while parsing the scheme values.
      * @return the newly created WWWAuthenticateHeader object.
+     * @throws ParseException which signals that an error has been reached
+     *                        unexpectedly while parsing the scheme values.
      */
     public WWWAuthenticateHeader createWWWAuthenticateHeader(String scheme)
-        throws ParseException {
+            throws ParseException {
         if (scheme == null)
             throw new NullPointerException("null scheme");
         WWWAuthenticate www = new WWWAuthenticate();
@@ -1144,20 +1150,20 @@ public class HeaderFactoryImpl implements HeaderFactory, HeaderFactoryExt {
      * Creates a new WarningHeader based on the newly supplied
      * agent, code and comment values.
      *
-     * @param agent - the new string value of the agent.
-     * @param code - the new boolean integer of the code.
+     * @param agent   - the new string value of the agent.
+     * @param code    - the new boolean integer of the code.
      * @param comment - the new string value of the comment.
-     * @throws ParseException which signals that an error has been reached
-     * unexpectedly while parsing the agent or comment values.
-     * @throws InvalidArgumentException if an invalid integer code is given for
-     * the WarningHeader.
      * @return the newly created WarningHeader object.
+     * @throws ParseException           which signals that an error has been reached
+     *                                  unexpectedly while parsing the agent or comment values.
+     * @throws InvalidArgumentException if an invalid integer code is given for
+     *                                  the WarningHeader.
      */
     public WarningHeader createWarningHeader(
-        String agent,
-        int code,
-        String comment)
-        throws ParseException, InvalidArgumentException {
+            String agent,
+            int code,
+            String comment)
+            throws ParseException, InvalidArgumentException {
         if (agent == null)
             throw new NullPointerException("null arg");
         Warning warning = new Warning();
@@ -1168,7 +1174,8 @@ public class HeaderFactoryImpl implements HeaderFactory, HeaderFactoryExt {
         return warning;
     }
 
-    /** Creates a new ErrorInfoHeader based on the newly
+    /**
+     * Creates a new ErrorInfoHeader based on the newly
      * supplied errorInfo value.
      *
      * @param errorInfo - the new URI value of the errorInfo.
@@ -1183,6 +1190,7 @@ public class HeaderFactoryImpl implements HeaderFactory, HeaderFactoryExt {
     /**
      * Create a header from the given header text.
      * Header should not have the trailng crlf.
+     *
      * @throws ParseException
      */
     public Header createHeader(String headerText) throws ParseException {
@@ -1191,13 +1199,13 @@ public class HeaderFactoryImpl implements HeaderFactory, HeaderFactoryExt {
         if (sipHeader instanceof SIPHeaderList) {
             if (((SIPHeaderList) sipHeader).size() > 1) {
                 throw new ParseException(
-                    "Only singleton allowed " + headerText,
-                    0);
+                        "Only singleton allowed " + headerText,
+                        0);
             } else if (((SIPHeaderList) sipHeader).size() == 0) {
                 try {
                     return (Header) ((SIPHeaderList) sipHeader)
-                        .getMyClass()
-                        .newInstance();
+                            .getMyClass()
+                            .newInstance();
                 } catch (InstantiationException ex) {
                     ex.printStackTrace();
                     return null;
@@ -1214,37 +1222,40 @@ public class HeaderFactoryImpl implements HeaderFactory, HeaderFactoryExt {
 
     }
 
-    /** Create and parse a header.
+    /**
+     * Create and parse a header.
      *
-     * @param headerName -- header name for the header to parse.
+     * @param headerName  -- header name for the header to parse.
      * @param headerValue -- header value for the header to parse.
+     * @return the parsed sip header
      * @throws ParseException
-     * @return  the parsed sip header
      */
     public Header createHeader(
-        String headerName,
-        String headerValue)
-        throws ParseException {
+            String headerName,
+            String headerValue)
+            throws ParseException {
         if (headerName == null)
             throw new NullPointerException("header name is null");
         String hdrText =
-            new StringBuilder()
-                .append(headerName)
-                .append(":")
-                .append(headerValue)
-                .toString();
+                new StringBuilder()
+                        .append(headerName)
+                        .append(":")
+                        .append(headerValue)
+                        .toString();
         return createHeader(hdrText);
 
     }
 
-    /** Create and return a list of headers.
-     *@param headers -- list of headers.
-     *@throws ParseException -- if a parse exception occurs or a List
-     * of that type of header is not alowed.
-     *@return a List containing the headers.
+    /**
+     * Create and return a list of headers.
+     *
+     * @param headers -- list of headers.
+     * @return a List containing the headers.
+     * @throws ParseException -- if a parse exception occurs or a List
+     *                        of that type of header is not alowed.
      */
     public List createHeaders(String headers)
-        throws ParseException {
+            throws ParseException {
         if (headers == null)
             throw new NullPointerException("null arg!");
         StringMsgParser smp = new StringMsgParser();
@@ -1253,12 +1264,14 @@ public class HeaderFactoryImpl implements HeaderFactory, HeaderFactoryExt {
             return (SIPHeaderList) shdr;
         else
             throw new ParseException(
-                "List of headers of this type is not allowed in a message",
-                0);
+                    "List of headers of this type is not allowed in a message",
+                    0);
     }
 
-    /** Create a ReferTo Header.
-     *@param address -- address for the header.
+    /**
+     * Create a ReferTo Header.
+     *
+     * @param address -- address for the header.
      */
     public ReferToHeader createReferToHeader(Address address) {
         if (address == null)
@@ -1268,15 +1281,15 @@ public class HeaderFactoryImpl implements HeaderFactory, HeaderFactoryExt {
         return referTo;
     }
 
-    /** Create a ReferredBy Header.
+    /**
+     * Create a ReferredBy Header.
+     * <p>
+     * pmusgrave
      *
-     *  pmusgrave
-     *
-     *@param address -- address for the header.
-     *
-     * TODO: Once interfaces are in javax, change the type to MinSEHeader
-     * and add to HeaderFactory. - pmusgrave
-
+     * @param address -- address for the header.
+     *                <p>
+     *                TODO: Once interfaces are in javax, change the type to MinSEHeader
+     *                and add to HeaderFactory. - pmusgrave
      */
     public ReferredByHeader createReferredByHeader(Address address) {
         if (address == null)
@@ -1288,14 +1301,13 @@ public class HeaderFactoryImpl implements HeaderFactory, HeaderFactoryExt {
 
     /**
      * Create a Replaces header with a call Id, to and from tag.
-     *
+     * <p>
      * TODO: Once interfaces are in javax, change the type to MinSEHeader
      * and add to HeaderFactory. - pmusgrave
      * pmusgrave
      */
     public ReplacesHeader createReplacesHeader(String callId, String toTag,
-                String fromTag) throws ParseException
-    {
+                                               String fromTag) throws ParseException {
         Replaces replaces = new Replaces();
         replaces.setCallId(callId);
         replaces.setFromTag(fromTag);
@@ -1306,11 +1318,9 @@ public class HeaderFactoryImpl implements HeaderFactory, HeaderFactoryExt {
 
     /**
      * Create a Join header with a call Id, to and from tag.
-     *
      */
     public JoinHeader createJoinHeader(String callId, String toTag,
-                String fromTag) throws ParseException
-    {
+                                       String fromTag) throws ParseException {
         Join join = new Join();
         join.setCallId(callId);
         join.setFromTag(fromTag);
@@ -1344,10 +1354,10 @@ public class HeaderFactoryImpl implements HeaderFactory, HeaderFactoryExt {
 
     /**
      * creates a P-Access-Network-Info header
+     *
      * @return newly created P-Access-Network-Info header
      */
-    public PAccessNetworkInfoHeader createPAccessNetworkInfoHeader()
-    {
+    public PAccessNetworkInfoHeader createPAccessNetworkInfoHeader() {
         PAccessNetworkInfo accessNetworkInfo = new PAccessNetworkInfo();
 
         return accessNetworkInfo;
@@ -1356,14 +1366,14 @@ public class HeaderFactoryImpl implements HeaderFactory, HeaderFactoryExt {
 
     /**
      * P-Asserted-Identity header
+     *
      * @param address - Address
      * @return newly created P-Asserted-Identity header
      * @throws ParseException
      * @throws NullPointerException
      */
     public PAssertedIdentityHeader createPAssertedIdentityHeader(Address address)
-        throws NullPointerException, ParseException
-    {
+            throws NullPointerException, ParseException {
         if (address == null)
             throw new NullPointerException("null address!");
 
@@ -1371,22 +1381,20 @@ public class HeaderFactoryImpl implements HeaderFactory, HeaderFactoryExt {
         assertedIdentity.setAddress(address);
 
         return assertedIdentity;
-
-
     }
 
 
     /**
      * Creates a new P-Associated-URI header based on the supplied address
+     *
      * @param assocURI - Address
      * @return newly created P-Associated-URI header
      * @throws NullPointerException if the supplied address is null
      * @throws ParseException
      */
-    public PAssociatedURIHeader createPAssociatedURIHeader(Address assocURI)
-    {
+    public PAssociatedURIHeader createPAssociatedURIHeader(Address assocURI) {
         if (assocURI == null)
-        throw new NullPointerException("null associatedURI!");
+            throw new NullPointerException("null associatedURI!");
 
         PAssociatedURI associatedURI = new PAssociatedURI();
         associatedURI.setAddress(assocURI);
@@ -1395,17 +1403,15 @@ public class HeaderFactoryImpl implements HeaderFactory, HeaderFactoryExt {
     }
 
 
-
-
     /**
      * P-Called-Party-ID header
+     *
      * @param address - Address
      * @return newly created P-Called-Party-ID header
      * @throws NullPointerException
      * @throws ParseException
      */
-    public PCalledPartyIDHeader createPCalledPartyIDHeader(Address address)
-    {
+    public PCalledPartyIDHeader createPCalledPartyIDHeader(Address address) {
         if (address == null)
             throw new NullPointerException("null address!");
 
@@ -1416,13 +1422,12 @@ public class HeaderFactoryImpl implements HeaderFactory, HeaderFactoryExt {
     }
 
 
-
     /**
      * P-Charging-Function-Addresses header
+     *
      * @return newly created P-Charging-Function-Addresses header
      */
-    public PChargingFunctionAddressesHeader createPChargingFunctionAddressesHeader()
-    {
+    public PChargingFunctionAddressesHeader createPChargingFunctionAddressesHeader() {
         PChargingFunctionAddresses cfa = new PChargingFunctionAddresses();
 
         return cfa;
@@ -1431,16 +1436,16 @@ public class HeaderFactoryImpl implements HeaderFactory, HeaderFactoryExt {
 
     /**
      * P-Charging-Vector header
+     *
      * @param icid - icid string
      * @return newly created P-Charging-Vector header
      * @throws NullPointerException
      * @throws ParseException
      */
     public PChargingVectorHeader createChargingVectorHeader(String icid)
-        throws ParseException
-    {
+            throws ParseException {
         if (icid == null)
-        throw new NullPointerException("null icid arg!");
+            throw new NullPointerException("null icid arg!");
 
         PChargingVector chargingVector = new PChargingVector();
         chargingVector.setICID(icid);
@@ -1452,14 +1457,14 @@ public class HeaderFactoryImpl implements HeaderFactory, HeaderFactoryExt {
 
     /**
      * P-Media-Authorization header
+     *
      * @param token - token string
      * @return newly created P-Media-Authorizarion header
      * @throws InvalidArgumentException
      * @throws ParseException
      */
     public PMediaAuthorizationHeader createPMediaAuthorizationHeader(String token)
-        throws InvalidArgumentException, ParseException
-    {
+            throws InvalidArgumentException, ParseException {
         if (token == null || token == "")
             throw new InvalidArgumentException("The Media-Authorization-Token parameter is null or empty");
 
@@ -1473,12 +1478,12 @@ public class HeaderFactoryImpl implements HeaderFactory, HeaderFactoryExt {
 
     /**
      * P-Preferred-Identity header
+     *
      * @param address - Address
      * @return newly created P-Preferred-Identity header
      * @throws NullPointerException
      */
-    public PPreferredIdentityHeader createPPreferredIdentityHeader(Address address)
-    {
+    public PPreferredIdentityHeader createPPreferredIdentityHeader(Address address) {
         if (address == null)
             throw new NullPointerException("null address!");
 
@@ -1491,26 +1496,25 @@ public class HeaderFactoryImpl implements HeaderFactory, HeaderFactoryExt {
 
     /**
      * P-Visited-Network-ID header
+     *
      * @return newly created P-Visited-Network-ID header
      */
-    public PVisitedNetworkIDHeader createPVisitedNetworkIDHeader()
-    {
+    public PVisitedNetworkIDHeader createPVisitedNetworkIDHeader() {
         PVisitedNetworkID visitedNetworkID = new PVisitedNetworkID();
 
         return visitedNetworkID;
     }
 
 
-
     /**
      * PATH header
+     *
      * @param address - Address
      * @return newly created Path header
      * @throws NullPointerException
      * @throws ParseException
      */
-    public PathHeader createPathHeader(Address address)
-    {
+    public PathHeader createPathHeader(Address address) {
         if (address == null)
             throw new NullPointerException("null address!");
 
@@ -1524,12 +1528,12 @@ public class HeaderFactoryImpl implements HeaderFactory, HeaderFactoryExt {
 
     /**
      * Privacy header
+     *
      * @param privacyType - privacy type string
      * @return newly created Privacy header
      * @throws NullPointerException
      */
-    public PrivacyHeader createPrivacyHeader(String privacyType)
-    {
+    public PrivacyHeader createPrivacyHeader(String privacyType) {
         if (privacyType == null)
             throw new NullPointerException("null privacyType arg");
 
@@ -1542,12 +1546,12 @@ public class HeaderFactoryImpl implements HeaderFactory, HeaderFactoryExt {
 
     /**
      * Service-Route header
+     *
      * @param address - Address
      * @return newly created Service-Route header
      * @throws NullPointerException
      */
-    public ServiceRouteHeader createServiceRouteHeader(Address address)
-    {
+    public ServiceRouteHeader createServiceRouteHeader(Address address) {
         if (address == null)
             throw new NullPointerException("null address!");
 
@@ -1560,30 +1564,30 @@ public class HeaderFactoryImpl implements HeaderFactory, HeaderFactoryExt {
 
     /**
      * Security-Server header
+     *
      * @return newly created Security-Server header
      */
-    public SecurityServerHeader createSecurityServerHeader()
-    {
+    public SecurityServerHeader createSecurityServerHeader() {
         SecurityServer secServer = new SecurityServer();
         return secServer;
     }
 
     /**
      * Security-Client header
+     *
      * @return newly created Security-Client header
      */
-    public SecurityClientHeader createSecurityClientHeader()
-    {
+    public SecurityClientHeader createSecurityClientHeader() {
         SecurityClient secClient = new SecurityClient();
         return secClient;
     }
 
     /**
      * Security-Verify header
+     *
      * @return newly created Security-Verify header
      */
-    public SecurityVerifyHeader createSecurityVerifyHeader()
-    {
+    public SecurityVerifyHeader createSecurityVerifyHeader() {
         SecurityVerify secVerify = new SecurityVerify();
         return secVerify;
     }
@@ -1593,9 +1597,8 @@ public class HeaderFactoryImpl implements HeaderFactory, HeaderFactoryExt {
      * Please note that this is not a SIP/TEL uri. It is a
      * DIAMETER AAA URI.
      */
-    public PUserDatabaseHeader createPUserDatabaseHeader(String databaseName)
-    {
-        if((databaseName ==null)||(databaseName.equals(" ")))
+    public PUserDatabaseHeader createPUserDatabaseHeader(String databaseName) {
+        if ((databaseName == null) || (databaseName.equals(" ")))
             throw new NullPointerException("Database name is null");
 
         PUserDatabase pUserDatabase = new PUserDatabase();
@@ -1606,13 +1609,10 @@ public class HeaderFactoryImpl implements HeaderFactory, HeaderFactoryExt {
 
 
     /**
-     * 
      * @return The newly created P-Profile-Key header.
-     *
      */
-    public PProfileKeyHeader createPProfileKeyHeader(Address address)
-    {
-        if (address ==null)
+    public PProfileKeyHeader createPProfileKeyHeader(Address address) {
+        if (address == null)
             throw new NullPointerException("Address is null");
         PProfileKey pProfileKey = new PProfileKey();
         pProfileKey.setAddress(address);
@@ -1621,33 +1621,29 @@ public class HeaderFactoryImpl implements HeaderFactory, HeaderFactoryExt {
     }
 
     /**
-     * 
      * @return The newly created P-Served-User header.
      */
-    public PServedUserHeader createPServedUserHeader(Address address)
-    {
-        if(address==null)
+    public PServedUserHeader createPServedUserHeader(Address address) {
+        if (address == null)
             throw new NullPointerException("Address is null");
         PServedUser psu = new PServedUser();
         psu.setAddress(address);
 
         return psu;
     }
+
     /**
      * @return The newly created P-Preferred-Service header.
      */
-    public PPreferredServiceHeader createPPreferredServiceHeader()
-    {
+    public PPreferredServiceHeader createPPreferredServiceHeader() {
         PPreferredService pps = new PPreferredService();
         return pps;
     }
 
     /**
-     *
      * @return The newly created P-Asserted-Service header.
      */
-    public PAssertedServiceHeader createPAssertedServiceHeader()
-    {
+    public PAssertedServiceHeader createPAssertedServiceHeader() {
         PAssertedService pas = new PAssertedService();
         return pas;
     }
@@ -1656,13 +1652,12 @@ public class HeaderFactoryImpl implements HeaderFactory, HeaderFactoryExt {
      * Creates a new SessionExpiresHeader based on the newly supplied expires value.
      *
      * @param expires - the new integer value of the expires.
-     * @throws InvalidArgumentException if supplied expires is less
-     * than zero.
      * @return the newly created SessionExpiresHeader object.
-     *
+     * @throws InvalidArgumentException if supplied expires is less
+     *                                  than zero.
      */
     public SessionExpiresHeader createSessionExpiresHeader(int expires)
-        throws InvalidArgumentException {
+            throws InvalidArgumentException {
         if (expires < 0)
             throw new InvalidArgumentException("bad value " + expires);
         SessionExpires s = new SessionExpires();
@@ -1670,18 +1665,17 @@ public class HeaderFactoryImpl implements HeaderFactory, HeaderFactoryExt {
 
         return s;
     }
-    
-    
+
+
     /**
      * Create a new Request Line from a String.
-     * 
      */
-    public SipRequestLine createRequestLine(String requestLine)  throws ParseException {
-        
+    public SipRequestLine createRequestLine(String requestLine) throws ParseException {
+
         RequestLineParser requestLineParser = new RequestLineParser(requestLine);
         return (SipRequestLine) requestLineParser.parse();
     }
-    
+
     /**
      * Create a new StatusLine from a String.
      */
@@ -1691,10 +1685,9 @@ public class HeaderFactoryImpl implements HeaderFactory, HeaderFactoryExt {
     }
 
 
-    
     /**
      * Create and return a references header.
-     * 
+     *
      * @param callId
      * @param rel
      * @return
@@ -1707,21 +1700,19 @@ public class HeaderFactoryImpl implements HeaderFactory, HeaderFactoryExt {
         retval.setRel(rel);
         return retval;
     }
-    
-    
 
 
     //////////////////////////////////////////////////////////
     // Constructor
     //////////////////////////////////////////////////////////
+
     /**
      * Default constructor.
      */
     public HeaderFactoryImpl() {
         stripAddressScopeZones
-            = Boolean.getBoolean("gov.nist.core.STRIP_ADDR_SCOPES");
+                = Boolean.getBoolean("gov.nist.core.STRIP_ADDR_SCOPES");
     }
-
 
 
 }

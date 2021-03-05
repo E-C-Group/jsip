@@ -26,6 +26,7 @@ package co.ecg.jain_sip.sip.ri.header.ims;
 */
 import java.text.ParseException;
 import co.ecg.jain_sip.sip.header.ExtensionHeader;
+import co.ecg.jain_sip.sip.ri.header.ParametersHeader;
 
 /**
  *
@@ -33,7 +34,7 @@ import co.ecg.jain_sip.sip.header.ExtensionHeader;
  * Rancore Technologies Pvt Ltd, Mumbai India.
  *
  */
-public class PUserDatabase extends gov.nist.javax.sip.header.ParametersHeader  implements PUserDatabaseHeader,SIPHeaderNamesIms, ExtensionHeader{
+public class PUserDatabase extends ParametersHeader implements PUserDatabaseHeader,SIPHeaderNamesIms, ExtensionHeader{
 
     private String databaseName;
 

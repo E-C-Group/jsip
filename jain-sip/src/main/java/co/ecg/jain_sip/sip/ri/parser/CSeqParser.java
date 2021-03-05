@@ -25,6 +25,8 @@
 */
 package co.ecg.jain_sip.sip.ri.parser;
 
+import co.ecg.jain_sip.sip.ri.header.CSeq;
+import co.ecg.jain_sip.sip.ri.header.SIPHeader;
 import co.ecg.jain_sip.sip.ri.message.SIPRequest;
 
 import java.text.ParseException;
@@ -62,10 +64,8 @@ public class CSeqParser extends HeaderParser {
             this.lexer.match('\n');
             return c;
         } catch (NumberFormatException ex) {
-            Debug.printStackTrace(ex);
             throw createParseException("Number format exception");
         } catch (InvalidArgumentException ex) {
-            Debug.printStackTrace(ex);
             throw createParseException(ex.getMessage());
         }
     }

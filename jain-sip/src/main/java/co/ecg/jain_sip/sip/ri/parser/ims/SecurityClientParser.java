@@ -62,7 +62,7 @@ public class SecurityClientParser extends SecurityAgreeParser
 
     public SIPHeader parse() throws ParseException
     {
-    	if (debug)
+
     		dbg_enter("SecuriryClient parse");
         try {
 
@@ -74,7 +74,7 @@ public class SecurityClientParser extends SecurityAgreeParser
 
 
         } finally {
-        	if (debug)
+
         		dbg_leave("SecuriryClient parse");
         }
     }

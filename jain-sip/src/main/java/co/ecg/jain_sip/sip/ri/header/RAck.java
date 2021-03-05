@@ -29,6 +29,8 @@
 package co.ecg.jain_sip.sip.ri.header;
 
 import co.ecg.jain_sip.sip.InvalidArgumentException;
+import co.ecg.jain_sip.sip.header.RAckHeader;
+
 import java.text.ParseException;
 
 /**
@@ -40,7 +42,7 @@ import java.text.ParseException;
  *
  *
  */
-public class RAck extends SIPHeader implements javax.sip.header.RAckHeader {
+public class RAck extends SIPHeader implements RAckHeader {
 
     /**
      * Comment for <code>serialVersionUID</code>
@@ -111,7 +113,7 @@ public class RAck extends SIPHeader implements javax.sip.header.RAckHeader {
 
     /**
      * @deprecated
-     * @see javax.sip.header.RAckHeader#setCSeqNumber(int)
+     * @see RAckHeader#setCSeqNumber(int)
      */
     public void setCSeqNumber(int cSeqNumber) throws InvalidArgumentException {
         this.setCSequenceNumber(cSeqNumber);
@@ -140,7 +142,7 @@ public class RAck extends SIPHeader implements javax.sip.header.RAckHeader {
 
     /**
      *@deprecated
-     * @see javax.sip.header.RAckHeader#setRSeqNumber(int)
+     * @see RAckHeader#setRSeqNumber(int)
      */
     public void setRSeqNumber(int rSeqNumber) throws InvalidArgumentException {
         this.setRSequenceNumber(rSeqNumber);

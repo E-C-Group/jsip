@@ -28,10 +28,7 @@
  *******************************************************************************/
 package co.ecg.jain_sip.sip.ri.stack;
 
-import co.ecg.jain_sip.core.ri.CommonLogger;
 import co.ecg.jain_sip.core.ri.HostPort;
-import co.ecg.jain_sip.core.ri.LogWriter;
-import co.ecg.jain_sip.core.ri.StackLogger;
 import co.ecg.jain_sip.core.ri.ThreadAuditor;
 import co.ecg.jain_sip.sip.ri.SipStackImpl;
 
@@ -48,6 +45,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 import co.ecg.jain_sip.sip.IOExceptionEvent;
 import co.ecg.jain_sip.sip.SipListener;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Sit in a loop and handle incoming udp datagram messages. For each Datagram
@@ -70,9 +68,9 @@ import co.ecg.jain_sip.sip.SipListener;
  * thread pooling be added to limit the number of threads and improve
  * performance.
  */
+@Slf4j
 public class UDPMessageProcessor extends MessageProcessor implements Runnable {
-	
-	private static StackLogger logger = CommonLogger.getLogger(UDPMessageProcessor.class);
+
     /**
      * The Mapped port (in case STUN suport is enabled)
      */
@@ -273,7 +271,7 @@ public class UDPMessageProcessor extends MessageProcessor implements Runnable {
 	    	String msg = String.format("Caught '%s' on UDP receive socket on %s:%s, message '%s'. Trying to ignore it ... %s",
 			                     e.getClass().getSimpleName(), sock.getLocalAddress().getHostAddress(), getPort(), e.getMessage(), lastBeforeFloodingChecker ? "(Flooding checker active, no more socket IO-exceptions will be reported)" : "");
 	    	log.warn(msg);
-	    	logger.logException(e);
+	    	log.info("Exception", e);
 			SipListener listener = sipStack.getSipListener();
 			if( listener != null ) {
 				listener.processIOException( new SocketIOExceptionEvent(msg));

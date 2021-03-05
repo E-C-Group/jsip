@@ -66,7 +66,7 @@ public class PCalledPartyIDParser
     public SIPHeader parse() throws ParseException
     {
 
-        if (debug)
+
             dbg_enter("PCalledPartyIDParser.parse");
 
         try {
@@ -81,7 +81,7 @@ public class PCalledPartyIDParser
             return calledPartyID;
 
         } finally {
-            if (debug)
+
                 dbg_leave("PCalledPartyIDParser.parse");
         }
 

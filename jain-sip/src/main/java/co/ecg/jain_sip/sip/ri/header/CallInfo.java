@@ -27,6 +27,10 @@
 * Product of NIST/ITL Advanced Networking Technologies Division (ANTD).        *
 *******************************************************************************/
 package co.ecg.jain_sip.sip.ri.header;
+import co.ecg.jain_sip.sip.address.URI;
+import co.ecg.jain_sip.sip.header.CallInfoHeader;
+import co.ecg.jain_sip.sip.ri.address.GenericURI;
+
 import java.text.ParseException;
 
 /**
@@ -39,7 +43,7 @@ import java.text.ParseException;
  */
 public final class CallInfo
     extends ParametersHeader
-    implements javax.sip.header.CallInfoHeader {
+    implements CallInfoHeader {
 
     /**
      * Comment for <code>serialVersionUID</code>
@@ -88,7 +92,7 @@ public final class CallInfo
      * get the URI field
      * @return URI
      */
-    public javax.sip.address.URI getInfo() {
+    public URI getInfo() {
         return info;
     }
 
@@ -109,7 +113,7 @@ public final class CallInfo
      * set the URI field
      * @param info is the URI to set.
      */
-    public void setInfo(javax.sip.address.URI info) {
+    public void setInfo(URI info) {
         this.info = (GenericURI) info;
     }
 

@@ -28,6 +28,8 @@
 *******************************************************************************/
 package co.ecg.jain_sip.sip.ri.header;
 
+import co.ecg.jain_sip.sip.header.ContentDispositionHeader;
+
 import java.text.*;
 
 /**
@@ -40,7 +42,7 @@ import java.text.*;
  */
 public final class ContentDisposition
     extends ParametersHeader
-    implements javax.sip.header.ContentDispositionHeader {
+    implements ContentDispositionHeader {
 
     /**
      * Comment for <code>serialVersionUID</code>

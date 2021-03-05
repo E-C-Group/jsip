@@ -32,10 +32,8 @@ package co.ecg.jain_sip.sip.ri;
 
 
 import co.ecg.jain_sip.sip.ri.message.SIPRequest;
-import co.ecg.jain_sip.sip.ri.stack.SIPTransaction;
-import co.ecg.jain_sip.sip.ri.stack.SIPTransactionStack;
-import co.ecg.jain_sip.sip.ri.stack.ServerRequestInterface;
-import co.ecg.jain_sip.sip.ri.stack.StackMessageFactory;
+import co.ecg.jain_sip.sip.ri.message.SIPResponse;
+import co.ecg.jain_sip.sip.ri.stack.*;
 import lombok.extern.slf4j.Slf4j;
 
 import co.ecg.jain_sip.sip.*;
@@ -104,7 +102,7 @@ class NistSipMessageFactoryImpl implements StackMessageFactory {
      *            is the MessageChannel abstraction for this SIPServerResponse
      */
   public ServerResponseInterface newSIPServerResponse(
-            SIPResponse sipResponse, MessageChannel msgChannel) {
+          SIPResponse sipResponse, MessageChannel messageChannel) {
         // Tr is null if a transaction is not mapped.
         SIPTransaction tr = sipStack.findTransaction(sipResponse, false);
         if (log.isDebugEnabled())
@@ -136,7 +134,7 @@ class NistSipMessageFactoryImpl implements StackMessageFactory {
 
         retval.transactionChannel = tr;
 
-        retval.listeningPoint = msgChannel.getMessageProcessor()
+        retval.listeningPoint = messageChannel.getMessageProcessor()
                 .getListeningPoint();
         return retval;
     }

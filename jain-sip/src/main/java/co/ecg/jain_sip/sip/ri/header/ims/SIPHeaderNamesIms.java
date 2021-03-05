@@ -30,12 +30,14 @@
 package co.ecg.jain_sip.sip.ri.header.ims;
 
 
+import co.ecg.jain_sip.sip.ri.header.SIPHeaderNames;
+
 /**
  * @author ALEXANDRE MIGUEL SILVA SANTOS - Nú 10045401
  */
 
 public interface SIPHeaderNamesIms
-    extends gov.nist.javax.sip.header.SIPHeaderNames {
+    extends SIPHeaderNames {
 
     public static final String PATH = PathHeader.NAME;
     public static final String SERVICE_ROUTE = ServiceRouteHeader.NAME;

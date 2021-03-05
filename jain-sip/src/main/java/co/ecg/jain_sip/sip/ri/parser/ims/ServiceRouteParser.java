@@ -71,7 +71,7 @@ public class ServiceRouteParser extends AddressParametersParser {
     public SIPHeader parse() throws ParseException {
         ServiceRouteList serviceRouteList = new ServiceRouteList();
 
-        if (debug)
+
             dbg_enter("ServiceRouteParser.parse");
 
         try {
@@ -94,7 +94,7 @@ public class ServiceRouteParser extends AddressParametersParser {
             }
             return serviceRouteList;
         } finally {
-            if (debug)
+
                 dbg_leave("ServiceRouteParser.parse");
         }
 

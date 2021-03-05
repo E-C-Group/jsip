@@ -25,6 +25,12 @@
 */
 package co.ecg.jain_sip.sip.ri.parser;
 
+import co.ecg.jain_sip.core.ri.Token;
+import co.ecg.jain_sip.sip.ri.header.SIPHeader;
+import co.ecg.jain_sip.sip.ri.header.SIPHeaderNames;
+import co.ecg.jain_sip.sip.ri.header.Supported;
+import co.ecg.jain_sip.sip.ri.header.SupportedList;
+
 import java.text.ParseException;
 
 /**
@@ -60,11 +66,11 @@ public class SupportedParser extends HeaderParser {
     /**
      * parse the String message
      * @return SIPHeader (Supported object)
-     * @throws SIPParseException if the message does not respect the spec.
+     * @throws ParseException if the message does not respect the spec.
      */
     public SIPHeader parse() throws ParseException {
         SupportedList supportedList = new SupportedList();
-        if (debug)
+
             dbg_enter("SupportedParser.parse");
 
         try {
@@ -101,7 +107,7 @@ public class SupportedParser extends HeaderParser {
                 supportedList.add(supported);
             }
         } finally {
-            if (debug)
+
                 dbg_leave("SupportedParser.parse");
         }
 

@@ -26,7 +26,12 @@
 package co.ecg.jain_sip.sip.ri.parser;
 
 import java.text.ParseException;
+
+import co.ecg.jain_sip.core.ri.Token;
 import co.ecg.jain_sip.sip.*;
+import co.ecg.jain_sip.sip.ri.header.RAck;
+import co.ecg.jain_sip.sip.ri.header.SIPHeader;
+import co.ecg.jain_sip.sip.ri.header.SIPHeaderNames;
 
 /**
  * Parser for RAck header.
@@ -61,11 +66,11 @@ public class RAckParser extends HeaderParser {
     /**
      * parse the String message
      * @return SIPHeader (RAck object)
-     * @throws SIPParseException if the message does not respect the spec.
+     * @throws ParseException if the message does not respect the spec.
      */
     public SIPHeader parse() throws ParseException {
 
-        if (debug)
+
             dbg_enter("RAckParser.parse");
         RAck rack = new RAck();
         try {
@@ -92,7 +97,7 @@ public class RAckParser extends HeaderParser {
 
             return rack;
         } finally {
-            if (debug)
+
                 dbg_leave("RAckParser.parse");
         }
     }

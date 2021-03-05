@@ -25,6 +25,11 @@
 */
 package co.ecg.jain_sip.sip.ri.parser;
 
+import co.ecg.jain_sip.core.ri.Token;
+import co.ecg.jain_sip.sip.ri.header.ContentLanguage;
+import co.ecg.jain_sip.sip.ri.header.ContentLanguageList;
+import co.ecg.jain_sip.sip.ri.header.SIPHeader;
+
 import java.text.ParseException;
 
 /**
@@ -58,11 +63,11 @@ public class ContentLanguageParser extends HeaderParser {
     /**
      * parse the ContentLanguageHeader String header
      * @return SIPHeader (ContentLanguageList object)
-     * @throws SIPParseException if the message does not respect the spec.
+     * @throws ParseException if the message does not respect the spec.
      */
     public SIPHeader parse() throws ParseException {
 
-        if (debug)
+
             dbg_enter("ContentLanguageParser.parse");
         ContentLanguageList list = new ContentLanguageList();
 
@@ -94,7 +99,7 @@ public class ContentLanguageParser extends HeaderParser {
         } catch (ParseException ex) {
             throw createParseException(ex.getMessage());
         } finally {
-            if (debug)
+
                 dbg_leave("ContentLanguageParser.parse");
         }
     }

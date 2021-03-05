@@ -1,28 +1,28 @@
 /*
-* Conditions Of Use
-*
-* This software was developed by employees of the National Institute of
-* Standards and Technology (NIST), an agency of the Federal Government.
-* Pursuant to title 15 Untied States Code Section 105, works of NIST
-* employees are not subject to copyright protection in the United States
-* and are considered to be in the public domain.  As a result, a formal
-* license is not needed to use the software.
-*
-* This software is provided by NIST as a service and is expressly
-* provided "AS IS."  NIST MAKES NO WARRANTY OF ANY KIND, EXPRESS, IMPLIED
-* OR STATUTORY, INCLUDING, WITHOUT LIMITATION, THE IMPLIED WARRANTY OF
-* MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, NON-INFRINGEMENT
-* AND DATA ACCURACY.  NIST does not warrant or make any representations
-* regarding the use of the software or the results thereof, including but
-* not limited to the correctness, accuracy, reliability or usefulness of
-* the software.
-*
-* Permission to use this software is contingent upon your acceptance
-* of the terms of this agreement
-*
-* .
-*
-*/
+ * Conditions Of Use
+ *
+ * This software was developed by employees of the National Institute of
+ * Standards and Technology (NIST), an agency of the Federal Government.
+ * Pursuant to title 15 Untied States Code Section 105, works of NIST
+ * employees are not subject to copyright protection in the United States
+ * and are considered to be in the public domain.  As a result, a formal
+ * license is not needed to use the software.
+ *
+ * This software is provided by NIST as a service and is expressly
+ * provided "AS IS."  NIST MAKES NO WARRANTY OF ANY KIND, EXPRESS, IMPLIED
+ * OR STATUTORY, INCLUDING, WITHOUT LIMITATION, THE IMPLIED WARRANTY OF
+ * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, NON-INFRINGEMENT
+ * AND DATA ACCURACY.  NIST does not warrant or make any representations
+ * regarding the use of the software or the results thereof, including but
+ * not limited to the correctness, accuracy, reliability or usefulness of
+ * the software.
+ *
+ * Permission to use this software is contingent upon your acceptance
+ * of the terms of this agreement
+ *
+ * .
+ *
+ */
 /*******************************************
  * PRODUCT OF PT INOVACAO - EST DEPARTMENT *
  *******************************************/
@@ -34,6 +34,7 @@ import java.text.ParseException;
 import co.ecg.jain_sip.sip.header.ExtensionHeader;
 
 import co.ecg.jain_sip.sip.ri.address.AddressImpl;
+import co.ecg.jain_sip.sip.ri.header.AddressParametersHeader;
 import co.ecg.jain_sip.sip.ri.header.ims.PathHeader;
 
 /**
@@ -41,11 +42,12 @@ import co.ecg.jain_sip.sip.ri.header.ims.PathHeader;
  */
 
 public class Path
-    extends gov.nist.javax.sip.header.AddressParametersHeader
-    implements PathHeader, SIPHeaderNamesIms , ExtensionHeader{
+        extends AddressParametersHeader
+        implements PathHeader, SIPHeaderNamesIms, ExtensionHeader {
 
     /**
      * constructor
+     *
      * @param address address to set
      */
     public Path(AddressImpl address) {
@@ -56,15 +58,16 @@ public class Path
     /**
      * default constructor
      */
-    public Path()
-    {
+    public Path() {
         // issued by Miguel Freitas
         super(NAME);
 
     }
 
-    /** Encode into canonical form.
-     *@return String containing the canonicaly encoded header.
+    /**
+     * Encode into canonical form.
+     *
+     * @return String containing the canonicaly encoded header.
      */
     public StringBuilder encodeBody(StringBuilder retval) {
 //        StringBuilder retval = new StringBuilder();
@@ -77,14 +80,14 @@ public class Path
         }
 
         if (!parameters.isEmpty()) {
-            retval= retval.append(SEMICOLON);
-            retval= this.parameters.encode(retval);
-        } 
+            retval = retval.append(SEMICOLON);
+            retval = this.parameters.encode(retval);
+        }
         return retval;
     }
 
     public void setValue(String value) throws ParseException {
-        throw new ParseException(value,0);
+        throw new ParseException(value, 0);
 
     }
 

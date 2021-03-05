@@ -27,6 +27,8 @@ package co.ecg.jain_sip.sip.ri.parser;
 
 import java.text.ParseException;
 import co.ecg.jain_sip.sip.*;
+import co.ecg.jain_sip.sip.ri.header.Expires;
+import co.ecg.jain_sip.sip.ri.header.SIPHeader;
 
 /**
  * Parser for SIP Expires Parser. Converts from SIP Date to the
@@ -61,7 +63,7 @@ public class ExpiresParser extends HeaderParser {
      */
     public SIPHeader parse() throws ParseException {
         Expires expires = new Expires();
-        if (debug)
+
             dbg_enter("parse");
         try {
             lexer.match(TokenTypes.EXPIRES);
@@ -83,7 +85,7 @@ public class ExpiresParser extends HeaderParser {
                 throw createParseException(ex.getMessage());
             }
         } finally {
-            if (debug)
+
                 dbg_leave("parse");
         }
 

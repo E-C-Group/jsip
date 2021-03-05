@@ -28,7 +28,9 @@
 *******************************************************************************/
 package co.ecg.jain_sip.sip.ri.header;
 
+import co.ecg.jain_sip.core.ri.HostPort;
 import co.ecg.jain_sip.sip.header.*;
+import co.ecg.jain_sip.sip.ri.address.AddressImpl;
 
 /**
  * ReplyTo Header.

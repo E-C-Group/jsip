@@ -77,19 +77,19 @@ public class HostNameParser extends ParserCore {
     // Add underscore as allowed character https://java.net/jira/browse/JSIP-506
         new char[] {LexerCore.ALPHADIGIT_VALID_CHARS, '-', '.', '_'};
     protected void consumeDomainLabel() throws ParseException {
-        if (debug)
+
             dbg_enter("domainLabel");
         try {
             lexer.consumeValidChars(VALID_DOMAIN_LABEL_CHAR);
         } finally {
-            if (debug)
+
                 dbg_leave("domainLabel");
         }
     }
 
     protected String ipv6Reference() throws ParseException {
         StringBuilder retval = new StringBuilder();
-        if (debug)
+
             dbg_enter("ipv6Reference");
 
         try {
@@ -157,13 +157,13 @@ public class HostNameParser extends ParserCore {
                 lexer.getBuffer() + ": Illegal Host name ",
                 lexer.getPtr());
         } finally {
-            if (debug)
+
                 dbg_leave("ipv6Reference");
         }
     }
 
     public Host host() throws ParseException {
-        if (debug)
+
             dbg_enter("host");
         try {
             String hostname;
@@ -197,7 +197,7 @@ public class HostNameParser extends ParserCore {
             else
                 return new Host(hostname);
         } finally {
-            if (debug)
+
                 dbg_leave("host");
         }
     }
@@ -261,7 +261,7 @@ public class HostNameParser extends ParserCore {
      * @throws ParseException
      */
     public HostPort hostPort( boolean allowWS ) throws ParseException {
-        if (debug)
+
             dbg_enter("hostPort");
         try {
             Host host = this.host();
@@ -313,7 +313,7 @@ public class HostNameParser extends ParserCore {
             }
             return hp;
         } finally {
-            if (debug)
+
                 dbg_leave("hostPort");
         }
     }

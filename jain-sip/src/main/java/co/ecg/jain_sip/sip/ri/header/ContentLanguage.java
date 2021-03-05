@@ -28,6 +28,8 @@
 *******************************************************************************/
 package co.ecg.jain_sip.sip.ri.header;
 
+import co.ecg.jain_sip.sip.header.ContentLanguageHeader;
+
 import java.util.Locale;
 
 /**
@@ -81,7 +83,7 @@ import java.util.Locale;
 */
 public class ContentLanguage
     extends SIPHeader
-    implements javax.sip.header.ContentLanguageHeader {
+    implements ContentLanguageHeader {
 
     /**
      * Comment for <code>serialVersionUID</code>

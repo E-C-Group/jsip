@@ -33,6 +33,8 @@ package co.ecg.jain_sip.sip.ri.header.ims;
 import co.ecg.jain_sip.core.ri.NameValue;
 
 import co.ecg.jain_sip.sip.header.ExtensionHeader;
+import co.ecg.jain_sip.sip.ri.header.ParametersHeader;
+
 import java.text.ParseException;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -65,7 +67,7 @@ import java.util.ListIterator;
 
 
 public class PChargingFunctionAddresses
-    extends gov.nist.javax.sip.header.ParametersHeader
+    extends ParametersHeader
     implements PChargingFunctionAddressesHeader, SIPHeaderNamesIms , ExtensionHeader{
 
 

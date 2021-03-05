@@ -78,7 +78,7 @@ public class PAssociatedURIParser
 
     public SIPHeader parse() throws ParseException
     {
-        if (debug)
+
             dbg_enter("PAssociatedURIParser.parse");
 
         PAssociatedURIList associatedURIList = new PAssociatedURIList();
@@ -114,7 +114,7 @@ public class PAssociatedURIParser
 
 
         } finally {
-            if (debug)
+
                 dbg_leave("PAssociatedURIParser.parse");
         }
 

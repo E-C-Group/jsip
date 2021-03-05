@@ -26,6 +26,7 @@
 package co.ecg.jain_sip.sip.ri.address;
 
 import co.ecg.jain_sip.core.ri.NameValueList;
+import co.ecg.jain_sip.sip.address.TelURL;
 
 import java.text.ParseException;
 import java.util.Iterator;
@@ -40,7 +41,7 @@ import java.util.Iterator;
  */
 public class TelURLImpl
     extends GenericURI
-    implements javax.sip.address.TelURL {
+    implements TelURL {
 
 
     private static final long serialVersionUID = 5873527320305915954L;

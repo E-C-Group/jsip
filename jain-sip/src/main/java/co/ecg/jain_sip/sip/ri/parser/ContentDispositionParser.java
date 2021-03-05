@@ -25,6 +25,11 @@
 */
 package co.ecg.jain_sip.sip.ri.parser;
 
+import co.ecg.jain_sip.core.ri.Token;
+import co.ecg.jain_sip.sip.ri.header.ContentDisposition;
+import co.ecg.jain_sip.sip.ri.header.SIPHeader;
+import co.ecg.jain_sip.sip.ri.header.SIPHeaderNames;
+
 import java.text.ParseException;
 
 /**
@@ -58,11 +63,11 @@ public class ContentDispositionParser extends ParametersParser {
     /**
      * parse the ContentDispositionHeader String header
      * @return SIPHeader (ContentDispositionList object)
-     * @throws SIPParseException if the message does not respect the spec.
+     * @throws ParseException if the message does not respect the spec.
      */
     public SIPHeader parse() throws ParseException {
 
-        if (debug)
+
             dbg_enter("ContentDispositionParser.parse");
 
         try {
@@ -86,7 +91,7 @@ public class ContentDispositionParser extends ParametersParser {
         } catch (ParseException ex) {
             throw createParseException(ex.getMessage());
         } finally {
-            if (debug)
+
                 dbg_leave("ContentDispositionParser.parse");
         }
     }

@@ -25,6 +25,12 @@
 */
 package co.ecg.jain_sip.sip.ri.parser;
 
+import co.ecg.jain_sip.core.ri.Token;
+import co.ecg.jain_sip.sip.ri.header.ContentEncoding;
+import co.ecg.jain_sip.sip.ri.header.ContentEncodingList;
+import co.ecg.jain_sip.sip.ri.header.SIPHeader;
+import co.ecg.jain_sip.sip.ri.header.SIPHeaderNames;
+
 import java.text.ParseException;
 
 /**
@@ -60,11 +66,11 @@ public class ContentEncodingParser extends HeaderParser {
     /**
      * parse the ContentEncodingHeader String header
      * @return SIPHeader (ContentEncodingList object)
-     * @throws SIPParseException if the message does not respect the spec.
+     * @throws ParseException if the message does not respect the spec.
      */
     public SIPHeader parse() throws ParseException {
 
-        if (debug)
+
             dbg_enter("ContentEncodingParser.parse");
         ContentEncodingList list = new ContentEncodingList();
 
@@ -101,7 +107,7 @@ public class ContentEncodingParser extends HeaderParser {
         } catch (ParseException ex) {
             throw createParseException(ex.getMessage());
         } finally {
-            if (debug)
+
                 dbg_leave("ContentEncodingParser.parse");
         }
     }

@@ -35,6 +35,7 @@ import java.text.ParseException;
 import co.ecg.jain_sip.sip.header.ExtensionHeader;
 
 import co.ecg.jain_sip.sip.ri.address.AddressImpl;
+import co.ecg.jain_sip.sip.ri.header.AddressParametersHeader;
 import co.ecg.jain_sip.sip.ri.header.ims.PCalledPartyIDHeader;
 
 /**
@@ -44,7 +45,7 @@ import co.ecg.jain_sip.sip.ri.header.ims.PCalledPartyIDHeader;
  */
 
 public class PCalledPartyID
-    extends gov.nist.javax.sip.header.AddressParametersHeader
+    extends AddressParametersHeader
     implements PCalledPartyIDHeader, SIPHeaderNamesIms , ExtensionHeader{
 
     /**

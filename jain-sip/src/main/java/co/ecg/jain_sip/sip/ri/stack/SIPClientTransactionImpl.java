@@ -25,13 +25,11 @@
  */
 package co.ecg.jain_sip.sip.ri.stack;
 
+import co.ecg.jain_sip.sip.address.URI;
 import co.ecg.jain_sip.sip.ri.message.SIPMessage;
 import co.ecg.jain_sip.sip.ri.message.SIPResponse;
-import co.ecg.jain_sip.core.ri.CommonLogger;
 import co.ecg.jain_sip.core.ri.InternalErrorHandler;
-import co.ecg.jain_sip.core.ri.LogWriter;
 import co.ecg.jain_sip.core.ri.NameValueList;
-import co.ecg.jain_sip.core.ri.StackLogger;
 import co.ecg.jain_sip.sip.ri.SIPConstants;
 import co.ecg.jain_sip.sip.ri.SipProviderImpl;
 import co.ecg.jain_sip.sip.ri.SipStackImpl;
@@ -73,6 +71,7 @@ import co.ecg.jain_sip.sip.header.ExpiresHeader;
 import co.ecg.jain_sip.sip.header.RouteHeader;
 import co.ecg.jain_sip.sip.header.TimeStampHeader;
 import co.ecg.jain_sip.sip.message.Request;
+import lombok.extern.slf4j.Slf4j;
 
 /*
  * Jeff Keyser -- initial. Daniel J. Martinez Manzano --Added support for TLS message channel.
@@ -187,8 +186,9 @@ import co.ecg.jain_sip.sip.message.Request;
  * 
  * @version 1.2 $Revision: 1.144 $ $Date: 2010-12-02 22:04:16 $
  */
+@Slf4j
 public class SIPClientTransactionImpl extends SIPTransactionImpl implements SIPClientTransaction {
-  private static StackLogger logger = CommonLogger.getLogger(SIPClientTransaction.class);
+
   // a SIP Client transaction may belong simultaneously to multiple
   // dialogs in the early state. These dialogs all have
   // the same call ID and same From tag but different to tags.
@@ -308,7 +308,6 @@ public class SIPClientTransactionImpl extends SIPTransactionImpl implements SIPC
 
     if (log.isDebugEnabled()) {
       log.debug("Creating clientTransaction " + this);
-      logger.logStackTrace();
     }
     // this.startTransactionTimer();
     this.sipDialogs = new CopyOnWriteArraySet<String>();
@@ -322,7 +321,6 @@ public class SIPClientTransactionImpl extends SIPTransactionImpl implements SIPC
     if (log.isDebugEnabled()) {
       log.debug("Setting response interface for " + this + " to " + newRespondTo);
       if (newRespondTo == null) {
-        logger.logStackTrace();
         log.debug("WARNING -- setting to null!");
       }
     }
@@ -537,8 +535,7 @@ public class SIPClientTransactionImpl extends SIPTransactionImpl implements SIPC
       else
         nonInviteClientTransaction(transactionResponse, sourceChannel, dialog);
     } catch (IOException ex) {
-      if (logger.isLoggingEnabled())
-        logger.logException(ex);
+        log.info("IOException", ex);
       this.setState(TransactionState._TERMINATED);
       raiseErrorEvent(SIPTransactionErrorEvent.TRANSPORT_ERROR);
     }
@@ -989,7 +986,7 @@ public class SIPClientTransactionImpl extends SIPTransactionImpl implements SIPC
     try {
       sipRequest.checkHeaders();
     } catch (ParseException ex) {
-      if (logger.isLoggingEnabled())
+
         log.error("missing required header");
       throw new IllegalTransactionStateException(ex.getMessage(), Reason.MissingRequiredHeader);
     }
@@ -999,7 +996,7 @@ public class SIPClientTransactionImpl extends SIPTransactionImpl implements SIPC
        * If no "Expires" header is present in a SUBSCRIBE request, the implied default is
        * defined by the event package being used.
        */
-      if (logger.isLoggingEnabled())
+
         log.warn("Expires header missing in outgoing subscribe --"
                           + " Notifier will assume implied value on event package");
     }
@@ -1262,7 +1259,7 @@ public class SIPClientTransactionImpl extends SIPTransactionImpl implements SIPC
       // request URI.
       if (lastResponse.getContactHeaders() != null && lastResponse.getStatusCode() / 100 != 3) {
         Contact contact = (Contact) lastResponse.getContactHeaders().getFirst();
-        javax.sip.address.URI uri = (javax.sip.address.URI) contact.getAddress().getURI().clone();
+        URI uri = (URI) contact.getAddress().getURI().clone();
         ackRequest.setRequestURI(uri);
       }
       return ackRequest;
@@ -1298,7 +1295,7 @@ public class SIPClientTransactionImpl extends SIPTransactionImpl implements SIPC
 
       Route firstRoute = (Route) routeList.getFirst();
       routeList.removeFirst();
-      javax.sip.address.URI uri = firstRoute.getAddress().getURI();
+      URI uri = firstRoute.getAddress().getURI();
       ackRequest.setRequestURI(uri);
 
       if (route != null)
@@ -1307,7 +1304,7 @@ public class SIPClientTransactionImpl extends SIPTransactionImpl implements SIPC
       ackRequest.addHeader(routeList);
     } else {
       if (contact != null) {
-        javax.sip.address.URI uri = (javax.sip.address.URI) contact.getAddress().getURI().clone();
+        URI uri = (URI) contact.getAddress().getURI().clone();
         ackRequest.setRequestURI(uri);
         ackRequest.addHeader(routeList);
       }
@@ -1697,7 +1694,7 @@ public class SIPClientTransactionImpl extends SIPTransactionImpl implements SIPC
       log.debug("setDialog: " + dialogId + " sipDialog = " + sipDialog);
 
     if (sipDialog == null) {
-      if (logger.isLoggingEnabled(LogWriter.TRACE_ERROR))
+      if (log.isErrorEnabled())
         log.error("NULL DIALOG!!");
       throw new NullPointerException("bad dialog null");
     }
@@ -1909,7 +1906,7 @@ public class SIPClientTransactionImpl extends SIPTransactionImpl implements SIPC
       // Cache the client connections so dont close the
       // connection. This keeps the connection open permanently
       // until the client disconnects.
-      if (logger.isLoggingEnabled() && isReliable()) {
+      if (log.isDebugEnabled() && isReliable()) {
         int useCount = getMessageChannel().useCount;
         if (log.isDebugEnabled())
           log.debug("Client Use Count = " + useCount);

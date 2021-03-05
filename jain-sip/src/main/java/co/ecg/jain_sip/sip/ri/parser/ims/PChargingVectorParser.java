@@ -65,7 +65,7 @@ extends ParametersParser implements TokenTypes {
     public SIPHeader parse() throws ParseException {
 
 
-        if (debug)
+
             dbg_enter("parse");
         try {
             headerName(TokenTypes.P_VECTOR_CHARGING);
@@ -92,20 +92,20 @@ extends ParametersParser implements TokenTypes {
                 throw new ParseException("Missing a required Parameter : " + ParameterNamesIms.ICID_VALUE, 0);
             return chargingVector;
         } finally {
-            if (debug)
+
                 dbg_leave("parse");
         }
     }
 
     protected void parseParameter(PChargingVector chargingVector) throws ParseException {
 
-        if (debug)
+
             dbg_enter("parseParameter");
         try {
             NameValue nv = this.nameValue('=');
             chargingVector.setParameter(nv);
         } finally {
-            if (debug)
+
                 dbg_leave("parseParameter");
         }
 

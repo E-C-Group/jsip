@@ -28,6 +28,8 @@
 *******************************************************************************/
 package co.ecg.jain_sip.sip.ri.header;
 
+import co.ecg.jain_sip.core.ri.NameValueList;
+
 /**
  * Credentials  that are used in authentication and authorization headers.
  * @author M. Ranganathan

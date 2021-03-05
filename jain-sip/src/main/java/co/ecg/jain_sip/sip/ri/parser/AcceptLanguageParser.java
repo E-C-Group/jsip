@@ -30,9 +30,13 @@
  */
 
 package co.ecg.jain_sip.sip.ri.parser;
+import co.ecg.jain_sip.core.ri.Token;
+import co.ecg.jain_sip.sip.ri.header.AcceptLanguage;
 import co.ecg.jain_sip.sip.ri.header.AcceptLanguageList;
 
 import co.ecg.jain_sip.sip.*;
+import co.ecg.jain_sip.sip.ri.header.SIPHeader;
+
 import java.text.ParseException;
 
 
@@ -82,7 +86,7 @@ public class AcceptLanguageParser extends HeaderParser {
      */
     public SIPHeader parse() throws ParseException {
         AcceptLanguageList acceptLanguageList = new AcceptLanguageList();
-        if (debug)
+
             dbg_enter("AcceptLanguageParser.parse");
 
         try {
@@ -124,7 +128,7 @@ public class AcceptLanguageParser extends HeaderParser {
                     break;
             } while (true);
         } finally {
-            if (debug)
+
                 dbg_leave("AcceptLanguageParser.parse");
         }
 

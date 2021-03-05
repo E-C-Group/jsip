@@ -25,6 +25,13 @@
 */
 package co.ecg.jain_sip.sdp.parser;
 
+import co.ecg.jain_sip.core.ri.Host;
+import co.ecg.jain_sip.core.ri.LexerCore;
+import co.ecg.jain_sip.core.ri.Token;
+import co.ecg.jain_sip.sdp.fields.ConnectionAddress;
+import co.ecg.jain_sip.sdp.fields.ConnectionField;
+import co.ecg.jain_sip.sdp.fields.SDPField;
+
 import java.text.ParseException;
 
 /**

@@ -20,6 +20,7 @@ package co.ecg.jain_sip.sip.ri.address;
 import java.text.ParseException;
 
 import co.ecg.jain_sip.sip.address.AddressFactory;
+import co.ecg.jain_sip.sip.address.SipURI;
 
 /**
  * This interface is extension to {@link AddressFactory}. It
@@ -39,6 +40,6 @@ public interface AddressFactoryEx extends AddressFactory {
 	 *            enclosed within [].
 	 * @throws ParseException if the URI string is malformed. 
 	 */
-	public javax.sip.address.SipURI createSipURI(String sipUri) throws ParseException;
+	public SipURI createSipURI(String sipUri) throws ParseException;
 
 }

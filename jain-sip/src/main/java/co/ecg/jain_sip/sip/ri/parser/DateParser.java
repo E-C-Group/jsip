@@ -24,6 +24,9 @@
 *
 */
 package co.ecg.jain_sip.sip.ri.parser;
+import co.ecg.jain_sip.sip.ri.header.SIPDateHeader;
+import co.ecg.jain_sip.sip.ri.header.SIPHeader;
+
 import java.util.*;
 import java.text.ParseException;
 
@@ -53,7 +56,7 @@ public class DateParser extends HeaderParser {
      * @return  the parsed Date header/
      */
     public SIPHeader parse() throws ParseException {
-        if (debug)
+
             dbg_enter("DateParser.parse");
         try {
             headerName(TokenTypes.DATE);
@@ -72,7 +75,7 @@ public class DateParser extends HeaderParser {
             retval.setDate(cal);
             return retval;
         } finally {
-            if (debug)
+
                 dbg_leave("DateParser.parse");
 
         }

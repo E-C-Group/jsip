@@ -25,6 +25,12 @@
 */
 package co.ecg.jain_sip.sip.ri.parser;
 
+import co.ecg.jain_sip.core.ri.Token;
+import co.ecg.jain_sip.sip.ri.header.Require;
+import co.ecg.jain_sip.sip.ri.header.RequireList;
+import co.ecg.jain_sip.sip.ri.header.SIPHeader;
+import co.ecg.jain_sip.sip.ri.header.SIPHeaderNames;
+
 import java.text.ParseException;
 
 /**
@@ -60,11 +66,11 @@ public class RequireParser extends HeaderParser {
     /**
      * parse the String message
      * @return SIPHeader (RequireList object)
-     * @throws SIPParseException if the message does not respect the spec.
+     * @throws ParseException if the message does not respect the spec.
      */
     public SIPHeader parse() throws ParseException {
         RequireList requireList = new RequireList();
-        if (debug)
+
             dbg_enter("RequireParser.parse");
 
         try {
@@ -99,7 +105,7 @@ public class RequireParser extends HeaderParser {
 
             }
         } finally {
-            if (debug)
+
                 dbg_leave("RequireParser.parse");
         }
 
