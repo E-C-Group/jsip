@@ -192,7 +192,7 @@ public class TimeStampParser extends HeaderParser {
  * Added NIST disclaimer to all public domain files. Clean up some javadoc. Fixed a leak
  *
  * Revision 1.3  2006/05/25 23:46:23  mranga
- * Added @author NIST to all API files. Moved a package around in the tck directory.
+ * Added @author NIST to all API files. Moved a package around in the co.ecg.jain_sip.tck directory.
  *
  * Ranga.
  *

@@ -116,14 +116,5 @@ public interface Address extends Cloneable, Serializable{
      * @return true if this address is a wildcard, false otherwise.
      */
     public boolean isWildcard();
-    
-    /**
-     * Clone method. An implementation is expected to override the default
-     * Object.clone method and return a "deep clone".
-     * 
-     * @since v1.2
-     */
-    public Object clone();
-
 }
 

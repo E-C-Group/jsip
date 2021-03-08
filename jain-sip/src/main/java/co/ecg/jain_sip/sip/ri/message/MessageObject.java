@@ -48,10 +48,6 @@ import java.lang.reflect.*;
 public abstract class MessageObject extends GenericObject {
     public abstract String encode();
 
-    public void dbgPrint() {
-        super.dbgPrint();
-    }
-
     /**
      * An introspection based string formatting method. We need this because
      * in this package (although it is an exact duplicate of the one in

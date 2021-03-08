@@ -102,13 +102,5 @@ public class ConnectionAddress extends SDPObject {
         }
         return encoded_string;
     }
-
-    public Object clone() throws CloneNotSupportedException {
-        ConnectionAddress retval = (ConnectionAddress) super.clone();
-        if (this.address != null)
-            retval.address = (Host) this.address.clone();
-        return retval;
-    }
-
 }
 

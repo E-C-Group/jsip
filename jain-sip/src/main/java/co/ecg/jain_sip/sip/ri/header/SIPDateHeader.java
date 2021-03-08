@@ -94,13 +94,6 @@ public class SIPDateHeader extends SIPHeader implements DateHeader {
             return null;
         return date.getJavaCal();
     }
-
-    public Object clone() {
-        SIPDateHeader retval = (SIPDateHeader) super.clone();
-        if (this.date != null)
-            retval.date = (SIPDate) this.date.clone();
-        return retval;
-    }
 }
 /*
  * $Log: not supported by cvs2svn $

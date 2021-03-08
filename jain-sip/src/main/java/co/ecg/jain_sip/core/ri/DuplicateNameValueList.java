@@ -28,16 +28,13 @@ import java.util.Collection;
 import java.util.Iterator;
 
 /**
- * 
- * 
  * This is a Duplicate Name Value List that will allow multiple values map to the same key.
- * 
+ * <p>
  * The parsing and encoding logic for it is the same as that of NameValueList. Only the HashMap
  * container is different.
- * 
+ *
  * @author aayush.bhatnagar
  * @since 2.0
- * 
  */
 public class DuplicateNameValueList implements Serializable, Cloneable {
 
@@ -45,16 +42,14 @@ public class DuplicateNameValueList implements Serializable, Cloneable {
 
     private static final long serialVersionUID = -5611332957903796952L;
 
-    public DuplicateNameValueList()
-
-    {
+    public DuplicateNameValueList() {
     }
 
     // ------------------
 
     /**
      * Encode the list in semicolon separated form.
-     * 
+     *
      * @return an encoded string containing the objects in this list.
      * @since v1.0
      */
@@ -107,12 +102,12 @@ public class DuplicateNameValueList implements Serializable, Cloneable {
 
     /**
      * Compare if two NameValue lists are equal.
-     * 
+     *
      * @param otherObject is the object to compare to.
      * @return true if the two objects compare for equality.
      */
     public boolean equals(Object otherObject) {
-        if ( otherObject == null ) {
+        if (otherObject == null) {
             return false;
         }
         if (!otherObject.getClass().equals(this.getClass())) {
@@ -150,7 +145,6 @@ public class DuplicateNameValueList implements Serializable, Cloneable {
 
     /**
      * Get the NameValue record given a name.
-     * 
      */
     public Collection getNameValue(String name) {
         return (Collection) this.nameValueMap.get(name.toLowerCase());
@@ -177,18 +171,9 @@ public class DuplicateNameValueList implements Serializable, Cloneable {
 
     }
 
-    public Object clone() {
-        DuplicateNameValueList retval = new DuplicateNameValueList();        
-        Iterator<NameValue> it = this.nameValueMap.values().iterator();
-        while (it.hasNext()) {
-            retval.set((NameValue) ((NameValue) it.next()).clone());
-        }
-        return retval;
-    }
-
     /**
      * Return an iterator for the name-value pairs of this list.
-     * 
+     *
      * @return the iterator.
      */
     public Iterator<NameValue> iterator() {
@@ -197,7 +182,7 @@ public class DuplicateNameValueList implements Serializable, Cloneable {
 
     /**
      * Get a list of parameter names.
-     * 
+     *
      * @return a list iterator that has the names of the parameters.
      */
     public Iterator<String> getNames() {
@@ -207,7 +192,7 @@ public class DuplicateNameValueList implements Serializable, Cloneable {
 
     /**
      * Get the parameter as a String.
-     * 
+     *
      * @return the parameter as a string.
      */
     public String getParameter(String name) {

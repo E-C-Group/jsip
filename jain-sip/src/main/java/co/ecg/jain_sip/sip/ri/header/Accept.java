@@ -1,31 +1,31 @@
 /*
-* Conditions Of Use
-*
-* This software was developed by employees of the National Institute of
-* Standards and Technology (NIST), an agency of the Federal Government.
-* Pursuant to title 15 Untied States Code Section 105, works of NIST
-* employees are not subject to copyright protection in the United States
-* and are considered to be in the public domain.  As a result, a formal
-* license is not needed to use the software.
-*
-* This software is provided by NIST as a service and is expressly
-* provided "AS IS."  NIST MAKES NO WARRANTY OF ANY KIND, EXPRESS, IMPLIED
-* OR STATUTORY, INCLUDING, WITHOUT LIMITATION, THE IMPLIED WARRANTY OF
-* MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, NON-INFRINGEMENT
-* AND DATA ACCURACY.  NIST does not warrant or make any representations
-* regarding the use of the software or the results thereof, including but
-* not limited to the correctness, accuracy, reliability or usefulness of
-* the software.
-*
-* Permission to use this software is contingent upon your acceptance
-* of the terms of this agreement
-*
-* .
-*
-*/
+ * Conditions Of Use
+ *
+ * This software was developed by employees of the National Institute of
+ * Standards and Technology (NIST), an agency of the Federal Government.
+ * Pursuant to title 15 Untied States Code Section 105, works of NIST
+ * employees are not subject to copyright protection in the United States
+ * and are considered to be in the public domain.  As a result, a formal
+ * license is not needed to use the software.
+ *
+ * This software is provided by NIST as a service and is expressly
+ * provided "AS IS."  NIST MAKES NO WARRANTY OF ANY KIND, EXPRESS, IMPLIED
+ * OR STATUTORY, INCLUDING, WITHOUT LIMITATION, THE IMPLIED WARRANTY OF
+ * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, NON-INFRINGEMENT
+ * AND DATA ACCURACY.  NIST does not warrant or make any representations
+ * regarding the use of the software or the results thereof, including but
+ * not limited to the correctness, accuracy, reliability or usefulness of
+ * the software.
+ *
+ * Permission to use this software is contingent upon your acceptance
+ * of the terms of this agreement
+ *
+ * .
+ *
+ */
 /*******************************************************************************
-* Product of NIST/ITL Advanced Networking Technologies Division (ANTD).        *
-*******************************************************************************/
+ * Product of NIST/ITL Advanced Networking Technologies Division (ANTD).        *
+ *******************************************************************************/
 package co.ecg.jain_sip.sip.ri.header;
 
 import co.ecg.jain_sip.sip.header.AcceptHeader;
@@ -36,14 +36,9 @@ import co.ecg.jain_sip.sip.InvalidArgumentException;
  * Accept header : The top level header is actually AcceptList which is a list of
  * Accept headers.
  *
- * @version 1.2 $Revision: 1.10 $ $Date: 2010-05-06 14:07:54 $
- *
- * @since 1.1
- *
  * @author M. Ranganathan   <br/>
- *
- *
- *
+ * @version 1.2 $Revision: 1.10 $ $Date: 2010-05-06 14:07:54 $
+ * @since 1.1
  */
 public final class Accept extends ParametersHeader implements AcceptHeader {
 
@@ -52,20 +47,24 @@ public final class Accept extends ParametersHeader implements AcceptHeader {
      */
     private static final long serialVersionUID = -7866187924308658151L;
 
-    /** mediaRange field
+    /**
+     * mediaRange field
      */
     protected MediaRange mediaRange;
 
-    /** default constructor
+    /**
+     * default constructor
      */
     public Accept() {
         super(NAME);
     }
 
-    /** returns true if this header allows all ContentTypes,
-      * false otherwise.
-      * @return Boolean
-      */
+    /**
+     * returns true if this header allows all ContentTypes,
+     * false otherwise.
+     *
+     * @return Boolean
+     */
     public boolean allowsAllContentTypes() {
         if (mediaRange == null)
             return false;
@@ -76,6 +75,7 @@ public final class Accept extends ParametersHeader implements AcceptHeader {
     /**
      * returns true if this header allows all ContentSubTypes,
      * false otherwise.
+     *
      * @return boolean
      */
     public boolean allowsAllContentSubTypes() {
@@ -85,9 +85,11 @@ public final class Accept extends ParametersHeader implements AcceptHeader {
             return mediaRange.getSubtype().compareTo(STAR) == 0;
     }
 
-    /** Encode the value of this header into cannonical form.
-    *@return encoded value of the header as a string.
-    */
+    /**
+     * Encode the value of this header into cannonical form.
+     *
+     * @return encoded value of the header as a string.
+     */
     protected String encodeBody() {
         return encodeBody(new StringBuilder()).toString();
     }
@@ -102,14 +104,18 @@ public final class Accept extends ParametersHeader implements AcceptHeader {
         return buffer;
     }
 
-    /** get the MediaRange field
+    /**
+     * get the MediaRange field
+     *
      * @return MediaRange
      */
     public MediaRange getMediaRange() {
         return mediaRange;
     }
 
-    /** get the contentType field
+    /**
+     * get the contentType field
+     *
      * @return String
      */
     public String getContentType() {
@@ -119,7 +125,9 @@ public final class Accept extends ParametersHeader implements AcceptHeader {
             return mediaRange.getType();
     }
 
-    /** get the ContentSubType fiels
+    /**
+     * get the ContentSubType fiels
+     *
      * @return String
      */
     public String getContentSubType() {
@@ -131,6 +139,7 @@ public final class Accept extends ParametersHeader implements AcceptHeader {
 
     /**
      * Get the q value.
+     *
      * @return float
      */
     public float getQValue() {
@@ -139,6 +148,7 @@ public final class Accept extends ParametersHeader implements AcceptHeader {
 
     /**
      * Return true if the q value has been set.
+     *
      * @return boolean
      */
     public boolean hasQValue() {
@@ -147,13 +157,15 @@ public final class Accept extends ParametersHeader implements AcceptHeader {
     }
 
     /**
-     *Remove the q value.
+     * Remove the q value.
      */
     public void removeQValue() {
         super.removeParameter(ParameterNames.Q);
     }
 
-    /** set the ContentSubType field
+    /**
+     * set the ContentSubType field
+     *
      * @param subtype String to set
      */
     public void setContentSubType(String subtype) {
@@ -162,7 +174,9 @@ public final class Accept extends ParametersHeader implements AcceptHeader {
         mediaRange.setSubtype(subtype);
     }
 
-    /** set the ContentType field
+    /**
+     * set the ContentType field
+     *
      * @param type String to set
      */
     public void setContentType(String type) {
@@ -173,6 +187,7 @@ public final class Accept extends ParametersHeader implements AcceptHeader {
 
     /**
      * Set the q value
+     *
      * @param qValue float to set
      * @throws IllegalArgumentException if qValue is <0.0 or >1.0
      */
@@ -184,18 +199,11 @@ public final class Accept extends ParametersHeader implements AcceptHeader {
     }
 
     /**
-         * Set the mediaRange member
-         * @param m MediaRange field
-         */
+     * Set the mediaRange member
+     *
+     * @param m MediaRange field
+     */
     public void setMediaRange(MediaRange m) {
         mediaRange = m;
     }
-
-    public Object clone() {
-        Accept retval = (Accept) super.clone();
-        if (this.mediaRange != null)
-            retval.mediaRange = (MediaRange) this.mediaRange.clone();
-        return retval;
-    }
-
 }

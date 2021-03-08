@@ -7,7 +7,7 @@ co.ecg.jain_sip-src      : contains only the source files
 co.ecg.jain_sip-javadoc  : contains only the javadoc
 co.ecg.jain_sip-ri       : contains the JSR 32 Reference Implementation.
 co.ecg.jain_sip-sdp      : contains the sip with SDP implementation. This includes the JSR 32 RI.
-co.ecg.jain_sip-tck      : contains the TCK
+co.ecg.jain_sip-co.ecg.jain_sip.tck      : contains the TCK
 
 The Version number in version.txt is the svn version number for the source.
 Each jar file that is version dependendent is stamped with the svn version 

@@ -186,11 +186,4 @@ public class ZoneField
     public boolean getTypedTime() {
         return false;
     }
-
-    public Object clone() {
-        ZoneField retval = (ZoneField) super.clone();
-        if (this.zoneAdjustments != null)
-            retval.zoneAdjustments = (SDPObjectList) this.zoneAdjustments.clone();
-        return retval;
-    }
 }

@@ -27,6 +27,9 @@
 * Product of NIST/ITL Advanced Networking Technologies Division (ANTD).        *
 *******************************************************************************/
 package co.ecg.jain_sip.sip.ri.header;
+import co.ecg.jain_sip.core.ri.InternalErrorHandler;
+import co.ecg.jain_sip.core.ri.Separators;
+
 import java.util.Calendar;
 import java.util.TimeZone;
 import java.util.Locale;
@@ -507,18 +510,6 @@ public class SIPDate implements Cloneable,Serializable {
         // long ctime = this.getJavaCal().getTimeInMillis();
         long ctime = this.getJavaCal().getTime().getTime();
         return (int) (ctime - System.currentTimeMillis()) / 1000;
-    }
-
-    public Object clone() {
-        SIPDate retval;
-        try {
-            retval = (SIPDate) super.clone();
-        } catch (CloneNotSupportedException e) {
-            throw new RuntimeException("Internal error");
-        }
-        if (javaCal != null)
-            retval.javaCal = (Calendar) javaCal.clone();
-        return retval;
     }
 }
 /*

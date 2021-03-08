@@ -25,7 +25,7 @@
 */
 package co.ecg.jain_sip.core.ri;
 
-import jdk.javadoc.internal.doclets.toolkit.util.Utils;
+import co.ecg.jain_sip.sip.ri.Utils;
 
 import java.text.ParseException;
 import java.util.Map;

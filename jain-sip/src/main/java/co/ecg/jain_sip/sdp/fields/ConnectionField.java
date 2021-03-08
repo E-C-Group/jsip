@@ -175,11 +175,4 @@ public class ConnectionField extends SDPField implements Connection {
         else
             setNettype(type);
     }
-    public Object clone() throws CloneNotSupportedException {
-        ConnectionField retval = (ConnectionField) super.clone();
-        if (this.address != null)
-            retval.address = (ConnectionAddress) this.address.clone();
-        return retval;
-    }
-
 }

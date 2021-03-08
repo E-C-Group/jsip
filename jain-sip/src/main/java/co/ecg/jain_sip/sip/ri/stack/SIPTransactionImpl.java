@@ -66,6 +66,7 @@ import co.ecg.jain_sip.sip.address.SipURI;
 import co.ecg.jain_sip.sip.message.Request;
 import co.ecg.jain_sip.sip.message.Response;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.SerializationUtils;
 
 /*
  * Modifications for TLS Support added by Daniel J. Martinez Manzano
@@ -802,7 +803,7 @@ public abstract class SIPTransactionImpl implements SIPTransaction {
                                 public void run() {
                                     try {
                                         ((TCPMessageChannel) channel)
-                                                .processMessage((SIPMessage) messageToSend.clone(), getPeerInetAddress());
+                                                .processMessage(SerializationUtils.clone(messageToSend), getPeerInetAddress());
                                     } catch (Exception ex) {
 
                                         if (log.isErrorEnabled()) {
@@ -831,7 +832,7 @@ public abstract class SIPTransactionImpl implements SIPTransaction {
                                 public void run() {
                                     try {
                                         ((TLSMessageChannel) channel)
-                                                .processMessage((SIPMessage) messageToSend.clone(), getPeerInetAddress());
+                                                .processMessage(SerializationUtils.clone(messageToSend), getPeerInetAddress());
                                     } catch (Exception ex) {
                                         if (log.isErrorEnabled()) {
                                             log.error("Error self routing TLS message cause by: ", ex);
@@ -855,7 +856,7 @@ public abstract class SIPTransactionImpl implements SIPTransaction {
 
                                 public void run() {
                                     try {
-                                        ((RawMessageChannel) channel).processMessage((SIPMessage) messageToSend.clone());
+                                        channel.processMessage(SerializationUtils.clone(messageToSend));
                                     } catch (Exception ex) {
                                         if (log.isErrorEnabled()) {
                                             log.error("Error self routing message cause by: ", ex);

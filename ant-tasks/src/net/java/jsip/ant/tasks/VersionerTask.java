@@ -156,8 +156,8 @@ public class VersionerTask extends Task {
 
 			getProject().setProperty("co.ecg.jain-sip-all-tar",
 					"co.ecg.jain-sip-1.2." + localVersion + ".tar.gz");
-			getProject().setProperty("co.ecg.jain-sip-tck-jar",
-					"co.ecg.jain-sip-tck-1.2." + localVersion + ".jar");
+			getProject().setProperty("co.ecg.jain-sip-co.ecg.jain_sip.tck-jar",
+					"co.ecg.jain-sip-co.ecg.jain_sip.tck-1.2." + localVersion + ".jar");
 			getProject().setProperty("sdp_jar",
 					"jain-sdp-1.0." + localVersion + ".jar");
 			getProject().setProperty("sdp-src-jar",

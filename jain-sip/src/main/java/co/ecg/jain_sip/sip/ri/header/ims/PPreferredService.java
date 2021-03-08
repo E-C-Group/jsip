@@ -1,39 +1,40 @@
 package co.ecg.jain_sip.sip.ri.header.ims;
 /*
-* Conditions Of Use
-*
-* This software was developed by employees of the National Institute of
-* Standards and Technology (NIST), an agency of the Federal Government.
-* Pursuant to title 15 Untied States Code Section 105, works of NIST
-* employees are not subject to copyright protection in the United States
-* and are considered to be in the public domain.  As a result, a formal
-* license is not needed to use the software.
-*
-* This software is provided by NIST as a service and is expressly
-* provided "AS IS."  NIST MAKES NO WARRANTY OF ANY KIND, EXPRESS, IMPLIED
-* OR STATUTORY, INCLUDING, WITHOUT LIMITATION, THE IMPLIED WARRANTY OF
-* MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, NON-INFRINGEMENT
-* AND DATA ACCURACY.  NIST does not warrant or make any representations
-* regarding the use of the software or the results thereof, including but
-* not limited to the correctness, accuracy, reliability or usefulness of
-* the software.
-*
-* Permission to use this software is contingent upon your acceptance
-* of the terms of this agreement
-*
-* .
-*
-*/
+ * Conditions Of Use
+ *
+ * This software was developed by employees of the National Institute of
+ * Standards and Technology (NIST), an agency of the Federal Government.
+ * Pursuant to title 15 Untied States Code Section 105, works of NIST
+ * employees are not subject to copyright protection in the United States
+ * and are considered to be in the public domain.  As a result, a formal
+ * license is not needed to use the software.
+ *
+ * This software is provided by NIST as a service and is expressly
+ * provided "AS IS."  NIST MAKES NO WARRANTY OF ANY KIND, EXPRESS, IMPLIED
+ * OR STATUTORY, INCLUDING, WITHOUT LIMITATION, THE IMPLIED WARRANTY OF
+ * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, NON-INFRINGEMENT
+ * AND DATA ACCURACY.  NIST does not warrant or make any representations
+ * regarding the use of the software or the results thereof, including but
+ * not limited to the correctness, accuracy, reliability or usefulness of
+ * the software.
+ *
+ * Permission to use this software is contingent upon your acceptance
+ * of the terms of this agreement
+ *
+ * .
+ *
+ */
+
 import java.text.ParseException;
+
 import co.ecg.jain_sip.sip.header.ExtensionHeader;
 import co.ecg.jain_sip.sip.ri.header.SIPHeader;
 
 /**
- *
  * @author aayush.bhatnagar
  * @author jean.deruelle@gmail.com
  */
-public class PPreferredService extends SIPHeader implements PPreferredServiceHeader, SIPHeaderNamesIms, ExtensionHeader{
+public class PPreferredService extends SIPHeader implements PPreferredServiceHeader, SIPHeaderNamesIms, ExtensionHeader {
 
     private String subServiceIds;
     private String subAppIds;
@@ -42,8 +43,7 @@ public class PPreferredService extends SIPHeader implements PPreferredServiceHea
         super(NAME);
     }
 
-    public PPreferredService()
-    {
+    public PPreferredService() {
         super(P_PREFERRED_SERVICE);
     }
 
@@ -51,41 +51,35 @@ public class PPreferredService extends SIPHeader implements PPreferredServiceHea
     protected StringBuilder encodeBody(StringBuilder retval) {
 //        StringBuilder retval = new StringBuilder();
 
-         retval.append(ParameterNamesIms.SERVICE_ID);
+        retval.append(ParameterNamesIms.SERVICE_ID);
 
-            if(this.subServiceIds!=null)
-            {
-                retval.append(ParameterNamesIms.SERVICE_ID_LABEL).append(".");
-                retval.append(this.getSubserviceIdentifiers());
-            }
-
-            else if(this.subAppIds!=null)
-            {
-                retval.append(ParameterNamesIms.APPLICATION_ID_LABEL).append(".");
-                retval.append(this.getApplicationIdentifiers());
-            }
+        if (this.subServiceIds != null) {
+            retval.append(ParameterNamesIms.SERVICE_ID_LABEL).append(".");
+            retval.append(this.getSubserviceIdentifiers());
+        } else if (this.subAppIds != null) {
+            retval.append(ParameterNamesIms.APPLICATION_ID_LABEL).append(".");
+            retval.append(this.getApplicationIdentifiers());
+        }
 
         return retval;
     }
 
     public void setValue(String value) throws ParseException {
-        throw new ParseException(value,0);
+        throw new ParseException(value, 0);
 
     }
 
     public String getApplicationIdentifiers() {
-        if(this.subAppIds.charAt(0)=='.')
-        {
-        	// https://java.net/jira/browse/JSIP-476 Adding trim to avoid parsing issues
+        if (this.subAppIds.charAt(0) == '.') {
+            // https://java.net/jira/browse/JSIP-476 Adding trim to avoid parsing issues
             return this.subAppIds.substring(1).trim();
         }
         return this.subAppIds;
     }
 
     public String getSubserviceIdentifiers() {
-        if(this.subServiceIds.charAt(0)=='.')
-        {
-        	// https://java.net/jira/browse/JSIP-476 Adding trim to avoid parsing issues
+        if (this.subServiceIds.charAt(0) == '.') {
+            // https://java.net/jira/browse/JSIP-476 Adding trim to avoid parsing issues
             return this.subServiceIds.substring(1).trim();
         }
         return this.subServiceIds;
@@ -101,16 +95,8 @@ public class PPreferredService extends SIPHeader implements PPreferredServiceHea
 
     }
 
-    public boolean equals(Object other)
-    {
+    public boolean equals(Object other) {
         return (other instanceof PPreferredServiceHeader) && super.equals(other);
 
     }
-
-
-    public Object clone() {
-        PPreferredService retval = (PPreferredService) super.clone();
-        return retval;
-    }
-
 }

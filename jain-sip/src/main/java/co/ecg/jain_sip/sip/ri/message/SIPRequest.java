@@ -1,13 +1,13 @@
 /*
- * Conditions Of Use 
- * 
+ * Conditions Of Use
+ *
  * This software was developed by employees of the National Institute of
  * Standards and Technology (NIST), an agency of the Federal Government.
  * Pursuant to title 15 Untied States Code Section 105, works of NIST
  * employees are not subject to copyright protection in the United States
  * and are considered to be in the public domain.  As a result, a formal
  * license is not needed to use the software.
- * 
+ *
  * This software is provided by NIST as a service and is expressly
  * provided "AS IS."  NIST MAKES NO WARRANTY OF ANY KIND, EXPRESS, IMPLIED
  * OR STATUTORY, INCLUDING, WITHOUT LIMITATION, THE IMPLIED WARRANTY OF
@@ -16,12 +16,12 @@
  * regarding the use of the software or the results thereof, including but
  * not limited to the correctness, accuracy, reliability or usefulness of
  * the software.
- * 
+ *
  * Permission to use this software is contingent upon your acceptance
  * of the terms of this agreement
- *  
+ *
  * .
- * 
+ *
  */
 /*******************************************************************************
  * Product of NIST/ITL Advanced Networking Technologies Division (ANTD)         *
@@ -37,6 +37,7 @@ import co.ecg.jain_sip.sip.ri.address.GenericURI;
 import co.ecg.jain_sip.sip.ri.address.SipUri;
 import co.ecg.jain_sip.sip.ri.header.*;
 import co.ecg.jain_sip.sip.ri.stack.SIPTransactionStack;
+import org.apache.commons.lang3.SerializationUtils;
 
 import java.io.UnsupportedEncodingException;
 import java.text.ParseException;
@@ -55,19 +56,15 @@ import java.util.concurrent.ConcurrentHashMap;
  * Bystrom. Szabo Barna noticed a contact in a cancel request - this is a pointless header for
  * cancel. Antonis Kyardis contributed bug fixes. Jeroen van Bemmel noted that method names are
  * case sensitive, should use equals() in getting CannonicalName
- * 
+ *
  */
 
 /**
  * The SIP Request structure.
- * 
+ *
+ * @author M. Ranganathan <br/>
  * @version 1.2 $Revision: 1.57 $ $Date: 2010-09-17 20:06:57 $
  * @since 1.1
- * 
- * @author M. Ranganathan <br/>
- * 
- * 
- * 
  */
 
 public class SIPRequest extends SIPMessage implements Request, RequestExt {
@@ -85,13 +82,12 @@ public class SIPRequest extends SIPMessage implements Request, RequestExt {
     private transient Object messageChannel;
 
 
-
     private transient Object inviteTransaction; // The original invite request for a
     // given cancel request
 
     /**
      * Set of target refresh methods, currently: INVITE, UPDATE, SUBSCRIBE, NOTIFY, REFER
-     *
+     * <p>
      * A target refresh request and its response MUST have a Contact
      */
     private static final Set<String> targetRefreshMethods = new HashSet<String>();
@@ -161,7 +157,6 @@ public class SIPRequest extends SIPMessage implements Request, RequestExt {
      * faster in the stack because then it is just identity comparision. Character by char
      * comparison is not required. The method returns the String CONSTANT corresponding to the
      * String name.
-     *
      */
     public static String getCannonicalName(String method) {
 
@@ -204,7 +199,6 @@ public class SIPRequest extends SIPMessage implements Request, RequestExt {
      * convert the nice curly brackets into some grotesque XML tag.
      *
      * @return a string which can be used to examine the message contents.
-     *
      */
     public String debugDump() {
         String superstring = super.debugDump();
@@ -403,11 +397,11 @@ Caused by: java.text.ParseException: Scheme for contact should be sips:sip:proxy
      * support Request-URIs with schemes other than "sip" and "sips", for example the "tel" URI
      * scheme. SIP elements MAY translate non-SIP URIs using any mechanism at their disposal,
      * resulting in SIP URI, SIPS URI, or some other scheme.
-     * 
+     *
      * @param uri the new Request URI of this request message
      */
     public void setRequestURI(URI uri) {
-        if ( uri == null ) {
+        if (uri == null) {
             throw new NullPointerException("Null request URI");
         }
         if (this.requestLine == null) {
@@ -419,7 +413,7 @@ Caused by: java.text.ParseException: Scheme for contact should be sips:sip:proxy
 
     /**
      * Set the method.
-     * 
+     *
      * @param method is the method to set.
      * @throws IllegalArgumentException if the method is null
      */
@@ -447,9 +441,9 @@ Caused by: java.text.ParseException: Scheme for contact should be sips:sip:proxy
 
     /**
      * Get the method from the request line.
-     * 
+     *
      * @return the method from the request line if the method exits and null if the request line
-     *         or the method does not exist.
+     * or the method does not exist.
      */
     public String getMethod() {
         if (requestLine == null)
@@ -460,7 +454,7 @@ Caused by: java.text.ParseException: Scheme for contact should be sips:sip:proxy
 
     /**
      * Encode the SIP Request as a string.
-     * 
+     *
      * @return an encoded String containing the encoded SIP Message.
      */
 
@@ -471,7 +465,7 @@ Caused by: java.text.ParseException: Scheme for contact should be sips:sip:proxy
             retval = requestLine.encode() + super.encode();
         } else if (this.isNullRequest()) {
             retval = "\r\n\r\n";
-        } else {       
+        } else {
             retval = super.encode();
         }
         return retval;
@@ -480,7 +474,7 @@ Caused by: java.text.ParseException: Scheme for contact should be sips:sip:proxy
     /**
      * Encode only the headers and not the content.
      */
-    public StringBuilder encodeMessage(StringBuilder retval) {    	       
+    public StringBuilder encodeMessage(StringBuilder retval) {
         if (requestLine != null) {
             this.setRequestLineDefaults();
             requestLine.encode(retval);
@@ -501,26 +495,8 @@ Caused by: java.text.ParseException: Scheme for contact should be sips:sip:proxy
     }
 
     /**
-     * Make a clone (deep copy) of this object. You can use this if you want to modify a request
-     * while preserving the original
-     * 
-     * @return a deep copy of this object.
-     */
-
-    public Object clone() {
-        SIPRequest retval = (SIPRequest) super.clone();
-        // Do not copy over the tx pointer -- this is only for internal
-        // tracking.
-        retval.transactionPointer = null;
-        if (this.requestLine != null)
-            retval.requestLine = (RequestLine) this.requestLine.clone();
-
-        return retval;
-    }
-
-    /**
      * Compare for equality.
-     * 
+     *
      * @param other object to compare ourselves with.
      */
     public boolean equals(Object other) {
@@ -533,7 +509,7 @@ Caused by: java.text.ParseException: Scheme for contact should be sips:sip:proxy
     /**
      * Get the message as a linked list of strings. Use this if you want to iterate through the
      * message.
-     * 
+     *
      * @return a linked list containing the request line and headers encoded as strings.
      */
     public LinkedList getMessageAsEncodedStrings() {
@@ -550,9 +526,8 @@ Caused by: java.text.ParseException: Scheme for contact should be sips:sip:proxy
      * Match with a template. You can use this if you want to match incoming messages with a
      * pattern and do something when you find a match. This is useful for building filters/pattern
      * matching responders etc.
-     * 
+     *
      * @param matchObj object to match ourselves with (null matches wildcard)
-     * 
      */
     public boolean match(Object matchObj) {
         if (matchObj == null)
@@ -574,7 +549,7 @@ Caused by: java.text.ParseException: Scheme for contact should be sips:sip:proxy
     /**
      * Encode this into a byte array. This is used when the body has been set as a binary array
      * and you want to encode the body as a byte array for transmission.
-     * 
+     *
      * @return a byte array containing the SIPRequest encoded as a byte array.
      */
 
@@ -582,7 +557,7 @@ Caused by: java.text.ParseException: Scheme for contact should be sips:sip:proxy
         if (this.isNullRequest()) {
             // Encoding a null message for keepalive.
             return "\r\n\r\n".getBytes();
-        } else if ( this.requestLine == null ) {
+        } else if (this.requestLine == null) {
             return new byte[0];
         }
 
@@ -609,11 +584,10 @@ Caused by: java.text.ParseException: Scheme for contact should be sips:sip:proxy
      * outgoing response will result in a modification of the incoming request. Tag fields are
      * just copied from the incoming request. Contact headers are removed from the incoming
      * request. Added by Jeff Keyser.
-     * 
+     *
      * @param statusCode Status code for the response. Reason phrase is generated.
-     * 
      * @return A SIPResponse with the status and reason supplied, and a copy of all the original
-     *         headers from this request.
+     * headers from this request.
      */
 
     public SIPResponse createResponse(int statusCode) {
@@ -631,13 +605,12 @@ Caused by: java.text.ParseException: Scheme for contact should be sips:sip:proxy
      * outgoing response will result in a modification of the incoming request. Tag fields are
      * just copied from the incoming request. Contact headers are removed from the incoming
      * request. Added by Jeff Keyser. Route headers are not added to the response.
-     * 
-     * @param statusCode Status code for the response.
+     *
+     * @param statusCode   Status code for the response.
      * @param reasonPhrase Reason phrase for this response.
-     * 
      * @return A SIPResponse with the status and reason supplied, and a copy of all the original
-     *         headers from this request except the ones that are not supposed to be part of the
-     *         response .
+     * headers from this request except the ones that are not supposed to be part of the
+     * response .
      */
 
     public SIPResponse createResponse(int statusCode, String reasonPhrase) {
@@ -655,7 +628,7 @@ Caused by: java.text.ParseException: Scheme for contact should be sips:sip:proxy
             newResponse.setReasonPhrase(reasonPhrase);
         else
             newResponse.setReasonPhrase(SIPResponse.getReasonPhrase(statusCode));
-        
+
 //        headerIterator = getHeaders();
 //        while (headerIterator.hasNext()) {
 //            nextHeader = (SIPHeader) headerIterator.next();
@@ -676,22 +649,22 @@ Caused by: java.text.ParseException: Scheme for contact should be sips:sip:proxy
 //                }
 //            }
 //        }
-        
+
         // no need to iterate through all headers to create the response since we know which headers
         // we only want to keep and helps the lazy parsing to avoid going through all headers
-        for(String headerName : headersToIncludeInResponse) {                	
-        	SIPHeader nextHeader = headerTable.get(headerName);
-        	if(nextHeader != null) {
-        		if(!(nextHeader instanceof RecordRouteList) || (nextHeader instanceof RecordRouteList && mustCopyRR(statusCode))) {
-        			try {
-        				newResponse.attachHeader((SIPHeader) nextHeader.clone(), false);
-        			} catch (SIPDuplicateHeaderException e) {
-                      e.printStackTrace();
-                  }
-        		}
-        	}
+        for (String headerName : headersToIncludeInResponse) {
+            SIPHeader nextHeader = headerTable.get(headerName);
+            if (nextHeader != null) {
+                if (!(nextHeader instanceof RecordRouteList) || (nextHeader instanceof RecordRouteList && mustCopyRR(statusCode))) {
+                    try {
+                        newResponse.attachHeader((SIPHeader) SerializationUtils.clone(nextHeader), false);
+                    } catch (SIPDuplicateHeaderException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
         }
-        
+
         if (MessageFactoryImpl.getDefaultServerHeader() != null) {
             newResponse.setHeader(MessageFactoryImpl.getDefaultServerHeader());
 
@@ -712,20 +685,19 @@ Caused by: java.text.ParseException: Scheme for contact should be sips:sip:proxy
     }
 
     // Helper method for createResponse, to avoid copying Record-Route unless needed
-    protected final boolean mustCopyRR( int code ) {
-    	// Only for 1xx-2xx, not for 100 or errors
-    	if ( code>100 && code<300 ) {
-    		return isDialogCreating( this.getMethod() ) && getToTag() == null;
-    	} else return false;
+    protected final boolean mustCopyRR(int code) {
+        // Only for 1xx-2xx, not for 100 or errors
+        if (code > 100 && code < 300) {
+            return isDialogCreating(this.getMethod()) && getToTag() == null;
+        } else return false;
     }
-    
+
     /**
      * Creates a default SIPResquest message that would cancel this request. Note that tag
      * assignment and removal of is left to the caller (we use whatever tags are present in the
      * original request).
-     * 
+     *
      * @return A CANCEL SIPRequest constructed according to RFC3261 section 9.1
-     * 
      * @throws SipException
      * @throws ParseException
      */
@@ -751,27 +723,27 @@ Caused by: java.text.ParseException: Scheme for contact should be sips:sip:proxy
          * own right (See Section 17).
          */
         SIPRequest cancel = new SIPRequest();
-        cancel.setRequestLine((RequestLine) this.requestLine.clone());
+        cancel.setRequestLine((RequestLine) SerializationUtils.clone(this.requestLine));
         cancel.setMethod(Request.CANCEL);
-        cancel.setHeader((Header) this.callIdHeader.clone());
-        cancel.setHeader((Header) this.toHeader.clone());
-        cancel.setHeader((Header) cSeqHeader.clone());
+        cancel.setHeader((Header) SerializationUtils.clone(this.callIdHeader));
+        cancel.setHeader((Header) SerializationUtils.clone(this.toHeader));
+        cancel.setHeader((Header) SerializationUtils.clone(cSeqHeader));
         try {
             cancel.getCSeq().setMethod(Request.CANCEL);
         } catch (ParseException e) {
             e.printStackTrace(); // should not happen
         }
-        cancel.setHeader((Header) this.fromHeader.clone());
+        cancel.setHeader((Header) SerializationUtils.clone(this.fromHeader));
 
-        cancel.addFirst((Header) this.getTopmostVia().clone());
-        cancel.setHeader((Header) this.maxForwardsHeader.clone());
+        cancel.addFirst((Header) SerializationUtils.clone(this.getTopmostVia()));
+        cancel.setHeader((Header) SerializationUtils.clone(this.maxForwardsHeader));
 
         /*
          * If the request being cancelled contains a Route header field, the CANCEL request MUST
          * include that Route header field's values.
          */
         if (this.getRouteHeaders() != null) {
-            cancel.setHeader((SIPHeaderList< ? >) this.getRouteHeaders().clone());
+            cancel.setHeader((SIPHeaderList<?>) SerializationUtils.clone(this.getRouteHeaders()));
         }
         if (MessageFactoryImpl.getDefaultUserAgentHeader() != null) {
             cancel.setHeader(MessageFactoryImpl.getDefaultUserAgentHeader());
@@ -785,9 +757,8 @@ Caused by: java.text.ParseException: Scheme for contact should be sips:sip:proxy
      * defaultACK SIPRequest does not include the content of the original SIPRequest. If
      * responseToHeader is null then the toHeader of this request is used to construct the ACK.
      * Note that tag fields are just copied from the original SIP Request. Added by Jeff Keyser.
-     * 
+     *
      * @param responseToHeader To header to use for this request.
-     * 
      * @return A SIPRequest with an ACK method.
      */
     public SIPRequest createAckRequest(To responseToHeader) {
@@ -795,9 +766,9 @@ Caused by: java.text.ParseException: Scheme for contact should be sips:sip:proxy
 //        Iterator headerIterator;
 //        SIPHeader nextHeader;
 
-    	// cloning instead of iterating through headers so that lazy parsers don't have to parse the messages fully
-    	// to create ACK requests
-        SIPRequest newRequest = (SIPRequest) this.clone();
+        // cloning instead of iterating through headers so that lazy parsers don't have to parse the messages fully
+        // to create ACK requests
+        SIPRequest newRequest = (SIPRequest) SerializationUtils.clone(this);
 //        newRequest = new SIPRequest();
 //        newRequest.setRequestLine((RequestLine) this.requestLine.clone());
         newRequest.setMethod(Request.ACK);
@@ -818,9 +789,9 @@ Caused by: java.text.ParseException: Scheme for contact should be sips:sip:proxy
         // sequence number as was present in the
         // original request, but the method parameter
         // MUST be equal to "ACK".
-        try{
-        	newRequest.getCSeq().setMethod(Request.ACK);
-        } catch (ParseException e) {
+        try {
+            newRequest.getCSeq().setMethod(Request.ACK);
+        } catch (ParseException ignored) {
         }
         if (responseToHeader != null) {
             newRequest.setTo(responseToHeader);
@@ -834,12 +805,12 @@ Caused by: java.text.ParseException: Scheme for contact should be sips:sip:proxy
         // and this MUST be equal to the top Via header
         // field of the original
         // request.
-        if(via != null && via.size() > 1) {
-        	for(int i = 2; i < via.size(); i++) {
-        		via.remove(i);
-        	}
+        if (via != null && via.size() > 1) {
+            for (int i = 2; i < via.size(); i++) {
+                via.remove(i);
+            }
         }
-        
+
         if (MessageFactoryImpl.getDefaultUserAgentHeader() != null) {
             newRequest.setHeader(MessageFactoryImpl.getDefaultUserAgentHeader());
 
@@ -849,12 +820,11 @@ Caused by: java.text.ParseException: Scheme for contact should be sips:sip:proxy
 
     /**
      * Creates an ACK for non-2xx responses according to RFC3261 17.1.1.3
-     * 
+     *
      * @return A SIPRequest with an ACK method.
      * @throws SipException
      * @throws NullPointerException
      * @throws ParseException
-     * 
      * @author jvb
      */
     public final SIPRequest createErrorAck(To responseToHeader) throws SipException,
@@ -873,16 +843,14 @@ Caused by: java.text.ParseException: Scheme for contact should be sips:sip:proxy
          * be equal to "ACK".
          */
         SIPRequest newRequest = new SIPRequest();
-        newRequest.setRequestLine((RequestLine) this.requestLine.clone());
+        newRequest.setRequestLine((RequestLine) SerializationUtils.clone(this.requestLine));
         newRequest.setMethod(Request.ACK);
-        newRequest.setHeader((Header) this.callIdHeader.clone());
-        newRequest.setHeader((Header) this.maxForwardsHeader.clone()); // ISSUE
-        // 130
-        // fix
-        newRequest.setHeader((Header) this.fromHeader.clone());
-        newRequest.setHeader((Header) responseToHeader.clone());
-        newRequest.addFirst((Header) this.getTopmostVia().clone());
-        newRequest.setHeader((Header) cSeqHeader.clone());
+        newRequest.setHeader((Header) SerializationUtils.clone(this.callIdHeader));
+        newRequest.setHeader((Header) SerializationUtils.clone(this.maxForwardsHeader)); // ISSUE 130 fix
+        newRequest.setHeader((Header) SerializationUtils.clone(this.fromHeader));
+        newRequest.setHeader((Header) SerializationUtils.clone(responseToHeader));
+        newRequest.addFirst((Header) SerializationUtils.clone(this.getTopmostVia()));
+        newRequest.setHeader((Header) SerializationUtils.clone(cSeqHeader));
         newRequest.getCSeq().setMethod(Request.ACK);
 
         /*
@@ -891,7 +859,7 @@ Caused by: java.text.ParseException: Scheme for contact should be sips:sip:proxy
          * routed properly through any downstream stateless proxies.
          */
         if (this.getRouteHeaders() != null) {
-            newRequest.setHeader((SIPHeaderList) this.getRouteHeaders().clone());
+            newRequest.setHeader((SIPHeaderList) SerializationUtils.clone(this.getRouteHeaders()));
         }
         if (MessageFactoryImpl.getDefaultUserAgentHeader() != null) {
             newRequest.setHeader(MessageFactoryImpl.getDefaultUserAgentHeader());
@@ -900,9 +868,9 @@ Caused by: java.text.ParseException: Scheme for contact should be sips:sip:proxy
         return newRequest;
     }
 
-     /**
+    /**
      * Get the host from the topmost via header.
-     * 
+     *
      * @return the string representation of the host from the topmost via header.
      */
     public String getViaHost() {
@@ -913,7 +881,7 @@ Caused by: java.text.ParseException: Scheme for contact should be sips:sip:proxy
 
     /**
      * Get the port from the topmost via header.
-     * 
+     *
      * @return the port from the topmost via header (5060 if there is no port indicated).
      */
     public int getViaPort() {
@@ -926,7 +894,7 @@ Caused by: java.text.ParseException: Scheme for contact should be sips:sip:proxy
 
     /**
      * Get the first line encoded.
-     * 
+     *
      * @return a string containing the encoded request line.
      */
     public String getFirstLine() {
@@ -938,7 +906,7 @@ Caused by: java.text.ParseException: Scheme for contact should be sips:sip:proxy
 
     /**
      * Set the sip version.
-     * 
+     *
      * @param sipVersion the sip version to set.
      */
     public void setSIPVersion(String sipVersion) throws ParseException {
@@ -949,7 +917,7 @@ Caused by: java.text.ParseException: Scheme for contact should be sips:sip:proxy
 
     /**
      * Get the SIP version.
-     * 
+     *
      * @return the SIP version from the request line.
      */
     public String getSIPVersion() {
@@ -958,7 +926,7 @@ Caused by: java.text.ParseException: Scheme for contact should be sips:sip:proxy
 
     /**
      * Book keeping method to return the current tx for the request if one exists.
-     * 
+     *
      * @return the assigned tx.
      */
     public Object getTransaction() {
@@ -969,7 +937,7 @@ Caused by: java.text.ParseException: Scheme for contact should be sips:sip:proxy
 
     /**
      * Book keeping field to set the current tx for the request.
-     * 
+     *
      * @param transaction
      */
     public void setTransaction(Object transaction) {
@@ -978,7 +946,7 @@ Caused by: java.text.ParseException: Scheme for contact should be sips:sip:proxy
 
     /**
      * Book keeping method to get the messasge channel for the request.
-     * 
+     *
      * @return the message channel for the request.
      */
 
@@ -991,7 +959,7 @@ Caused by: java.text.ParseException: Scheme for contact should be sips:sip:proxy
 
     /**
      * Set the message channel for the request ( bookkeeping field ).
-     * 
+     *
      * @param messageChannel
      */
 
@@ -1001,7 +969,7 @@ Caused by: java.text.ParseException: Scheme for contact should be sips:sip:proxy
 
     /**
      * Generates an Id for checking potentially merged requests.
-     * 
+     *
      * @return String to check for merged requests
      */
     public String getMergeId() {
@@ -1011,7 +979,7 @@ Caused by: java.text.ParseException: Scheme for contact should be sips:sip:proxy
         String fromTag = this.getFromTag();
         String cseq = this.cSeqHeader.toString();
         String callId = this.callIdHeader.getCallId();
-        /* NOTE : The RFC does NOT specify you need to include a Request URI 
+        /* NOTE : The RFC does NOT specify you need to include a Request URI
          * This is added here for the case of Back to Back User Agents.
          */
         String requestUri = this.getRequestURI().toString();
@@ -1037,9 +1005,9 @@ Caused by: java.text.ParseException: Scheme for contact should be sips:sip:proxy
     public Object getInviteTransaction() {
         return inviteTransaction;
     }
-    
+
     @Override
     public void cleanUp() {
-    	super.cleanUp();
+        super.cleanUp();
     }
 }

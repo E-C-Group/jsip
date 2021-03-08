@@ -57,10 +57,4 @@ public class PAssertedIdentityList extends SIPHeaderList<PAssertedIdentity> {
     {
         super(PAssertedIdentity.class, PAssertedIdentityHeader.NAME);
     }
-
-
-    public Object clone() {
-        PAssertedIdentityList retval = new PAssertedIdentityList();
-        return retval.clonehlist(this.hlist);
-    }
 }

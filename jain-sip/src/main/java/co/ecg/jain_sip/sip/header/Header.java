@@ -125,24 +125,6 @@ public interface Header extends Cloneable, Serializable {
     public boolean equals(Object obj);
 
     /**
-     * Creates and returns a deep copy of the Header. This methods must ensure a
-     * deep copy of the Header, so that when a message is cloned the Header can
-     * be modified without effecting the original Header in the message. This
-     * provides useful functionality for proxying Requests and Responses, for
-     * example:
-     * <ul>
-     * <li>Recieve a message.
-     * <li>Create a deep clone of the message and headers.
-     * <li>Modify necessary headers.
-     * <li>Proxy the message using the send methods on the SipProvider.
-     * </ul>
-     * This method overrides the clone method in java.lang.Object.
-     *
-     * @return a deep copy of Header
-     */
-    public Object clone();
-    
-    /**
      * Gets a integer hashcode representation of the Header. This method 
      * overrides the hashcode method in java.lang.Object.
      *

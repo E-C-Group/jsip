@@ -1,7 +1,8 @@
 /*******************************************************************************
-* Product of NIST/ITL Advanced Networking Technologies Division (ANTD).        *
-*******************************************************************************/
+ * Product of NIST/ITL Advanced Networking Technologies Division (ANTD).        *
+ *******************************************************************************/
 package co.ecg.jain_sip.sip.ri.header.extensions;
+
 import co.ecg.jain_sip.sip.header.ExtensionHeader;
 import co.ecg.jain_sip.sip.ri.header.CallIdentifier;
 import co.ecg.jain_sip.sip.ri.header.ParameterNames;
@@ -10,20 +11,17 @@ import co.ecg.jain_sip.sip.ri.header.ParametersHeader;
 import java.text.ParseException;
 
 /*
-* This code is in the public domain.
-*/
+ * This code is in the public domain.
+ */
 
 /**
  * Join SIPHeader.
  *
  * @author jean.deruelle@gmail.com  <br/>
- *
  * @version JAIN-SIP-1.2
- *
- *
  */
 
-public class Join     extends ParametersHeader implements ExtensionHeader, JoinHeader {
+public class Join extends ParametersHeader implements ExtensionHeader, JoinHeader {
 
     /**
      *
@@ -45,9 +43,11 @@ public class Join     extends ParametersHeader implements ExtensionHeader, JoinH
         super(NAME);
     }
 
-    /** Constructor given the call Identifier.
-     *@param callId string call identifier (should be localid@host)
-     *@throws IllegalArgumentException if call identifier is bad.
+    /**
+     * Constructor given the call Identifier.
+     *
+     * @param callId string call identifier (should be localid@host)
+     * @throws IllegalArgumentException if call identifier is bad.
      */
     public Join(String callId) throws IllegalArgumentException {
         super(NAME);
@@ -56,6 +56,7 @@ public class Join     extends ParametersHeader implements ExtensionHeader, JoinH
 
     /**
      * Encode the body part of this header (i.e. leave out the hdrName).
+     *
      * @return String encoded body part of the header.
      */
     public StringBuilder encodeBody(StringBuilder retval) {
@@ -82,6 +83,7 @@ public class Join     extends ParametersHeader implements ExtensionHeader, JoinH
 
     /**
      * get the call Identifer member.
+     *
      * @return CallIdentifier
      */
     public CallIdentifier getCallIdentifer() {
@@ -90,10 +92,11 @@ public class Join     extends ParametersHeader implements ExtensionHeader, JoinH
 
     /**
      * set the CallId field
+     *
      * @param cid String to set. This is the body part of the Call-Id
-     *  header. It must have the form localId@host or localId.
+     *            header. It must have the form localId@host or localId.
      * @throws IllegalArgumentException if cid is null, not a token, or is
-     * not a token@token.
+     *                                  not a token@token.
      */
     public void setCallId(String cid) {
         callId = cid;
@@ -101,6 +104,7 @@ public class Join     extends ParametersHeader implements ExtensionHeader, JoinH
 
     /**
      * Set the callIdentifier member.
+     *
      * @param cid CallIdentifier to set (localId@host).
      */
     public void setCallIdentifier(CallIdentifier cid) {
@@ -109,6 +113,7 @@ public class Join     extends ParametersHeader implements ExtensionHeader, JoinH
 
     /**
      * Get the to-tag parameter from the address parm list.
+     *
      * @return tag field
      */
     public String getToTag() {
@@ -116,8 +121,10 @@ public class Join     extends ParametersHeader implements ExtensionHeader, JoinH
             return null;
         return getParameter(ParameterNames.TO_TAG);
     }
+
     /**
      * Set the to-tag member
+     *
      * @param t tag to set. From tags are mandatory.
      */
     public void setToTag(String t) throws ParseException {
@@ -127,20 +134,26 @@ public class Join     extends ParametersHeader implements ExtensionHeader, JoinH
             throw new ParseException("bad tag", 0);
         this.setParameter(ParameterNames.TO_TAG, t);
     }
-    /** Boolean function
+
+    /**
+     * Boolean function
+     *
      * @return true if the Tag exist
      */
     public boolean hasToTag() {
         return hasParameter(ParameterNames.TO_TAG);
     }
 
-    /** remove Tag member
+    /**
+     * remove Tag member
      */
     public void removeToTag() {
         parameters.delete(ParameterNames.TO_TAG);
     }
+
     /**
      * Get the from-tag parameter from the address parm list.
+     *
      * @return tag field
      */
     public String getFromTag() {
@@ -148,8 +161,10 @@ public class Join     extends ParametersHeader implements ExtensionHeader, JoinH
             return null;
         return getParameter(ParameterNames.FROM_TAG);
     }
+
     /**
      * Set the to-tag member
+     *
      * @param t tag to set. From tags are mandatory.
      */
     public void setFromTag(String t) throws ParseException {
@@ -159,32 +174,28 @@ public class Join     extends ParametersHeader implements ExtensionHeader, JoinH
             throw new ParseException("bad tag", 0);
         this.setParameter(ParameterNames.FROM_TAG, t);
     }
-    /** Boolean function
+
+    /**
+     * Boolean function
+     *
      * @return true if the Tag exist
      */
     public boolean hasFromTag() {
         return hasParameter(ParameterNames.FROM_TAG);
     }
 
-    /** remove Tag member
+    /**
+     * remove Tag member
      */
     public void removeFromTag() {
         parameters.delete(ParameterNames.FROM_TAG);
     }
 
 
-
     public void setValue(String value) throws ParseException {
         // not implemented.
-        throw new ParseException(value,0);
+        throw new ParseException(value, 0);
 
     }
-
-//  public Object clone() {
-//      CallID retval = (CallID) super.clone();
-//      if (this.callIdentifier != null)
-//      retval.setCallIdentifier( (CallIdentifier) this.callIdentifier.clone() );
-//      return retval;
-//  }
 }
 

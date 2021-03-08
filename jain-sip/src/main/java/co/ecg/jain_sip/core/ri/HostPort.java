@@ -155,13 +155,6 @@ public final class HostPort extends GenericObject {
             port = ((HostPort) mergeObject).port;
     }
 
-    public Object clone() throws CloneNotSupportedException {
-        HostPort retval = (HostPort) super.clone();
-        if (this.host != null)
-            retval.host = (Host) this.host.clone();
-        return retval;
-    }
-
     public String toString() {
         return this.encode();
     }

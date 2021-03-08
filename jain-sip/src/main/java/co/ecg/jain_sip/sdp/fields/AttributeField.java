@@ -177,13 +177,6 @@ public class AttributeField extends SDPField implements Attribute {
         setAttribute(nameValue);
     }
 
-    public Object clone() throws CloneNotSupportedException {
-        AttributeField retval = (AttributeField) super.clone();
-        if (this.attribute != null)
-            retval.attribute = (NameValue) this.attribute.clone();
-        return retval;
-    }
-
     public boolean equals(Object that ) {
         if ( ! (that instanceof AttributeField)) return false;
         AttributeField other = (AttributeField) that;

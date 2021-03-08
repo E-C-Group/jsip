@@ -345,12 +345,4 @@ public final class AddressImpl extends NetObject implements Address {
         this.address = new SipUri();
         ((SipUri) this.address).setUser("*");
     }
-
-    public Object clone() {
-        AddressImpl retval = (AddressImpl) super.clone();
-        if (this.address != null)
-            retval.address = (GenericURI) this.address.clone();
-        return retval;
-    }
-
 }

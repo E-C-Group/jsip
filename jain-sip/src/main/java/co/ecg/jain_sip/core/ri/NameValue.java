@@ -37,14 +37,10 @@ import java.util.Map.Entry;
 /**
  * Generic structure for storing name-value pairs.
  *
- * @version 1.2
- *
  * @author M. Ranganathan <br/>
- *
- *
- *
+ * @version 1.2
  */
-public class NameValue extends GenericObject implements Entry<String,String> {
+public class NameValue extends GenericObject implements Entry<String, String> {
 
     private static final long serialVersionUID = -1857729012596437950L;
 
@@ -126,16 +122,16 @@ public class NameValue extends GenericObject implements Entry<String,String> {
     public Object getValueAsObject() {
         return getValueAsObject(true);
     }
-    
+
     public Object getValueAsObject(boolean stripQuotes) {
-        if(isFlagParameter)
+        if (isFlagParameter)
             return ""; // never return null for flag params
-         
+
         // Issue 315 : (https://jain-sip.dev.java.net/issues/show_bug.cgi?id=315)
         // header.getParameter() doesn't return quoted value
-        if(!stripQuotes && isQuotedString)
+        if (!stripQuotes && isQuotedString)
             return quotes + value.toString() + quotes; // add the quotes for quoted string
-        
+
         return value;
     }
 
@@ -156,15 +152,15 @@ public class NameValue extends GenericObject implements Entry<String,String> {
     /**
      * Get the encoded representation of this namevalue object. Added
      * doublequote for encoding doublequoted values.
-     *
+     * <p>
      * Bug: RFC3261 stipulates that an opaque parameter in authenticate header
      * has to be:
      * opaque              =  "opaque" EQUAL quoted-string
      * so returning just the name is not acceptable. (e.g. LinkSys phones
      * are picky about this)
      *
-     * @since 1.0
      * @return an encoded name value (eg. name=value) string.
+     * @since 1.0
      */
     public String encode() {
         return encode(new StringBuilder()).toString();
@@ -182,13 +178,13 @@ public class NameValue extends GenericObject implements Entry<String,String> {
                 GenericObjectList gvlist = (GenericObjectList) value;
                 buffer.append(name).append(separator).append(gvlist.encode());
                 return buffer;
-            } else if ( value.toString().length() == 0) {
+            } else if (value.toString().length() == 0) {
                 // opaque="" bug fix - pmusgrave
                 /*if (name.toString().equals(gov.nist.javax.sip.header.ParameterNames.OPAQUE))
                     return name + separator + quotes + quotes;
                 else
                     return name;*/
-                if ( this.isQuotedString ) {
+                if (this.isQuotedString) {
                     buffer.append(name).append(separator).append(quotes).append(quotes);
                     return buffer;
                 } else {
@@ -220,18 +216,11 @@ public class NameValue extends GenericObject implements Entry<String,String> {
         }
     }
 
-    public Object clone() {
-        NameValue retval = (NameValue) super.clone();
-        if (value != null)
-            retval.value = makeClone(value);
-        return retval;
-    }
-
     /**
      * Equality comparison predicate.
      */
     public boolean equals(Object other) {
-        if (other == null ) return false;
+        if (other == null) return false;
         if (!other.getClass().equals(this.getClass()))
             return false;
         NameValue that = (NameValue) other;
@@ -274,9 +263,9 @@ public class NameValue extends GenericObject implements Entry<String,String> {
      */
     public String getValue() {
 
-        if(value == null)
+        if (value == null)
             return null;
-        
+
         return value.toString();
     }
 
@@ -290,7 +279,7 @@ public class NameValue extends GenericObject implements Entry<String,String> {
         return retval;
 
     }
-    
+
     @Override
     public int hashCode() {
         return this.encode().toLowerCase().hashCode();

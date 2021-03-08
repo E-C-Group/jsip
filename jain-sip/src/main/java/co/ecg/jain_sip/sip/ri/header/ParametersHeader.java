@@ -433,14 +433,6 @@ public abstract class ParametersHeader extends SIPHeader implements Parameters, 
         return parameters.getNameValue(parameterName);
     }
 
-
-    public Object clone() {
-        ParametersHeader retval = (ParametersHeader) super.clone();
-        if (this.parameters != null)
-            retval.parameters = (NameValueList) this.parameters.clone();
-        return retval;
-    }
-
     //-------------------------
 
     /**

@@ -439,36 +439,6 @@ public abstract class SIPHeaderList<HDR extends SIPHeader> extends SIPHeader imp
         }
     }
 
-
-    /**
-     * make a clone of this header list.
-     *
-     * @return clone of this Header.
-     */
-    public Object clone() {
-        try {
-            Class<?> clazz = this.getClass();
-
-            Constructor<?> cons = clazz.getConstructor((Class[])null);
-            SIPHeaderList<HDR> retval = (SIPHeaderList<HDR>) cons.newInstance((Object[])null);
-            retval.headerName = this.headerName;
-            retval.myClass  = this.myClass;
-            return retval.clonehlist(this.hlist);
-        } catch (Exception ex) {
-            throw new RuntimeException("Could not clone!", ex);
-        }
-    }
-
-    protected final SIPHeaderList<HDR> clonehlist(List<HDR> hlistToClone) {
-        if (hlistToClone != null) {
-            for (Iterator<HDR> it = (Iterator<HDR>) hlistToClone.iterator(); it.hasNext();) {
-                Header h = it.next();
-                this.hlist.add((HDR)h.clone());
-            }
-        }
-        return this;
-    }
-
     /**
      * Get the number of headers in the list.
      */

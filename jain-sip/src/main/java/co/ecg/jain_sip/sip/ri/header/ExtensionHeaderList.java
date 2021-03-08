@@ -41,12 +41,6 @@ public class ExtensionHeaderList extends SIPHeaderList<ExtensionHeaderImpl> {
 
     private static final long serialVersionUID = 4681326807149890197L;
 
-
-    public Object clone() {
-        ExtensionHeaderList retval = new ExtensionHeaderList(headerName);
-        retval.clonehlist(this.hlist);
-        return retval;
-    }
     public ExtensionHeaderList(String hName) {
         super( ExtensionHeaderImpl.class, hName);
     }

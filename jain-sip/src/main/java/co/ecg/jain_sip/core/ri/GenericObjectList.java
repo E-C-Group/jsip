@@ -37,15 +37,11 @@ import java.util.*;
  * place on our code as this property is invariant.The list is created with the
  * superclass which can be specified as either a class name or a Class.
  *
- * @version 1.2
- *
  * @author M. Ranganathan <br/>
- *
- *
- *
+ * @version 1.2
  */
 public abstract class GenericObjectList extends LinkedList<GenericObject> implements
-        Serializable, Cloneable{
+        Serializable, Cloneable {
     // Useful constants.
     protected static final String SEMICOLON = Separators.SEMICOLON;
 
@@ -118,21 +114,6 @@ public abstract class GenericObjectList extends LinkedList<GenericObject> implem
         return GenericObjectList.class.isAssignableFrom(other);
 
     }
-
-    /**
-     * Makes a deep clone of this list.
-     */
-    public Object clone() {
-        GenericObjectList retval = (GenericObjectList) super.clone();
-        for (ListIterator<GenericObject> iter = retval.listIterator(); iter.hasNext();) {
-            GenericObject obj = (GenericObject) iter.next()
-                    .clone();
-            iter.set(obj);
-        }
-        return retval;
-    }
-
-
 
     public void setMyClass(Class cl) {
         myClass = cl;
@@ -229,7 +210,7 @@ public abstract class GenericObjectList extends LinkedList<GenericObject> implem
      * concatenation.
      *
      * @param topFlag set to true to add items to top of list else
-     *            add them to the tail end of the list.
+     *                add them to the tail end of the list.
      */
     protected void concatenate(GenericObjectList objList, boolean topFlag) {
         if (!topFlag) {
@@ -311,11 +292,9 @@ public abstract class GenericObjectList extends LinkedList<GenericObject> implem
      * modification of the given list. This does an object by object merge of
      * the given objects.
      *
-     * @param mergeList
-     *            is the list of Generic objects that we want to do an object by
-     *            object merge with. Note that no new objects are added to this
-     *            list.
-     *
+     * @param mergeList is the list of Generic objects that we want to do an object by
+     *                  object merge with. Note that no new objects are added to this
+     *                  list.
      */
 
     public void mergeObjects(GenericObjectList mergeList) {
@@ -367,22 +346,23 @@ public abstract class GenericObjectList extends LinkedList<GenericObject> implem
      */
     public String toString() {
         return this.encode();
-    }   
-    
+    }
+
     /**
      * Hash code. We never expect to put this in a hash table so return a constant.
      */
-    public int hashCode() { return 42; }
+    public int hashCode() {
+        return 42;
+    }
 
     /**
      * Equality checking predicate.
      *
-     * @param other
-     *            is the object to compare ourselves to.
+     * @param other is the object to compare ourselves to.
      * @return true if the objects are equal.
      */
     public boolean equals(Object other) {
-        if (other == null ) return false;
+        if (other == null) return false;
         if (!this.getClass().equals(other.getClass()))
             return false;
         GenericObjectList that = (GenericObjectList) other;
@@ -424,8 +404,7 @@ public abstract class GenericObjectList extends LinkedList<GenericObject> implem
      * template. This can be used for partial match (template matching of SIP
      * objects). Note -- this implementation is not unnecessarily efficient :-)
      *
-     * @param other
-     *            template object to compare against.
+     * @param other template object to compare against.
      */
 
     public boolean match(Object other) {
@@ -433,7 +412,8 @@ public abstract class GenericObjectList extends LinkedList<GenericObject> implem
             return false;
         GenericObjectList that = (GenericObjectList) other;
         ListIterator hisIterator = that.listIterator();
-        outer: while (hisIterator.hasNext()) {
+        outer:
+        while (hisIterator.hasNext()) {
             Object hisobj = hisIterator.next();
             Object myobj = null;
             ListIterator myIterator = this.listIterator();

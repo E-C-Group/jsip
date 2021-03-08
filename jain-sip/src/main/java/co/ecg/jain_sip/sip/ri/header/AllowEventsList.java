@@ -49,13 +49,6 @@ public class AllowEventsList extends SIPHeaderList<AllowEvents>  {
 
     private static final long serialVersionUID = -684763195336212992L;
 
-    public Object clone() {
-        AllowEventsList retval = new AllowEventsList();
-        retval.clonehlist(this.hlist);
-        return retval;
-    }
-
-
     /** default constructor
      */
     public AllowEventsList() {

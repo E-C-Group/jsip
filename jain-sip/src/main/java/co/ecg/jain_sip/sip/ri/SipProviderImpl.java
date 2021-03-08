@@ -172,16 +172,6 @@ public class SipProviderImpl implements SipProvider, SipProviderExt,
     /*
      * (non-Javadoc)
      *
-     * @see java.lang.Object#clone()
-     */
-    protected Object clone() throws CloneNotSupportedException {
-        throw new CloneNotSupportedException();
-    }
-
-
-    /*
-     * (non-Javadoc)
-     *
      * @see javax.sip.SipProvider#addSipListener(javax.sip.SipListener)
      */
     public void addSipListener(SipListener sipListener)

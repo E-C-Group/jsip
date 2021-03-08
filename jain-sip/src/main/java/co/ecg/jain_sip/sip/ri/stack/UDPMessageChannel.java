@@ -61,6 +61,7 @@ import java.util.concurrent.TimeUnit;
 import co.ecg.jain_sip.sip.address.Hop;
 import co.ecg.jain_sip.sip.message.Response;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.SerializationUtils;
 
 /*
  * Kim Kirby (Keyvoice) suggested that duplicate checking should be added to the
@@ -682,7 +683,7 @@ public class UDPMessageChannel extends MessageChannel implements
                             public void run() {
                                 try {
                                     ((RawMessageChannel) channel)
-                                            .processMessage((SIPMessage) sipMessage.clone());
+                                            .processMessage((SIPMessage) SerializationUtils.clone(sipMessage));
                                 } catch (Exception ex) {
                                     if (log.isErrorEnabled()) {
                                         log.error("Error self routing message cause by: ",

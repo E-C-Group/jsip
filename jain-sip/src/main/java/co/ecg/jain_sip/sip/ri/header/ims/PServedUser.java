@@ -154,11 +154,4 @@ public class PServedUser extends AddressParametersHeader implements PServedUserH
          }
         return false;
     }
-
-
-    public Object clone() {
-        PServedUser retval = (PServedUser) super.clone();
-        return retval;
-    }
-
 }

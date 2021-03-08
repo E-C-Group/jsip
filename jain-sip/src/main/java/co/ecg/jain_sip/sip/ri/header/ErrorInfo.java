@@ -34,6 +34,7 @@ import co.ecg.jain_sip.sip.ri.address.GenericURI;
 
 import co.ecg.jain_sip.sip.header.*;
 import co.ecg.jain_sip.sip.address.*;
+
 import java.text.ParseException;
 
 /**
@@ -133,11 +134,5 @@ public final class ErrorInfo extends ParametersHeader implements ErrorInfoHeader
         return getParameter("message");
     }
 
-    public Object clone() {
-        ErrorInfo retval = (ErrorInfo) super.clone();
-        if (this.errorInfo != null)
-            retval.errorInfo = (GenericURI) this.errorInfo.clone();
-        return retval;
-    }
 }
 

@@ -99,12 +99,5 @@ public class InReplyTo extends SIPHeader implements InReplyToHeader {
     public StringBuilder encodeBody(StringBuilder retval) {
         return callId.encode(retval);
     }
-
-    public Object clone() {
-        InReplyTo retval = (InReplyTo) super.clone();
-        if (this.callId != null)
-            retval.callId = (CallIdentifier) this.callId.clone();
-        return retval;
-    }
 }
 

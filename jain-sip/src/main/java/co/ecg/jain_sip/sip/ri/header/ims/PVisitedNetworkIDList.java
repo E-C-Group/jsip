@@ -47,10 +47,4 @@ public class PVisitedNetworkIDList extends SIPHeaderList<PVisitedNetworkID> {
     public PVisitedNetworkIDList() {
         super(PVisitedNetworkID.class, PVisitedNetworkIDHeader.NAME);
     }
-
-    public Object clone() {
-        PVisitedNetworkIDList retval = new PVisitedNetworkIDList();
-        return retval.clonehlist(this.hlist);
-    }
-
 }

@@ -121,13 +121,4 @@ public final class AlertInfo extends ParametersHeader implements AlertInfoHeader
         return alertInfoUri;
     }
 
-    public Object clone() {
-        AlertInfo retval = (AlertInfo) super.clone();
-        if (this.uri != null) {
-            retval.uri = (GenericURI) this.uri.clone();
-        } else if (this.string != null) {
-            retval.string = this.string;
-        }
-        return retval;
-    }
 }

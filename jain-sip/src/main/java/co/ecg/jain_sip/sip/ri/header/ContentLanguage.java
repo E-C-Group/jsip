@@ -162,11 +162,4 @@ public class ContentLanguage
     public void setContentLanguage(Locale language) {
         this.locale = language;
     }
-
-    public Object clone() {
-        ContentLanguage retval = (ContentLanguage) super.clone();
-        if (this.locale != null)
-            retval.locale = (Locale) this.locale.clone();
-        return retval;
-    }
 }

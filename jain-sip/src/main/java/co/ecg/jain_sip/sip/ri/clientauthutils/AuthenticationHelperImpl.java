@@ -37,6 +37,7 @@ import co.ecg.jain_sip.sip.ri.message.SIPRequest;
 import co.ecg.jain_sip.sip.ri.stack.SIPClientTransaction;
 import co.ecg.jain_sip.sip.ri.stack.SIPTransactionStack;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.SerializationUtils;
 
 /**
  * The class handles authentication challenges, caches user credentials and takes care (through
@@ -141,7 +142,7 @@ public class AuthenticationHelperImpl implements AuthenticationHelper {
             if (challengedRequest.getToTag() != null ||
                     challengedTransaction.getDialog() == null ||
                     challengedTransaction.getDialog().getState() != DialogState.CONFIRMED) {
-                reoriginatedRequest = (Request) challengedRequest.clone();
+                reoriginatedRequest = (Request) SerializationUtils.clone(challengedRequest);
             } else {
                 /*
                  * Re-originate the request by consulting the dialog. In particular

@@ -103,7 +103,7 @@ public class CallID
      * get the call Identifer member.
      * @return CallIdentifier
      */
-    public CallIdentifier getCallIdentifer() {
+    public CallIdentifier getCallIdentifier() {
         return callIdentifier;
     }
 
@@ -137,12 +137,5 @@ public class CallID
     public CallID(String callId) throws IllegalArgumentException {
         super(NAME);
         this.callIdentifier = new CallIdentifier(callId);
-    }
-
-    public Object clone() {
-        CallID retval = (CallID) super.clone();
-        if (this.callIdentifier != null)
-            retval.callIdentifier = (CallIdentifier) this.callIdentifier.clone();
-        return retval;
     }
 }

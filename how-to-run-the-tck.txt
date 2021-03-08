@@ -11,9 +11,9 @@ You need install the the ant junit extension.
 Edit ant-build-config.properties and make sure the settings correspond
 to what you have installed.
 
-Edit tck.properties and set the path to your implementation there.
+Edit co.ecg.jain_sip.tck.properties and set the path to your implementation there.
 
-To run the tck do as follows from a command prompt:
+To run the co.ecg.jain_sip.tck do as follows from a command prompt:
 
 ant runtck
 
@@ -22,7 +22,7 @@ console.
 
 You can look at the results of your run in test-reports/html/index.html
 
-To post a challenge to the tck : send mail to the user@co.ecg.jain_sip.dev.java.net
+To post a challenge to the co.ecg.jain_sip.tck : send mail to the user@co.ecg.jain_sip.dev.java.net
 mailing list 
 
 

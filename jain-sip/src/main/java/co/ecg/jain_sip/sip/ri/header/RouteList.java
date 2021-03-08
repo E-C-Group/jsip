@@ -53,12 +53,6 @@ public class RouteList extends SIPHeaderList<Route> {
 
     }
 
-    public Object clone() {
-        RouteList retval = new RouteList();
-        retval.clonehlist(this.hlist);
-        return retval;
-    }
-
     public String encode() {
         if ( super.hlist.isEmpty()) return "";
         else return super.encode();

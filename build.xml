@@ -62,7 +62,7 @@ Where avaliable targets are:
 
         - init	-> create the classes directory
 
-        - runtck -> Cleans, compile and run the tck.
+        - runtck -> Cleans, compile and run the co.ecg.jain_sip.tck.
 
 On my machine I run this as follows:
 c:/jakarta-ant/bin/ant all
@@ -367,31 +367,31 @@ c:/jakarta-ant/bin/ant all
                     </jain-javac>
                 </target>
 
-                <!-- Compile the tck, always with debug on -->
+                <!-- Compile the co.ecg.jain_sip.tck, always with debug on -->
                 <target name="compiletck" depends="init,compileri,compilesctp">
                     <mkdir dir="${classes}" />
                     <jain-javac>
-                        <include name="test/tck/**/*.java" />
+                        <include name="test/co.ecg.jain_sip.tck/**/*.java" />
                         <include name="test/rihelper/**/*.java" />
                         <classpath>
                             <pathelement location='${junit_jar}' />
                             <pathelement location='${log4j_jar}' />
                         </classpath>
                     </jain-javac>
-                    <jar destfile="${co.ecg.jain-sip-tck-jar}" basedir="${classes}">
-                        <include name="test/tck/**/*.class" />
+                    <jar destfile="${co.ecg.jain-sip-co.ecg.jain_sip.tck-jar}" basedir="${classes}">
+                        <include name="test/co.ecg.jain_sip.tck/**/*.class" />
                         <include name="test/rihelper/**/*.class" />
                         <manifest>
                             <attribute name="Built-By" value="${user.name}" />
-                            <attribute name="Main-Class" value="test.tck.Tck" />
+                            <attribute name="Main-Class" value="test.co.ecg.jain_sip.tck.Tck" />
                         </manifest>
                     </jar>
-                    <copy file="tck.properties" toDir="./classes" />
+                    <copy file="co.ecg.jain_sip.tck.properties" toDir="./classes" />
                 </target>
 
 
 
-                <!-- this uses the junit task of ant to run the tck in self test mode -->
+                <!-- this uses the junit task of ant to run the co.ecg.jain_sip.tck in self test mode -->
 
                 <target name='runtck' depends="compiletck" description="Runs all TCK tests using the ant junit task.">
                     <mkdir dir="test-reports" />
@@ -403,29 +403,29 @@ c:/jakarta-ant/bin/ant all
                             <pathelement location="${co.ecg.jain-sip-api-jar}" />
                             <pathelement location="${co.ecg.jain-sip-ri-jar}" />
                             <pathelement location="${log4j_jar}" />
-                            <pathelement location="${co.ecg.jain-sip-tck-jar}" />
+                            <pathelement location="${co.ecg.jain-sip-co.ecg.jain_sip.tck-jar}" />
                             <pathelement location='${junit_jar}' />
                             <pathelement location='${log4j_jar}' />
                             
                             <pathelement location='${co.ecg.jain-sip-sctp-jar}'/> <!-- only for Java 7 -->
 
-                            <!-- add source path since this will pick up test.tck.gui.images -->
+                            <!-- add source path since this will pick up test.co.ecg.jain_sip.tck.gui.images -->
                             <pathelement location='src' />
 
-                            <!-- add project root to the classpath in order to make tck.properties accessible. -->
+                            <!-- add project root to the classpath in order to make co.ecg.jain_sip.tck.properties accessible. -->
                             <pathelement location="${root}" />
                         </classpath>
                         <formatter type="xml" />
 
                         <batchtest fork="yes" todir="test-reports" haltonfailure="no">
                             <fileset dir="${srcroot}">
-                                <include name="test/tck/**/*Test.java" />
+                                <include name="test/co.ecg.jain_sip.tck/**/*Test.java" />
                                 <!-- TCP Tests excluded - its enough to test one transport for TCK compliance  -->
                                 <exclude name="**/Tcp*Test.java" />
                                 <exclude name="**/TCP*Test.java" />
-                                <!-- Tls Tests excluded for tck compliance  -->
-                                <exclude name="test/tck/msgflow/callflows/tls/*Test.java" />
-                                <exclude name="test/tck/msgflow/callflows/sctp/*Test.java" />
+                                <!-- Tls Tests excluded for co.ecg.jain_sip.tck compliance  -->
+                                <exclude name="test/co.ecg.jain_sip.tck/msgflow/callflows/tls/*Test.java" />
+                                <exclude name="test/co.ecg.jain_sip.tck/msgflow/callflows/sctp/*Test.java" />
                             </fileset>
                         </batchtest>
                     </junit>
@@ -451,26 +451,26 @@ c:/jakarta-ant/bin/ant all
                             <pathelement location="${co.ecg.jain-sip-api-jar}" />
                             <pathelement location="${co.ecg.jain-sip-ri-jar}" />
                             <pathelement location="${log4j_jar}" />
-                            <pathelement location="${co.ecg.jain-sip-tck-jar}" />
+                            <pathelement location="${co.ecg.jain-sip-co.ecg.jain_sip.tck-jar}" />
                             <pathelement location='${junit_jar}' />
                             <pathelement location='${log4j_jar}' />
 
-                            <!-- add source path since this will pick up test.tck.gui.images -->
+                            <!-- add source path since this will pick up test.co.ecg.jain_sip.tck.gui.images -->
                             <pathelement location='src' />
 
-                            <!-- add project root to the classpath in order to make tck.properties accessible. -->
+                            <!-- add project root to the classpath in order to make co.ecg.jain_sip.tck.properties accessible. -->
                             <pathelement location="${root}" />
                         </classpath>
                         <formatter type="xml" />
 
                         <batchtest fork="yes" todir="test-reports" haltonfailure="no">
                             <fileset dir="${srcroot}">
-                                <include name="test/tck/msgflow/callflows/**/*Test.java" />
-                                <exclude name="test/tck/msgflow/callflows/**/Udp*Test.java" />
-                            	<exclude name="test/tck/msgflow/callflows/sctp/**" />
-                                <!-- Tls Tests excluded for tck compliance  -->
-                                <exclude name="test/tck/msgflow/callflows/tls/*Test.java" />
-                                <exclude name="test/tck/msgflow/callflows/sctp/*Test.java" />
+                                <include name="test/co.ecg.jain_sip.tck/msgflow/callflows/**/*Test.java" />
+                                <exclude name="test/co.ecg.jain_sip.tck/msgflow/callflows/**/Udp*Test.java" />
+                            	<exclude name="test/co.ecg.jain_sip.tck/msgflow/callflows/sctp/**" />
+                                <!-- Tls Tests excluded for co.ecg.jain_sip.tck compliance  -->
+                                <exclude name="test/co.ecg.jain_sip.tck/msgflow/callflows/tls/*Test.java" />
+                                <exclude name="test/co.ecg.jain_sip.tck/msgflow/callflows/sctp/*Test.java" />
                             </fileset>
                         </batchtest>
                     </junit>
@@ -488,14 +488,14 @@ c:/jakarta-ant/bin/ant all
 
 
                 <!-- target for an individual unit test  -->
-                <target name='tlstests'  depends="compileunit" description="Runs unit tests not included in tck.">
+                <target name='tlstests'  depends="compileunit" description="Runs unit tests not included in co.ecg.jain_sip.tck.">
                     <mkdir dir="test-reports" />
                     <delete failonerror="0">
                         <fileset file="logs/*" />
                     </delete>
                     <mkdir dir="logs" />
                     <copy file="src/test/unit/gov/nist/javax/sip/stack/tls/testkeys" toDir= "classes/test/unit/gov/nist/javax/sip/stack/tls" />
-                    <copy file="src/test/tck/msgflow/callflows/tls/testkeys" toDir="classes/test/tck/msgflow/callflows/tls" />
+                    <copy file="src/test/co.ecg.jain_sip.tck/msgflow/callflows/tls/testkeys" toDir="classes/test/co.ecg.jain_sip.tck/msgflow/callflows/tls" />
 
                     <junit fork="yes" showoutput="yes" failureproperty="testing.failed">
                         <classpath>
@@ -504,10 +504,10 @@ c:/jakarta-ant/bin/ant all
                             <pathelement location='${junit_jar}' />
                             <pathelement location='${log4j_jar}' />
 
-                            <!-- add source path since this will pick up test.tck.gui.images -->
+                            <!-- add source path since this will pick up test.co.ecg.jain_sip.tck.gui.images -->
                             <pathelement location='src' />
 
-                            <!-- add project root to the classpath in order to make tck.properties accessible. -->
+                            <!-- add project root to the classpath in order to make co.ecg.jain_sip.tck.properties accessible. -->
                             <pathelement location="${root}" />
                         </classpath>
                         <formatter type="xml" />
@@ -515,7 +515,7 @@ c:/jakarta-ant/bin/ant all
                         <batchtest fork="yes" todir="test-reports" haltonfailure="no">
                             <fileset dir="${srcroot}">
                                 <include name="test/unit/gov/nist/javax/sip/stack/tls/*Test.java" />
-                                <include name="test/tck/msgflow/callflows/tls/*Test.java" />
+                                <include name="test/co.ecg.jain_sip.tck/msgflow/callflows/tls/*Test.java" />
                             </fileset>
                         </batchtest>
                     </junit>
@@ -531,7 +531,7 @@ c:/jakarta-ant/bin/ant all
 		    <fail if="${fail.build}"/>
                 </target>
                 <!-- target for an individual unit test  -->
-                <target name='unit2'  depends="compileunit" description="Runs unit tests not included in tck.">
+                <target name='unit2'  depends="compileunit" description="Runs unit tests not included in co.ecg.jain_sip.tck.">
                     <mkdir dir="test-reports" />
                     <delete failonerror="0">
                         <fileset file="logs/*" />
@@ -543,15 +543,15 @@ c:/jakarta-ant/bin/ant all
                             <pathelement location="${co.ecg.jain-sip-api-jar}" />
                             <pathelement location="${co.ecg.jain-sip-ri-jar}" />
                             <pathelement location="${log4j_jar}" />
-                            <pathelement location="${co.ecg.jain-sip-tck-jar}" />
+                            <pathelement location="${co.ecg.jain-sip-co.ecg.jain_sip.tck-jar}" />
                             <pathelement location='${junit_jar}' />
                             <pathelement location='${log4j_jar}' />
                             <pathelement location='${unit_test_jar}' />
 
-                            <!-- add source path since this will pick up test.tck.gui.images -->
+                            <!-- add source path since this will pick up test.co.ecg.jain_sip.tck.gui.images -->
                             <pathelement location='src' />
 
-                            <!-- add project root to the classpath in order to make tck.properties accessible. -->
+                            <!-- add project root to the classpath in order to make co.ecg.jain_sip.tck.properties accessible. -->
                             <pathelement location="${root}" />
                         </classpath>
                         <formatter type="xml" />
@@ -574,7 +574,7 @@ c:/jakarta-ant/bin/ant all
 		    <fail if="${fail.build}"/>
                 </target>
 
-                <target name='unittest'  depends="compileunit" description="Runs unit tests not included in tck.">
+                <target name='unittest'  depends="compileunit" description="Runs unit tests not included in co.ecg.jain_sip.tck.">
                     <mkdir dir="test-reports" />
                     <delete failonerror="0">
                         <fileset file="logs/*" />
@@ -587,15 +587,15 @@ c:/jakarta-ant/bin/ant all
                             <pathelement location="${co.ecg.jain-sip-api-jar}" />
                             <pathelement location="${co.ecg.jain-sip-ri-jar}" />
                             <pathelement location="${log4j_jar}" />
-                            <pathelement location="${co.ecg.jain-sip-tck-jar}" />
+                            <pathelement location="${co.ecg.jain-sip-co.ecg.jain_sip.tck-jar}" />
                             <pathelement location='${junit_jar}' />
                             <pathelement location='${log4j_jar}' />
                             <pathelement location='${unit_test_jar}' />
 
-                            <!-- add source path since this will pick up test.tck.gui.images -->
+                            <!-- add source path since this will pick up test.co.ecg.jain_sip.tck.gui.images -->
                             <pathelement location='src' />
 
-                            <!-- add project root to the classpath in order to make tck.properties accessible. -->
+                            <!-- add project root to the classpath in order to make co.ecg.jain_sip.tck.properties accessible. -->
                             <pathelement location="${root}" />
                         </classpath>
                         <formatter type="xml" />
@@ -640,7 +640,7 @@ c:/jakarta-ant/bin/ant all
                             <pathelement location='${log4j_jar}' />
                             <pathelement location='${unit_test_jar}' />
 
-                            <!-- add project root to the classpath in order to make tck.properties accessible. -->
+                            <!-- add project root to the classpath in order to make co.ecg.jain_sip.tck.properties accessible. -->
                             <pathelement location="${root}" />
                         </classpath>
                         <formatter type="xml" />
@@ -676,7 +676,7 @@ c:/jakarta-ant/bin/ant all
                             <pathelement location='${log4j_jar}' />
                             <pathelement location='${unit_test_jar}' />
 
-                            <!-- add project root to the classpath in order to make tck.properties accessible. -->
+                            <!-- add project root to the classpath in order to make co.ecg.jain_sip.tck.properties accessible. -->
                             <pathelement location="${root}" />
                         </classpath>
                         <formatter type="xml" />
@@ -727,7 +727,7 @@ c:/jakarta-ant/bin/ant all
                     <mkdir dir="${dist}/co.ecg.jain-sip-sdp"/>
                     <mkdir dir="${dist}/co.ecg.jain-sip-api"/>
                     <mkdir dir="${dist}/co.ecg.jain-sip-ri"/>
-                    <mkdir dir="${dist}/co.ecg.jain-sip-tck" />
+                    <mkdir dir="${dist}/co.ecg.jain-sip-co.ecg.jain_sip.tck" />
                     <mkdir dir="${dist}/co.ecg.jain-sip-src" />
                     <mkdir dir="${dist}/co.ecg.jain-sip-all" />
                     <copy file="${co.ecg.jain-sip-javadoc-tar}" todir="${dist}/co.ecg.jain-sip-javadoc"  />
@@ -736,7 +736,7 @@ c:/jakarta-ant/bin/ant all
                     <copy file="${co.ecg.jain-sip-ri-jar}" todir="${dist}/co.ecg.jain-sip-ri"/>
                     <copy file="${co.ecg.jain-sip-sdp-jar}" todir="${dist}/co.ecg.jain-sip-sdp"/>
                     <copy file="${sdp_jar}" todir="${dist}/jain-sdp"/>
-                    <copy file="${co.ecg.jain-sip-tck-jar}" todir ="${dist}/co.ecg.jain-sip-tck" />
+                    <copy file="${co.ecg.jain-sip-co.ecg.jain_sip.tck-jar}" todir ="${dist}/co.ecg.jain-sip-co.ecg.jain_sip.tck" />
                     <copy file="${co.ecg.jain-sip-all-tar}"   todir="${dist}/co.ecg.jain-sip-all" />
                     <copy file="README-DISTRIBUTION"  todir="${dist}"/>
 

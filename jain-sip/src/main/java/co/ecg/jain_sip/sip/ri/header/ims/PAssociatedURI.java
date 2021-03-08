@@ -145,15 +145,6 @@ public class PAssociatedURI
         return this.address.getURI();
     }
 
-
-    public Object clone() {
-        PAssociatedURI retval = (PAssociatedURI) super.clone();
-        if (this.address != null)
-            retval.address = (AddressImpl) this.address.clone();
-        return retval;
-    }
-
-
     public void setValue(String value) throws ParseException{
         // not implemented
         throw new ParseException(value,0);

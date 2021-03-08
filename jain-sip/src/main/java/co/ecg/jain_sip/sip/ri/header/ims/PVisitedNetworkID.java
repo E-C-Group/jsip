@@ -153,15 +153,4 @@ public class PVisitedNetworkID
         }
         return false;
     }
-
-
-    public Object clone() {
-        PVisitedNetworkID retval = (PVisitedNetworkID) super.clone();
-        if (this.networkID != null)
-            retval.networkID = this.networkID;
-        retval.isQuoted = this.isQuoted;
-        return retval;
-    }
-
-
 }

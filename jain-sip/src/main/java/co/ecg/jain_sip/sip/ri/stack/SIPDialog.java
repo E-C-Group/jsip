@@ -71,6 +71,7 @@ import co.ecg.jain_sip.sip.ri.parser.CallIDParser;
 import co.ecg.jain_sip.sip.ri.parser.ContactParser;
 import co.ecg.jain_sip.sip.ri.parser.RecordRouteParser;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.SerializationUtils;
 
 
 /*
@@ -287,7 +288,6 @@ public class SIPDialog implements Dialog, DialogExt {
     // //////////////////////////////////////////////////////
     // Inner classes
     // //////////////////////////////////////////////////////
-    @Slf4j
     public class AckSendingStrategyImpl implements AckSendingStrategy {
 
         private Hop hop = null;
@@ -318,7 +318,6 @@ public class SIPDialog implements Dialog, DialogExt {
         }
     }
 
-    @Slf4j
     class EarlyStateTimerTask extends SIPStackTimerTask implements Serializable {
 
         public EarlyStateTimerTask() {
@@ -354,7 +353,6 @@ public class SIPDialog implements Dialog, DialogExt {
      * ACK for the previous re-INVITE has been sent before sending the next
      * re-INVITE.
      */
-    @Slf4j
     public class ReInviteSender implements Runnable, Serializable {
         private static final long serialVersionUID = 1019346148741070635L;
         ClientTransaction ctx;
@@ -469,7 +467,6 @@ public class SIPDialog implements Dialog, DialogExt {
         }
     }
 
-    @Slf4j
     class LingerTimer extends SIPStackTimerTask implements Serializable {
 
         public void runTask() {
@@ -487,7 +484,6 @@ public class SIPDialog implements Dialog, DialogExt {
 
     }
 
-    @Slf4j
     class DialogTimerTask extends SIPStackTimerTask implements Serializable {
         int nRetransmissions;
 
@@ -586,7 +582,6 @@ public class SIPDialog implements Dialog, DialogExt {
     /**
      * This timer task is used to garbage collect the dialog after some time.
      */
-    @Slf4j
     class DialogDeleteTask extends SIPStackTimerTask implements Serializable {
 
         public void runTask() {
@@ -598,7 +593,6 @@ public class SIPDialog implements Dialog, DialogExt {
     /**
      * This timer task is used to garbage collect the dialog after some time.
      */
-    @Slf4j
     class DialogDeleteIfNoAckSentTask extends SIPStackTimerTask implements Serializable {
         private long seqno;
 
@@ -938,12 +932,10 @@ public class SIPDialog implements Dialog, DialogExt {
                     RecordRoute rr = (RecordRoute) li.previous();
 
                     Route route = new Route();
-                    AddressImpl address = ((AddressImpl) ((AddressImpl) rr
-                            .getAddress()).clone());
+                    AddressImpl address = ((AddressImpl) SerializationUtils.clone(rr.getAddress()));
 
                     route.setAddress(address);
-                    route.setParameters((NameValueList) rr.getParameters()
-                            .clone());
+                    route.setParameters((NameValueList) SerializationUtils.clone(rr.getParameters()));
 
                     this.routeList.add(route);
                 }
@@ -958,11 +950,9 @@ public class SIPDialog implements Dialog, DialogExt {
                     RecordRoute rr = (RecordRoute) li.next();
 
                     Route route = new Route();
-                    AddressImpl address = ((AddressImpl) ((AddressImpl) rr
-                            .getAddress()).clone());
+                    AddressImpl address = ((AddressImpl) SerializationUtils.clone(rr.getAddress()));
                     route.setAddress(address);
-                    route.setParameters((NameValueList) rr.getParameters()
-                            .clone());
+                    route.setParameters((NameValueList) SerializationUtils.clone(rr.getParameters()));
                     routeList.add(route);
 
                 }
@@ -1079,19 +1069,20 @@ public class SIPDialog implements Dialog, DialogExt {
             li = routeList.listIterator();
             while (li.hasNext()) {
                 Route route = (Route) li.next();
-                retval.add((Route) route.clone());
+                retval.add((Route) SerializationUtils.clone(route));
             }
         }
 
         if (log.isDebugEnabled()) {
             log.debug("----- ");
             log.debug("getRouteList for " + this);
+
             if (retval != null)
-                log.debug(
-                        "RouteList = " + retval.encode());
+                log.debug("RouteList = " + retval.encode());
+
             if (routeList != null)
-                log.debug(
-                        "myRouteList = " + routeList.encode());
+                log.debug("myRouteList = " + routeList.encode());
+
             log.debug("----- ");
         }
         return retval;
@@ -1161,7 +1152,7 @@ public class SIPDialog implements Dialog, DialogExt {
         }
         // we clone the request that we store to make sure that if getNextHop modifies the request
         // we store it as it was passed to the method originally
-        this.setLastAckSent((SIPRequest) ackRequest.clone());
+        this.setLastAckSent((SIPRequest) SerializationUtils.clone(ackRequest));
 
         try {
             ackSendingStrategy.send(ackRequest);
@@ -2193,9 +2184,9 @@ public class SIPDialog implements Dialog, DialogExt {
 
         SipUri sipUri = null;
         if (this.getRemoteTarget() != null)
-            sipUri = (SipUri) this.getRemoteTarget().getURI().clone();
+            sipUri = (SipUri) SerializationUtils.clone(this.getRemoteTarget().getURI());
         else {
-            sipUri = (SipUri) this.getRemoteParty().getURI().clone();
+            sipUri = (SipUri) SerializationUtils.clone(this.getRemoteParty().getURI());
             sipUri.clearUriParms();
         }
 
@@ -2922,8 +2913,7 @@ public class SIPDialog implements Dialog, DialogExt {
             }
             SIPRequest sipRequest = new SIPRequest();
             sipRequest.setMethod(Request.ACK);
-            sipRequest.setRequestURI((SipUri) getRemoteTarget().getURI()
-                    .clone());
+            sipRequest.setRequestURI((SipUri) SerializationUtils.clone(getRemoteTarget().getURI()));
             sipRequest.setCallId(this.getCallId());
             sipRequest.setCSeq(new CSeq(cseqno, Request.ACK));
             List<Via> vias = new ArrayList<Via>();
@@ -2945,8 +2935,7 @@ public class SIPDialog implements Dialog, DialogExt {
                         .getTopmostVia().getParameters();
                 if (originalRequestParameters != null
                         && originalRequestParameters.size() > 0) {
-                    via.setParameters((NameValueList) originalRequestParameters
-                            .clone());
+                    via.setParameters((NameValueList) SerializationUtils.clone(originalRequestParameters));
                 }
             }
             via.setBranch(Utils.getInstance().generateBranchId()); // new branch
@@ -3057,7 +3046,7 @@ public class SIPDialog implements Dialog, DialogExt {
             this.lastResponseStatusCode = Integer.valueOf(statusCode);
             // Issue 378 : http://java.net/jira/browse/JSIP-378
             // Cloning the via header to avoid race condition and be modified
-            this.lastResponseTopMostVia = (Via) sipResponse.getTopmostVia().clone();
+            this.lastResponseTopMostVia = (Via) SerializationUtils.clone(sipResponse.getTopmostVia());
             String cseqMethod = sipResponse.getCSeqHeader().getMethod();
             this.lastResponseMethod = cseqMethod;
             long responseCSeqNumber = sipResponse.getCSeq().getSeqNumber();
@@ -3524,7 +3513,7 @@ public class SIPDialog implements Dialog, DialogExt {
          */
         RecordRouteList rrl = request.getRecordRouteHeaders();
         if (rrl != null) {
-            RecordRouteList rrlclone = (RecordRouteList) rrl.clone();
+            RecordRouteList rrlclone = SerializationUtils.clone(rrl);
             response.setHeader(rrlclone);
         }
 

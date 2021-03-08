@@ -20,7 +20,7 @@ Dependencies
 ------------
 
 1. You need to install ant and the junit extension for ant on your machine. 
-2. You need to have junit.jar in your classpath to run the tck.
+2. You need to have junit.jar in your classpath to run the co.ecg.jain_sip.tck.
 3. You need to have log4j.jar in your classpath (included in this distribution). 
 
 There are versions of the dependent libraries in the lib directory.  
@@ -42,7 +42,7 @@ Builds everything.
 Building the TCK
 ----------------
 
-Edit tck.properties and set the claspath to your implementation.
+Edit co.ecg.jain_sip.tck.properties and set the claspath to your implementation.
 
 ant runtck 
 

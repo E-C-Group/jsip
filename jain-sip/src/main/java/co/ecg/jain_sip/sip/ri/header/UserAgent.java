@@ -116,14 +116,6 @@ public class UserAgent extends SIPHeader implements UserAgentHeader {
                     + " product parameter is null");
         productTokens = product;
     }
-
-    public Object clone() {
-        UserAgent retval = (UserAgent) super.clone();
-        if (productTokens != null)
-            retval.productTokens = new LinkedList (productTokens);
-        return retval;
-    }
-
 }
 /*
  * $Log: not supported by cvs2svn $

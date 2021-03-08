@@ -1,31 +1,31 @@
 /*
-* Conditions Of Use
-*
-* This software was developed by employees of the National Institute of
-* Standards and Technology (NIST), an agency of the Federal Government.
-* Pursuant to title 15 Untied States Code Section 105, works of NIST
-* employees are not subject to copyright protection in the United States
-* and are considered to be in the public domain.  As a result, a formal
-* license is not needed to use the software.
-*
-* This software is provided by NIST as a service and is expressly
-* provided "AS IS."  NIST MAKES NO WARRANTY OF ANY KIND, EXPRESS, IMPLIED
-* OR STATUTORY, INCLUDING, WITHOUT LIMITATION, THE IMPLIED WARRANTY OF
-* MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, NON-INFRINGEMENT
-* AND DATA ACCURACY.  NIST does not warrant or make any representations
-* regarding the use of the software or the results thereof, including but
-* not limited to the correctness, accuracy, reliability or usefulness of
-* the software.
-*
-* Permission to use this software is contingent upon your acceptance
-* of the terms of this agreement
-*
-* .
-*
-*/
+ * Conditions Of Use
+ *
+ * This software was developed by employees of the National Institute of
+ * Standards and Technology (NIST), an agency of the Federal Government.
+ * Pursuant to title 15 Untied States Code Section 105, works of NIST
+ * employees are not subject to copyright protection in the United States
+ * and are considered to be in the public domain.  As a result, a formal
+ * license is not needed to use the software.
+ *
+ * This software is provided by NIST as a service and is expressly
+ * provided "AS IS."  NIST MAKES NO WARRANTY OF ANY KIND, EXPRESS, IMPLIED
+ * OR STATUTORY, INCLUDING, WITHOUT LIMITATION, THE IMPLIED WARRANTY OF
+ * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, NON-INFRINGEMENT
+ * AND DATA ACCURACY.  NIST does not warrant or make any representations
+ * regarding the use of the software or the results thereof, including but
+ * not limited to the correctness, accuracy, reliability or usefulness of
+ * the software.
+ *
+ * Permission to use this software is contingent upon your acceptance
+ * of the terms of this agreement
+ *
+ * .
+ *
+ */
 /*******************************************************************************
-* Product of NIST/ITL Advanced Networking Technologies Division (ANTD).        *
-*******************************************************************************/
+ * Product of NIST/ITL Advanced Networking Technologies Division (ANTD).        *
+ *******************************************************************************/
 package co.ecg.jain_sip.sip.ri.header;
 
 import co.ecg.jain_sip.core.ri.NameValue;
@@ -37,8 +37,7 @@ import co.ecg.jain_sip.core.ri.NameValueList;
  * @author M. Ranganathan    <br/>
  * @version 1.2 $Revision: 1.8 $ $Date: 2010-05-06 14:07:54 $
  * @since 1.1
- *
-*/
+ */
 public class Challenge extends SIPObject {
 
     /**
@@ -77,17 +76,19 @@ public class Challenge extends SIPObject {
 
     /**
      * Encode the challenge in canonical form.
+     *
      * @return String
      */
     public String encode() {
         return new StringBuilder(scheme)
-            .append(SP)
-            .append(authParams.encode())
-            .toString();
+                .append(SP)
+                .append(authParams.encode())
+                .toString();
     }
 
     /**
      * get the scheme field
+     *
      * @return String
      */
     public String getScheme() {
@@ -96,6 +97,7 @@ public class Challenge extends SIPObject {
 
     /**
      * get AuthParms list.
+     *
      * @return NameValueList
      */
     public NameValueList getAuthParams() {
@@ -104,6 +106,7 @@ public class Challenge extends SIPObject {
 
     /**
      * get the domain
+     *
      * @return String
      */
     public String getDomain() {
@@ -112,6 +115,7 @@ public class Challenge extends SIPObject {
 
     /**
      * get the URI field
+     *
      * @return String
      */
     public String getURI() {
@@ -120,6 +124,7 @@ public class Challenge extends SIPObject {
 
     /**
      * get the Opaque field
+     *
      * @return String
      */
     public String getOpaque() {
@@ -128,6 +133,7 @@ public class Challenge extends SIPObject {
 
     /**
      * get QOP value
+     *
      * @return String
      */
     public String getQOP() {
@@ -136,6 +142,7 @@ public class Challenge extends SIPObject {
 
     /**
      * get the Algorithm value.
+     *
      * @return String
      */
     public String getAlgorithm() {
@@ -144,6 +151,7 @@ public class Challenge extends SIPObject {
 
     /**
      * get the State value.
+     *
      * @return String
      */
     public String getStale() {
@@ -152,6 +160,7 @@ public class Challenge extends SIPObject {
 
     /**
      * get the Signature value.
+     *
      * @return String
      */
     public String getSignature() {
@@ -160,6 +169,7 @@ public class Challenge extends SIPObject {
 
     /**
      * get the signedBy value.
+     *
      * @return String
      */
     public String getSignedBy() {
@@ -168,6 +178,7 @@ public class Challenge extends SIPObject {
 
     /**
      * get the Response value.
+     *
      * @return String
      */
     public String getResponse() {
@@ -176,6 +187,7 @@ public class Challenge extends SIPObject {
 
     /**
      * get the realm value.
+     *
      * @return String.
      */
     public String getRealm() {
@@ -184,6 +196,7 @@ public class Challenge extends SIPObject {
 
     /**
      * get the specified parameter
+     *
      * @param name String to set
      * @return String to set
      */
@@ -193,6 +206,7 @@ public class Challenge extends SIPObject {
 
     /**
      * boolean function
+     *
      * @param name String to set
      * @return true if this header has the specified parameter, false otherwise.
      */
@@ -202,6 +216,7 @@ public class Challenge extends SIPObject {
 
     /**
      * Boolean function
+     *
      * @return true if this header has some parameters.
      */
     public boolean hasParameters() {
@@ -210,6 +225,7 @@ public class Challenge extends SIPObject {
 
     /**
      * delete the specified parameter
+     *
      * @param name String
      * @return true if the specified parameter has been removed, false
      * otherwise.
@@ -227,6 +243,7 @@ public class Challenge extends SIPObject {
 
     /**
      * set the specified parameter
+     *
      * @param nv NameValue to set
      */
     public void setParameter(NameValue nv) {
@@ -235,6 +252,7 @@ public class Challenge extends SIPObject {
 
     /**
      * Set the scheme member
+     *
      * @param s String to set
      */
     public void setScheme(String s) {
@@ -243,16 +261,10 @@ public class Challenge extends SIPObject {
 
     /**
      * Set the authParams member
+     *
      * @param a NameValueList to set
      */
     public void setAuthParams(NameValueList a) {
         authParams = a;
-    }
-
-    public Object clone() {
-        Challenge retval = (Challenge) super.clone();
-        if (this.authParams != null)
-            retval.authParams = (NameValueList) this.authParams.clone();
-        return retval;
     }
 }

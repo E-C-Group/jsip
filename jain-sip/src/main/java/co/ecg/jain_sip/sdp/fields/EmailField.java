@@ -99,12 +99,4 @@ public class EmailField extends SDPField implements EMail {
             emailAddress.setDisplayName(value);
         }
     }
-
-    public Object clone() throws CloneNotSupportedException {
-        EmailField retval = (EmailField) super.clone();
-        if (this.emailAddress != null)
-            retval.emailAddress = (EmailAddress) this.emailAddress.clone();
-        return retval;
-    }
-
 }

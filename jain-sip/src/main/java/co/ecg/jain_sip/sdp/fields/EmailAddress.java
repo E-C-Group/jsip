@@ -81,11 +81,4 @@ public class EmailAddress extends SDPObject {
         }
         return encoded_string;
     }
-    public Object clone() throws CloneNotSupportedException {
-        EmailAddress retval = (EmailAddress) super.clone();
-        if (this.email != null)
-            retval.email = (Email) this.email.clone();
-        return retval;
-    }
-
 }

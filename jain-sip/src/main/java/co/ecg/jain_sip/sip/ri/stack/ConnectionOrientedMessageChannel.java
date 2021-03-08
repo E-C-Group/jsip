@@ -52,6 +52,7 @@ import co.ecg.jain_sip.sip.SipListener;
 import co.ecg.jain_sip.sip.address.Hop;
 import co.ecg.jain_sip.sip.message.Response;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.SerializationUtils;
 
 /**
  * @author jean.deruelle@gmail.com
@@ -175,7 +176,7 @@ public abstract class ConnectionOrientedMessageChannel extends MessageChannel im
 
                     public void run() {
                         try {
-                            processMessage((SIPMessage) sipMessage.clone());
+                            processMessage(SerializationUtils.clone(sipMessage));
                         } catch (Exception ex) {
 
                             log.error("Error self routing message cause by: ",

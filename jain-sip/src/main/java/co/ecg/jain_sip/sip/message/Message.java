@@ -71,7 +71,7 @@ import java.text.ParseException;
  *
  */
 
-public interface Message extends Cloneable, Serializable {
+public interface Message extends Serializable {
 
 
 // Generic header methods of the Message
@@ -394,32 +394,6 @@ public interface Message extends Cloneable, Serializable {
 
 
 // Java Utility methods for Message
-
-    /**
-     * Creates and returns a deep copy of the Message. This methods must ensure a
-     * deep copy of the message, so that it can be modified without effecting
-     * the original message. This provides useful functionality for proxying
-     * Requests and Responses, for example:
-     * <ul>
-     * <li>Recieve a message.
-     * <li>Create a deep clone of the message.
-     * <li>Modify necessary headers.
-     * <li>Proxy the message using the send methods on the SipProvider.
-     * </ul>
-     * The message contents are cloned as follows:
-     * <ul>
-     * <li>If the content is of type byte[] a new byte[] array is allocated and the
-     * original contents are copied over to the cloned Message.
-     * <li>If the content is of type String then a new String equal to the old
-     * String is allocated and assigned to the cloned Message.
-     * <li>If the content is of type Object and it has a public clone method
-     * then it is invoked and the resultant Object is used in the new cloned
-     * Message.
-     * </ul>
-     *
-     * @return a deep copy of Message
-     */
-    public Object clone();
 
     /**
      * Compare this SIP Message for equality with another.

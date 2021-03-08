@@ -220,13 +220,6 @@ public class ContentType extends ParametersHeader implements ContentTypeHeader {
         mediaRange.setSubtype(contentType);
     }
 
-    public Object clone() {
-        ContentType retval = (ContentType) super.clone();
-        if (this.mediaRange != null)
-            retval.mediaRange = (MediaRange) this.mediaRange.clone();
-        return retval;
-    }
-
     public boolean equals(Object other) {
         if (other instanceof ContentTypeHeader) {
             final ContentTypeHeader o = (ContentTypeHeader) other;

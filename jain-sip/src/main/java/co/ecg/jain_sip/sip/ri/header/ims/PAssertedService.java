@@ -107,12 +107,4 @@ public class PAssertedService extends SIPHeader implements PAssertedServiceHeade
         return (other instanceof PAssertedServiceHeader) && super.equals(other);
 
     }
-
-
-    public Object clone() {
-        PAssertedService retval = (PAssertedService) super.clone();
-        return retval;
-    }
-
-
 }

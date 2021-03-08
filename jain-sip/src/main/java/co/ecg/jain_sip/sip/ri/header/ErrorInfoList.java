@@ -59,11 +59,6 @@ public class ErrorInfoList extends SIPHeaderList<ErrorInfo>{
      */
     private static final long serialVersionUID = 1L;
 
-    public Object clone() {
-        ErrorInfoList retval = new ErrorInfoList();
-        retval.clonehlist(this.hlist);
-        return retval;
-    }
     /**
      * Default constructor.
      */

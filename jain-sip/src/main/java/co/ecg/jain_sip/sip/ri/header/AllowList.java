@@ -48,14 +48,6 @@ public class AllowList extends SIPHeaderList<Allow> {
      */
     private static final long serialVersionUID = -4699795429662562358L;
 
-
-    public Object clone() {
-        AllowList retval = new AllowList();
-        retval.clonehlist(this.hlist);
-        return retval;
-    }
-
-
     /** default constructor
      */
     public AllowList() {

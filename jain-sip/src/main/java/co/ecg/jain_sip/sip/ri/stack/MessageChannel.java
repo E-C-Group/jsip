@@ -45,6 +45,7 @@ import co.ecg.jain_sip.sip.ri.message.SIPMessage;
 import co.ecg.jain_sip.sip.ri.message.SIPRequest;
 import co.ecg.jain_sip.sip.ri.message.SIPResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.SerializationUtils;
 
 
 import java.io.IOException;
@@ -214,7 +215,7 @@ public abstract class MessageChannel {
 
                             public void run() {
                                 try {
-                                    ((RawMessageChannel) channel).processMessage((SIPMessage) sipMessage.clone());
+                                    ((RawMessageChannel) channel).processMessage(SerializationUtils.clone(sipMessage));
                                 } catch (Exception ex) {
 
                                     log.error("Error self routing message cause by: ", ex);
@@ -422,7 +423,7 @@ public abstract class MessageChannel {
         long tsval = tsHdr == null ? 0 : tsHdr.getTime();
 
         LogRecord logRecord = getSIPStack().logRecordFactory.createLogRecord(sipResponse.encode(), from, to, receptionTime, false,
-               firstLine, tid, callId, tsval);
+                firstLine, tid, callId, tsval);
 
         log.info(logRecord.toString());
     }

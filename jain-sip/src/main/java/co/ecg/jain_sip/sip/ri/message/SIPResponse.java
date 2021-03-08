@@ -469,20 +469,6 @@ public class SIPResponse extends SIPMessage implements Response, ResponseExt {
     }
 
     /**
-     * Make a clone (deep copy) of this object.
-     *
-     * @return a deep copy of this object.
-     */
-
-    public Object clone() {
-        SIPResponse retval = (SIPResponse) super.clone();
-        if (this.statusLine != null)
-            retval.statusLine = (StatusLine) this.statusLine.clone();
-        return retval;
-    }
-
-
-    /**
      * Compare for equality.
      *
      * @param other other object to compare with.

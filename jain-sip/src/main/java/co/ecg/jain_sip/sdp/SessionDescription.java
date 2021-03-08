@@ -24,15 +24,8 @@ import java.util.*;
  * @author deruelle
  * @version 1.0
  */
-public interface SessionDescription extends Serializable, Cloneable{
+public interface SessionDescription extends Serializable {
 
-    /** Public clone declaration.
-     * @throws CloneNotSupportedException if clone method is not supported
-     * @return Object
-     */    
-    public Object clone()
-             throws CloneNotSupportedException;
-    
     /** Returns the version of SDP in use. This corresponds to the v= field of the SDP data.
      * @return the integer version (-1 if not set).
      */    

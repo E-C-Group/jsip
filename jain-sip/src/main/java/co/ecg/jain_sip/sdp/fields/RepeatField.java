@@ -206,17 +206,5 @@ public class RepeatField extends SDPField implements RepeatTime {
         retval.append (Separators.NEWLINE);
         return retval.toString ();
     }
-
-    public Object clone() {
-        RepeatField retval = (RepeatField) super.clone();
-        if (this.repeatInterval != null)
-            retval.repeatInterval = (TypedTime) this.repeatInterval.clone();
-        if (this.activeDuration != null)
-            retval.activeDuration = (TypedTime) this.activeDuration.clone();
-        if (this.offsets != null)
-            retval.offsets = (SDPObjectList) this.offsets.clone();
-        return retval;
-    }
-
 }
 

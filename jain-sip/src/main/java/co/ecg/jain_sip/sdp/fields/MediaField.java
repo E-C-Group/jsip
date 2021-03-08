@@ -239,12 +239,5 @@ public class MediaField extends SDPField implements Media {
         encoded_string += Separators.NEWLINE;
         return encoded_string;
     }
-
-    public Object clone() {
-        MediaField retval = (MediaField) super.clone();
-        if (this.formats != null)
-            retval.formats = (Vector) this.formats.clone();
-        return retval;
-    }
 }
 

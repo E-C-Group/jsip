@@ -304,13 +304,5 @@ public class OriginField extends SDPField implements Origin {
             + addressStr
             + Separators.NEWLINE;
     }
-
-    public Object clone() {
-        OriginField retval = (OriginField) super.clone();
-        if (this.address != null)
-            retval.address = (Host) this.address.clone();
-        return retval;
-    }
-
 }
 

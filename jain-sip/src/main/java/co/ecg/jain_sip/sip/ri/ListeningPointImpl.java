@@ -141,20 +141,6 @@ public class ListeningPointImpl implements ListeningPoint, ListeningPointExt {
     }
 
     /**
-     * Clone this listening point. Note that a message Processor is not
-     * started. The transport is set to null.
-     *
-     * @return cloned listening point.
-     */
-    public Object clone() {
-        ListeningPointImpl lip =
-                new ListeningPointImpl(this.sipStack, this.port, null);
-        lip.sipStack = this.sipStack;
-        return lip;
-    }
-
-
-    /**
      * Gets the port of the ListeningPoint. The default port of a ListeningPoint
      * is dependent on the scheme and transport.  For example:
      * <ul>

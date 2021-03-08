@@ -72,8 +72,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
  * @see PipelinedMsgParser
  * @since 1.1
  */
-public abstract class SIPMessage extends MessageObject implements Message,
-        MessageExt {
+public abstract class SIPMessage extends MessageObject implements Message, MessageExt {
 
     // JvB: use static here?
     private String contentEncodingCharset = MessageFactoryImpl.getDefaultContentEncodingCharset();
@@ -470,44 +469,6 @@ public abstract class SIPMessage extends MessageObject implements Message,
                 InternalErrorHandler.handleException(ex);
             }
         }
-        return retval;
-    }
-
-    /**
-     * clone this message (create a new deep physical copy). All headers in the message are
-     * cloned. You can modify the cloned copy without affecting the original. The content is
-     * handled as follows: If the content is a String, or a byte array, a new copy of the content
-     * is allocated and copied over. If the content is an Object that supports the clone method,
-     * then the clone method is invoked and the cloned content is the new content. Otherwise, the
-     * content of the new message is set equal to the old one.
-     *
-     * @return A cloned copy of this object.
-     */
-    public Object clone() {
-        SIPMessage retval = (SIPMessage) super.clone();
-        retval.headerTable = new ConcurrentHashMap<String, SIPHeader>();
-        retval.fromHeader = null;
-        retval.toHeader = null;
-        retval.cSeqHeader = null;
-        retval.callIdHeader = null;
-        retval.contentLengthHeader = null;
-        retval.maxForwardsHeader = null;
-        retval.forkId = null;
-        if (this.headers != null) {
-            retval.headers = new ConcurrentLinkedQueue<SIPHeader>();
-            for (Iterator<SIPHeader> iter = headers.iterator(); iter.hasNext(); ) {
-                SIPHeader hdr = (SIPHeader) iter.next();
-                retval.attachHeader((SIPHeader) hdr.clone());
-            }
-
-        }
-        if (this.messageContentBytes != null)
-            retval.messageContentBytes = (byte[]) this.messageContentBytes.clone();
-        if (this.messageContentObject != null)
-            retval.messageContentObject = makeClone(messageContentObject);
-        retval.unrecognizedHeaders = this.unrecognizedHeaders;
-        retval.remoteAddress = this.remoteAddress;
-        retval.remotePort = this.remotePort;
         return retval;
     }
 

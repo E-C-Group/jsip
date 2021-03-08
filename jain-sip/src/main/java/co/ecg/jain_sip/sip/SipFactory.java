@@ -28,6 +28,7 @@ package co.ecg.jain_sip.sip;
 import co.ecg.jain_sip.sip.address.AddressFactory;
 import co.ecg.jain_sip.sip.header.HeaderFactory;
 import co.ecg.jain_sip.sip.message.MessageFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.*;
 import java.lang.reflect.Constructor;
@@ -101,6 +102,7 @@ import java.lang.reflect.Constructor;
  * @version 1.2
  */
 
+@Slf4j
 public class SipFactory {
 
     /**
@@ -110,8 +112,11 @@ public class SipFactory {
      * @return the single instance of this singleton SipFactory
      */
     public synchronized static SipFactory getInstance() {
+        log.info("SipFactory.getInstance()");
         if (myFactory == null) {
+            log.info("SipFactory.getInstance - myFactory(BEFORE)", myFactory);
             myFactory = new SipFactory();
+            log.info("SipFactory.getInstance - myFactory(AFTER)", myFactory);
         }
         return myFactory;
     }
@@ -146,7 +151,7 @@ public class SipFactory {
         // IP address was not specified in the properties.
         // This means that the architecture supports a single sip stack
         // instance per stack name
-        // and each listening point is assinged its own IP address.
+        // and each listening point is assigned its own IP address.
         if ( ipAddress == null) {
             SipStack mySipStack = (SipStack) this.sipStackByName.get(name);
             if (mySipStack == null) {
@@ -180,7 +185,7 @@ public class SipFactory {
     public MessageFactory createMessageFactory()
             throws PeerUnavailableException {
         if (messageFactory == null) {
-            messageFactory = (MessageFactory) createSipFactory("javax.sip.message.MessageFactoryImpl");
+            messageFactory = (MessageFactory) createSipFactory("sip.ri.message.MessageFactoryImpl");
         }
         return messageFactory;
     }
@@ -195,7 +200,7 @@ public class SipFactory {
      */
     public HeaderFactory createHeaderFactory() throws PeerUnavailableException {
         if (headerFactory == null) {
-            headerFactory = (HeaderFactory) createSipFactory("javax.sip.header.HeaderFactoryImpl");
+            headerFactory = (HeaderFactory) createSipFactory("sip.ri.header.HeaderFactoryImpl");
         }
         return headerFactory;
     }
@@ -211,7 +216,7 @@ public class SipFactory {
     public AddressFactory createAddressFactory()
             throws PeerUnavailableException {
         if (addressFactory == null) {
-            addressFactory = (AddressFactory) createSipFactory("javax.sip.address.AddressFactoryImpl");
+            addressFactory = (AddressFactory) createSipFactory("sip.ri.address.AddressFactoryImpl");
         }
         return addressFactory;
     }
@@ -261,7 +266,7 @@ public class SipFactory {
         headerFactory = null;
         addressFactory = null;
         sipStackByName = new Hashtable();
-        pathName = "gov.nist";
+        pathName = "co.ecg.jain_sip";
     }
 
     /**
@@ -304,7 +309,7 @@ public class SipFactory {
             paramTypes[0] = Class.forName("java.util.Properties");
             // get constructor of SipStack in order to instantiate
             Constructor sipStackConstructor = Class.forName(
-                    getPathName() + ".javax.sip.SipStackImpl").getConstructor(
+                    getPathName() + ".sip.ri.SipStackImpl").getConstructor(
                     paramTypes);
             // Wrap properties object in order to pass to constructor of
             // SipSatck

@@ -38,9 +38,7 @@ import java.io.Serializable;
  * @version 1.2
  */
 
-public interface URI extends Cloneable, Serializable{
-
-    
+public interface URI extends Serializable{
     /**
      * Returns the value of the "scheme" of this URI, for example "sip", "sips" 
      * or "tel".
@@ -49,17 +47,6 @@ public interface URI extends Cloneable, Serializable{
      */
     public String getScheme();
 
-    /**
-     * Creates and returns a deep copy of the URI. This methods must ensure a
-     * deep copy of the URI, so that when a URI is cloned the URI can be 
-     * modified without effecting the original URI. This provides useful 
-     * functionality for proxying Requests and Responses. This method overrides 
-     * the clone method in java.lang.Object.
-     *
-     * @return a deep copy of URI
-     */
-    public Object clone();
-    
     /**
      * This method determines if this is a URI with a scheme of "sip" or "sips". 
      *

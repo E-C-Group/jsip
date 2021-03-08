@@ -235,13 +235,6 @@ public final class Contact extends AddressParametersHeader implements ContactHea
         this.parameters.set(Q, Float.valueOf(qValue));
     }
 
-    public Object clone() {
-        Contact retval = (Contact) super.clone();
-        if (this.contactList != null)
-            retval.contactList = (ContactList) this.contactList.clone();
-        return retval;
-    }
-
     /* (non-Javadoc)
      * @see javax.sip.header.ContactHeader#setWildCard()
      */

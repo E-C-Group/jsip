@@ -1,26 +1,26 @@
 /*
-* Conditions Of Use
-*
-* This software was developed by employees of the National Institute of
-* Standards and Technology (NIST), an agency of the Federal Government.
-* Pursuant to title 15 Untied States Code Section 105, works of NIST
-* employees are not subject to copyright protection in the United States
-* and are considered to be in the public domain.  As a result, a formal
-* license is not needed to use the software.
-*
-* This software is provided by NIST as a service and is expressly
-* provided "AS IS."  NIST MAKES NO WARRANTY OF ANY KIND, EXPRESS, IMPLIED
-* OR STATUTORY, INCLUDING, WITHOUT LIMITATION, THE IMPLIED WARRANTY OF
-* MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, NON-INFRINGEMENT
-* AND DATA ACCURACY.  NIST does not warrant or make any representations
-* regarding the use of the software or the results thereof, including but
-* not limited to the correctness, accuracy, reliability or usefulness of
-* the software.
-*
-* Permission to use this software is contingent upon your acceptance
-* of the terms of this agreement.
-*
-*/
+ * Conditions Of Use
+ *
+ * This software was developed by employees of the National Institute of
+ * Standards and Technology (NIST), an agency of the Federal Government.
+ * Pursuant to title 15 Untied States Code Section 105, works of NIST
+ * employees are not subject to copyright protection in the United States
+ * and are considered to be in the public domain.  As a result, a formal
+ * license is not needed to use the software.
+ *
+ * This software is provided by NIST as a service and is expressly
+ * provided "AS IS."  NIST MAKES NO WARRANTY OF ANY KIND, EXPRESS, IMPLIED
+ * OR STATUTORY, INCLUDING, WITHOUT LIMITATION, THE IMPLIED WARRANTY OF
+ * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, NON-INFRINGEMENT
+ * AND DATA ACCURACY.  NIST does not warrant or make any representations
+ * regarding the use of the software or the results thereof, including but
+ * not limited to the correctness, accuracy, reliability or usefulness of
+ * the software.
+ *
+ * Permission to use this software is contingent upon your acceptance
+ * of the terms of this agreement.
+ *
+ */
 package co.ecg.jain_sip.sip.ri.header;
 
 
@@ -29,17 +29,12 @@ import co.ecg.jain_sip.sip.header.HeaderAddress;
 import co.ecg.jain_sip.sip.header.Parameters;
 import co.ecg.jain_sip.sip.ri.address.AddressImpl;
 
-/** An abstract class for headers that take an address and parameters.
- *
- * @version 1.2 $Revision: 1.11 $ $Date: 2009-07-17 18:57:25 $
- *
- * @since 1.1
+/**
+ * An abstract class for headers that take an address and parameters.
  *
  * @author M. Ranganathan   <br/>
- *
- *
- *
- *
+ * @version 1.2 $Revision: 1.11 $ $Date: 2009-07-17 18:57:25 $
+ * @since 1.1
  */
 public abstract class AddressParametersHeader extends ParametersHeader implements Parameters {
 
@@ -74,30 +69,18 @@ public abstract class AddressParametersHeader extends ParametersHeader implement
      */
 
     protected AddressParametersHeader(String name, boolean sync) {
-        super(name,sync);
-    }
-
-    /* (non-Javadoc)
-     * @see gov.nist.javax.sip.header.AddressParameters#clone()
-     */
-    public Object clone() {
-        AddressParametersHeader retval = (AddressParametersHeader) super.clone();
-        if (this.address != null)
-            retval.address = (AddressImpl) this.address.clone();
-        return retval;
+        super(name, sync);
     }
 
     /* (non-Javadoc)
      * @see gov.nist.javax.sip.header.AddressParameters#equals(java.lang.Object)
      */
     public boolean equals(Object other) {
-        if (this==other) return true;
-
-
+        if (this == other) return true;
 
         if (other instanceof HeaderAddress && other instanceof Parameters) {
             final HeaderAddress o = (HeaderAddress) other;
-            return this.getAddress().equals( o.getAddress() ) && this.equalParameters( (Parameters) o );
+            return this.getAddress().equals(o.getAddress()) && this.equalParameters((Parameters) o);
         }
         return false;
     }

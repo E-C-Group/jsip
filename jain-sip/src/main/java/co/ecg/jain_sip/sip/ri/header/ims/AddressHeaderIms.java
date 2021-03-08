@@ -70,14 +70,5 @@ public abstract class AddressHeaderIms extends SIPHeader {
     //protected AddressHeader(String name) {
         super(name);
     }
-
-    public Object clone() {
-        AddressHeaderIms retval = (AddressHeaderIms) super.clone();
-        if (this.address != null)
-            retval.address = (AddressImpl) this.address.clone();
-        return retval;
-    }
-
-
 }
 

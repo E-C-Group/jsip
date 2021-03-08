@@ -736,7 +736,7 @@ public class SipStackImpl extends SIPTransactionStack implements SipStack, SipSt
         String routerPath = configurationProperties
                 .getProperty("javax.sip.ROUTER_PATH");
         if (routerPath == null)
-            routerPath = "gov.nist.javax.sip.stack.DefaultRouter";
+            routerPath = "co.ecg.jain_sip.sip.ri.stack.DefaultRouter";
 
         try {
             Class<?> routerClass = Class.forName(routerPath);
@@ -912,7 +912,7 @@ public class SipStackImpl extends SIPTransactionStack implements SipStack, SipSt
         // Allow application to hook in a TLS Security Policy implementation
         String tlsPolicyPath = configurationProperties.getProperty("gov.nist.javax.sip.TLS_SECURITY_POLICY");
         if (tlsPolicyPath == null) {
-            tlsPolicyPath = "gov.nist.javax.sip.stack.DefaultTlsSecurityPolicy";
+            tlsPolicyPath = "co.ecg.jain_sip.sip.ri.stack.DefaultTlsSecurityPolicy";
             log.warn("using default tls security policy");
         }
         try {

@@ -212,13 +212,6 @@ public class RequestLine extends SIPObject implements SipRequestLine {
           return false;
         return true;
     }
-
-    public Object clone() {
-        RequestLine retval = (RequestLine) super.clone();
-        if (this.uri != null)
-            retval.uri = (GenericURI) this.uri.clone();
-        return retval;
-    }
 }
 
 

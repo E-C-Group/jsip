@@ -47,12 +47,6 @@ public class AcceptList extends SIPHeaderList<Accept> {
      */
     private static final long serialVersionUID = -1800813338560484831L;
 
-    @Override
-    public Object clone() {
-        AcceptList retval = new AcceptList();
-        retval.clonehlist(this.hlist);
-        return retval;
-    }
     /**
      * Default constructor
      */

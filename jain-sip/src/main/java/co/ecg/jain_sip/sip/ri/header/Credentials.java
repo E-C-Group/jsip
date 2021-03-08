@@ -126,11 +126,4 @@ public class Credentials extends SIPObject {
             nameValue.setQuotedValue();
         parameters.set(nameValue);
     }*/
-
-    public Object clone() {
-        Credentials retval = (Credentials) super.clone();
-        if (this.parameters != null)
-            retval.parameters = (NameValueList) this.parameters.clone();
-        return retval;
-    }
 }
