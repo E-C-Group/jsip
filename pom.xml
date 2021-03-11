@@ -29,6 +29,20 @@
         </profile>
     </profiles>
 
+    <!-- Deployment Location -->
+    <distributionManagement>
+        <repository>
+            <id>ECG-Maven-Central</id>
+            <name>ECG Internal Repository</name>
+            <url>http://maven.e-c-group.com:8081/artifactory/libs-release-local</url>
+        </repository>
+        <snapshotRepository>
+            <id>ECG-Maven-Snapshots</id>
+            <name>ECG Internal Snapshot Repository</name>
+            <url>http://maven.e-c-group.com:8081/artifactory/libs-snapshot-local</url>
+        </snapshotRepository>
+    </distributionManagement>
+
     <dependencies>
         <dependency>
             <groupId>org.slf4j</groupId>
