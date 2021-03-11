@@ -36,7 +36,7 @@ public abstract class ScenarioHarness extends TestHarness {
             this.addRiProtocolObjects(new ProtocolObjects("ri" + super.getName(), super
                     .getImplementationPath(), transport, true, false, false));
             /*
-             * if (!getImplementationPath().equals("gov.nist")) this.riProtocolObjects = new
+             * if (!getImplementationPath().equals("co.ecg.jain_sip")) this.riProtocolObjects = new
              * ProtocolObjects( super.getName(), super.getImplementationPath(), transport, true);
              * else this.riProtocolObjects = tiProtocolObjects;
              */
@@ -48,7 +48,7 @@ public abstract class ScenarioHarness extends TestHarness {
                     transport, true, false, false));
 
             /*
-             * if (!getImplementationPath().equals("gov.nist")) this.riProtocolObjects = new
+             * if (!getImplementationPath().equals("co.ecg.jain_sip")) this.riProtocolObjects = new
              * ProtocolObjects( super.getName(), super.getImplementationPath(), transport, true);
              * else this.riProtocolObjects = tiProtocolObjects;
              */
@@ -68,7 +68,7 @@ public abstract class ScenarioHarness extends TestHarness {
                         .getImplementationPath(), transport, true, false, false));
             }
             /*
-             * if (!getImplementationPath().equals("gov.nist")) this.riProtocolObjects = new
+             * if (!getImplementationPath().equals("co.ecg.jain_sip")) this.riProtocolObjects = new
              * ProtocolObjects( super.getName(), super.getImplementationPath(), transport, true);
              * else this.riProtocolObjects = tiProtocolObjects;
              */
@@ -84,7 +84,7 @@ public abstract class ScenarioHarness extends TestHarness {
             }
 
             /*
-             * if (!getImplementationPath().equals("gov.nist")) this.riProtocolObjects = new
+             * if (!getImplementationPath().equals("co.ecg.jain_sip")) this.riProtocolObjects = new
              * ProtocolObjects( super.getName(), super.getImplementationPath(), transport, true);
              * else this.riProtocolObjects = tiProtocolObjects;
              */
@@ -100,7 +100,7 @@ public abstract class ScenarioHarness extends TestHarness {
             this.addRiProtocolObjects(new ProtocolObjects("ri" + super.getName(), super
                     .getImplementationPath(), transport, riAutoDialog, false, false));
             /*
-             * if (!getImplementationPath().equals("gov.nist")) this.riProtocolObjects = new
+             * if (!getImplementationPath().equals("co.ecg.jain_sip")) this.riProtocolObjects = new
              * ProtocolObjects( super.getName(), super.getImplementationPath(), transport, true);
              * else this.riProtocolObjects = tiProtocolObjects;
              */
@@ -112,7 +112,7 @@ public abstract class ScenarioHarness extends TestHarness {
                     transport, riAutoDialog, false, false));
 
             /*
-             * if (!getImplementationPath().equals("gov.nist")) this.riProtocolObjects = new
+             * if (!getImplementationPath().equals("co.ecg.jain_sip")) this.riProtocolObjects = new
              * ProtocolObjects( super.getName(), super.getImplementationPath(), transport, true);
              * else this.riProtocolObjects = tiProtocolObjects;
              */

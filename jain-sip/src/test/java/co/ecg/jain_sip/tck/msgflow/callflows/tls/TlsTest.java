@@ -1,22 +1,22 @@
 /*
-* Conditions Of Use
-*
-* This software was developed by employees of the National Institute of
-* Standards and Technology (NIST), and others.
-* This software is has been contributed to the public domain.
-* As a result, a formal license is not needed to use the software.
-*
-* This software is provided "AS IS."
-* NIST MAKES NO WARRANTY OF ANY KIND, EXPRESS, IMPLIED
-* OR STATUTORY, INCLUDING, WITHOUT LIMITATION, THE IMPLIED WARRANTY OF
-* MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, NON-INFRINGEMENT
-* AND DATA ACCURACY.  NIST does not warrant or make any representations
-* regarding the use of the software or the results thereof, including but
-* not limited to the correctness, accuracy, reliability or usefulness of
-* the software.
-*
-*
-*/
+ * Conditions Of Use
+ *
+ * This software was developed by employees of the National Institute of
+ * Standards and Technology (NIST), and others.
+ * This software is has been contributed to the public domain.
+ * As a result, a formal license is not needed to use the software.
+ *
+ * This software is provided "AS IS."
+ * NIST MAKES NO WARRANTY OF ANY KIND, EXPRESS, IMPLIED
+ * OR STATUTORY, INCLUDING, WITHOUT LIMITATION, THE IMPLIED WARRANTY OF
+ * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, NON-INFRINGEMENT
+ * AND DATA ACCURACY.  NIST does not warrant or make any representations
+ * regarding the use of the software or the results thereof, including but
+ * not limited to the correctness, accuracy, reliability or usefulness of
+ * the software.
+ *
+ *
+ */
 /**
  *
  */
@@ -36,6 +36,7 @@ import co.ecg.jain_sip.sip.TransactionTerminatedEvent;
 import lombok.extern.slf4j.Slf4j;
 
 import co.ecg.jain_sip.tck.msgflow.callflows.ScenarioHarness;
+import org.apache.commons.lang3.ClassPathUtils;
 
 /**
  * @author M. Ranganathan
@@ -43,7 +44,6 @@ import co.ecg.jain_sip.tck.msgflow.callflows.ScenarioHarness;
  */
 @Slf4j
 public class TlsTest extends ScenarioHarness implements SipListener {
-
 
     protected Shootist shootist;
 
@@ -64,15 +64,15 @@ public class TlsTest extends ScenarioHarness implements SipListener {
 
         try {
             // setup TLS properties
-            System.setProperty( "javax.net.ssl.keyStore",  TlsTest.class.getResource("testkeys").getPath() );
-            System.setProperty( "javax.net.ssl.trustStore", TlsTest.class.getResource("testkeys").getPath() );
-            System.setProperty( "javax.net.ssl.keyStorePassword", "passphrase" );
-            System.setProperty( "javax.net.ssl.keyStoreType", "jks" );
+            System.setProperty("javax.net.ssl.keyStore", ClassLoader.getSystemResource("testkeys").getPath());
+            System.setProperty("javax.net.ssl.trustStore", ClassLoader.getSystemResource("testkeys").getPath());
+            System.setProperty("javax.net.ssl.keyStorePassword", "passphrase");
+            System.setProperty("javax.net.ssl.keyStoreType", "jks");
 
             this.transport = "tls";
 
             super.setUp();
-        
+
             shootme = new Shootme(getTiProtocolObjects());
             SipProvider shootmeProvider = shootme.createSipProvider();
             providerTable.put(shootmeProvider, shootme);
@@ -81,7 +81,7 @@ public class TlsTest extends ScenarioHarness implements SipListener {
             providerTable.put(shootistProvider, shootist);
             shootmeProvider.addSipListener(this);
             shootistProvider.addSipListener(this);
-             
+
             getRiProtocolObjects().start();
             if (getTiProtocolObjects() != getRiProtocolObjects())
                 getTiProtocolObjects().start();
@@ -106,10 +106,10 @@ public class TlsTest extends ScenarioHarness implements SipListener {
             Thread.sleep(1000);
             this.providerTable.clear();
 
-            System.clearProperty( "javax.net.ssl.keyStore" );
-            System.clearProperty( "javax.net.ssl.trustStore" );
-            System.clearProperty( "javax.net.ssl.keyStorePassword" );
-            System.clearProperty( "javax.net.ssl.keyStoreType" );
+            System.clearProperty("javax.net.ssl.keyStore");
+            System.clearProperty("javax.net.ssl.trustStore");
+            System.clearProperty("javax.net.ssl.keyStorePassword");
+            System.clearProperty("javax.net.ssl.keyStoreType");
 
             logTestCompleted();
         } catch (Exception ex) {

@@ -27,7 +27,7 @@ package co.ecg.jain_sip.torture;
 
 public interface TagNames
 {
-     public final static String TORTURE = "co/ecg/jain_sip/torture";
+     public final static String TORTURE = "torture";
     public final static String TESTCASE = "testcase";
     public final static String EXPECT_EXCEPTION =
                     "expect-exception-callback";

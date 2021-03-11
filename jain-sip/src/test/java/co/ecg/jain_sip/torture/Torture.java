@@ -1,30 +1,43 @@
 /*
-* Conditions Of Use
-*
-* This software was developed by employees of the National Institute of
-* Standards and Technology (NIST), and others.
-* This software is has been contributed to the public domain.
-* As a result, a formal license is not needed to use the software.
-*
-* This software is provided "AS IS."
-* NIST MAKES NO WARRANTY OF ANY KIND, EXPRESS, IMPLIED
-* OR STATUTORY, INCLUDING, WITHOUT LIMITATION, THE IMPLIED WARRANTY OF
-* MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, NON-INFRINGEMENT
-* AND DATA ACCURACY.  NIST does not warrant or make any representations
-* regarding the use of the software or the results thereof, including but
-* not limited to the correctness, accuracy, reliability or usefulness of
-* the software.
-*
-*
-*/
-/*******************************************************************************
+ * Conditions Of Use
+ *
+ * This software was developed by employees of the National Institute of
+ * Standards and Technology (NIST), and others.
+ * This software is has been contributed to the public domain.
+ * As a result, a formal license is not needed to use the software.
+ *
+ * This software is provided "AS IS."
+ * NIST MAKES NO WARRANTY OF ANY KIND, EXPRESS, IMPLIED
+ * OR STATUTORY, INCLUDING, WITHOUT LIMITATION, THE IMPLIED WARRANTY OF
+ * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, NON-INFRINGEMENT
+ * AND DATA ACCURACY.  NIST does not warrant or make any representations
+ * regarding the use of the software or the results thereof, including but
+ * not limited to the correctness, accuracy, reliability or usefulness of
+ * the software.
+ *
+ *
+ */
+/**
  * Product of NIST/ITL Advanced Networking Technologies Division (ANTD).        *
  * Author: M. Ranganathan (mranga@nist.gov)                                     *
- *******************************************************************************/
+ * <p>
+ * Implements  Parser torture tests.
+ *
+ * @author M. Ranganathan < mranga@nist.gov >
+ * <p>
+ * Implements  Parser torture tests.
+ * @author M. Ranganathan < mranga@nist.gov >
+ * <p>
+ * Implements  Parser torture tests.
+ * @author M. Ranganathan < mranga@nist.gov >
+ * <p>
+ * Implements  Parser torture tests.
+ * @author M. Ranganathan < mranga@nist.gov >
+ */
 /**
  * Implements  Parser torture tests.
  *
- *@author  M. Ranganathan < mranga@nist.gov >
+ *@author M. Ranganathan < mranga@nist.gov >
  *
  */
 
@@ -34,6 +47,7 @@ import co.ecg.jain_sip.sip.ri.address.*;
 import co.ecg.jain_sip.sip.ri.parser.*;
 import co.ecg.jain_sip.sip.ri.header.*;
 import co.ecg.jain_sip.sip.ri.message.*;
+
 import java.io.*;
 import java.util.Hashtable;
 import java.util.Enumeration;
@@ -47,6 +61,7 @@ import org.xml.sax.XMLReader;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 import org.xml.sax.helpers.DefaultHandler;
+
 import java.text.ParseException;
 
 public class Torture extends DefaultHandler implements ParseExceptionListener,
@@ -116,11 +131,11 @@ public class Torture extends DefaultHandler implements ParseExceptionListener,
 
     private static final String XML_DOCTYPE_IDENTIFIER = "<?xml version='1.0' encoding='us-ascii'?>";
 
-    class MyEntityResolver implements  EntityResolver {
+    class MyEntityResolver implements EntityResolver {
 
         public InputSource resolveEntity(String publicId, String systemId) throws SAXException, IOException {
-
-            return new InputSource( Torture.class.getResourceAsStream("torture.dtd"));
+            InputStream inputStream = ClassLoader.getSystemResourceAsStream("torture.dtd");
+            return new InputSource(inputStream);
         }
 
     }
@@ -165,7 +180,7 @@ public class Torture extends DefaultHandler implements ParseExceptionListener,
     }
 
     public void handleException(ParseException ex, SIPMessage sipMessage,
-            Class headerClass, String headerText, String messageText)
+                                Class headerClass, String headerText, String messageText)
             throws ParseException {
         String exceptionString = headerText;
         if (debugFlag) {
@@ -244,7 +259,7 @@ public class Torture extends DefaultHandler implements ParseExceptionListener,
     }
 
     public void startElement(String namespaceURI, String local, String name,
-            Attributes attrs) throws SAXException {
+                             Attributes attrs) throws SAXException {
         if (name.compareTo(TORTURE) == 0) {
             outputParsedStructures = false;
             outputResults = false;
@@ -379,12 +394,12 @@ public class Torture extends DefaultHandler implements ParseExceptionListener,
                             testMessage, null);
                 } catch (ParseException ex1) {
                     ex1.printStackTrace();
-                    System.out.println("Unexpected excception!");
+                    System.out.println("Unexpected exception!");
                     System.exit(0);
                 }
             } catch (Exception ex) {
                 ex.printStackTrace();
-                System.out.println("Unexpected excception!");
+                System.out.println("Unexpected exception!");
                 System.exit(0);
 
             }
@@ -613,11 +628,12 @@ public class Torture extends DefaultHandler implements ParseExceptionListener,
         statusMessage += emitStringEndTag(DIAGNOSTIC);
     }
 
-    public Torture () {
+    public Torture() {
 
     }
+
     public void doTests() throws Exception {
-        String fileName ;
+        String fileName;
         fileName = "torture.xml";
 
         /* The tests do not check for content length */
@@ -630,11 +646,12 @@ public class Torture extends DefaultHandler implements ParseExceptionListener,
 
             saxParser.setEntityResolver(new MyEntityResolver());
             saxParser.setContentHandler(this);
-            saxParser
-                    .setFeature("http://xml.org/sax/features/validation", true);
-            saxParser.parse(new InputSource ( Torture.class.getResourceAsStream(fileName)));
-            System.out.println("Elapsed time = "
-                    + (System.currentTimeMillis() - startTime) / counter);
+            saxParser.setFeature("http://xml.org/sax/features/validation", true);
+
+            InputStream inputStream = ClassLoader.getSystemResourceAsStream(fileName);
+            saxParser.parse(new InputSource(inputStream));
+
+            System.out.println("Elapsed time = " + (System.currentTimeMillis() - startTime) / counter);
 
         } catch (Exception ex) {
             ex.printStackTrace();

@@ -1,0 +1,6 @@
+package co.ecg.jain_sip.sip.stack.dialog.b2bua.reinvite;
+
+public enum Operation {
+    FORWARD_INVITE,FORWARD_BYE,SEND_RE_INVITE;
+
+}

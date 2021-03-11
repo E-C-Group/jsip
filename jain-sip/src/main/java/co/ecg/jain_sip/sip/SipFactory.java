@@ -340,14 +340,14 @@ public class SipFactory {
     }
 
     // default domain to locate Reference Implementation
-    private String pathName = "gov.nist";
+    private String pathName = "co.ecg.jain_sip";
 
     // My sip stack. The implementation will allow only a single
     // sip stack in future versions of this specification.
 
     private Hashtable sipStackByName;
 
-    // intrenal variable to ensure SipFactory only returns a single instance
+    // internal variable to ensure SipFactory only returns a single instance
     // of the other Factories and SipStack
     private MessageFactory messageFactory = null;
 
